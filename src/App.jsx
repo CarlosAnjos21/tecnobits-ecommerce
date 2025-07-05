@@ -11,8 +11,8 @@ const LoginPage = lazy(() => import('./pages/LoginPage'));
 const CreateAccountInitialPage = lazy(
   () => import('./pages/CreateAccountInitialPage')
 );
-// Adicione a importação da nova página do carrinho
-const ShoppingCartPage = lazy(() => import('./pages/ShoppingCartPage')); // Nova linha
+const ShoppingCartPage = lazy(() => import('./pages/ShoppingCartPage'));
+const NotFoundPage = lazy(() => import('./pages/404'));
 
 const App = () => {
   return (
@@ -43,10 +43,10 @@ const App = () => {
           }
         />
         <Route
-          path='/categorias'
+          path='/*'
           element={
             <Layout>
-              <div>Categoria</div>
+              <NotFoundPage />
             </Layout>
           }
         />
@@ -104,6 +104,15 @@ const App = () => {
           element={
             <Layout>
               <ShoppingCartPage />
+            </Layout>
+          }
+        />
+        {/* Rota de fallback para 404 - deve ser a última rota */}
+        <Route
+          path='/*'
+          element={
+            <Layout>
+              <NotFoundPage />
             </Layout>
           }
         />
