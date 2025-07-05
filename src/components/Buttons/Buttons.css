@@ -25,13 +25,15 @@
 }
 
 .btn-primary.btn-add-to-cart {
-  width: 100%;
+  width: 80%; /* vini: isso aqui muda a largura dos btns de adicionar ao carrinho*/
 }
 
 .btn-primary.btn-login {
   width: 100%;
   height: 48px;
 }
+
+
 
 @media (max-width: 1400px) {
   .btn-primary.desktop {

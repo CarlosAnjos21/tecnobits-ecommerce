@@ -6,6 +6,7 @@
   align-items:center;
   overflow-y: hidden; /*Vini-Bugador: evita que os cards passem a tela igual desgraçados*/
   gap: 8px;
+  padding: 5%; 
   width: 100%;
   /*border: 8px solid red;*/
   max-width: 692px;
@@ -27,7 +28,7 @@
   align-content: center;
   width: 100%;
   height: 100%;
-  
+
 
 }
 
@@ -44,11 +45,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 10px;
   overflow: hidden;
   padding: 38px 20px 0;
   position: relative;
-  
+
   
 }
 
@@ -67,10 +68,10 @@
 }
 
 .product-card .card-product img {
-  width: 248px;
-  height: 134px;
+  width: 238px; /* antes: 248px*/
+  height: 190px;
   display: block;
-  position: static;
+  position: static; /*Vini: Arrumei a position, goxtaram? > 3 > */
   top: 50%;
   left: 50%;
   /* transform: translate(-50%, -50%) rotate(-30deg); */
@@ -89,7 +90,9 @@
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.75px;
-  color: var(--dark-gray-2);
+  margin-top: 5%; /* vini: adicionei esses dois margin para ajustar a legenda dos produtos. */
+  margin-bottom: -1%;
+  color: var(--white);
 }
 
 .product-card .card-info {
@@ -99,7 +102,7 @@
 }
 
 .product-card .card-info .original-price {
-  color: var(--dark-gray-2);
+  color: rgb(189, 187, 187);/* antes: var(dark-gray-2) */
   font-feature-settings:
     'liga' off,
     'clig' off;
@@ -114,7 +117,7 @@
 }
 
 .product-card .card-info .discount-price {
-  color: var(--dark-gray);
+  color: rgb(218, 213, 213);/* antes: var(--dark-gray) */
   font-feature-settings:
     'liga' off,
     'clig' off;
