@@ -43,14 +43,6 @@ const App = () => {
           }
         />
         <Route
-          path='/*'
-          element={
-            <Layout>
-              <NotFoundPage />
-            </Layout>
-          }
-        />
-        <Route
           path='/orders'
           element={
             <Layout>

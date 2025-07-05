@@ -24,7 +24,7 @@ const HomePage = () => {
       {/* Seção de Campeões de vendas */}
       <Section
         title='Campeões de vendas'
-        link={{ text: 'Ver todos', href: '/collections' }}
+        link={{ text: 'Ver todos', href: '/*' }}
       >
         <BestSellers />
       </Section>

@@ -3,14 +3,17 @@ import { priceUtils } from '../utils/priceUtils';
 // Configurações para produtos campeões de vendas
 export const bestSellersConfig = {
   // Quantidade máxima de produtos a exibir
-  maxProducts: 8,
+  maxProducts: 3,
   
-  // Categorias priorizadas para campeões de vendas
+  // Categorias priorizadas para campeões de vendas (ordem de prioridade)
   priorityCategories: [
-    'graphics-cards',
-    'processors', 
-    'motherboards',
-    'memory'
+    'smartphone',
+    'notebook', 
+    'headphone',
+    'processor',
+    'tablet',
+    'smart-tv',
+    'graphics-card'
   ],
   
   // Critério de filtro para produtos em destaque
@@ -20,9 +23,16 @@ export const bestSellersConfig = {
       return false;
     }
     
-    // Produtos com preço acima de R$ 200 (simulando produtos premium)
-    const price = priceUtils.parsePrice(product.price);
-    return price >= 200;
+    // Produtos em estoque
+    if (!product.inStock) {
+      return false;
+    }
+    
+    // Produtos com rating mínimo ou com desconto
+    const hasGoodRating = product.rating && product.rating >= 4.0;
+    const hasDiscount = product.priceDiscount && product.priceDiscount < product.price;
+    
+    return hasGoodRating || hasDiscount;
   },
   
   // Configurações de exibição

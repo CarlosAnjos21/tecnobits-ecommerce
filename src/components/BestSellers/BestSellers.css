@@ -5,7 +5,14 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-  background-color: var(--light-gray);
+}
+
+/* Grid para os cards de campeões de vendas */
+.best-sellers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
 }
 
 /* Customizações específicas para produtos em destaque */
@@ -31,6 +38,11 @@
     padding: 0 15px;
   }
   
+  .best-sellers-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  
   .best-sellers .product-listing {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
@@ -41,6 +53,11 @@
     padding: 0 10px;
   }
   
+  .best-sellers-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  
   .best-sellers .product-listing {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
@@ -48,6 +65,14 @@
 }
 
 @media (max-width: 480px) {
+  .best-sellers {
+    padding: 0 8px;
+  }
+  
+  .best-sellers-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
   .best-sellers .product-listing {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
