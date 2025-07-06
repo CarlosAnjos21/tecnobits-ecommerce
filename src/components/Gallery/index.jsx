@@ -61,10 +61,6 @@ const Gallery = () => {
             className='brand-image'
           />
         </div>
-
-        <div className='content-image-icon'>
-          <img src="/images/Ornament.png" alt='Decoração' />
-        </div>
       </div>
     </div>
   );

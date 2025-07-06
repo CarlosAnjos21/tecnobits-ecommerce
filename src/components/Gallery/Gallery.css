@@ -3,7 +3,6 @@
 .gallery-container {
   width: 100%;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, var(--professional-color), var(--background-color));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,20 +32,21 @@
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--text-white);
+  color: var(--text-dark);
   margin: 0;
 }
 
 /* Estilo para a palavra que muda */
 .changing-word {
-  color: var(--highlight-color);
   position: relative;
   display: inline-block;
   animation: fadeInUp 0.6s ease-in-out;
-  background: linear-gradient(135deg, var(--highlight-color), var(--professional-color));
+  background: var(--gradient-dynamic);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-size: 200% 200%;
+  animation: fadeInUp 0.6s ease-in-out, gradientShift 3s ease-in-out infinite;
 }
 
 /* Animação para a palavra que muda */
@@ -61,11 +61,24 @@
   }
 }
 
+/* Animação do gradiente */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .gallery-container .content-gallery .content-info p {
   font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--text-dark);
   margin: 0;
   max-width: 500px;
 }
