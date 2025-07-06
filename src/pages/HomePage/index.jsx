@@ -13,7 +13,7 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* <Gallery /> */}
+      <Gallery />
 
       {/* Seção de Produtos em destaque */}
       <Section title='Produtos em destaque'>

@@ -32,8 +32,8 @@ const BestSellerCard = ({ product, index }) => {
   const badge = getBadgePosition();
 
   const handleCardClick = () => {
-    // Navegar para página do produto
-    window.location.href = `/produtos/${id}`;
+    // Navegar para página 404
+    window.location.href = `/404`;
   };
 
   return (
@@ -45,7 +45,7 @@ const BestSellerCard = ({ product, index }) => {
         </div>
       )}
 
-      {/* Badge de desconto */}
+      {/* Badge de desconto em vermelho */}
       {discountPercentage > 0 && (
         <div className="discount-badge">
           <span>{discountPercentage}% OFF</span>
@@ -99,14 +99,6 @@ const BestSellerCard = ({ product, index }) => {
             <span className="current-price">{originalPrice}</span>
           )}
         </div>
-
-        {/* Tag personalizada */}
-        {tagValue && (
-          <div className="custom-tag">
-            <span>{tagValue}</span>
-          </div>
-        )}
-
         {/* Botão de ação */}
         <button 
           className="best-seller-btn"

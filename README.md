@@ -97,15 +97,15 @@ Este projeto faz parte do curso de Front-End e será desenvolvido em equipe por 
 
 #### 👤 **Dani** - HomePage + Componentes de Listagem
 📁 Diretório: `src/pages/HomePage` + `src/components/`
-- Componente `<ProductListing />` (listagem de produtos)
 - Componente `<Section />` (seções reutilizáveis)
 - Componente `<BestSellers />` (seção de campeões de vendas)
 - Componente `<BestSellerCard />` (cards específicos para campeões de vendas)
 - Componente `<FeaturedProducts />` (produtos em destaque)
 - Página `HomePage` (página inicial)
-- Página de Categorias + 404 (página não encontrada)
+- Página 404 (página não encontrada)
 - 📊 Configurações `bestSellersConfig.js` (configuração dos campeões de vendas)
 - 📊 Dados `featuredProducts.js` (produtos em destaque)
+- 📊 Dados `products.json` (produtos da loja)
 
 #### 👤 **May** - Finalização de Compra + Inputs
 📁 Diretório: `src/pages/` + `src/components/`
@@ -347,9 +347,13 @@ Seguir [Conventional Commits](https://www.conventionalcommits.org/):
 
 | Parte                          | Responsável | Status                                    |
 | ------------------------------ | ----------- | ----------------------------------------- |
+| HomePage                       | **Dani**    | ✅ 
+| Section + Categorias (404)     | **Dani**    | ✅                                       |
+| BestSellers + BestSellerCard   | **Dani**    | ✅                                       |
+| FeaturedProducts               | **Dani**    | ✅                                       |
+| Carrossel                      | **Dani**    | ⬜️                                       |
 | Header + Logo                  | **Gaabe**   | ⬜️ Pendente                              |
 | Footer + ProductCard           | **Vini**    | ⬜️ Pendente                              |
-| HomePage + ProductListing      | **Dani**    | ⬜️ Pendente                              |
 | ProductViewPage + LoginPage    | **Gaabe**   | ⬜️ Pendente                              |
 | FilterGroup + Buttons          | **Carlos**  | ⬜️ Pendente                              |
 | ProductListingPage + Cart      | **Carlos**  | ⬜️ Pendente                              |
@@ -358,8 +362,7 @@ Seguir [Conventional Commits](https://www.conventionalcommits.org/):
 | CustomSelect + Gallery         | **Anderson**| ⬜️ Pendente                              |
 | CreateAccountInitialPage       | **Anderson**| ⬜️ Pendente                              |
 | FormCreatePage                 | **Vini**    | ⬜️ Pendente                              |
-| Section + Categorias (404)     | **Dani**    | ⬜️ Pendente                              |
-
+                                      |
 ---
 
 ## 🚀 Como Executar o Projeto

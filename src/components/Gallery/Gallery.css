@@ -1,77 +1,108 @@
 /* Gallery Component Styles */
 
 .gallery-container {
-  width: auto;
-  height: auto;
-  padding: 78px 37px 0px 100px;
-  background-color: var(--light-gray-3);
+  width: 100%;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, var(--professional-color), var(--background-color));
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 70vh;
 }
 
 .gallery-container .content-gallery {
   width: 100%;
-  max-width: 1440px;
-  height: 398px;
+  max-width: 1200px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  gap: 3rem;
   position: relative;
 }
 
 .gallery-container .content-gallery .content-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
+  gap: 1.5rem;
   z-index: 2;
 }
 
 .gallery-container .content-gallery .content-info h2 {
-  font-size: 1rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  line-height: 24px;
-  letter-spacing: 0.75px;
-  color: var(--warning-color);
+  line-height: 1.2;
+  color: var(--text-white);
+  margin: 0;
 }
 
-.gallery-container .content-gallery .content-info h1 {
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 66px;
-  letter-spacing: 1px;
-  color: var(--dark-gray-2);
+/* Estilo para a palavra que muda */
+.changing-word {
+  color: var(--highlight-color);
+  position: relative;
+  display: inline-block;
+  animation: fadeInUp 0.6s ease-in-out;
+  background: linear-gradient(135deg, var(--highlight-color), var(--professional-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animação para a palavra que muda */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .gallery-container .content-gallery .content-info p {
-  font-size: 1.125rem;
+  font-size: 1.1rem;
   font-weight: 400;
-  line-height: 34px;
-  letter-spacing: 0.75px;
-  color: var(--dark-gray-2);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 500px;
 }
 
+/* Imagem da marca */
 .gallery-container .content-gallery .content-image {
-  width: 100%;
-  max-width: 466px;
-  height: 466px;
-  border-radius: 50%;
-  background: linear-gradient(
-    180deg,
-    rgba(227, 198, 247, 1) 0%,
-    rgba(242, 227, 252, 1) 27%,
-    rgba(255, 255, 255, 1) 64%
-  );
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
-.gallery-container .content-gallery .content-image img {
-  width: 570px;
-  height: auto;
+.brand-image {
+  max-width: 300px;
+  max-height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.brand-image:hover {
+  transform: scale(1.05);
+}
+
+/* Ícone decorativo */
+.gallery-container .content-gallery .content-image-icon {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.gallery-container .content-gallery .content-image-icon img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
 /* Responsividade */
@@ -102,27 +133,49 @@
   }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 768px) {
   .gallery-container {
-    padding: 20px 10px;
+    padding: 2rem 1rem;
+    min-height: 50vh;
   }
 
-  .gallery-container .content-gallery .content-info h1 {
+  .gallery-container .content-gallery {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .gallery-container .content-gallery .content-info h2 {
     font-size: 2rem;
-    line-height: 36px;
   }
 
   .gallery-container .content-gallery .content-info p {
     font-size: 1rem;
-    line-height: 28px;
+    max-width: 100%;
   }
 
-  .gallery-container .content-gallery .content-image {
-    max-width: 250px;
-    height: 250px;
+  .brand-image {
+    max-width: 200px;
+    max-height: 150px;
   }
 
-  .gallery-container .content-gallery .content-image img {
-    width: 300px;
+  .gallery-container .content-gallery .content-image-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-container .content-gallery .content-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .changing-word {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  .brand-image {
+    max-width: 150px;
+    max-height: 120px;
   }
 }
