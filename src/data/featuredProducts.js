@@ -3,7 +3,7 @@ export const featuredProductsData = [
   {
     id: 1,
     title: 'Processadores',
-    image: '../assets/images/rizenproc.png',
+    image: '/public/images/rizenproc.png',
     discount: 15,
     buttonText: 'Ver mais',
     category: 'processors',
@@ -12,7 +12,7 @@ export const featuredProductsData = [
   {
     id: 2,
     title: 'Samsung',
-    image: 'src/assets/images/gws.png',
+    image: '/public/images/gws.png',
     tag: '15% OFF',
     buttonText: 'Ver mais',
     category: 'mobile-devices',
@@ -21,7 +21,7 @@ export const featuredProductsData = [
   {
     id: 3,
     title: 'Apple',
-    image: '../assets/images/ipodmax.png',
+    image: '/public/images/ipodmax.png',
     tag: '14% OFF',
     buttonText: 'Ver mais',
     category: 'mobile-devices',

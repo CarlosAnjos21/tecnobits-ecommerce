@@ -1,7 +1,7 @@
 /* ProductListing Component Styles */
 
 .product-listing-container {
-  column-count: 2;
+  column-count: 3;
   /* display: flex;
   flex-direction: column; */
   
@@ -9,8 +9,13 @@
   gap: 15px;
   width: 100%;
   justify-content: center;
-  background-color: blue;
+  background-color: rgb(38, 38, 43);
 }
+
+/*.content-limit {
+
+
+}*/
 
 @media (max-width: 1400px) {
   .product-listing-container {

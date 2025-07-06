@@ -7,14 +7,13 @@ import {
 import Gallery from '../../components/Gallery';
 import FeaturedProducts from '../../components/FeaturedProducts';
 import BestSellers from '../../components/BestSellers';
-import MarketingBottom from '/nike-bottom.png';
 
 
 const HomePage = () => {
 
   return (
     <div>
-      {/* <Gallery /> */}
+      <Gallery />
 
       {/* Seção de Produtos em destaque */}
       <Section title='Produtos em destaque'>
@@ -25,7 +24,7 @@ const HomePage = () => {
       {/* Seção de Campeões de vendas */}
       <Section
         title='Campeões de vendas'
-        link={{ text: 'Ver todos', href: '/collections' }}
+        link={{ text: 'Ver todos', href: '/*' }}
       >
         <BestSellers />
       </Section>
@@ -35,7 +34,7 @@ const HomePage = () => {
         <section className='container-bottom'>
           <div className='content-bottom-left'>
             <div className='content-bottom-image'>
-              <img src={MarketingBottom} alt='Marketing Bottom' />
+              <img src="/images/iphone-15-pro-max.jpg" alt='Marketing Bottom' />
             </div>
           </div>
 
