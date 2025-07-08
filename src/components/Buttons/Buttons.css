@@ -38,10 +38,11 @@
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
+  border: none;
 }
 
 .btn-primary.desktop {
-  min-width: 220px;
+  min-width: 220px; /* V: isso estipula largura minima para o botao da pagina de cards */
   height: 48px;
 }
 
