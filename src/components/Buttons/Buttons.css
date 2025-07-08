@@ -103,6 +103,7 @@
   background: var(--gradient-secondary);
   transform: translateY(-2px);
   border: none;
+  box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
 }
 
 .btn-shop {
