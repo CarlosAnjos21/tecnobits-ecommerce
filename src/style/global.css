@@ -147,7 +147,7 @@ html {
 
 .btn-secondary {
   background: var(--gradient-primary);
-  /*border: 2px solid transparent;*/
+  
   border: none; /* vini: o problema das bordas era culpa da linha de cima... que ela queime nas profundesas do inferno! */
 }
 
