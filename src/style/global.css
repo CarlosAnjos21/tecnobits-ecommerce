@@ -113,11 +113,13 @@ html {
   gap: 0.5rem;
   position: relative;
   z-index: 1;
+  border: none;
 }
 
 .btn-primary {
   background: var(--gradient-primary);
-  border: 2px solid transparent;
+  /*border: 2px solid transparent;*/
+  border: none;
   overflow: hidden;
 }
 
@@ -144,12 +146,13 @@ html {
 }
 
 .btn-secondary {
-  background: var(--gradient-secondary);
-  border: 2px solid transparent;
+  background: var(--gradient-primary);
+  
+  border: none; /* vini: o problema das bordas era culpa da linha de cima... que ela queime nas profundesas do inferno! */
 }
 
 .btn-secondary:hover {
-  background: var(--gradient-primary);
+  background: var(--gradient-secondary);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
 }

@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Form } from 'react-router-dom';
 import Layout from './pages/Layout';
 import FormCreatePage from './pages/FormCreatePage';
 import UserDashboard from './components/UserDashboard';
@@ -63,14 +63,6 @@ const App = () => {
           element={
             <Layout>
               <LoginPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/register'
-          element={
-            <Layout>
-              <CreateAccountInitialPage />
             </Layout>
           }
         />

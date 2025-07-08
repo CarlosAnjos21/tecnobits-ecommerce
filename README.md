@@ -85,9 +85,9 @@ Este projeto faz parte do curso de Front-End e será desenvolvido em equipe por 
 | Membro | Nome         | Responsabilidade Principal                                      |
 | ------ | ------------ | --------------------------------------------------------------- |
 | 👤 1   | **Dani**     | ProductListing + Section + HomePage + Categorias (404) + Carrossel         |
-| 👤 2   | **May**      | ProductOptions + Input + PageFinalizarCompra + BuySuccess      |
+| 👤 2   | **May**      | Input + PageFinalizarCompra + BuySuccess                       |
 | 👤 3   | **Gaabe**    | Header + Logo + ProductViewPage + LoginPage                    |
-| 👤 4   | **Carlos**   | FilterGroup + Buttons + ProductListingPage + ShoppingCartPage  |
+| 👤 4   | **Carlos**   | Buttons + ProductListingPage + ShoppingCartPage                |
 | 👤 5   | **Vini**     | Footer + ProductCard + FormCreatePage                          |
 | 👤 6   | **Anderson** | CustomSelect + Gallery + CreateAccountInitialPage              |
 
