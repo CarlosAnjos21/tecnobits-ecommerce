@@ -1,24 +1,20 @@
 import './FeaturedProducts.css';
 import { ButtonSecundary } from '../Buttons/ButtonComponents';
 import { featuredProductsData } from '../../data/featuredProducts';
-import RyzenProc from '../../assets/images/rizenproc.png';
-import IpodMax from '../../assets/images/ipodmax.png';
-import Samsung from '../../assets/images/galaxybook4.avif';
-
 
 const FeaturedProducts = () => {
-  // Mapeamento das imagens (necessário devido aos imports)
+  // Mapeamento das imagens usando caminhos públicos
   const imageMap = {
-    '../assets/images/rizenproc.png': RyzenProc,
-    '../assets/images/galaxybook4.avif': Samsung,
-    '../assets/images/ipodmax.png': IpodMax
+    '/public/images/rizenproc.png': '/images/rizenproc.png',
+    '/public/images/gws.png': '/images/gws.png',
+    '/public/images/ipodmax.png': '/images/ipodmax.png'
   };
 
   // Processa os dados adicionando as imagens corretas
   const featuredProducts = featuredProductsData.map(product => ({
     ...product,
     image: imageMap[product.image] || product.image,
-    onBuy: () => console.log(`Comprar ${product.title}`)
+    onBuy: () => window.location.href = '/404' //retorna para a página 404
   }));
 
   // Validação de segurança
@@ -47,7 +43,7 @@ const FeaturedProducts = () => {
 
             <h3>{product.title}</h3>
             <ButtonSecundary onClick={product.onBuy}>
-              {product.buttonText || 'Comprar'}
+              {product.buttonText || 'Ver mais'}
             </ButtonSecundary>
           </div>
 
