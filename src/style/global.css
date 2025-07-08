@@ -144,12 +144,12 @@ html {
 }
 
 .btn-secondary {
-  background: var(--gradient-secondary);
+  background: var(--gradient-primary);
   border: 2px solid transparent;
 }
 
 .btn-secondary:hover {
-  background: var(--gradient-primary);
+  background: var(--gradient-secondary);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
 }

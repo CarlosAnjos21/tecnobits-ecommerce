@@ -189,7 +189,7 @@
 
 /* Botão de ação */
 .best-seller-btn {
-  background: linear-gradient(135deg, var(--highlight-color), var(--professional-color));
+  background: var(--gradient-primary);
   color: var(--text-white);
   border: none;
   padding: 12px 16px;
@@ -204,9 +204,8 @@
 }
 
 .best-seller-btn:hover {
-  background: linear-gradient(135deg, var(--professional-color), var(--base-color));
+  background: var(--gradient-secondary);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .best-seller-btn:active {
