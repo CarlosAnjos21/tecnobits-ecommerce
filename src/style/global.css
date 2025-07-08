@@ -127,11 +127,13 @@ html {
   gap: 0.5rem;
   position: relative;
   z-index: 1;
+  border: none;
 }
 
 .btn-primary {
   background: var(--gradient-primary);
-  border: 2px solid transparent;
+  /*border: 2px solid transparent;*/
+  border: none;
   overflow: hidden;
 }
 
