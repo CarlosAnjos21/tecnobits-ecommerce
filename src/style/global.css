@@ -6,8 +6,6 @@
   --base-color: #1A1D29;          /* Azul muito escuro - sofisticado */
   --professional-color: #1E293B;   /* Slate escuro - confiança */
   --highlight-color: #00D2FF;      /* Ciano vibrante - inovação */
-  --accent-color: #3B82F6;         /* Azul vibrante - CTAs secundários */
-  --secondary-accent: #8B5CF6;     /* Roxo - elementos premium */
   --neutral-color: #64748B;        /* Slate médio - versatilidade */
   --background-color: #F1F5F9;     /* Slate muito claro - limpeza */
 
@@ -25,7 +23,7 @@
 
   /* Gradientes Modernos */
   --gradient-primary: linear-gradient(135deg, #00D2FF, #3B82F6);
-  --gradient-secondary: linear-gradient(135deg, #8B5CF6, #7C3AED);
+  --gradient-secondary: linear-gradient(135deg, #1461c7, #0b66c1);
   --gradient-accent: linear-gradient(135deg, #FF6B35, #F59E0B);
   --gradient-success: linear-gradient(135deg, #10B981, #059669);
   --gradient-hero: linear-gradient(135deg, #1E293B 0%, #334155 50%, #F1F5F9 100%);
@@ -33,19 +31,7 @@
 
   /* Aliases para compatibilidade com componentes existentes */
   --primary-color: var(--highlight-color);
-  --secondary-color: var(--professional-color);
-  --tertiary-color: var(--base-color);
-  --bg-main: var(--background-color);
   --white: var(--text-white);
-
-  /* Cores específicas para componentes */
-  --card-background: var(--text-white);
-  --card-border: var(--background-color);
-  --button-primary: var(--highlight-color);
-  --button-secondary: var(--professional-color);
-  --input-border: var(--neutral-color);
-  --hover-color: var(--accent-color);
-  --active-color: var(--secondary-accent);
 }
 
 * {
@@ -154,7 +140,7 @@ html {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(99, 133, 141, 0.3);
 }
 
 .btn-secondary {
