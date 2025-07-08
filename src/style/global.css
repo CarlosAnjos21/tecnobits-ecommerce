@@ -6,8 +6,6 @@
   --base-color: #1A1D29;          /* Azul muito escuro - sofisticado */
   --professional-color: #1E293B;   /* Slate escuro - confiança */
   --highlight-color: #00D2FF;      /* Ciano vibrante - inovação */
-  --accent-color: #3B82F6;         /* Azul vibrante - CTAs secundários */
-  --secondary-accent: #8B5CF6;     /* Roxo - elementos premium */
   --neutral-color: #64748B;        /* Slate médio - versatilidade */
   --background-color: #F1F5F9;     /* Slate muito claro - limpeza */
 
@@ -33,19 +31,7 @@
 
   /* Aliases para compatibilidade com componentes existentes */
   --primary-color: var(--highlight-color);
-  --secondary-color: var(--professional-color);
-  --tertiary-color: var(--base-color);
-  --bg-main: var(--background-color);
   --white: var(--text-white);
-
-  /* Cores específicas para componentes */
-  --card-background: var(--text-white);
-  --card-border: var(--background-color);
-  --button-primary: var(--highlight-color);
-  --button-secondary: var(--professional-color);
-  --input-border: var(--neutral-color);
-  --hover-color: var(--accent-color);
-  --active-color: var(--secondary-accent);
 }
 
 * {
@@ -160,12 +146,12 @@ html {
 }
 
 .btn-secondary {
-  background: var(--gradient-secondary);
+  background: var(--gradient-primary);
   border: 2px solid transparent;
 }
 
 .btn-secondary:hover {
-  background: var(--gradient-primary);
+  background: var(--gradient-secondary);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
 }

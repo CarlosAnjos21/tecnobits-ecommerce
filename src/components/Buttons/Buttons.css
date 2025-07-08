@@ -1,5 +1,3 @@
-/* Button Styles - Usando o design system global */
-
 .btn-primary {
   cursor: pointer;
   min-width: 114px;
@@ -87,7 +85,7 @@
   max-width: 133px;
   height: 40px;
   border-radius: 8px;
-  background: var(--gradient-secondary);
+  background: var(--gradient-primary);
   color: var(--text-white);
   font-size: 0.85rem;
   font-weight: 700;
@@ -102,10 +100,9 @@
 }
 
 .btn-secondary:hover {
-  background: var(--gradient-primary);
+  background: var(--gradient-secondary);
   transform: translateY(-2px);
   border: none;
-  box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
 }
 
 .btn-shop {
