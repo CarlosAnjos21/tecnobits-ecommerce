@@ -7,7 +7,7 @@
     "priceDiscount": 7999.99,
     "category": "smartphone",
     "brand": "Apple",
-    "image": "../images/iphone-15-pro-max.jpg",
+    "image": "/assets/images/iphone-15-pro-max.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "11% Off"
@@ -20,7 +20,7 @@
     "priceDiscount": 6999.99,
     "category": "smartphone",
     "brand": "Samsung",
-    "image": "/images/galaxy-s24-ultra.jpg",
+    "image": "/assets/images/galaxy-s24-ultra.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "13% Off"
