@@ -1,17 +1,18 @@
 .featured-products {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  display: grid;
+  justify-content: center;
   gap: 15px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 0 20px;
+  width: 470px;
+  height: 630px;
+  flex-direction: column;
 }
 
 @media (max-width: 1200px) {
   .featured-products {
-    align-items: stretch;
     gap: 12px;
     padding: 0 15px;
   }
@@ -31,18 +32,6 @@
   .featured-card {
     max-width: 90% !important;
   }
-
-
-/* @media (max-width: 768px) {
-  .best-sellers-container {
-    padding: 1.5rem 0;
-  }
-  
-  .best-sellers-grid {
-    gap: 1.5rem;
-    padding: 0 0.5rem;
-  }
-} */
 
 .featured-card {
   width: 100%;

@@ -123,7 +123,6 @@ Este projeto faz parte do curso de Front-End e será desenvolvido em equipe por 
 
 #### 👤 **Carlos** - Filtros + Carrinho
 📁 Diretório: `src/components/` + `src/pages/`
-- Componente `<FilterGroup />` (grupo de filtros)
 - Componente `<Buttons />` (botões reutilizáveis)
 - Página `ProductListingPage` (listagem com filtros)
 - Página `ShoppingCartPage` (carrinho de compras)
@@ -355,7 +354,7 @@ Seguir [Conventional Commits](https://www.conventionalcommits.org/):
 | Header + Logo                  | **Gaabe**   | ⬜️ Pendente                              |
 | Footer + ProductCard           | **Vini**    | ⬜️ Pendente                              |
 | ProductViewPage + LoginPage    | **Gaabe**   | ⬜️ Pendente                              |
-| FilterGroup + Buttons          | **Carlos**  | ⬜️ Pendente                              |
+| Buttons                        | **Carlos**  | ⬜️ Pendente                              |
 | ProductListingPage + Cart      | **Carlos**  | ⬜️ Pendente                              |
 | ProductOptions + Input         | **May**     | ⬜️ Pendente                              |
 | Finalizar Compra + BuySuccess  | **May**     | ⬜️ Pendente                              |
