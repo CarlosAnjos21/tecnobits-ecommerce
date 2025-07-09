@@ -6,7 +6,6 @@ import {
 import Gallery from '../../components/Gallery';
 import FeaturedProducts from '../../components/FeaturedProducts';
 import BestSellers from '../../components/BestSellers';
-import Footer from '../../components/Footer/Footer';
 
 
 const HomePage = () => {

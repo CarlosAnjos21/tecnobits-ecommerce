@@ -180,11 +180,13 @@
 @media (max-width: 480px) {
   .gallery-container .content-gallery .content-info h2 {
     font-size: 1.5rem;
+    text-align: center;
   }
 
   .changing-word {
     display: block;
     margin-top: 0.5rem;
+    
   }
 
   .brand-image {

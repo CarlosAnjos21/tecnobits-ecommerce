@@ -1,6 +1,6 @@
 .footer-container {
   display: flex;
-  background-color: var(--primary-color);
+  background-color: var(--background-color);
   width: 100%;
   height: 454px;
   padding: 72px 100px 30px;
