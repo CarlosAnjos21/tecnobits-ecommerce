@@ -9,12 +9,6 @@ import products from '../../data/products.json';
 
 
 const ProductListingPage = () => {
-  const [selectedFilters, setSelectedFilters] = useState({
-    marca: [],
-    categoria: [],
-    genero: [],
-    estado: [],
-  });
   const [sortBy, setSortBy] = useState('mais-relevantes');
 
   // Estado para verificar o tamanho da tela
@@ -23,7 +17,7 @@ const ProductListingPage = () => {
   // Estado para controlar a visibilidde do sidebar (filtro de produtos)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Opções do select de ordenação
+  // Opções do select de ordenação (apenas visual, sem funcionalidade)
   const sortOptions = [
     { value: 'mais-relevantes', label: 'mais relevantes' },
     { value: 'menor-preco', label: 'menor preço' },
@@ -31,53 +25,11 @@ const ProductListingPage = () => {
     { value: 'mais-vendidos', label: 'mais vendidos' },
   ];
 
-  // Função para filtrar produtos baseada nos filtros selecionados
-  const getFilteredProducts = () => {
-    let filtered = products;
+  // Usar todos os produtos sem filtro
+  const filteredProducts = products;
 
-    // Filtrar por marca
-    if (selectedFilters.marca.length > 0) {
-      filtered = filtered.filter(product => 
-        selectedFilters.marca.includes(product.brand)
-      );
-    }
-
-    // Filtrar por categoria
-    if (selectedFilters.categoria.length > 0) {
-      filtered = filtered.filter(product => 
-        selectedFilters.categoria.includes(product.category)
-      );
-    }
-
-    // Ordenar produtos
-    switch (sortBy) {
-      case 'menor-preco':
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case 'maior-preco':
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case 'mais-vendidos':
-        // Simular produtos mais vendidos (pode ser baseado em rating)
-        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-        break;
-      default:
-        // Manter ordem original para "mais relevantes"
-        break;
-    }
-
-    return filtered;
-  };
-
-  const filteredProducts = getFilteredProducts();
-
-  // Extrair marcas e categorias únicas dos produtos
-  const getUniqueValues = (key) => {
-    return [...new Set(products.map(product => product[key]).filter(Boolean))];
-  };
-
-  const uniqueBrands = getUniqueValues('brand');
-  const uniqueCategories = getUniqueValues('category');
+  // Marcas fixas para exibição visual dos filtros
+  const uniqueBrands = ['Nike', 'Adidas', 'Puma', 'Reebok', 'Under Armour', 'New Balance', 'Converse', 'Vans', 'Fila', 'Asics'];
 
   // Verificar o tamanho da tela quando o componente montar e quando a janela for redimensionada
   useEffect(() => {
@@ -101,19 +53,6 @@ const ProductListingPage = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []); // Array de dependências vazio para executar apenas na montagem e desmontagem
-
-  const handleFilterChange = (filterType, value) => {
-    setSelectedFilters(prev => ({
-      ...prev,
-      [filterType]: prev[filterType].includes(value)
-        ? prev[filterType].filter(item => item !== value)
-        : [...prev[filterType], value],
-    }));
-  };
-
-  const handleAddToCart = product => {
-    console.log('Adicionado ao carrinho:', product);
-  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -150,13 +89,13 @@ const ProductListingPage = () => {
 
       <Section>
         <div className='content-container'>
-          {/* Sidebar com filtros, não estão funcionais */}
+          {/* Sidebar com filtros - apenas visual, sem funcionalidade */}
           <aside
             className={`filters-sidebar ${isMobile && isSidebarOpen ? 'open' : ''} ${!isMobile ? 'desktop-visible' : ''}`}
           >
             <h3>Filtrar por</h3>
 
-            {/* Filtro por Marca */}
+            {/* Filtro por Marca - apenas visual */}
             <div className='filter-group'>
               <h4>Marca</h4>
               <div className='filter-options'>
@@ -164,8 +103,7 @@ const ProductListingPage = () => {
                   <label key={marca} className='filter-option'>
                     <input
                       type='checkbox'
-                      checked={selectedFilters.marca.includes(marca)}
-                      onChange={() => handleFilterChange('marca', marca)}
+                      disabled
                     />
                     <span>{marca}</span>
                   </label>
@@ -173,7 +111,7 @@ const ProductListingPage = () => {
               </div>
             </div>
 
-            {/* Filtro por Categoria */}
+            {/* Filtro por Categoria - apenas visual */}
             <div className='filter-group'>
               <h4>Categoria</h4>
               <div className='filter-options'>
@@ -182,10 +120,7 @@ const ProductListingPage = () => {
                     <label key={categoria} className='filter-option'>
                       <input
                         type='checkbox'
-                        checked={selectedFilters.categoria.includes(categoria)}
-                        onChange={() =>
-                          handleFilterChange('categoria', categoria)
-                        }
+                        disabled
                       />
                       <span>{categoria}</span>
                     </label>
@@ -194,7 +129,7 @@ const ProductListingPage = () => {
               </div>
             </div>
 
-            {/* Filtro por Gênero */}
+            {/* Filtro por Gênero - apenas visual */}
             <div className='filter-group'>
               <h4>Gênero</h4>
               <div className='filter-options'>
@@ -202,8 +137,7 @@ const ProductListingPage = () => {
                   <label key={genero} className='filter-option'>
                     <input
                       type='checkbox'
-                      checked={selectedFilters.genero.includes(genero)}
-                      onChange={() => handleFilterChange('genero', genero)}
+                      disabled
                     />
                     <span>{genero}</span>
                   </label>
@@ -211,7 +145,7 @@ const ProductListingPage = () => {
               </div>
             </div>
 
-            {/* Filtro por Estado */}
+            {/* Filtro por Estado - apenas visual */}
             <div className='filter-group'>
               <h4>Estado</h4>
               <div className='filter-options'>
@@ -219,8 +153,7 @@ const ProductListingPage = () => {
                   <label key={estado} className='filter-option'>
                     <input
                       type='checkbox'
-                      checked={selectedFilters.estado.includes(estado)}
-                      onChange={() => handleFilterChange('estado', estado)}
+                      disabled
                     />
                     <span>{estado}</span>
                   </label>
