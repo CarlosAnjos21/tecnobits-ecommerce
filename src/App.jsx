@@ -8,9 +8,6 @@ const HomePage = lazy(() => import('./pages/HomePage'));
 const ProductListingPage = lazy(() => import('./pages/ProductListingPage'));
 const ProductViewPage = lazy(() => import('./pages/ProductViewPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
-const CreateAccountInitialPage = lazy(
-  () => import('./pages/CreateAccountInitialPage')
-);
 const ShoppingCartPage = lazy(() => import('./pages/ShoppingCartPage'));
 const NotFoundPage = lazy(() => import('./pages/404'));
 
