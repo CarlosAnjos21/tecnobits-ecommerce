@@ -168,7 +168,7 @@ const Header = () => {
                   <img src="/images/Search.svg" alt='Ícone de pesquisa' />
                 </div>
 
-                <NavLink to='/register' className='nav-link'>Cadastre-se</NavLink>
+                <NavLink to='/create-account' className='nav-link'>Cadastre-se</NavLink>
               </div>
 
               <div className='user-actions'>
