@@ -45,7 +45,7 @@
 
 .section-link {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--primary-color);
   text-decoration: none;
   margin-right: 4.3rem;
@@ -60,7 +60,6 @@
   align-items: center;
   width: 100%;
   justify-content: center;
-  
 }
 
 /* Responsividade */
