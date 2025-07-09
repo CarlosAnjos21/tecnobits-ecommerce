@@ -7,6 +7,8 @@ import Logo from '../Logo';
 import { PrimaryBtn } from '../Buttons/ButtonComponents';
 import { InputDefault } from '../Input';
 import { useCart } from '../../contexts/CartContext';
+// 1. Caminho da imagem corrigido para 'icons'
+import logoIcon from '../../assets/icons/logo.png';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,9 +66,8 @@ const Header = () => {
                     // Cabeçalho simplificado para páginas de autenticação
                     <div className='header-main-auth'>
                         <Link to="/" className="back-icon" aria-label="Voltar para a página principal">
-                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 18L9 12L15 6" stroke="#2D2D36" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
+                             {/* 2. Use a imagem importada aqui */}
+                             <img src={logoIcon} alt="Logotipo Tecnobits" className="auth-logo-icon" />
                         </Link>
                     </div>
                 ) : (
