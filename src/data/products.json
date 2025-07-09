@@ -7,11 +7,7 @@
     "priceDiscount": 7999.99,
     "category": "smartphone",
     "brand": "Apple",
-<<<<<<< HEAD
-    "image": "/assets/images/iphone-15-pro-max.jpg",
-=======
-    "image": "/images/iphone-15-pro-max.jpg",
->>>>>>> 59d5dc472153983121af168a6202f2b88481a2ee
+    "image": "/public/images/iphone-15-pro-max.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "11% Off"
