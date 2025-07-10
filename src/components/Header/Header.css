@@ -56,8 +56,10 @@
 }
 
 .auth-logo-icon {
-    height: 40px; /* TAMANHO DA IMAGEM REDUZIDO */
-    width: auto; /* Mantém a proporção da imagem */
+    height: 40px; 
+    width: 40px; /* Definir largura para criar um quadrado */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+    border-radius: 8px; /* Adiciona as bordas arredondadas */
     display: block;
 }
 /* --- FIM DOS ESTILOS ATUALIZADOS --- */
