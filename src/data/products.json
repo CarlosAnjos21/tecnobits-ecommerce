@@ -7,7 +7,7 @@
     "priceDiscount": 7999.99,
     "category": "smartphone",
     "brand": "Apple",
-    "image": "/images/iphone-15-pro-max.jpg",
+    "image": "/public/images/iphone-15-pro-max.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "11% Off"
@@ -20,7 +20,7 @@
     "priceDiscount": 6999.99,
     "category": "smartphone",
     "brand": "Samsung",
-    "image": "/images/galaxy-s24-ultra.jpg",
+    "image": "/public/images/samsung-galaxy-s24-ultra.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "13% Off"
@@ -33,7 +33,7 @@
     "priceDiscount": 8799.99,
     "category": "notebook",
     "brand": "Apple",
-    "image": "/images/macbook-air-m3.jpg",
+    "image": "public/images/macbook-air-m3.jpg",
     "rating": 4.9,
     "inStock": true,
     "tagValue": "12% Off"
@@ -46,7 +46,7 @@
     "priceDiscount": 7299.99,
     "category": "notebook",
     "brand": "Dell",
-    "image": "/images/dell-xps-13-plus.jpg",
+    "image": "public/images/dell-xps-13-plus.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "14% Off"
@@ -59,7 +59,7 @@
     "priceDiscount": 1499.99,
     "category": "headphone",
     "brand": "Sony",
-    "image": "/images/sony-wh1000xm5.jpg",
+    "image": "public/images/sony-wh-1000xm5.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "17% Off"
@@ -72,7 +72,7 @@
     "priceDiscount": 1699.99,
     "category": "headphone",
     "brand": "Apple",
-    "image": "/images/airpods-pro-2.jpg",
+    "image": "public/images/airpods-pro-2.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "15% Off"
@@ -85,7 +85,7 @@
     "priceDiscount": 4299.99,
     "category": "tablet",
     "brand": "Apple",
-    "image": "/images/ipad-air-5.jpg",
+    "image": "public/images/ipad-air-5.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "14% Off"
@@ -98,7 +98,7 @@
     "priceDiscount": 5999.99,
     "category": "tablet",
     "brand": "Samsung",
-    "image": "/images/galaxy-tab-s9-ultra.jpg",
+    "image": "public/images/samsung-galaxy-tab-s9-ultra.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "14% Off"
@@ -111,7 +111,7 @@
     "priceDiscount": 6799.99,
     "category": "smart-tv",
     "brand": "Samsung",
-    "image": "/images/samsung-neo-qled-65.jpg",
+    "image": "public/images/samsung-neo-qled-65.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "15% Off"
@@ -124,7 +124,7 @@
     "priceDiscount": 4999.99,
     "category": "smart-tv",
     "brand": "LG",
-    "image": "/images/lg-oled-c3-55.jpg",
+    "image": "public/images/lg-oled-c3-55.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "17% Off"
@@ -137,7 +137,7 @@
     "priceDiscount": 2999.99,
     "category": "gadget",
     "brand": "Apple",
-    "image": "/images/apple-watch-series-9.jpg",
+    "image": "public/images/apple-watch-series-9.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "14% Off"
@@ -150,7 +150,7 @@
     "priceDiscount": 1899.99,
     "category": "gadget",
     "brand": "Nintendo",
-    "image": "/images/nintendo-switch-oled.jpg",
+    "image": "public/images/nintendo-switch-oled.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "14% Off"
@@ -163,7 +163,7 @@
     "priceDiscount": 4199.99,
     "category": "smartphone",
     "brand": "Xiaomi",
-    "image": "/images/xiaomi-13-pro.jpg",
+    "image": "public/images/xiaomi-13-pro.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "16% Off"
@@ -176,7 +176,7 @@
     "priceDiscount": 5199.99,
     "category": "smartphone",
     "brand": "Google",
-    "image": "/images/google-pixel-8-pro.jpg",
+    "image": "public/images/google-pixel-8-pro.jpg",
     "rating": 4.5,
     "inStock": true,
     "tagValue": "13% Off"
@@ -189,7 +189,7 @@
     "priceDiscount": 8499.99,
     "category": "notebook",
     "brand": "Lenovo",
-    "image": "/images/thinkpad-x1-carbon-gen11.jpg",
+    "image": "public/images/thinkpad-x1-carbon-gen11.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "15% Off"
@@ -202,7 +202,7 @@
     "priceDiscount": 10999.99,
     "category": "notebook",
     "brand": "ASUS",
-    "image": "/public/images/asus-rog-zephyrus-g14.jpg",
+    "image": "public/public/images/asus-rog-zephyrus-g14.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "15% Off"
@@ -215,7 +215,7 @@
     "priceDiscount": 1599.99,
     "category": "headphone",
     "brand": "Bose",
-    "image": "/images/bose-qc45.jpg",
+    "image": "public/images/bose-qc45.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "20% Off"
@@ -228,7 +228,7 @@
     "priceDiscount": 549.99,
     "category": "headphone",
     "brand": "JBL",
-    "image": "/images/jbl-tune-760nc.jpg",
+    "image": "public/images/jbl-tune-760nc.jpg",
     "rating": 4.4,
     "inStock": true,
     "tagValue": "21% Off"
@@ -241,7 +241,7 @@
     "priceDiscount": 7699.99,
     "category": "tablet",
     "brand": "Microsoft",
-    "image": "/images/surface-pro-9.jpg",
+    "image": "public/images/surface-pro-9.jpg",
     "rating": 4.5,
     "inStock": true,
     "tagValue": "14% Off"
@@ -254,7 +254,7 @@
     "priceDiscount": 1599.99,
     "category": "tablet",
     "brand": "Lenovo",
-    "image": "/images/lenovo-tab-p11-plus.jpg",
+    "image": "public/images/lenovo-tab-p11-plus.jpg",
     "rating": 4.3,
     "inStock": true,
     "tagValue": "20% Off"
@@ -267,7 +267,7 @@
     "priceDiscount": 3599.99,
     "category": "processor",
     "brand": "Intel",
-    "image": "/images/intel-i9-13900k.jpg",
+    "image": "public/images/intel-i9-13900k.jpg",
     "rating": 4.9,
     "inStock": true,
     "tagValue": "10% Off"
@@ -280,7 +280,7 @@
     "priceDiscount": 2499.99,
     "category": "processor",
     "brand": "Intel",
-    "image": "/images/intel-i7-13700k.jpg",
+    "image": "public/images/intel-i7-13700k.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "11% Off"
@@ -293,7 +293,7 @@
     "priceDiscount": 1799.99,
     "category": "processor",
     "brand": "Intel",
-    "image": "/images/intel-i5-13600k.jpg",
+    "image": "public/images/intel-i5-13600k.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "10% Off"
@@ -306,7 +306,7 @@
     "priceDiscount": 1099.99,
     "category": "processor",
     "brand": "Intel",
-    "image": "/images/intel-i5-12400f.jpg",
+    "image": "public/images/intel-i5-12400f.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "15% Off"
@@ -319,7 +319,7 @@
     "priceDiscount": 699.99,
     "category": "processor",
     "brand": "Intel",
-    "image": "/images/intel-i3-12100f.jpg",
+    "image": "public/images/intel-i3-12100f.jpg",
     "rating": 4.5,
     "inStock": true,
     "tagValue": "13% Off"
@@ -332,7 +332,7 @@
     "priceDiscount": 3799.99,
     "category": "processor",
     "brand": "AMD",
-    "image": "/images/amd-ryzen-9-7950x.jpg",
+    "image": "public/images/amd-ryzen-9-7950x.jpg",
     "rating": 4.9,
     "inStock": true,
     "tagValue": "10% Off"
@@ -345,7 +345,7 @@
     "priceDiscount": 2999.99,
     "category": "processor",
     "brand": "AMD",
-    "image": "/images/amd-ryzen-9-7900x.jpg",
+    "image": "public/images/amd-ryzen-9-7900x.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "9% Off"
@@ -358,7 +358,7 @@
     "priceDiscount": 2099.99,
     "category": "processor",
     "brand": "AMD",
-    "image": "/images/amd-ryzen-7-7700x.jpg",
+    "image": "public/images/amd-ryzen-7-7700x.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "9% Off"
@@ -371,7 +371,7 @@
     "priceDiscount": 1499.99,
     "category": "processor",
     "brand": "AMD",
-    "image": "/images/amd-ryzen-7-5700x.jpg",
+    "image": "public/images/amd-ryzen-7-5700x.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "12% Off"
@@ -384,7 +384,7 @@
     "priceDiscount": 999.99,
     "category": "processor",
     "brand": "AMD",
-    "image": "/images/amd-ryzen-5-5600x.jpg",
+    "image": "public/images/amd-ryzen-5-5600x.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "17% Off"
