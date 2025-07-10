@@ -116,7 +116,7 @@ const LoginPage = () => {
 
                 {/* Opções de Login Social */}
                 <div className={styles.socialLogin}>
-                    {/* Pode adicionar os seus botões de login social aqui */}
+                    {/* Adicionar botões  */}
                     <button className={styles.socialButton}>Google</button>
                     <button className={styles.socialButton}>Facebook</button>
                 </div>
