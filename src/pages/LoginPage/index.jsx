@@ -53,7 +53,7 @@ const LoginPage = () => {
                 // Aqui, você adicionaria a lógica de autenticação
                 // e, se for bem-sucedido, redirecionaria o utilizador.
                 // Por exemplo: navigate('/account');
-                alert('Login efetuado com sucesso! (simulação)');
+                alert('Login efetuado com sucesso!');
                 navigate('/'); // Redireciona para a página inicial
             }, 1500);
         }
@@ -116,7 +116,7 @@ const LoginPage = () => {
 
                 {/* Opções de Login Social */}
                 <div className={styles.socialLogin}>
-                    {/* Pode adicionar os seus botões de login social aqui */}
+                    {/* Adicionar botões  */}
                     <button className={styles.socialButton}>Google</button>
                     <button className={styles.socialButton}>Facebook</button>
                 </div>
