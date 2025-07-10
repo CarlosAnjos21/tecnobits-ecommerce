@@ -1,112 +1,175 @@
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './style.css';
 import { ButtonShop } from '../../components/Buttons/ButtonComponents';
+import { useCart } from '../../contexts/CartContext';
 
 const BuySuccessPage = () => {
-  return (
-    <div class='container-main'>
-      <div class='container'>
-        <div className='content-icon-title'>
-          <div class='confete-icon'>
-            <img src="/images/confete.png" alt='Confete de festa' />
-          </div>
+  const { clearCart } = useCart();
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
-          <div class='content-title'>
+  useEffect(() => {
+    clearCart();
+  }, []);
+
+  if (!state) {
+    navigate('/');
+    return null;
+  }
+
+  const {
+    nome,
+    cpf,
+    rua,
+    numero,
+    bairro,
+    cidade,
+    estado,
+    cep,
+    numeroCartao,
+    nomeCartao,
+    validade,
+    cartItems,
+    subtotal,
+    shippingCost,
+    discount,
+    total,
+  } = state;
+
+  const mascararCartao = (num) => {
+    if (!num || num.length < 4) return 'Não informado';
+    return `**** **** **** ${num.slice(-4)}`;
+  };
+
+  const formatCurrency = (value) =>
+    value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+  return (
+    <div className="container-main">
+      <div className="container">
+        <div className="content-icon-title">
+          <div className="content-icon">
+            <img src="/images/confete.png" alt="Confete de festa" />
+          </div>
+          <div className="content-title">
             <h2>
-              Compra Realizada <br /> com sucesso!{' '}
+              Compra realizada <br /> com sucesso!
             </h2>
+            <p className="subtext" style={{ textAlign: 'center', marginTop: 10 }}>
+              Obrigado por comprar conosco! Abaixo estão os detalhes do seu pedido.
+            </p>
           </div>
         </div>
 
-        <div class='linha-divisor'></div>
+        <div className="linha-divisor"></div>
 
-        <div class='section-info'>
+        <section className="section-info">
           <h2>Informações Pessoais</h2>
           <p>
             <span>Nome:</span>
-            <strong> Francisco Antonio Pereira</strong>
+            <strong>{nome}</strong>
           </p>
           <p>
             <span>CPF:</span>
-            <strong> 123485913-43</strong>
+            <strong>{cpf}</strong>
           </p>
-          <p>
-            <span>E-mail:</span>
-            <strong> francisco@gmail.com</strong>
-          </p>
-          <p>
-            <span>Telefone:</span>
-            <strong> (85) 5555-5555</strong>
-          </p>
-        </div>
+        </section>
 
-        <div class='linha-divisor'></div>
+        <div className="linha-divisor"></div>
 
-        <div class='section-info'>
-          <h2>Informações de Entrega</h2>
+        <section className="section-info">
+          <h2>Endereço de Entrega</h2>
           <p>
-            <span>Endereço:</span>
-            <strong> Rua João Pessoa, 333</strong>
+            <span>Rua:</span>
+            <strong>
+              {rua}, {numero}
+            </strong>
           </p>
           <p>
             <span>Bairro:</span>
-            <strong> Centro</strong>
+            <strong>{bairro}</strong>
           </p>
           <p>
-            <span>Cidade:</span>
-            <strong>Fortaleza, Ceará</strong>
+            <span>Cidade/Estado:</span>
+            <strong>
+              {cidade} - {estado}
+            </strong>
           </p>
           <p>
             <span>CEP:</span>
-            <strong>433-8800</strong>
+            <strong>{cep}</strong>
           </p>
-        </div>
+        </section>
 
-        <div class='linha-divisor'></div>
+        <div className="linha-divisor"></div>
 
-        <div class='section-payment'>
+        <section className="section-payment">
           <h2>Informações de Pagamento</h2>
           <p>
-            <span>Titular do cartão:</span>
-            <strong>FRANCISCO A P</strong>
+            <span>Nome no cartão:</span>
+            <strong>{nomeCartao}</strong>
           </p>
           <p>
-            <span>Final:</span>
-            <strong> **** **** **** 1234</strong>
+            <span>Número do cartão:</span>
+            <strong>{mascararCartao(numeroCartao)}</strong>
           </p>
-        </div>
+          <p>
+            <span>Validade:</span>
+            <strong>{validade}</strong>
+          </p>
+        </section>
 
-        <div class='linha-divisor'></div>
+        <div className="linha-divisor"></div>
 
-        <div class='section-resumo'>
-          <h4>Resumo da compra</h4>
-
-          <div class='container-imagem-texto'>
-            <div class='lado-esquerdo'>
-              <img src="/images/iphone-15-pro-max.jpg" alt='Produto comprado' className='tenis' />
+        <section className="section-resumo">
+          <h2>Resumo da Compra</h2>
+          {cartItems.map((item) => (
+            <div key={item.id} className="container-imagem-texto">
+              <div className="lado-esquerdo">
+                <img src={item.image} alt={item.name} />
+              </div>
+              <div className="lado-direito">
+                <p>{item.name}</p>
+                <p>Quantidade: {item.quantity}</p>
+                <p>Preço unitário: {formatCurrency(item.price)}</p>
+                <p>Subtotal: {formatCurrency(item.price * item.quantity)}</p>
+              </div>
             </div>
-            <div class='lado-direito'>
-              <p>iPhone 15 Pro Max 256GB</p>
-              <p>Tecnologia</p>
+          ))}
+
+          <div className="container-total-valor">
+            <div className="total-valor">
+              <span>Subtotal:</span>
+              <span>{formatCurrency(subtotal)}</span>
+            </div>
+            <div className="total-valor">
+              <span>Frete:</span>
+              <span>{formatCurrency(shippingCost)}</span>
+            </div>
+            <div className="total-valor">
+              <span>Desconto:</span>
+              <span>- {formatCurrency(discount)}</span>
+            </div>
+            <div className="total-valor" style={{ fontWeight: '700', fontSize: '1.1rem' }}>
+              <span>Total:</span>
+              <span>{formatCurrency(total)}</span>
             </div>
           </div>
+        </section>
+
+        <div className="linha-divisor"></div>
+
+        <div className="content-print">
+          <button className="print-button" onClick={() => window.print()}>
+            🧾 Imprimir recibo
+          </button>
         </div>
 
-        <div class='container-total-valor'>
-          <div class='total-valor'>
-            <span>Total</span>
-            <span>R$ 219,00</span>
-          </div>
-          <div class='info-parcelas'>
-            <p>ou 10x de 21,90 sem juros </p>
-          </div>
-        </div>
-
-        <div className='content-print'>
-          <a href=''>Imprimir recibo</a>
+        <div style={{ marginTop: 20, width: '100%', maxWidth: 778, display: 'flex', justifyContent: 'center' }}>
+          <ButtonShop onClick={() => navigate('/')}>Voltar para Home</ButtonShop>
         </div>
       </div>
-
-      <ButtonShop>Voltar para Home</ButtonShop>
     </div>
   );
 };
