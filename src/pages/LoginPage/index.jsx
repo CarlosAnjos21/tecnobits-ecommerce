@@ -53,7 +53,7 @@ const LoginPage = () => {
                 // Aqui, você adicionaria a lógica de autenticação
                 // e, se for bem-sucedido, redirecionaria o utilizador.
                 // Por exemplo: navigate('/account');
-                alert('Login efetuado com sucesso! (simulação)');
+                alert('Login efetuado com sucesso!');
                 navigate('/'); // Redireciona para a página inicial
             }, 1500);
         }
