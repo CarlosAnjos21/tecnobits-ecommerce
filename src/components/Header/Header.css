@@ -46,7 +46,7 @@
     align-items: center;
 }
 
-/* --- ESTILOS ATUALIZADOS PARA O CABEÇALHO DE AUTENTICAÇÃO --- */
+
 .header-main-auth {
     display: flex;
     width: 100%;
@@ -62,7 +62,7 @@
     border-radius: 8px; /* Adiciona as bordas arredondadas */
     display: block;
 }
-/* --- FIM DOS ESTILOS ATUALIZADOS --- */
+
 
 
 .search-input {
