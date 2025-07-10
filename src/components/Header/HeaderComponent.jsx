@@ -1,238 +1,132 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation, NavLink, Link } from 'react-router-dom';
+import './Header.css'; // A usar CSS normal
+
+// Componentes que o seu Header precisa
 import Logo from '../Logo';
-import './Header.css';
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation, NavLink } from 'react-router-dom';
 import { PrimaryBtn } from '../Buttons/ButtonComponents';
 import { InputDefault } from '../Input';
-import { Link } from 'react-router-dom';
-import { useCart } from '../../contexts/CartContext'; // Import useCart hook
+import { useCart } from '../../contexts/CartContext';
+// 1. Caminho da imagem corrigido para 'icons'
+import logoIcon from '../../assets/icons/logo.png';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showMenu, setShowMenu] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  // Estado para controlar a visibilidade do campo de pesquisa
-  const [showSearch, setShowSearch] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 460);
-  const navigate = useNavigate();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [showSearch, setShowSearch] = useState(window.innerWidth > 768);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-  // Obter a localização atual
-  const location = useLocation();
+    // Contexto do Carrinho
+    const cartContext = useCart();
+    const cartItemCount = cartContext ? cartContext.getCartItemCount() : 0;
 
-  // Use o hook useCart para acessar o número de itens
-  const { getCartItemCount } = useCart();
-  const cartItemCount = getCartItemCount();
+    // Verifica se é uma página de autenticação
+    const isAuthPage = ['/login', '/register', '/create-account'].includes(location.pathname);
 
-  // Verifica se estamos em uma página de autenticação
-  const isAuthPage = ['/login', '/register', '/create-account'].includes(
-    location.pathname
-  );
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth <= 768;
+            setIsMobile(mobile);
+            if (!mobile) {
+                setShowSearch(true); // Mostra sempre a busca em ecrãs maiores
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-  // Verificar o tamanho da tela quando o componente montar e quando a janela for redimensionada
-  useEffect(() => {
-    const handleResize = () => {
-      const newIsMobile = window.innerWidth <= 460;
-      setIsMobile(newIsMobile);
+    const handleMenuClick = () => setIsMenuOpen(!isMenuOpen);
+    const handleInputChange = event => setSearchTerm(event.target.value);
+    const toggleSearch = () => isMobile && setShowSearch(!showSearch);
 
-      // Quando não for mobile, sempre mostrar a busca
-      // Quando for mobile, manter o estado atual ou ocultar se estiver mudando para mobile
-      if (!newIsMobile) {
-        setShowSearch(true);
-      } else if (isMobile !== newIsMobile) {
-        // Quando mudar de desktop para mobile, esconder a busca
-        setShowSearch(false);
-      }
+    const handleSearch = () => {
+        if (searchTerm.trim()) {
+            const formattedSearchTerm = searchTerm.trim().toLowerCase().replace(/\s+/g, '-');
+            navigate(`/produtos?filter=${formattedSearchTerm}`);
+        }
+        if (isMobile && searchTerm.trim()) {
+            setShowSearch(false);
+        }
     };
 
-    // Definir o estado inicial
-    handleResize();
-
-    // Adicionar listener para redimensionamento
-    window.addEventListener('resize', handleResize);
-
-    // Limpar listener quando o componente desmontar
-    return () => {
-      window.removeEventListener('resize', handleResize);
+    const handleKeyPress = event => {
+        if (event.key === 'Enter') handleSearch();
     };
-  }, [isMobile]);
 
-  const handleMenuClick = () => {
-    setIsMenuOpen(!isMenuOpen);
-    setShowMenu(!showMenu);
-  };
+    const headerClasses = `header-container ${isAuthPage ? 'auth-page' : ''}`;
+    const dropshadowClasses = `header-dropshadow ${isAuthPage ? 'auth-page' : ''}`;
+    const navClasses = `header-nav ${isMenuOpen ? 'mobile-open' : ''}`;
 
-  // Função para lidar com a mudança no campo de pesquisa
-  const handleInputChange = event => {
-    setSearchTerm(event.target.value);
-  };
+    return (
+        <header className={headerClasses}>
+            <div className={dropshadowClasses}>
+                {isAuthPage ? (
+                    // Cabeçalho simplificado para páginas de autenticação
+                    <div className='header-main-auth'>
+                        <Link to="/" className="back-icon" aria-label="Voltar para a página principal">
+                             {/* 2. Use a imagem importada aqui */}
+                             <img src={logoIcon} alt="Logotipo Tecnobits" className="auth-logo-icon" />
+                        </Link>
+                    </div>
+                ) : (
+                    // Cabeçalho completo para as outras páginas
+                    <>
+                        <div className='header-main'>
+                            <button className='hamburger-menu' onClick={handleMenuClick}>
+                                {isMenuOpen ? (
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="#2D2D36" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                ) : (
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12H21M3 6H21M3 18H21" stroke="#2D2D36" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                )}
+                            </button>
 
-  // Função para mostrar ou ocultar o campo de pesquisa
-  const toggleSearch = () => {
-    // No modo mobile, alternamos a visibilidade do campo de pesquisa
-    if (isMobile) {
-      setShowSearch(!showSearch);
-    } else {
-      // No desktop, limpamos o termo de busca e focamos no input
-      setSearchTerm('');
-      // Pode adicionar lógica para focar no input aqui se necessário
-    }
-  };
+                            <div className='content-logo'>
+                                <Logo />
+                            </div>
 
-  // Função para lidar com a pesquisa
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      // Formata o termo de busca para a URL (substitui espaços por hifens e converte para minúsculas)
-      const formattedSearchTerm = searchTerm
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, '-');
-      navigate(`/products?filter=${formattedSearchTerm}`);
-    }
+                            <div className='search-input'>
+                                {(showSearch || !isMobile) && (
+                                    <InputDefault
+                                        type='text'
+                                        placeholder='Pesquisar produtos...'
+                                        value={searchTerm}
+                                        onChange={handleInputChange}
+                                        onKeyUp={handleKeyPress}
+                                    />
+                                )}
+                                <div className='search-icon' onClick={isMobile ? toggleSearch : handleSearch}>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19ZM21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                </div>
+                                <NavLink to='/create-account' className='nav-link'>Cadastre-se</NavLink>
+                            </div>
 
-    // Se estiver no modo mobile e tiver um termo de busca, esconde o campo depois de buscar
-    if (isMobile && searchTerm.trim()) {
-      setShowSearch(false);
-    }
-  };
-
-  // Função para lidar com a tecla Enter
-  const handleKeyPress = event => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  // NOVO: Função para determinar se um link está ativo
-  const isActiveLink = path => {
-    // Para a home, verificamos se estamos exatamente na raiz
-    if (path === '/') {
-      return location.pathname === '/';
-    }
-
-    // Para outras rotas, verificamos se o pathname começa com o path
-    // Isso permite que /produtos/categoria também marque "Produtos" como ativo
-    return location.pathname.startsWith(path);
-  };
-
-  const headerClasses = `header-container ${isAuthPage ? 'auth-page' : ''}`;
-  const dropshadowClasses = `header-dropshadow ${isAuthPage ? 'auth-page' : ''}`;
-  const navClasses = `header-nav ${isMenuOpen ? 'mobile-open' : ''}`;
-
-  return (
-    // Passamos o estado showSearch como prop para o Container para controlar a altura no mobile
-    <header className={headerClasses}>
-      <div className={dropshadowClasses}>
-        <div className='header-main'>
-          {/* Renderização condicional para o botão de menu */}
-          {!isAuthPage && (
-            <button className='hamburger-menu' onClick={handleMenuClick}>
-              {isMenuOpen ? (
-                <img
-                  src="/images/Menu-vertical.svg"
-                  alt='Ícone de menu vertical'
-                  style={{ height: '24px' }}
-                />
-              ) : (
-                <img src="/images/Menu.svg" alt='Ícone de menu' />
-              )}
-            </button>
-          )}
-
-          <div className={`content-logo ${isAuthPage ? 'center-logo' : ''}`}>
-            <Logo />
-          </div>
-
-          {!isAuthPage && (
-            <>
-              <div className='search-input'>
-                {/* Mostrar o input apenas quando showSearch for true OU quando não estiver no modo mobile */}
-                {(showSearch || !isMobile) && (
-                  <InputDefault
-                    type='text'
-                    placeholder='Pesquisar produtos...'
-                    value={searchTerm}
-                    onChange={handleInputChange}
-                    onKeyUp={handleKeyPress}
-                    className={
-                      isMobile && showSearch ? 'mobile-search-active' : ''
-                    }
-                  />
+                            <div className='user-actions'>
+                                <PrimaryBtn>
+                                    <Link to='/login' className='btn-nav-link'>Entrar</Link>
+                                </PrimaryBtn>
+                                <Link to="/shopping-cart" className="icon-link">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22ZM20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22ZM1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    {cartItemCount > 0 && (
+                                        <span className="cart-badge">{cartItemCount}</span>
+                                    )}
+                                </Link>
+                            </div>
+                        </div>
+                        <nav className={navClasses}>
+                            <ul className="nav-list">
+                                <li><NavLink to='/' end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink></li>
+                                <li><NavLink to='/produtos' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Produtos</NavLink></li>
+                                <li><NavLink to='/categorias' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Categorias</NavLink></li>
+                                <li><NavLink to='/orders' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Meus Pedidos</NavLink></li>
+                            </ul>
+                        </nav>
+                    </>
                 )}
-
-                <div
-                  className='search-icon'
-                  // No mobile, ao clicar na lupa, alternamos a visibilidade do campo
-                  // No desktop, executamos a pesquisa
-                  onClick={isMobile ? toggleSearch : handleSearch}
-                >
-                  <img src="/images/Search.svg" alt='Ícone de pesquisa' />
-                </div>
-
-                <NavLink to='/register' className='nav-link'>Cadastre-se</NavLink>
-              </div>
-
-              <div className='user-actions'>
-                <PrimaryBtn>
-                  <Link to='/login' className='btn-nav-link'>Entrar</Link>
-                </PrimaryBtn>
-
-                <Link to="/shopping-cart" className="icon-link"> 
-                  <img src="/images/buy.svg" alt="Carrinho de compras" />
-                  {cartItemCount > 0 && ( // Only display count if greater than 0
-                    <span className="cart-badge">{cartItemCount}</span>
-                  )}
-                </Link>
-              </div>
-            </>
-          )}
-        </div>
-
-        {!isAuthPage && (
-          <nav className={navClasses}>
-            <ul className="nav-list">
-              {/* ATUALIZADO: Usando end prop para match exato na home */}
-              <li>
-                <NavLink
-                  to='/'
-                  end
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  Home
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to='/produtos'
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  Produtos
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to='/categorias'
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  Categorias
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to='/orders'
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  Meus Pedidos
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
-        )}
-      </div>
-    </header>
-  );
+            </div>
+        </header>
+    );
 };
 
 export default Header;

@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Form } from 'react-router-dom';
 import Layout from './pages/Layout';
 import FormCreatePage from './pages/FormCreatePage';
 import UserDashboard from './components/UserDashboard';
@@ -8,11 +8,8 @@ const HomePage = lazy(() => import('./pages/HomePage'));
 const ProductListingPage = lazy(() => import('./pages/ProductListingPage'));
 const ProductViewPage = lazy(() => import('./pages/ProductViewPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
-const CreateAccountInitialPage = lazy(
-  () => import('./pages/CreateAccountInitialPage')
-);
-// Adicione a importação da nova página do carrinho
-const ShoppingCartPage = lazy(() => import('./pages/ShoppingCartPage')); // Nova linha
+const ShoppingCartPage = lazy(() => import('./pages/ShoppingCartPage'));
+const NotFoundPage = lazy(() => import('./pages/404'));
 
 const App = () => {
   return (
@@ -43,14 +40,6 @@ const App = () => {
           }
         />
         <Route
-          path='/categorias'
-          element={
-            <Layout>
-              <div>Categoria</div>
-            </Layout>
-          }
-        />
-        <Route
           path='/orders'
           element={
             <Layout>
@@ -75,14 +64,6 @@ const App = () => {
           }
         />
         <Route
-          path='/register'
-          element={
-            <Layout>
-              <CreateAccountInitialPage />
-            </Layout>
-          }
-        />
-        <Route
           path='/create-account' 
           element={
             <Layout>
@@ -100,10 +81,19 @@ const App = () => {
         />
         {/* Nova rota para o carrinho */}
         <Route
-          path='/shopping-cart' // Changed from '/cart'
+          path='/shopping-cart' 
           element={
             <Layout>
               <ShoppingCartPage />
+            </Layout>
+          }
+        />
+        {/* Rota de fallback para 404 - deve ser a última rota */}
+        <Route
+          path='/*'
+          element={
+            <Layout>
+              <NotFoundPage />
             </Layout>
           }
         />

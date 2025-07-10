@@ -1,31 +1,52 @@
-/* Button Styles */
-
 .btn-primary {
   cursor: pointer;
-  width: 114px;
+  min-width: 114px;
   height: 40px;
   border-radius: 8px;
-  background-color: var(--primary-color);
+  background: var(--gradient-primary);
   font-weight: 700;
   font-size: 0.85rem;
   letter-spacing: 0.75px;
   line-height: 22px;
   transition: all 0.3s ease-in-out;
-  color: var(--light-gray-3);
+  color: var(--text-white);
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-secondary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
   border: none;
 }
 
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
 .btn-primary:hover {
-  background-color: var(--tertiary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
+  border: none;
 }
 
 .btn-primary.desktop {
-  width: 220px;
+  min-width: 220px; /* V: isso estipula largura minima para o botao da pagina de cards */
   height: 48px;
 }
 
 .btn-primary.btn-add-to-cart {
-  width: 100%;
+  width: 80%; /* vini: isso aqui muda a largura dos btns de adicionar ao carrinho*/
 }
 
 .btn-primary.btn-login {
@@ -33,9 +54,11 @@
   height: 48px;
 }
 
+
+
 @media (max-width: 1400px) {
   .btn-primary.desktop {
-    width: 200px;
+    min-width: 200px;
     height: 40px;
   }
 }
@@ -63,8 +86,8 @@
   max-width: 133px;
   height: 40px;
   border-radius: 8px;
-  background-color: var(--light-gray-3);
-  color: var(--primary-color);
+  background: var(--gradient-primary);
+  color: var(--text-white);
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.75px;
@@ -73,11 +96,15 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   border: none;
+  position: relative;
+  z-index: 1;
 }
 
 .btn-secondary:hover {
-  background-color: var(--secondary-color);
-  color: var(--light-gray-4);
+  background: var(--gradient-secondary);
+  transform: translateY(-2px);
+  border: none;
+  box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
 }
 
 .btn-shop {
@@ -85,7 +112,18 @@
   max-width: 778px;
   height: 50px;
   border-radius: 8px;
-  background-color: var(--warning-color);
+  background: var(--gradient-success);
   border: none;
   cursor: pointer;
+  color: var(--text-white);
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-shop:hover {
+  background: var(--gradient-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }

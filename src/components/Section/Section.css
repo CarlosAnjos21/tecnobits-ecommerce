@@ -9,6 +9,7 @@
   padding-left: 50px;
   padding-bottom: 50px;
   margin: 0 auto;
+  background-color: var(--background-color);
   /* margin-left: 50px; */
 }
 
@@ -47,6 +48,7 @@
   font-weight: 500;
   color: var(--primary-color);
   text-decoration: none;
+  margin-right: 4.3rem;
 }
 
 .section-link:hover {

@@ -2,39 +2,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
 
 :root {
-  /* Paleta de Cores Tecnobits - Design System */
-  --base-color: #2D2D36;          /* Cinza Escuro/Quase Preto - Base sólida */
-  --professional-color: #23395B;   /* Azul Escuro/Marinho - Confiança */
-  --highlight-color: #4B5B9D;      /* Azul Médio/Azul-violeta - Ação e CTA */
-  --neutral-color: #A9B3B3;        /* Cinza Claro/Prata - Versatilidade */
-  --background-color: #D9D9D9;     /* Cinza Muito Claro/Off-White - Limpeza */
+  /* Paleta de Cores Tecnobits - Modern Tech Design System */
+  --base-color: #1A1D29;          /* Azul muito escuro - sofisticado */
+  --professional-color: #1E293B;   /* Slate escuro - confiança */
+  --highlight-color: #00D2FF;      /* Ciano vibrante - inovação */
+  --neutral-color: #64748B;        /* Slate médio - versatilidade */
+  --background-color: #F1F5F9;     /* Slate muito claro - limpeza */
 
   /* Estados e Feedback */
-  --success-color: #00C851;        /* Verde confirmação */
-  --warning-color: #FFB000;        /* Amarelo alerta */
-  --error-color: #FF3547;          /* Vermelho erro */
+  --success-color: #10B981;        /* Verde esmeralda - confirmação */
+  --warning-color: #F59E0B;        /* Âmbar - alerta */
+  --error-color: #EF4444;          /* Vermelho coral - erro */
 
   /* Cores de Texto */
-  --text-primary: #2D2D36;         /* Texto principal */
-  --text-secondary: #23395B;       /* Texto secundário */
-  --text-muted: #A9B3B3;           /* Texto esmaecido */
+  --text-primary: #1A1D29;         /* Texto principal */
+  --text-secondary: #334155;       /* Texto secundário */
+  --text-muted: #64748B;           /* Texto esmaecido */
   --text-white: #FFFFFF;           /* Texto branco */
+  --text-light: #E2E8F0;           /* Texto claro sobre fundos escuros */
+
+  /* Gradientes Modernos */
+  --gradient-primary: linear-gradient(135deg, #00D2FF, #3B82F6);
+  --gradient-secondary: linear-gradient(135deg, #1461c7, #0b66c1);
+  --gradient-accent: linear-gradient(135deg, #FF6B35, #F59E0B);
+  --gradient-success: linear-gradient(135deg, #10B981, #059669);
+  --gradient-hero: linear-gradient(135deg, #1E293B 0%, #334155 50%, #F1F5F9 100%);
+  --gradient-dynamic: linear-gradient(135deg, #00D2FF, #3B82F6, #8B5CF6);
 
   /* Aliases para compatibilidade com componentes existentes */
   --primary-color: var(--highlight-color);
-  --secondary-color: var(--professional-color);
-  --tertiary-color: var(--base-color);
-  --bg-main: var(--background-color);
   --white: var(--text-white);
-
-  /* Cores específicas para componentes */
-  --card-background: var(--neutral-color);
-  --card-border: var(--background-color);
-  --button-primary: var(--highlight-color);
-  --button-secondary: var(--professional-color);
-  --input-border: var(--neutral-color);
-  --hover-color: var(--professional-color);
-  --active-color: var(--highlight-color);
 }
 
 * {
@@ -114,36 +111,61 @@ html {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+  border: none;
 }
 
 .btn-primary {
-  background-color: var(--button-primary);
-  border: 2px solid var(--button-primary);
+  background: var(--gradient-primary);
+  /*border: 2px solid transparent;*/
+  border: none;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-secondary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
 }
 
 .btn-primary:hover {
-  background-color: var(--hover-color);
-  border-color: var(--hover-color);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 133, 141, 0.3);
 }
 
 .btn-secondary {
-  background-color: var(--button-secondary);
-  border: 2px solid var(--button-secondary);
+  background: var(--gradient-primary);
+  
+  border: none; /* vini: o problema das bordas era culpa da linha de cima... que ela queime nas profundesas do inferno! */
 }
 
 .btn-secondary:hover {
-  background-color: var(--active-color);
-  border-color: var(--active-color);
+  background: var(--gradient-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
 }
 
 .btn-shop {
-  background-color: var(--success-color);
-  border: 2px solid var(--success-color);
+  background: var(--gradient-success);
+  border: 2px solid transparent;
 }
 
 .btn-shop:hover {
-  background-color: #00A844;
-  border-color: #00A844;
+  background: var(--gradient-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }
 
 .btn-icon {
@@ -154,8 +176,39 @@ html {
 }
 
 .btn-icon:hover {
-  background-color: var(--neutral-color);
+  background: var(--gradient-primary);
+  border-color: transparent;
   color: var(--text-white);
+  transform: translateY(-2px);
+}
+
+/* Garantir que o texto dos botões fique visível */
+.btn-primary *,
+.btn-secondary *,
+.btn-shop *,
+.btn-icon * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Texto direto nos botões também precisa de z-index */
+.btn-primary,
+.btn-secondary,
+.btn-shop,
+.btn-icon {
+  color: var(--text-white);
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 input, textarea, button, a, ul {

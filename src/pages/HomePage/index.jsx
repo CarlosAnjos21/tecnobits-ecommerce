@@ -1,6 +1,5 @@
 import Section from '../../components/Section';
 import './HomePage.css';
-
 import {
   ButtonPrimary,
 } from '../../components/Buttons/ButtonComponents';
@@ -13,7 +12,7 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* <Gallery /> */}
+      <Gallery />
 
       {/* Seção de Produtos em destaque */}
       <Section title='Produtos em destaque'>
@@ -24,7 +23,7 @@ const HomePage = () => {
       {/* Seção de Campeões de vendas */}
       <Section
         title='Campeões de vendas'
-        link={{ text: 'Ver todos', href: '/collections' }}
+        link={{ text: 'Ver todos', href: '/*' }}
       >
         <BestSellers />
       </Section>

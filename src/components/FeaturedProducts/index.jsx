@@ -5,16 +5,16 @@ import { featuredProductsData } from '../../data/featuredProducts';
 const FeaturedProducts = () => {
   // Mapeamento das imagens usando caminhos públicos
   const imageMap = {
-    '../assets/images/rizenproc.png': '/images/rizenproc.png',
-    '../assets/images/gws.png': '/images/gws.png',
-    '../assets/images/ipodmax.png': '/images/ipodmax.png'
+    '/public/images/rizenproc.png': '/images/rizenproc.png',
+    '/public/images/gws.png': '/images/gws.png',
+    '/public/images/ipodmax.png': '/images/ipodmax.png'
   };
 
   // Processa os dados adicionando as imagens corretas
   const featuredProducts = featuredProductsData.map(product => ({
     ...product,
     image: imageMap[product.image] || product.image,
-    onBuy: () => console.log(`Comprar ${product.title}`)
+    onBuy: () => window.location.href = '/404' //retorna para a página 404
   }));
 
   // Validação de segurança
