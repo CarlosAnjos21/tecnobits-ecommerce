@@ -1,5 +1,6 @@
-.footer-container {
+.footer {
   display: flex;
+  position: relative;
   background-color: var(--background-color);
   width: 100%;
   height: 454px;
@@ -9,7 +10,8 @@
   align-items: center;
 }
 
-.footer-content {
+/* div cabeçalho */
+.footer-header {
   width: 100%;
   max-width: 1440px;
   display: flex;
@@ -27,6 +29,9 @@
   max-width: 307px;
   gap: 40px;
   padding-top: 5px;
+  position: relative;
+  top: 450%;
+  left: -3%;
 }
 
 .footer-logo p {
@@ -34,91 +39,110 @@
   color: var(--white);
 }
 
-.footer-social ul {
-  display: flex;
-  gap: 35px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.footer-title {
+
+  position: relative;
+  
 }
 
-.footer-social ul li {
-  color: var(--white);
+/* div descrição */
+.footer-description {
+
 }
 
-.content-info {
-  display: flex;
-  gap: 102px;
+/* div links informações */
+.footer-info {
+
+}
+
+.footer-info-list {
+
+}
+
+.footer-info-title {
+
+}
+
+.footer-a {
+
+}
+
+/* div links categorias */
+
+.footer-categories {
+
+}
+
+.footer-categories-list {
+
+}
+
+.footer-categories-title {
+
+}
+
+.footer-c {
+
+}
+
+/* address */
+.footer-address {
+
+}
+
+.footer-address-title {
+
+}
+
+.p-address {
+
+}
+
+.footer-phone {
+
+}
+
+.footer-social {
+
+}
+
+/* Redes sociais */
+
+.footer-social-icon {
+
+}
+
+.footer-line {
+
+}
+
+/* div copyright */
+
+.footer-copy {
+
+}
+
+.footer-content {
+
 }
 
 .footer-info {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+
 }
 
-.footer-info h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 22px;
-  letter-spacing: 0.75px;
-  color: var(--white);
-  margin-bottom: 8px;
+.footer-categories {
+
 }
 
-.footer-info ul {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.footer-address {
+
 }
 
-.footer-info ul li {
-  color: var(--light-gray);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: 0.75px;
-  cursor: pointer;
-  transition: color 0.2s ease;
+.footer-phone {
+
 }
 
-.footer-info ul li:hover {
-  color: var(--primary-color);
-}
 
-.footer-copyright {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 1440px;
-  height: 22px;
-  margin-top: 30px;
-}
-
-.footer-copyright p {
-  color: var(--white);
-  font-size: 0.85rem;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: 0.75px;
-  text-align: center;
-}
-
-/* Responsividade */
-@media (max-width: 1400px) {
-  .footer-container {
-    padding: 50px 60px 20px;
-    height: auto;
-  }
-
-  .content-info {
-    gap: 60px;
-  }
-}
 
 @media (max-width: 768px) {
   .footer-container {
