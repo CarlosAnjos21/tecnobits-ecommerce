@@ -66,7 +66,7 @@ const ProductListingPage = () => {
       {/* Header com resultados e ordenação */}
       <div className='listing-header'>
         <div className='results-info'>
-          <h2>Resultados para "Nike" - 389 produtos</h2>
+          <h2>Resultados para "Hardware" - 106 produtos</h2>
         </div>
 
         {/* Substituição do select nativo pelo customizado */}
