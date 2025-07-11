@@ -59,7 +59,7 @@
     "priceDiscount": 1499.99,
     "category": "headphone",
     "brand": "Sony",
-    "image": "public/images/sony-wh-1000xm5.jpg",
+    "image": "public/images/sony-wh1000xm5.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "17% Off"
@@ -384,7 +384,7 @@
     "priceDiscount": 999.99,
     "category": "processor",
     "brand": "AMD",
-    "image": "public/images/amd-ryzen-5-5600x.jpg",
+    "image": "publicgit /images/amd-ryzen-5-5600x.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "17% Off"
