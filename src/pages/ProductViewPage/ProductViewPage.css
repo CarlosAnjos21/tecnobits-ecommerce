@@ -54,6 +54,19 @@ padding-left: 5em;
     margin-right: 0.3em;
    
 }
+.direita .direitainfo p.direitatitulo{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: bold;
+}
+.direita .direitainfo p.direitatitulo .estrela{
+    width: 20px;
+    height: 20px;
+    color: #FFD700;
+}
 .direita h2.descricao{
     color: var(--text-light);
     
@@ -76,8 +89,24 @@ font-weight: bold;
     align-items: center;
     gap: 0.5em;
 }
-.direita .avista img.pix{
-  width: 30px;
+.direita .avista .pix{
+    width: 25px;
+    height: 25px;
+    color: #00B686;
+}
+.direita p.parcelado{
+    color: var(--text-light);
+    gap: 0.5em;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-top: 1em;
+}
+.direita p.parcelado .cartao{
+    width: 25px;
+    height: 25px;
+    color: var(--text-muted);
 }
 .direita .botoes{
     display: flex;

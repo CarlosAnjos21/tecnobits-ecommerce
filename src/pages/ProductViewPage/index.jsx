@@ -4,7 +4,9 @@ import products from '../../data/products.json';
 import { ButtonPrimary } from '../../components/Buttons/ButtonComponents';
 import { useCart } from '../../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
-
+import { FaCreditCard } from 'react-icons/fa6';
+import { FaStar } from 'react-icons/fa6';
+import { FaPix } from 'react-icons/fa6';
   
 
 function ProductViewPage() {
@@ -34,6 +36,8 @@ function ProductViewPage() {
     navigate('/shopping-cart');
   }
 
+  const parcela = (product.priceDiscount / 10).toFixed(2);
+
   if (!product) {
     return <h2>Produto não encontrado.</h2>;
   }
@@ -53,14 +57,26 @@ function ProductViewPage() {
         </div>
         <div className='direita'>
           <div className="direitainfo">
-          <p>NOVO</p>
-          <h2 className='descricao'>{product.description}</h2>
-          <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
-          <p className='preco'>R$ {product.priceDiscount}</p>
-          <p className='avista'><img src="/public/images/pix.png" alt="pix" className='pix'/>À vista no PIX com {descontoPercentual} de desconto</p>
-          <div className='botoes'><ButtonPrimary className='compraragr' onClick= {() => {comprarAgora(); handleAddToCart();}}
-          >COMPRAR AGORA</ButtonPrimary>
-          <ButtonPrimary className='addcarrinho' onClick={handleAddToCart}>ADICIONAR AO CARRINHO</ButtonPrimary></div>
+            <p className='direitatitulo'><FaStar className='estrela'/>{product.rating || '5.0'}</p>
+            <h2 className='descricao'>{product.description}</h2>
+            <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
+            <p className='preco'>R$ {product.priceDiscount}</p>
+            <p className='avista'>
+              <FaPix className='pix' />
+              À vista no PIX com {descontoPercentual} de desconto
+            </p>
+            <p className='parcelado'><FaCreditCard className='cartao'/>
+              Ou em até 10x de R$ {parcela} sem juros no cartão
+            </p>
+            
+            <div className='botoes'>
+              <ButtonPrimary className='compraragr' onClick={() => {comprarAgora(); handleAddToCart();}}>
+                COMPRAR AGORA
+              </ButtonPrimary>
+              <ButtonPrimary className='addcarrinho' onClick={handleAddToCart}>
+                ADICIONAR AO CARRINHO
+              </ButtonPrimary>
+            </div>
           </div>
         </div>
       </div>
