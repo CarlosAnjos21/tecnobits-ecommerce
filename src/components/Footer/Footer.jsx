@@ -14,15 +14,18 @@ const Footer = () => (
   <footer className='footer'>
     {/* div cabeçalho */}
     <div className='footer-header'>
-      <img className='footer-logo' src="/images/tecnobits.png" alt='Logo da loja' />
+      <img className='footer-logo' src="/images/MaybeFooterLogo.png" alt='Logo da loja' />
       <h3 className='footer-title'>Digital Store</h3>
     </div>
 
     {/* div descrição */}
     <div>
       <p className='footer-description'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        Na TecnoBits, tecnologia de ponta está ao seu alcance. Somos uma loja especializada em hardware,
+        oferecendo uma seleção completa de processadores, 
+        placas de vídeo, CPUs, memórias RAM, SSDs, fontes, periféricos, celulares e muito mais. 
+        Trabalhamos com as melhores marcas do mercado para garantir qualidade, desempenho e confiança em cada produto. 
+        Seja para montar seu setup gamer, turbinar seu PC ou encontrar o smartphone ideal, aqui você encontra tudo o que precisa com praticidade, segurança e suporte especializado.
       </p>
     </div>
 
@@ -67,25 +70,25 @@ const Footer = () => (
       </p>
     </address>
     <div className='footer-phone'>
-      <a href='tel: +558530513411'>(85) 3051-3411</a>
+      <p>(85) 3051-3411</p>
     </div>
 
     <div className='footer-social'>
       {/* Redes sociais */}
       <ul>
-        <li className='footer-social-icon'>
+        <li className='footer-social-icon-FB'>
           <FontAwesomeIcon icon={faFacebook} />
         </li>
-        <li className='footer-social-icon'>
+        <li className='footer-social-icon-IG'>
           <FontAwesomeIcon icon={faInstagram} />
         </li>
-        <li className='footer-social-icon'>
+        <li className='footer-social-icon-TW'>
           <FontAwesomeIcon icon={faTwitter} />
         </li>
       </ul>
     </div>
 
-    <div className='footer-line'>
+   {/* <div className='footer-line'>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         width='1240'
@@ -95,7 +98,7 @@ const Footer = () => (
       >
         <path opacity='0.3' d='M1240 0H0V1H1240V0Z' fill='white' />
       </svg>
-    </div>
+    </div>*/}
     {/* div copyright */}
     <div className='footer-copy'>
       <FooterCopy>© {new Date().getFullYear()} Digital College</FooterCopy>
