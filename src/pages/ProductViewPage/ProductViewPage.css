@@ -1,10 +1,10 @@
 .principal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  background-color: aqua;
-  height:  90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: aqua;
+    height:  90vh;
 }
 .titulo {
 
@@ -29,17 +29,22 @@
     flex-direction: wrap;
 }
 .esquerda {
-background-color: greenyellow;
-height: 100%;
-width: 50%;
-flex-direction: column;
-align-items: center;
-padding-left: 5em;
+    background-color: greenyellow;
+    height: 100%;
+    width: 50%;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 5em;
 
 }
 .esquerda .imagem-produto{
     width: auto;
     height: 70vh;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.esquerda .imagem-produto:hover {
+    transform: scale(1.1);
 }
 .direita {
     background-color: var(--base-color); /*unico que vai ficar*/
@@ -48,6 +53,7 @@ padding-left: 5em;
     width: 50%;
     display: flex;
     flex-direction: column;
+    margin-right: 5em;
 }
 .direita .direitainfo{
     margin-left: 0.3em;
@@ -61,6 +67,11 @@ padding-left: 5em;
     color: var(--text-light);
     font-size: 1rem;
     font-weight: bold;
+}
+.direita .direitainfo p.direitatitulo .calendario{
+    width: 20px;
+    height: 20px;
+    color: var(--text-secundary);
 }
 .direita .direitainfo p.direitatitulo .estrela{
     width: 20px;
@@ -108,6 +119,62 @@ font-weight: bold;
     height: 25px;
     color: var(--text-muted);
 }
+.direita .freteinfo{
+   color: var(--text-light);
+   font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-top: 1em;
+}
+.direita .freteinfo .caminhao{
+    width: 25px;
+    height: 25px;
+    color: var(--text-muted);
+}
+/* Seções de Cupom e Frete */
+.direita .shipping-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.shipping-section {
+    flex: 1;
+    min-width: 260px;
+}
+
+.shipping-section h4 {
+    font-size: 0.9em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #00D2FF;
+    font-weight: 600;
+}
+
+.shipping-input {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.shipping-input input {
+    flex-grow: 1;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.95em;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.shipping-input input:focus {
+    border-color: #00D2FF;
+    box-shadow: 0 0 0 0.1rem #3B82F6;
+    outline: none;
+}
+.shipping-section .valorfrete {
+    color: var(--text-light);
+ 
+}
 .direita .botoes{
     display: flex;
     flex-direction: column;
@@ -115,7 +182,7 @@ font-weight: bold;
     margin-top: 2rem;
 }
 .direta .compraragr{
-width: 100%;
+    width: 100%;
 }
 .direita .addcarrinho{
     width: 100%;

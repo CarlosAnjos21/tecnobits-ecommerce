@@ -4,9 +4,11 @@ import products from '../../data/products.json';
 import { ButtonPrimary } from '../../components/Buttons/ButtonComponents';
 import { useCart } from '../../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { FaCreditCard } from 'react-icons/fa6';
-import { FaStar } from 'react-icons/fa6';
-import { FaPix } from 'react-icons/fa6';
+import { FaCreditCard, FaStar, FaPix, FaTruck, FaCalendarDays } from 'react-icons/fa6';
+import { InputDefault } from '../../components/Input';
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+
   
 
 function ProductViewPage() {
@@ -19,6 +21,8 @@ function ProductViewPage() {
     ? `${Math.round(((product.price - product.priceDiscount) / product.price) * 100)}%`
     : "0%";
 
+  // Importa o contexto do carrinho
+  // e define a função para adicionar produtos ao carrinho
   const { addToCart } = useCart();
 
   // Adiciona o produto ao carrinho
@@ -36,7 +40,60 @@ function ProductViewPage() {
     navigate('/shopping-cart');
   }
 
-  const parcela = (product.priceDiscount / 10).toFixed(2);
+  const parcela = (product.price / 10).toFixed(2);
+
+  // Estado para o CEP e o cálculo do frete
+  const [cep, setCep] = useState('');
+  const [shippingCost, setShippingCost] = useState(0);
+  const [shippingMessage, setShippingMessage] = useState("");
+
+  // Função para calcular o frete com base no CEP
+  const calculateShipping = async (currentCep) => {
+    if (currentCep.replace(/\D/g, '').length === 8) { // Verifica se o CEP tem 8 dígitos
+      console.log(`Calculando frete para o CEP: ${currentCep}`);
+      // Lógica de simulação de frete:
+      // Esta é uma simulação MUITO simples. Substitua pela sua lógica real ou chamada API.
+      if (currentCep.startsWith('01000')) { // Exemplo: CEP de São Paulo Capital
+        setShippingCost(10.50);
+        setShippingMessage("Frete estimado: R$ 10,50 (São Paulo Capital)");
+        // setShippingOptions([{ name: 'SEDEX', cost: 15.00, days: 2 }, { name: 'PAC', cost: 10.50, days: 5 }]);
+      } else if (currentCep.startsWith('20000')) { // Exemplo: CEP do Rio de Janeiro Capital
+        setShippingCost(15.75);
+        setShippingMessage("Frete estimado: R$ 15,75 (Rio de Janeiro Capital)");
+      } else if (currentCep.startsWith('70000')) { // Exemplo: CEP de Brasília
+        setShippingCost(12.00);
+        setShippingMessage("Frete estimado: R$ 12,00 (Brasília)");
+      } else {
+        setShippingCost(25.00); // Um valor padrão para outros CEPs
+        setShippingMessage("Frete estimado: R$ 25,00 (Outros locais)");
+      }
+    } else {
+      setShippingCost(0); // Reseta o frete se o CEP for inválido/incompleto
+      setShippingMessage("CEP inválido. Por favor, insira um CEP válido.");
+    }
+  };
+    const handleCepChange = (event) => {
+    const newCep = event.target.value;
+    setCep(newCep);
+    // Opcional: calcular automaticamente ao digitar 8 dígitos
+    if (newCep.replace(/\D/g, '').length === 8) {
+      calculateShipping(newCep);
+    }
+  };
+
+  const handleCalculateShippingClick = () => {
+    calculateShipping(cep);
+  };
+
+  // Recalcula o total sempre que o subtotal ou o custo do frete mudar
+  // Adicione o desconto aqui se ele for fixo ou baseado apenas no subtotal
+  const subtotal = product.priceDiscount > 0 ? product.priceDiscount : product.price;
+  const discountPercentage = 0.50; // Ex: 50% de desconto sobre o subtotal
+  const discount = subtotal * discountPercentage;
+  const total = subtotal + shippingCost - discount;
+
+  
+
 
   if (!product) {
     return <h2>Produto não encontrado.</h2>;
@@ -50,14 +107,16 @@ function ProductViewPage() {
           <span className='pasta'>{'>'}</span>
           {product.brand}
         </p>
+
       </div>
       <div className='conteudo'>
         <div className='esquerda'>
           <img src={product.image} alt={product.name} className='imagem-produto' />
         </div>
+
         <div className='direita'>
           <div className="direitainfo">
-            <p className='direitatitulo'><FaStar className='estrela'/>{product.rating || '5.0'}</p>
+            <p className='direitatitulo'><AiOutlineThunderbolt className='prontaentrega'/><FaCalendarDays className='calendario'/>12 meses de garantia<FaStar className='estrela'/>{product.rating || '5.0'}</p>
             <h2 className='descricao'>{product.description}</h2>
             <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
             <p className='preco'>R$ {product.priceDiscount}</p>
@@ -68,7 +127,27 @@ function ProductViewPage() {
             <p className='parcelado'><FaCreditCard className='cartao'/>
               Ou em até 10x de R$ {parcela} sem juros no cartão
             </p>
-            
+            <div className="frete">
+              <p className='freteinfo'>
+                <FaTruck className='caminhao'/>
+                Em estoque e pronto para envio
+              </p>
+            </div>
+          <div className="shipping-section">
+                          <h4><FaTruck className='caminhao'/>CONSULTE FRETE</h4>
+                          <div className="shipping-input">
+                            <InputDefault 
+                              placeholder="Insira seu CEP"
+                              value={cep}
+                              onChange={handleCepChange}
+                              maxLength={9} // Formato XXXXX-XXX
+                            />
+                            <ButtonPrimary className='ok-button' onClick={handleCalculateShippingClick}>
+                              OK
+                            </ButtonPrimary>
+                          </div>
+                          {shippingMessage && <p className='valorfrete'>{shippingMessage}</p>}
+                        </div>
             <div className='botoes'>
               <ButtonPrimary className='compraragr' onClick={() => {comprarAgora(); handleAddToCart();}}>
                 COMPRAR AGORA
