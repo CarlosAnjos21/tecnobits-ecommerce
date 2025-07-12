@@ -10,6 +10,8 @@ const ProductListingPage = lazy(() => import('./pages/ProductListingPage'));
 const ProductViewPage = lazy(() => import('./pages/ProductViewPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const ShoppingCartPage = lazy(() => import('./pages/ShoppingCartPage'));
+const Success = lazy(() => import('./pages/BuySuccess'));
+const FinaleBuyPage = lazy(() => import('./pages/FinalizarCompraPage'));
 const NotFoundPage = lazy(() => import('./pages/404'));
 
 const App = () => {
@@ -61,6 +63,22 @@ const App = () => {
           element={
             <Layout>
               <LoginPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/checkout'
+          element={
+            <Layout>
+              <FinaleBuyPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/success'
+          element={
+            <Layout>
+              <Success/>
             </Layout>
           }
         />
