@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import products from '../../data/products.json';
 import { ButtonPrimary } from '../../components/Buttons/ButtonComponents';
 import { useCart } from '../../contexts/CartContext';
+import { useNavigate } from 'react-router-dom';
 
   
 
 function ProductViewPage() {
+  // Obtém o ID do produto da URL
   const { id } = useParams();
   const product = products.find((p) => p.id === Number(id));
 
@@ -17,7 +19,7 @@ function ProductViewPage() {
 
   const { addToCart } = useCart();
 
-  // Supondo que o produto não tem variações de tamanho/cor no JSON
+  // Adiciona o produto ao carrinho
   const handleAddToCart = () => {
     addToCart({
       ...product,
@@ -26,6 +28,11 @@ function ProductViewPage() {
       quantity: 1,
     });
   };
+  // Navegação para a página de carrinho
+  const navigate = useNavigate();
+  const comprarAgora = () => {
+    navigate('/shopping-cart');
+  }
 
   if (!product) {
     return <h2>Produto não encontrado.</h2>;
@@ -51,7 +58,8 @@ function ProductViewPage() {
           <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
           <p className='preco'>R$ {product.priceDiscount}</p>
           <p className='avista'><img src="/public/images/pix.png" alt="pix" className='pix'/>À vista no PIX com {descontoPercentual} de desconto</p>
-          <div className='botoes'><ButtonPrimary className='compraragr' >COMPRAR AGORA</ButtonPrimary>
+          <div className='botoes'><ButtonPrimary className='compraragr' onClick= {() => {comprarAgora(); handleAddToCart();}}
+          >COMPRAR AGORA</ButtonPrimary>
           <ButtonPrimary className='addcarrinho' onClick={handleAddToCart}>ADICIONAR AO CARRINHO</ButtonPrimary></div>
           </div>
         </div>
