@@ -8,7 +8,7 @@ import { FaCreditCard, FaStar, FaPix, FaTruck, FaCalendarDays } from 'react-icon
 import { InputDefault } from '../../components/Input';
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import React, { useState, useEffect } from 'react';
-
+import StarRating from '../../components/StarRating';
   
 
 function ProductViewPage() {
@@ -116,7 +116,7 @@ function ProductViewPage() {
 
         <div className='direita'>
           <div className="direitainfo">
-            <p className='direitatitulo'><AiOutlineThunderbolt className='prontaentrega'/><FaCalendarDays className='calendario'/>12 meses de garantia<FaStar className='estrela'/>{product.rating || '5.0'}</p>
+            <p className='direitatitulo'><AiOutlineThunderbolt className='prontaentrega'/><FaCalendarDays className='calendario'/>12 meses de garantia<StarRating rating={product.rating || 0}/></p>
             <h2 className='descricao'>{product.description}</h2>
             <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
             <p className='preco'>R$ {product.priceDiscount}</p>
