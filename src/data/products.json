@@ -384,7 +384,7 @@
     "priceDiscount": 999.99,
     "category": "processor",
     "brand": "AMD",
-    "image": "public/images/amd-ryzen-5-5600x.jpg",
+    "image": "publicgit /images/amd-ryzen-5-5600x.jpg",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "17% Off"
@@ -1337,5 +1337,18 @@
     "rating": 4.1,
     "inStock": true,
     "tagValue": "8% Off"
+  },
+  {
+    "id": 104,
+    "name": "Processador Intel Core Ultra 9 285K",
+    "description": "Processador Intel Core Ultra 9 285K, 3.7 Ghz (5.7Ghz Turbo), Série 2, 24-Cores 24-Threads, LGA 1851",
+    "price": 6999.99,
+    "priceDiscount": 3999.99,
+    "category": "processor",
+    "brand": "Intel",
+    "image": "/images/core-ultra-9-285k.jpg",
+    "rating": 4.2,
+    "inStock": true,
+    "tagValue": "7% Off"
   }
 ]
