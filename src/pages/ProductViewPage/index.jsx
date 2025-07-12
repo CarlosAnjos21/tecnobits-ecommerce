@@ -4,7 +4,7 @@ import products from '../../data/products.json';
 import { ButtonPrimary } from '../../components/Buttons/ButtonComponents';
 import { useCart } from '../../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { FaCreditCard, FaStar, FaPix, FaTruck, FaCalendarDays } from 'react-icons/fa6';
+import { FaCreditCard, FaBoltLightning, FaPix, FaTruck, FaCalendarDays } from 'react-icons/fa6';
 import { InputDefault } from '../../components/Input';
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import React, { useState, useEffect } from 'react';
@@ -116,39 +116,29 @@ function ProductViewPage() {
 
         <div className='direita'>
           <div className="direitainfo">
-            <p className='direitatitulo'><AiOutlineThunderbolt className='prontaentrega'/><FaCalendarDays className='calendario'/>12 meses de garantia<StarRating rating={product.rating || 0}/></p>
+            <div className='direitatitulo'>
+              <span><FaBoltLightning className='prontaentrega'/>Pronta entrega</span>
+              <span><StarRating rating={product.rating || 0}/></span>
+              <span><FaCalendarDays className='calendario'/>12 meses de garantia</span>
+            
+            </div>
             <h2 className='descricao'>{product.description}</h2>
             <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
             <p className='preco'>R$ {product.priceDiscount}</p>
-            <p className='avista'>
+            <div className='avista'>
               <FaPix className='pix' />
               À vista no PIX com {descontoPercentual} de desconto
-            </p>
-            <p className='parcelado'><FaCreditCard className='cartao'/>
-              Ou em até 10x de R$ {parcela} sem juros no cartão
-            </p>
-            <div className="frete">
-              <p className='freteinfo'>
-                <FaTruck className='caminhao'/>
-                Em estoque e pronto para envio
-              </p>
             </div>
-          <div className="shipping-section">
-                          <h4><FaTruck className='caminhao'/>CONSULTE FRETE</h4>
-                          <div className="shipping-input">
-                            <InputDefault 
-                              placeholder="Insira seu CEP"
-                              value={cep}
-                              onChange={handleCepChange}
-                              maxLength={9} // Formato XXXXX-XXX
-                            />
-                            <ButtonPrimary className='ok-button' onClick={handleCalculateShippingClick}>
-                              OK
-                            </ButtonPrimary>
-                          </div>
-                          {shippingMessage && <p className='valorfrete'>{shippingMessage}</p>}
-                        </div>
-            <div className='botoes'>
+            <div className='parcelado'><FaCreditCard className='cartao'/>
+              Ou em até 10x de R$ {parcela} sem juros no cartão
+            </div>
+            <div className="frete">
+              <div className='freteinfo'>
+                <FaTruck className='caminhao'/>
+                Em estoque
+              </div>
+            </div>
+             <div className='botoes'>
               <ButtonPrimary className='compraragr' onClick={() => {comprarAgora(); handleAddToCart();}}>
                 COMPRAR AGORA
               </ButtonPrimary>
@@ -156,6 +146,22 @@ function ProductViewPage() {
                 ADICIONAR AO CARRINHO
               </ButtonPrimary>
             </div>
+          <div className="frete">
+                          <h4><FaTruck className='caminhao'/>CONSULTE FRETE</h4>
+                          <div className="frete-entrada">
+                            <InputDefault 
+                              placeholder="Insira seu CEP"
+                              value={cep}
+                              onChange={handleCepChange}
+                              maxLength={9} // Formato XXXXX-XXX
+                            />
+                            <ButtonPrimary className='botao-ok' onClick={handleCalculateShippingClick}>
+                              OK
+                            </ButtonPrimary>
+                          </div>
+                          {shippingMessage && <p className='valorfrete'>{shippingMessage}</p>}
+                        </div>
+           
           </div>
         </div>
       </div>

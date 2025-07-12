@@ -1,4 +1,5 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import "./StarRating.css"; // Importa o CSS externo
 
 function StarRating({ rating }) {
   const numericRating = Math.min(Math.max(Number(rating) || 0, 0), 5);
@@ -7,8 +8,8 @@ function StarRating({ rating }) {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#f5c518" }}>
-      <div style={{ display: "flex", gap: "4px" }}>
+    <div className="star-rating-container">
+      <div className="star-icons">
         {[...Array(fullStars)].map((_, i) => (
           <FaStar key={"full" + i} />
         ))}
@@ -17,9 +18,7 @@ function StarRating({ rating }) {
           <FaRegStar key={"empty" + i} />
         ))}
       </div>
-      <span style={{ fontWeight: "bold", color: "#E2E8F0" }}>
-        {numericRating.toFixed(1)}
-      </span>
+      <span className="star-rating-score">{numericRating.toFixed(1)}</span>
     </div>
   );
 }
