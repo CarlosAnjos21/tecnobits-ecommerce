@@ -7,8 +7,19 @@
   height:  90vh;
 }
 .titulo {
-    background-color: blue;
+
     width: 100%;
+}
+.principal .titulo p.textotitulo {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8em;
+    color: var(--professional-color);
+}
+.principal .titulo p span.pasta {
+    color: var(--text-muted);
+    font-weight: bold;
+    margin: 0 4px;
 }
 .conteudo{
     display: flex;
@@ -37,19 +48,36 @@ padding-left: 5em;
     width: 50%;
     display: flex;
     flex-direction: column;
-
+}
+.direita .direitainfo{
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+   
 }
 .direita h2.descricao{
     color: var(--text-light);
+    
 }
 .direita .desconto{
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: var(--text-muted);
     text-decoration: line-through;
+    
 }
 .direita .preco{
 font-size: 3em;
 color: var(--success-color);
+font-weight: bold;
+}
+.direita .avista{
+    color: var(--text-light);
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.direita .avista img.pix{
+  width: 30px;
 }
 .direita .botoes{
     display: flex;
@@ -63,7 +91,4 @@ width: 100%;
 .direita .addcarrinho{
     width: 100%;
     margin-top: 0.5rem;
-}
-.direita .avista{
-    color: var(--text-light);
 }

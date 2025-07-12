@@ -22,20 +22,26 @@ function ProductViewPage() {
   return (
     <div className="principal">
       <div className="titulo">
-      <p>{product.category}/{product.brand}</p>
+        <p className='textotitulo'>
+          {product.category}
+          <span className='pasta'>{'>'}</span>
+          {product.brand}
+        </p>
       </div>
       <div className='conteudo'>
         <div className='esquerda'>
           <img src={product.image} alt={product.name} className='imagem-produto' />
         </div>
         <div className='direita'>
+          <div className="direitainfo">
           <p>NOVO</p>
           <h2 className='descricao'>{product.description}</h2>
           <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
           <p className='preco'>R$ {product.priceDiscount}</p>
           <p className='avista'><img src="/public/images/pix.png" alt="pix" className='pix'/>À vista no PIX com {descontoPercentual} de desconto</p>
-          <div className='botoes'><ButtonPrimary className='compraragr'>COMPRAR AGORA</ButtonPrimary>
+          <div className='botoes'><ButtonPrimary className='compraragr' >COMPRAR AGORA</ButtonPrimary>
           <ButtonPrimary className='addcarrinho'>ADICIONAR AO CARRINHO</ButtonPrimary></div>
+          </div>
         </div>
       </div>
     </div>
