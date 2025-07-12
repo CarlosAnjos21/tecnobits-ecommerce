@@ -183,8 +183,7 @@ const ProductListingPage = () => {
       {/* 🔹 Cabeçalho */}
       <div className='listing-header'>
         <div className='results-info'>
-          <h2>Resultados para "Nike" - {filteredProducts.length} produtos</h2>
-        </div>
+          <h2>Resultados para "Hardware" - 106 produtos</h2>
 
         <div className='sort-container'>
           <CustomSelect

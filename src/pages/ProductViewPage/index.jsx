@@ -1,179 +1,171 @@
-import React, { useState } from 'react';
-import './styles.css'; 
-import { useCart } from '../../contexts/CartContext'; // Seu hook do carrinho
+import './ProductViewPage.css';
+import { useParams } from "react-router-dom";
+import products from '../../data/products.json';
+import { ButtonPrimary } from '../../components/Buttons/ButtonComponents';
+import { useCart } from '../../contexts/CartContext';
+import { useNavigate } from 'react-router-dom';
+import { FaCreditCard, FaBoltLightning, FaPix, FaTruck, FaCalendarDays } from 'react-icons/fa6';
+import { InputDefault } from '../../components/Input';
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import StarRating from '../../components/StarRating';
+  
 
-// Cores dos backgrounds dos thumbnails, extraídas do seu ProductViewPage.css
-const THUMBNAIL_CSS_COLORS = [
-  '#E2E3FF', // Cor para o thumbnail :nth-child(1)
-  '#FFE8BC', // Cor para o thumbnail :nth-child(2)
-  '#FFC0BC', // Cor para o thumbnail :nth-child(3)
-  '#DEC699', // Cor para o thumbnail :nth-child(4)
-  '#E8DFCF', // Cor para o thumbnail :nth-child(5)
-];
+function ProductViewPage() {
+  // Obtém o ID do produto da URL
+  const { id } = useParams();
+  const product = products.find((p) => p.id === Number(id));
 
-const ProductViewPage = () => {
+  // Calcula o percentual de desconto do produto 
+  const descontoPercentual = product.priceDiscount && product.priceDiscount > 0
+    ? `${Math.round(((product.price - product.priceDiscount) / product.price) * 100)}%`
+    : "0%";
+
+  // Importa o contexto do carrinho
+  // e define a função para adicionar produtos ao carrinho
   const { addToCart } = useCart();
 
-  // Mock product data
-  const product = {
-    id: 1,
-    name: 'Tênis Nike Revolution 6 Next Nature Masculino',
-    price: 200.00,
-    priceDiscount: 100.00,
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-    // Idealmente, você teria imagens diferentes para cada thumbnail/cor
-    images: [
-      '/src/assets/images/tenis.png', // Imagem para thumbnail 1
-      '/src/assets/images/tenis.png', // Imagem para thumbnail 2 (ou tenis_variant2.png)
-      '/src/assets/images/tenis.png', // Imagem para thumbnail 3 (ou tenis_variant3.png)
-      '/src/assets/images/tenis.png', // Imagem para thumbnail 4 (ou tenis_variant4.png)
-      '/src/assets/images/tenis.png', // Imagem para thumbnail 5 (ou tenis_variant5.png)
-    ],
-    sizes: [39, 40, 41, 42, 43],
-    colors: ['#00FFFF', '#FF0000', '#800080', '#000000'], // Cores para os seletores de cor do produto
-  };
-
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null); // Cor do produto selecionada nos swatches
-  const [mainImage, setMainImage] = useState(product.images[0]);
-
-  // Estado para a cor de fundo do wrapper da imagem principal e índice do thumbnail ativo
-  const [mainImageBg, setMainImageBg] = useState(
-    THUMBNAIL_CSS_COLORS.length > 0 ? THUMBNAIL_CSS_COLORS[0] : 'transparent'
-  );
-  const [activeThumbnailIndex, setActiveThumbnailIndex] = useState(0);
-
-
-  const handleSizeSelect = (size) => {
-    setSelectedSize(size);
-  };
-
-  // Handler para seleção de cor do produto (swatches)
-  const handleProductColorSelect = (color) => {
-    setSelectedColor(color);
-    // Aqui você pode adicionar lógica se a seleção de cor do produto também deve mudar a imagem principal
-    // ou o fundo da imagem principal, se houver uma correspondência.
-  };
-
-  // Handler para clique no thumbnail
-  const handleThumbnailClick = (imageSrc, index) => {
-    setMainImage(imageSrc);
-    setActiveThumbnailIndex(index);
-    if (THUMBNAIL_CSS_COLORS[index]) {
-      setMainImageBg(THUMBNAIL_CSS_COLORS[index]);
-    } else {
-      setMainImageBg('transparent'); // Fallback
-    }
-  };
-
+  // Adiciona o produto ao carrinho
   const handleAddToCart = () => {
-    if (selectedSize && selectedColor) {
-      addToCart({
-        ...product, // Espalha as propriedades base do produto
-        price: product.priceDiscount, // Certifique-se de enviar o preço correto para o carrinho
-        selectedSize,
-        selectedColor, // Esta é a cor do produto selecionada nos swatches
-        imageUrl: mainImage,
-      });
-      console.log('Adding to cart:', product.name, 'Size:', selectedSize, 'Color:', selectedColor);
+    addToCart({
+      ...product,
+      price: product.priceDiscount > 0 ? product.priceDiscount : product.price,
+      imageUrl: product.image, // usa o campo 'image' do JSON
+      quantity: 1,
+    });
+  };
+  // Navegação para a página de carrinho
+  const navigate = useNavigate();
+  const comprarAgora = () => {
+    navigate('/shopping-cart');
+  }
+
+  const parcela = (product.price / 10).toFixed(2);
+
+  // Estado para o CEP e o cálculo do frete
+  const [cep, setCep] = useState('');
+  const [shippingCost, setShippingCost] = useState(0);
+  const [shippingMessage, setShippingMessage] = useState("");
+
+  // Função para calcular o frete com base no CEP
+  const calculateShipping = async (currentCep) => {
+    if (currentCep.replace(/\D/g, '').length === 8) { // Verifica se o CEP tem 8 dígitos
+      console.log(`Calculando frete para o CEP: ${currentCep}`);
+      // Lógica de simulação de frete:
+      // Esta é uma simulação MUITO simples. Substitua pela sua lógica real ou chamada API.
+      if (currentCep.startsWith('01000')) { // Exemplo: CEP de São Paulo Capital
+        setShippingCost(10.50);
+        setShippingMessage("Frete estimado: R$ 10,50 (São Paulo Capital)");
+        // setShippingOptions([{ name: 'SEDEX', cost: 15.00, days: 2 }, { name: 'PAC', cost: 10.50, days: 5 }]);
+      } else if (currentCep.startsWith('20000')) { // Exemplo: CEP do Rio de Janeiro Capital
+        setShippingCost(15.75);
+        setShippingMessage("Frete estimado: R$ 15,75 (Rio de Janeiro Capital)");
+      } else if (currentCep.startsWith('70000')) { // Exemplo: CEP de Brasília
+        setShippingCost(12.00);
+        setShippingMessage("Frete estimado: R$ 12,00 (Brasília)");
+      } else {
+        setShippingCost(25.00); // Um valor padrão para outros CEPs
+        setShippingMessage("Frete estimado: R$ 25,00 (Outros locais)");
+      }
     } else {
-      // Considerar substituir alert por um feedback de UI mais integrado
-      alert('Por favor, selecione um tamanho e uma cor antes de adicionar ao carrinho.');
+      setShippingCost(0); // Reseta o frete se o CEP for inválido/incompleto
+      setShippingMessage("CEP inválido. Por favor, insira um CEP válido.");
     }
   };
+    const handleCepChange = (event) => {
+    const newCep = event.target.value;
+    setCep(newCep);
+    // Opcional: calcular automaticamente ao digitar 8 dígitos
+    if (newCep.replace(/\D/g, '').length === 8) {
+      calculateShipping(newCep);
+    }
+  };
+
+  const handleCalculateShippingClick = () => {
+    calculateShipping(cep);
+  };
+
+  // Recalcula o total sempre que o subtotal ou o custo do frete mudar
+  // Adicione o desconto aqui se ele for fixo ou baseado apenas no subtotal
+  const subtotal = product.priceDiscount > 0 ? product.priceDiscount : product.price;
+  const discountPercentage = 0.50; // Ex: 50% de desconto sobre o subtotal
+  const discount = subtotal * discountPercentage;
+  const total = subtotal + shippingCost - discount;
+
+  
+
+
+  if (!product) {
+    return <h2>Produto não encontrado.</h2>;
+  }
 
   return (
-    // Usa a classe CSS definida em ProductViewPage.css
-    <div className="product-view-container">
-      <div className="breadcrumb">
-        <span>Home</span><span>Produtos</span><span>{product.name}</span>
+    <div className="principal">
+      <div className="titulo">
+        <p className='textotitulo'>
+          {product.category}
+          <span className='pasta'>{'>'}</span>
+          {product.brand}
+        </p>
+
       </div>
-        <div className="product-title">
-        <p>Casual | Nike | REF:38416711</p>
-        </div>
-      <div className="product-details-section">
-        <div className="image-gallery">
-          {/* Wrapper para a imagem principal, com estilo para a variável CSS */}
-          <div
-            className="main-image-wrapper"
-            style={{ '--main-image-bg-color': mainImageBg }}
-          >
-            <img src={mainImage} alt={product.name} className="main-image" />
-          </div>
-
-          <div className="thumbnails">
-            {/* Mapeia as imagens do produto, limitado pelo número de cores de thumbnail definidas */}
-            {product.images.slice(0, THUMBNAIL_CSS_COLORS.length).map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`${product.name} thumbnail ${index + 1}`}
-                className={`thumbnail ${activeThumbnailIndex === index ? 'active' : ''}`}
-                onClick={() => handleThumbnailClick(image, index)}
-                // A cor de fundo do thumbnail em si é definida pelo CSS via :nth-child
-              />
-            ))}
-          </div>
+      <div className='conteudo'>
+        <div className='esquerda'>
+          <img src={product.image} alt={product.name} className='imagem-produto' />
         </div>
 
-        <div className="product-info">
-          <h2>{product.name}</h2>
-          <div className="rating">
-          
-            <link className="fa-star" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star checked"></span>
-            <span className="fa fa-star"></span>
-            <span> 4.7 (90 avaliações)</span>
-          </div>
-          <div className="price-info">
-          <span className="current-price">R$ {product.priceDiscount.toFixed(2)}</span> &nbsp;
-            {product.price > product.priceDiscount && (
-              <span className="original-price">R$ {product.price.toFixed(2)}</span>
-            )}
-            
-          </div>
-          <p className="description">{product.description}</p>
-
-          <div className="options">
-            <div className="size-options">
-              <h4>Tamanho</h4>
-              <div className="buttons">
-                {product.sizes.map(size => (
-                  <button
-                    key={size}
-                    className={`option-button ${selectedSize === size ? 'selected' : ''}`}
-                    onClick={() => handleSizeSelect(size)}
-                  >
-                    {size}
-                  </button>
-                ))}
+        <div className='direita'>
+          <div className="direitainfo">
+            <div className='direitatitulo'>
+              <span><FaBoltLightning className='prontaentrega'/>Pronta entrega</span>
+              <span><StarRating rating={product.rating || 0}/></span>
+              <span><FaCalendarDays className='calendario'/>12 meses de garantia</span>
+            </div>
+            <h2 className='descricao'>{product.description}</h2>
+            <p className='desconto'>De: {product.price.toFixed(2)} por:</p>
+            <p className='preco'>R$ {product.priceDiscount}</p>
+            <div className='avista'>
+              <FaPix className='pix' />
+              À vista no PIX com {descontoPercentual} de desconto
+            </div>
+            <div className='parcelado'><FaCreditCard className='cartao'/>
+              Ou em até 10x de R$ {parcela} sem juros no cartão
+            </div>
+            <div className="frete">
+              <div className='freteinfo'>
+                <FaTruck className='caminhao'/>
+                Em estoque
               </div>
             </div>
-
-            <div className="color-options">
-              <h4>Cor</h4>
-              <div className="color-swatches">
-                {product.colors.map((colorValue, index) => (
-                  <div
-                    key={index}
-                    className={`color-swatch ${selectedColor === colorValue ? 'selected' : ''}`}
-                    style={{ backgroundColor: colorValue }}
-                    onClick={() => handleProductColorSelect(colorValue)}
-                  />
-                ))}
-              </div>
+             <div className='botoes'>
+              <ButtonPrimary className='compraragr' onClick={() => {comprarAgora(); handleAddToCart();}}>
+                COMPRAR AGORA
+              </ButtonPrimary>
+              <ButtonPrimary className='addcarrinho' onClick={handleAddToCart}>
+                ADICIONAR AO CARRINHO
+              </ButtonPrimary>
             </div>
+          <div className="frete">
+                          <h4><FaTruck className='caminhao'/>CONSULTE FRETE</h4>
+                          <div className="frete-entrada">
+                            <InputDefault 
+                              placeholder="Insira seu CEP"
+                              value={cep}
+                              onChange={handleCepChange}
+                              maxLength={9} // Formato XXXXX-XXX
+                            />
+                            <ButtonPrimary className='botao-ok' onClick={handleCalculateShippingClick}>
+                              OK
+                            </ButtonPrimary>
+                          </div>
+                          {shippingMessage && <p className='valorfrete'>{shippingMessage}</p>}
+                        </div>
+           
           </div>
-
-          <button className="buy-button" onClick={handleAddToCart}>COMPRAR</button>
         </div>
       </div>
-      
     </div>
   );
-};
+}
 
 export default ProductViewPage;
