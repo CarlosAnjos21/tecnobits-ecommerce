@@ -4,6 +4,7 @@ import Layout from './pages/Layout';
 import FormCreatePage from './pages/FormCreatePage';
 import UserDashboard from './components/UserDashboard';
 import BuySuccessPage from './pages/BuySuccess';
+import ResetScroll from './components/ResetScroll';
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ProductListingPage = lazy(() => import('./pages/ProductListingPage'));
 const ProductViewPage = lazy(() => import('./pages/ProductViewPage'));
@@ -14,7 +15,7 @@ const NotFoundPage = lazy(() => import('./pages/404'));
 const App = () => {
   return (
     <Suspense fallback={<div>Carregando...</div>}>
-      <Routes>
+      <ResetScroll /><Routes>
         <Route
           path='/'
           element={
