@@ -10,10 +10,9 @@ import products from '../../data/products.json';
 
 const ProductListingPage = () => {
   const [selectedFilters, setSelectedFilters] = useState({
-    marca: [],
-    categoria: [],
-    genero: [],
-    estado: [],
+  marca: [],
+  categoria: [],
+  estado: [],
   });
   const [sortBy, setSortBy] = useState('mais-relevantes');
 
@@ -191,23 +190,6 @@ const ProductListingPage = () => {
                     </label>
                   )
                 )}
-              </div>
-            </div>
-
-            {/* Filtro por Gênero */}
-            <div className='filter-group'>
-              <h4>Gênero</h4>
-              <div className='filter-options'>
-                {['Masculino', 'Feminino', 'Unissex'].map(genero => (
-                  <label key={genero} className='filter-option'>
-                    <input
-                      type='checkbox'
-                      checked={selectedFilters.genero.includes(genero)}
-                      onChange={() => handleFilterChange('genero', genero)}
-                    />
-                    <span>{genero}</span>
-                  </label>
-                ))}
               </div>
             </div>
 
