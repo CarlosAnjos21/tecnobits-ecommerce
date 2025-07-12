@@ -9,8 +9,6 @@ const BestSellerCard = ({ product, index }) => {
     price,
     priceDiscount,
     rating,
-    tagValue,
-    category,
     brand
   } = product;
 

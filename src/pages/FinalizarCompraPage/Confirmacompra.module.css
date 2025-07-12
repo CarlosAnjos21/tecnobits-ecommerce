@@ -1,0 +1,156 @@
+/* Definição de variáveis no início do arquivo */
+:root {
+  --primary-color: #F6AA1C;
+  --danger-color: #cf0808;
+  --background-light: #FFFFFF;
+  --background-medium: rgb(226, 221, 221);
+  --input-background: #dfd7d7;
+  --text-color: #333;
+  --text-light: #666666;
+  --border-radius: 8px;
+}
+
+/* Layout principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1440px; /* Usa max-width para ser responsivo */
+  margin: 0 auto; /* Centraliza o container */
+  padding: 20px;
+  background-color: var(--background-medium);
+  gap: 20px;
+}
+
+.mainContent {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas menores */
+  justify-content: center;
+  gap: 30px;
+}
+
+.formsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 2; /* Ocupa mais espaço */
+  min-width: 300px; /* Largura mínima */
+}
+
+.summaryColumn {
+  flex: 1; /* Ocupa menos espaço */
+  min-width: 300px; /* Largura mínima */
+}
+
+/* Estilo base para todas as seções do formulário */
+.formSection {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-light);
+  padding: 30px;
+  gap: 20px;
+  border-radius: var(--border-radius);
+}
+
+.formSection h4 {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-top: 0;
+}
+
+/* Inputs e Labels */
+.formSection label {
+  font-weight: bold;
+}
+
+.formSection input[type="text"] {
+  width: 100%; /* Ocupa 100% da largura do pai */
+  height: 60px;
+  background-color: var(--input-background);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.formSection input::placeholder {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* Seção de pagamento */
+.paymentOptions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.paymentOptions input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--danger-color);
+  appearance: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.paymentOptions input[type="radio"]:checked {
+  background-color: var(--danger-color);
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.row > div {
+  flex: 1; /* Faz com que os inputs na mesma linha ocupem espaço igual */
+}
+
+/* Resumo do pedido */
+.orderSummary {
+  background-color: var(--background-light);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  position: sticky; /* Efeito "grudento" ao rolar a página */
+  top: 20px;
+}
+
+.summaryLine {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+  margin-top: 16px;
+}
+
+.summaryButton {
+  width: 100%;
+  height: 60px;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.erroMensagem {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.erroInput {
+  border: 1px solid red;
+}

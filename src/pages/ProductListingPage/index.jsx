@@ -1,28 +1,23 @@
 import { useEffect, useState } from 'react';
 import { CiFilter } from 'react-icons/ci';
 import ProductListing from '../../components/ProductListing';
-import CustomSelect from '../../components/CustomSelect'; // Importe o novo componente
+import CustomSelect from '../../components/CustomSelect';
 import './ProductListingPage.css';
 import Section from '../../components/Section';
 import products from '../../data/products.json';
 
-
-
 const ProductListingPage = () => {
+  // 🧠 Estado dos filtros
+  const [mostrarTodasMarcas, setMostrarTodasMarcas] = useState(false);
+  const [mostrarTodasCategorias, setMostrarTodasCategorias] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
-  marca: [],
-  categoria: [],
-  estado: [],
+    marca: [],
+    categoria: [],
+    emEstoque: false,
   });
+
+  // 🧠 Estado de ordenação
   const [sortBy, setSortBy] = useState('mais-relevantes');
-
-  // Estado para verificar o tamanho da tela
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 460);
-
-  // Estado para controlar a visibilidde do sidebar (filtro de produtos)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  // Opções do select de ordenação
   const sortOptions = [
     { value: 'mais-relevantes', label: 'mais relevantes' },
     { value: 'menor-preco', label: 'menor preço' },
@@ -30,106 +25,167 @@ const ProductListingPage = () => {
     { value: 'mais-vendidos', label: 'mais vendidos' },
   ];
 
-  // Função para filtrar produtos baseada nos filtros selecionados
-  const getFilteredProducts = () => {
-    let filtered = products;
+  // 📱 Responsividade
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 460);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    // Filtrar por marca
-    if (selectedFilters.marca.length > 0) {
-      filtered = filtered.filter(product => 
-        selectedFilters.marca.includes(product.brand)
-      );
-    }
-
-    // Filtrar por categoria
-    if (selectedFilters.categoria.length > 0) {
-      filtered = filtered.filter(product => 
-        selectedFilters.categoria.includes(product.category)
-      );
-    }
-
-    // Ordenar produtos
-    switch (sortBy) {
-      case 'menor-preco':
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case 'maior-preco':
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case 'mais-vendidos':
-        // Simular produtos mais vendidos (pode ser baseado em rating)
-        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-        break;
-      default:
-        // Manter ordem original para "mais relevantes"
-        break;
-    }
-
-    return filtered;
-  };
-
-  const filteredProducts = getFilteredProducts();
-
-  // Extrair marcas e categorias únicas dos produtos
-  const getUniqueValues = (key) => {
-    return [...new Set(products.map(product => product[key]).filter(Boolean))];
-  };
-
-  const uniqueBrands = getUniqueValues('brand');
-  const uniqueCategories = getUniqueValues('category');
-
-  // Verificar o tamanho da tela quando o componente montar e quando a janela for redimensionada
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 460;
       setIsMobile(mobile);
-      // Se a tela não for mais mobile, garantir que o sidebar feche
-      if (!mobile) {
-        setIsSidebarOpen(false);
-      }
+      if (!mobile) setIsSidebarOpen(false);
     };
 
-    // Adicionar o evento de redimensionamento
     window.addEventListener('resize', handleResize);
-    // Chamar handleResize uma vez para definir o estado inicial corretamente
     handleResize();
-
-    // Remover o evento de redimensionamento quando o componente desmontar
-    // para evitar problemas de memória
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []); // Array de dependências vazio para executar apenas na montagem e desmontagem
-
-  const handleFilterChange = (filterType, value) => {
-    setSelectedFilters(prev => ({
-      ...prev,
-      [filterType]: prev[filterType].includes(value)
-        ? prev[filterType].filter(item => item !== value)
-        : [...prev[filterType], value],
-    }));
-  };
-
-  const handleAddToCart = product => {
-    console.log('Adicionado ao carrinho:', product);
-  };
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  // 🔍 Categorias filtráveis
+  const categoriasDesejadas = [
+    'SMARTPHONE',
+    'NOTEBOOK',
+    'HEADPHONE',
+    'TABLET',
+    'SMART-TV',
+    'GADGET',
+    'PROCESSOR',
+    'PLACA GRÁFICA',
+    'PLACA-MÃE',
+    'MEMÓRIA RAM',
+    'ARMAZENAMENTO',
+    'FONTE DE ENERGIA',
+    'RESFRIAMENTO',
+    'GABINETE',
+    'MOBILE-PC',
+  ];
+  // 🔍 Categorias disponíveis no products.json, limitadas às desejadas
+  const categoriasDisponiveis = Array.from(
+    new Set(products.map(p => p.category))
+  ).filter(cat => categoriasDesejadas.includes(cat));
+
+  // 🔍 Marcas desejadas
+  const marcasDesejadas = [
+    'Apple',
+    'Samsung',
+    'Dell',
+    'Sony',
+    'LG',
+    'Nintendo',
+    'Xiaomi',
+    'Google',
+    'Lenovo',
+    'ASUS',
+    'Bose',
+    'JBL',
+    'Microsoft',
+    'Intel',
+    'AMD',
+    'NVIDIA',
+    'MSI',
+    'GIGABYTE',
+    'ASRock',
+    'Corsair',
+    'G.Skill',
+    'Kingston',
+    'Western Digital',
+    'Seagate',
+    'Seasonic',
+    'EVGA',
+    'Cooler Master',
+    'Thermaltake',
+    'Noctua',
+    'NZXT',
+    'be quiet!',
+    'Fractal Design',
+    'OnePlus',
+    'Nothing',
+    'Motorola',
+    'Huawei',
+    'Realme',
+    'Vivo',
+    'Honor',
+    'OPPO',
+    'Framework',
+    'GPD',
+    'Valve',
+    'AYA',
+    'OneXPlayer',
+    'Anbernic',
+    'MINISFORUM',
+    'Beelink',
+    'TCL',
+    'Hisense',
+    'Philips',
+    'Audio-Technica',
+    'SteelSeries',
+    'Sennheiser',
+  ];
+
+  // 🔍 Marcas disponíveis no products.json, limitadas às desejadas
+  const marcasDisponiveis = Array.from(
+    new Set(products.map(p => p.brand))
+  ).filter(marca => marcasDesejadas.includes(marca));
+
+  // 🧠 Aplicar Filtros e Ordenação
+  const applyFiltersAndSort = () => {
+    let result = [...products];
+
+    // Filtro por marca
+    if (selectedFilters.marca.length > 0) {
+      result = result.filter(prod =>
+        selectedFilters.marca.includes(prod.brand)
+      );
+    }
+
+    // Filtro por categoria
+    if (selectedFilters.categoria.length > 0) {
+      result = result.filter(prod =>
+        selectedFilters.categoria.includes(prod.category)
+      );
+    }
+
+    // Filtro por estoque
+    if (selectedFilters.emEstoque) {
+      result = result.filter(prod => prod.inStock === true);
+    }
+
+    // Ordenação
+    switch (sortBy) {
+      case 'menor-preco':
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case 'maior-preco':
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case 'mais-vendidos':
+        result.sort((a, b) => (b.sales || 0) - (a.sales || 0));
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  };
+
+  const filteredProducts = applyFiltersAndSort();
 
   return (
     <div>
       {isMobile && isSidebarOpen && (
         <div className='sidebar-overlay' onClick={toggleSidebar}></div>
       )}
-      {/* Header com resultados e ordenação */}
+
+      {/* 🔹 Cabeçalho */}
       <div className='listing-header'>
         <div className='results-info'>
-          <h2>Resultados para "Nike" - 389 produtos</h2>
+          <h2>Resultados para "Nike" - {filteredProducts.length} produtos</h2>
         </div>
 
-        {/* Substituição do select nativo pelo customizado */}
         <div className='sort-container'>
           <CustomSelect
             value={sortBy}
@@ -138,7 +194,6 @@ const ProductListingPage = () => {
           />
         </div>
 
-        {/* Wrapper para o ícone de filtro, visível apenas em mobile */}
         <div
           className='filter-icon-wrapper'
           onClick={isMobile ? toggleSidebar : null}
@@ -149,22 +204,40 @@ const ProductListingPage = () => {
 
       <Section>
         <div className='content-container'>
-          {/* Sidebar com filtros, não estão funcionais */}
+          {/* 🔸 Filtros */}
           <aside
-            className={`filters-sidebar ${isMobile && isSidebarOpen ? 'open' : ''} ${!isMobile ? 'desktop-visible' : ''}`}
+            className={`filters-sidebar ${
+              isMobile && isSidebarOpen ? 'open' : ''
+            } ${!isMobile ? 'desktop-visible' : ''}`}
           >
             <h3>Filtrar por</h3>
 
-            {/* Filtro por Marca */}
+            {/* 🔘 Marca */}
             <div className='filter-group'>
-              <h4>Marca</h4>
+              <h4
+                onClick={() => setMostrarTodasMarcas(prev => !prev)}
+                style={{ cursor: 'pointer', userSelect: 'none' }}
+              >
+                Marca {mostrarTodasMarcas ? '▲' : '▼'}
+              </h4>
               <div className='filter-options'>
-                {uniqueBrands.slice(0, 10).map(marca => (
+                {(mostrarTodasMarcas
+                  ? marcasDisponiveis
+                  : marcasDisponiveis.slice(0, 0)
+                ).map(marca => (
                   <label key={marca} className='filter-option'>
                     <input
                       type='checkbox'
                       checked={selectedFilters.marca.includes(marca)}
-                      onChange={() => handleFilterChange('marca', marca)}
+                      onChange={e => {
+                        const checked = e.target.checked;
+                        setSelectedFilters(prev => ({
+                          ...prev,
+                          marca: checked
+                            ? [...prev.marca, marca]
+                            : prev.marca.filter(m => m !== marca),
+                        }));
+                      }}
                     />
                     <span>{marca}</span>
                   </label>
@@ -172,46 +245,61 @@ const ProductListingPage = () => {
               </div>
             </div>
 
-            {/* Filtro por Categoria */}
+            {/* 🔘 Categoria */}
             <div className='filter-group'>
-              <h4>Categoria</h4>
+              <h4
+                onClick={() => setMostrarTodasCategorias(prev => !prev)}
+                style={{ cursor: 'pointer', userSelect: 'none' }}
+              >
+                Categoria {mostrarTodasCategorias ? '▲' : '▼'}
+              </h4>
               <div className='filter-options'>
-                {['Esporte e lazer', 'Casual', 'Utilitário', 'Corrida'].map(
-                  categoria => (
-                    <label key={categoria} className='filter-option'>
-                      <input
-                        type='checkbox'
-                        checked={selectedFilters.categoria.includes(categoria)}
-                        onChange={() =>
-                          handleFilterChange('categoria', categoria)
-                        }
-                      />
-                      <span>{categoria}</span>
-                    </label>
-                  )
-                )}
-              </div>
-            </div>
-
-            {/* Filtro por Estado */}
-            <div className='filter-group'>
-              <h4>Estado</h4>
-              <div className='filter-options'>
-                {['Novo', 'Usado'].map(estado => (
-                  <label key={estado} className='filter-option'>
+                {(mostrarTodasCategorias
+                  ? categoriasDisponiveis
+                  : categoriasDisponiveis.slice(0, 3)
+                ).map(categoria => (
+                  <label key={categoria} className='filter-option'>
                     <input
                       type='checkbox'
-                      checked={selectedFilters.estado.includes(estado)}
-                      onChange={() => handleFilterChange('estado', estado)}
+                      checked={selectedFilters.categoria.includes(categoria)}
+                      onChange={e => {
+                        const checked = e.target.checked;
+                        setSelectedFilters(prev => ({
+                          ...prev,
+                          categoria: checked
+                            ? [...prev.categoria, categoria]
+                            : prev.categoria.filter(c => c !== categoria),
+                        }));
+                      }}
                     />
-                    <span>{estado}</span>
+                    <span>{categoria}</span>
                   </label>
                 ))}
               </div>
             </div>
+
+            {/* 🔘 Em estoque */}
+            <div className='filter-group'>
+              <h4>Em Estoque</h4>
+              <div className='filter-options'>
+                <label className='filter-option'>
+                  <input
+                    type='checkbox'
+                    checked={selectedFilters.emEstoque}
+                    onChange={e =>
+                      setSelectedFilters(prev => ({
+                        ...prev,
+                        emEstoque: e.target.checked,
+                      }))
+                    }
+                  />
+                  <span>Disponível</span>
+                </label>
+              </div>
+            </div>
           </aside>
 
-          {/* Grid de produtos */}
+          {/* 🛒 Lista de Produtos */}
           <main className='products-grid'>
             <ProductListing $isPageProducts products={filteredProducts} />
           </main>

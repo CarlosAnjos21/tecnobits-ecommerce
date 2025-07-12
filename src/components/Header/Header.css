@@ -1,277 +1,210 @@
-/* Header Component Styles */
+/* Estilos do Componente Header */
 
 .header-container {
-  width: 100%;
-  background-color: var(--white);
-  filter: drop-shadow(0 10px 30px 0 rgba(0, 0, 0, 0.5));
-  display: flex;
-  justify-content: center;
-  transition: height 0.3s ease;
+    width: 100%;
+    background-color: white;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.05));
+    display: flex;
+    justify-content: center;
+    transition: height 0.3s ease;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .header-container.auth-page {
-  height: 98px;
+    height: 98px;
 }
 
 .header-container:not(.auth-page) {
-  height: 192px;
+    min-height: 100px;
 }
 
 .header-dropshadow {
-  width: 100%;
-  max-width: 1440px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: height 0.3s ease;
+    width: 100%;
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
 .header-dropshadow.auth-page {
-  padding: 39px 0;
-  gap: 0;
+    padding: 20px 40px;
+    justify-content: center;
 }
 
 .header-dropshadow:not(.auth-page) {
-  padding: 39px 100px 29px;
-  gap: 40px;
-}
-
-/* Estilo especial para centralizar a logo em páginas de autenticação */
-.content-logo.center-logo {
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 48px;
-  width: 100%;
+    padding: 20px 40px;
+    gap: 20px;
 }
 
 .header-main {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-items: center;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
 
+
+.header-main-auth {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start; /* Alinha o logo à esquerda */
+    align-items: center;
+    height: 100%;
+}
+
+.auth-logo-icon {
+    height: 40px; 
+    width: 40px; /* Definir largura para criar um quadrado */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+    border-radius: 8px; /* Adiciona as bordas arredondadas */
+    display: block;
+}
+
+
+
 .search-input {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  gap: 48px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 1rem;
+    margin: 0 2rem;
 }
 
 .search-icon {
-  position: absolute;
-  left: 24px;
-  color: var(--light-gray);
-  font-size: 1.5rem;
-  z-index: 10;
+    position: absolute;
+    left: 16px;
+    color: #A9B3B3;
+    font-size: 1.5rem;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .search-input input {
-  width: 100%;
-  max-width: 559px;
-  height: 60px;
-  background-color: var(--light-gray-3);
-  border-radius: 8px;
-  padding: 0 24px 0 70px;
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--light-gray);
-  line-height: 28px;
-  letter-spacing: 0.75px;
-}
-
-.search-input input::placeholder {
-  color: var(--light-gray);
+    width: 100%;
+    max-width: 559px;
+    height: 48px;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    padding: 0 24px 0 50px;
+    font-size: 1rem;
+    border: 1px solid transparent;
 }
 
 .search-input input:focus {
-  outline: 2px solid var(--primary-color);
-  background-color: var(--white);
+    outline: 2px solid #4B5B9D;
+    background-color: white;
 }
 
 .user-actions {
-  display: flex;
-  align-items: center;
-  gap: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .user-actions .icon-link {
-  text-decoration: none;
-  color: var(--light-gray);
-  position: relative;
-  transition: color 0.2s ease;
+    text-decoration: none;
+    color: #2D2D36;
+    position: relative;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
 }
 
 .user-actions .icon-link:hover {
-  color: var(--primary-color);
+    color: #4B5B9D;
 }
 
 .cart-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: var(--error-color);
-  color: var(--white);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: 700;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #FF3547;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
 }
 
 .hamburger-menu {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 4px;
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
-.hamburger-line {
-  width: 25px;
-  height: 3px;
-  background-color: var(--light-gray);
-  transition: all 0.3s ease;
-}
-
-/* Navigation Styles */
 .header-nav {
-  width: 100%;
-  max-width: 1440px;
-  padding: 0 100px;
+    width: 100%;
+    max-width: 1440px;
 }
 
 .nav-list {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-link {
-  font-weight: 400;
-  line-height: 28px;
-  letter-spacing: 0.75px;
-  color: var(--light-gray);
-  transition: all 0.2s ease;
-  text-decoration: none;
-  text-underline-offset: 4px;
+    font-weight: 500;
+    line-height: 28px;
+    color: #2D2D36;
+    transition: all 0.2s ease;
+    text-decoration: none;
 }
 
 .nav-link:hover {
-  color: var(--primary-color);
-  text-decoration: underline 2px solid;
-  text-decoration-color: var(--primary-color);
-  text-underline-offset: 4px;
+    color: #4B5B9D;
 }
 
 .nav-link.active {
-  color: var(--primary-color);
-  text-decoration: underline 2px solid;
-  text-decoration-color: var(--primary-color);
-  font-weight: 700;
+    color: #4B5B9D;
+    font-weight: 700;
 }
 
 .btn-nav-link {
-  color: var(--light-gray-3);
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 /* Responsividade */
-@media (max-width: 1400px) {
-  .header-dropshadow:not(.auth-page) {
-    padding: 30px 60px 20px;
-    gap: 30px;
-  }
-
-  .search-input {
-    gap: 30px;
-  }
-
-  .user-actions {
-    gap: 25px;
-  }
-
-  .header-nav {
-    padding: 0 60px;
-  }
-
-  .nav-list {
-    gap: 24px;
-  }
-}
-
 @media (max-width: 768px) {
-  .hamburger-menu {
-    display: flex;
-  }
-
-  .header-main .search-input {
-    display: none;
-  }
-
-  .header-nav {
-    display: none;
-  }
-
-  .header-nav.mobile-open {
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--white);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-
-  .header-nav.mobile-open .nav-list {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    gap: 15px;
-  }
-}
-
-@media (max-width: 460px) {
-  .header-container:not(.auth-page) {
-    height: auto;
-    min-height: 120px;
-  }
-
-  .header-dropshadow:not(.auth-page) {
-    padding: 20px 10px;
-    gap: 20px;
-  }
-
-  .content-logo.center-logo {
-    margin-left: 20px;
-  }
-
-  .user-actions {
-    gap: 15px;
-  }
-
-  .nav-link {
-    display: none;
-  }
-
-  .search-input input {
-    max-width: 300px;
-    height: 45px;
-    padding: 0 20px 0 50px;
-    font-size: 0.9rem;
-  }
-
-  .search-icon {
-    left: 15px;
-    font-size: 1.2rem;
-  }
+    .hamburger-menu {
+        display: flex;
+    }
+    .search-input, .header-nav, .user-actions .nav-link, .user-actions .primary-btn {
+        display: none;
+    }
+    .header-nav.mobile-open {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    .header-nav.mobile-open .nav-list {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 15px;
+    }
 }

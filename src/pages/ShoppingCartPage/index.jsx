@@ -63,7 +63,7 @@ const ShoppingCartPage = () => {
   };
 
   const handleGoToCheckout = () => {
-    navigate('/finalizar-compra'); // Adicione esta linha para redirecionar
+    navigate('/checkout'); // Adicione esta linha para redirecionar
   };
 
   return (

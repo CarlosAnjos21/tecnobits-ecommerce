@@ -7,7 +7,7 @@
   min-height: 400px;
   height: 450px;
   align-items: center;
-  padding: 0px 80px 20px 60px;
+  padding: 0 80px 20px 60px;
   gap: 50px;
   margin: 0 auto;
 }
@@ -70,65 +70,112 @@
 /* Responsividade para Marketing Bottom */
 @media (max-width: 1366px) and (min-width: 1025px) {
   .container-bottom {
-    max-width: 1100px;
-    padding: 0px 60px 20px 40px;
-    gap: 40px;
+    max-width: 1000px;
+    padding: 0px 40px 20px 30px;
+    gap: 30px;
+  }
+  .container-bottom .content-bottom-image {
+    width: 260px;
+    height: 260px;
+  }
+  .container-bottom .content-bottom-image img {
+    width: 280px;
+  }
+  .container-bottom .content-bottom-right h3 {
+    font-size: 2.1rem;
+    line-height: 38px;
   }
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
   .container-bottom {
-    max-width: 900px;
-    padding: 0px 40px 20px 30px;
-    gap: 30px;
-    height: 380px;
+    max-width: 700px;
+    padding: 0px 20px 20px 15px;
+    gap: 18px;
+    height: 320px;
   }
-  
   .container-bottom .content-bottom-image {
-    width: 280px;
-    height: 280px;
+    width: 180px;
+    height: 180px;
   }
-  
   .container-bottom .content-bottom-image img {
-    width: 320px;
+    width: 200px;
   }
-  
   .container-bottom .content-bottom-right h3 {
-    font-size: 2.2rem;
-    line-height: 40px;
+    font-size: 1.5rem;
+    line-height: 30px;
+  }
+  .container-bottom .content-bottom-right p {
+    font-size: 0.9rem;
+    line-height: 22px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 461px) {
+  .container-bottom {
+    flex-direction: column;
+    align-items: center;
+    max-width: 95vw;
+    height: auto;
+    min-height: 320px;
+    padding: 30px 10px 30px 10px;
+    gap: 20px;
+  }
+  .container-bottom .content-bottom-image {
+    width: 160px;
+    height: 160px;
+  }
+  .container-bottom .content-bottom-image img {
+    width: 180px;
+  }
+  .container-bottom .content-bottom-right {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  .container-bottom .content-bottom-right h3 {
+    font-size: 1.2rem;
+    line-height: 26px;
+  }
+  .container-bottom .content-bottom-right p {
+    font-size: 0.85rem;
+    line-height: 18px;
   }
 }
 
 @media (max-width: 460px) {
   .container-bottom {
     width: 100%;
-    min-height: 375px;
-    height: 700px;
+    min-height: 250px;
+    height: auto;
     flex-direction: column;
-    padding: 40px 45px 50px;
-    gap: 0px;
+    align-items: center;
+    padding: 25px 10px 30px;
+    gap: 10px;
   }
-
   .container-bottom .content-bottom-image {
-    width: 270px;
-    height: 270px;
+    width: 120px;
+    height: 120px;
   }
-
   .container-bottom .content-bottom-image img {
-    width: 330px;
+    width: 130px;
   }
-
+  .container-bottom .content-bottom-right {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
   .container-bottom .content-bottom-right h3 {
-    font-size: 1.9rem;
-    line-height: 36px;
-    letter-spacing: 2px;
-  }
-
-  .container-bottom .content-bottom-right p {
-    font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.25px;
+    font-size: 1rem;
     line-height: 20px;
+    letter-spacing: 1px;
+  }
+  .container-bottom .content-bottom-right p {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15px;
+    line-height: 16px;
     color: var(--dark-gray-2);
   }
 }

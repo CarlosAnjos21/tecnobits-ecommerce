@@ -1,7 +1,7 @@
-.footer-container {
+.footer-header {
   display: flex;
-  background-color: var(--primary-color);
-  width: 100%;
+  background-color: var(--background-color);
+  width: 80%;
   height: 454px;
   padding: 72px 100px 30px;
   flex-direction: column;
