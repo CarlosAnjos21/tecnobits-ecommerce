@@ -120,7 +120,6 @@ function ProductViewPage() {
               <span><FaBoltLightning className='prontaentrega'/>Pronta entrega</span>
               <span><StarRating rating={product.rating || 0}/></span>
               <span><FaCalendarDays className='calendario'/>12 meses de garantia</span>
-            
             </div>
             <h2 className='descricao'>{product.description}</h2>
             <p className='desconto'>De: {product.price.toFixed(2)} por:</p>

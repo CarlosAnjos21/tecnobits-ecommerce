@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem;
-    background-color: aqua;
+    /*background-color: aqua;*/
     height:  90vh;
 }
 .titulo {
@@ -23,13 +23,13 @@
 }
 .conteudo{
     display: flex;
-    background-color: blueviolet;
+    /*background-color: blueviolet;*/
     height: 900%;
     width: 100%;
     flex-direction: wrap;
 }
 .esquerda {
-    background-color: greenyellow;
+    /*background-color: greenyellow;*/
     height: 100%;
     width: 50%;
     flex-direction: column;
@@ -161,7 +161,7 @@ font-weight: bold;
 .frete h4 {
     font-size: 0.9em;
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: #00D2FF;
     font-weight: 600;
     display: flex;
@@ -188,6 +188,7 @@ font-weight: bold;
     border-radius: 4px;
     font-size: 0.95em;
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    color: var(--text-light);
 }
 .frete-entrada input:focus {
     border-color: #00D2FF;
@@ -202,7 +203,8 @@ font-weight: bold;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 .direta .compraragr{
     width: 100%;
