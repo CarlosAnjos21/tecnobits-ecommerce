@@ -8,19 +8,19 @@
   align-items: center;
 }
 
-.logo-container .content-icon,
+.logo-container,
 .logo-container .content-image {
-  height: 40px;
+  height: 80px;
   width: 100%;
   color: var(--white);
 }
 
-.logo-container .icon-logo {
+.logo-container{
   width: 50px;
   border-radius: 8px;
 }
 
-.logo-container .logo-image {
+.logo-container{
   height: 100%;
   width: 100%;
 }

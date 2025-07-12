@@ -83,7 +83,8 @@ const Header = () => {
                             </button>
 
                             <div className='content-logo'>
-                                <Logo />
+                                <Link to="/" className="back-icon" aria-label="Voltar para a página principal">
+                                <Logo /></Link>
                             </div>
 
                             <div className='search-input'>
