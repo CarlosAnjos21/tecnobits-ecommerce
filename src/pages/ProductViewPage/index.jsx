@@ -2,7 +2,7 @@ import './ProductViewPage.css';
 import { useParams } from "react-router-dom";
 import products from '../../data/products.json';
 import { ButtonPrimary } from '../../components/Buttons/ButtonComponents';
-
+import { useCart } from '../../contexts/CartContext';
 
   
 
@@ -14,6 +14,18 @@ function ProductViewPage() {
   const descontoPercentual = product.priceDiscount && product.priceDiscount > 0
     ? `${Math.round(((product.price - product.priceDiscount) / product.price) * 100)}%`
     : "0%";
+
+  const { addToCart } = useCart();
+
+  // Supondo que o produto não tem variações de tamanho/cor no JSON
+  const handleAddToCart = () => {
+    addToCart({
+      ...product,
+      price: product.priceDiscount > 0 ? product.priceDiscount : product.price,
+      imageUrl: product.image, // usa o campo 'image' do JSON
+      quantity: 1,
+    });
+  };
 
   if (!product) {
     return <h2>Produto não encontrado.</h2>;
@@ -40,7 +52,7 @@ function ProductViewPage() {
           <p className='preco'>R$ {product.priceDiscount}</p>
           <p className='avista'><img src="/public/images/pix.png" alt="pix" className='pix'/>À vista no PIX com {descontoPercentual} de desconto</p>
           <div className='botoes'><ButtonPrimary className='compraragr' >COMPRAR AGORA</ButtonPrimary>
-          <ButtonPrimary className='addcarrinho'>ADICIONAR AO CARRINHO</ButtonPrimary></div>
+          <ButtonPrimary className='addcarrinho' onClick={handleAddToCart}>ADICIONAR AO CARRINHO</ButtonPrimary></div>
           </div>
         </div>
       </div>
