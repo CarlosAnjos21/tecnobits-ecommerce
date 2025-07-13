@@ -63,17 +63,7 @@ if (value.trim().length > 1) {
 
 
     const toggleSearch = () => isMobile && setShowSearch(!showSearch);
-
-   // const handleSearch = () => {
-   //     if (searchTerm.trim()) {
-  //          const formattedSearchTerm = searchTerm.trim().toLowerCase().replace(/\s+/g, '-');
-   //         navigate(`/produtos?filter=${formattedSearchTerm}`);
-   //     }
-   //     if (isMobile && searchTerm.trim()) {
-   //         setShowSearch(false);
-    //    }
-    //};
-
+    
     // Função para lidar com a pesquisa
     const handleSearch = () => {
   const term = searchTerm.trim().toLowerCase();
