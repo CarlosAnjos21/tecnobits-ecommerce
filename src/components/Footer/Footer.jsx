@@ -76,11 +76,11 @@ const Footer = () => (
     <address className='footer-address'>
       <strong className='footer-address-title'>Contato</strong>
       <p className='p-address'>
-        Av. Santos Dumont, 1510 - 1 andar - Aldeota, Fortaleza - CE, 60150-160
+        Av. Carlos Jereissati, 100 - Centro, Maracanaú - CE, 61900-010
       </p>
     </address>
     <div className='footer-phone'>
-      <p>(85) 3051-3411</p>
+      <p>(85) 9959-3879</p>
     </div>
 
     <div className='footer-social'>
@@ -98,27 +98,14 @@ const Footer = () => (
       </ul>
     </div>
 
-   {/* <div className='footer-line'>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='1240'
-        height='1'
-        viewBox='0 0 1240 1'
-        fill='none'
-      >
-        <path opacity='0.3' d='M1240 0H0V1H1240V0Z' fill='white' />
-      </svg>
-    </div>*/}
     {/* div copyright */}
     <div className='footer-copy'>
       <FooterCopy>© {new Date().getFullYear()} Digital College</FooterCopy>
     </div>
-    {/*<div className='footer-content'>
-      <div className='footer-info'>...</div>
-      <div className='footer-categories'>...</div>
-      <address className='footer-address'>...</address>
-      <div className='footer-phone'>...</div>
-    </div>*/}
+    <div className='Ilustrate-Footer-Image'>
+      <img src='/images/IlustrateFooterImage.jpg'/>
+    </div>
+
   </footer>
 );
 
