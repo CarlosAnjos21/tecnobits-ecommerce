@@ -15,7 +15,6 @@ const Footer = () => (
     {/* div cabeçalho */}
     <div className='footer-header'>
       <img className='footer-logo' src="/images/MaybeFooterLogo.png" alt='Logo da loja' />
-      <h3 className='footer-title'>Digital Store</h3>
     </div>
 
     {/* div descrição */}
@@ -73,10 +72,13 @@ const Footer = () => (
     </div>
 
     {/* address */}
+    <div className='contats-container'>
     <address className='footer-address'>
       <strong className='footer-address-title'>Contato</strong>
       <p className='p-address'>
-        Av. Carlos Jereissati, 100 - Centro, Maracanaú - CE, 61900-010
+        Av. Carlos Jereissati, 100 - Centro, 
+        Maracanaú - CE,
+        61900-010
       </p>
     </address>
     <div className='footer-phone'>
@@ -97,10 +99,11 @@ const Footer = () => (
         </li>
       </ul>
     </div>
+    </div>
 
     {/* div copyright */}
     <div className='footer-copy'>
-      <FooterCopy>© {new Date().getFullYear()} Digital College</FooterCopy>
+      <FooterCopy>© {new Date().getFullYear()} Projeto Integrador - Fullstack Capacita Brasil</FooterCopy>
     </div>
   </footer>
 );
