@@ -68,7 +68,7 @@
 }
 
 .product-card .card-product img {
-  width: 238px; /* antes: 248px*/
+  width: auto; /* antes: 248px*/
   height: 175px;
   display: block;
   position: static; /*Vini: Arrumei a position, goxtaram? > 3 > */
