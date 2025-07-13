@@ -102,10 +102,6 @@ const Footer = () => (
     <div className='footer-copy'>
       <FooterCopy>© {new Date().getFullYear()} Digital College</FooterCopy>
     </div>
-    <div className='Ilustrate-Footer-Image'>
-      <img src='/images/IlustrateFooterImage.jpg'/>
-    </div>
-
   </footer>
 );
 
