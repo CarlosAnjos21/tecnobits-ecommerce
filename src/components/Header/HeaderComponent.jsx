@@ -193,7 +193,7 @@ const handleSearch = () => {
                                 <FaRegCircleUser className='user-icons'/>
                                 <div className="user-text">
                                 <span className='user-line'>Olá, <Link to='/login'>Entre</Link></span>
-                                <span className='user-line'>ou <Link to='/'>Cadastre-se</Link></span>
+                                <span className='user-line'>ou <Link to='/create-account'>Cadastre-se</Link></span>
                                 </div>
                                 </div>
 
