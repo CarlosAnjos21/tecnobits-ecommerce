@@ -190,7 +190,7 @@ const handleSearch = () => {
 
                             <div className='user-actions'>
                                 <div className="user">
-                                <FaRegCircleUser className='user-icons'/>
+                                <Link to='/login'><FaRegCircleUser className='user-icons'/></Link>
                                 <div className="user-text">
                                 <span className='user-line'>Olá, <Link to='/login'>Entre</Link></span>
                                 <span className='user-line'>ou <Link to='/create-account'>Cadastre-se</Link></span>
