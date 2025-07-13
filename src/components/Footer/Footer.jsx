@@ -36,7 +36,7 @@ const Footer = () => (
           <li className='footer-info-title'>
             <strong>Informações</strong>
           </li>
-          <li className='footer-a'>Sobre Drip Store</li>
+          <li className='footer-a'>Sobre TecnoBits</li>
           <li className='footer-a'>Segurança</li>
           <li className='footer-a'>Wishlist</li>
           <li className='footer-a'>Blog</li>
