@@ -47,34 +47,41 @@ const Header = () => {
     
 // Função para lidar com a mudança no input de pesquisa
 const handleInputChange = (event) => {
-const value = event.target.value;
-setSearchTerm(value);
+  const value = event.target.value;
+  setSearchTerm(value);
 
-// Sugestões de produtos por nome
-if (value.trim().length > 1) {
-    const filtered = products.filter((p) =>
-        p.name.toLowerCase().includes(value.toLowerCase())
-    );
-    setSuggestions(filtered.slice(0, 5)); // no máximo 5 sugestões
+  if (value.trim().length > 1) {
+    const filtered = products.filter((product) => {
+      const term = value.toLowerCase();
+      return (
+        product.name.toLowerCase().includes(term) ||
+        product.brand?.toLowerCase().includes(term) ||
+        product.category?.toLowerCase().includes(term)
+      );
+    });
+
+    setSuggestions(filtered.slice(0, 5));
   } else {
     setSuggestions([]);
   }
 };
 
 
+
     const toggleSearch = () => isMobile && setShowSearch(!showSearch);
 
     // Função para lidar com a pesquisa
-    const handleSearch = () => {
+const handleSearch = () => {
   const term = searchTerm.trim().toLowerCase();
   if (!term) return;
 
-  const matchedProduct = products.find((p) =>
-    p.name.toLowerCase().includes(term)
+  const matchedProduct = products.find((product) =>
+    product.name.toLowerCase().includes(term) ||
+    product.brand?.toLowerCase().includes(term) ||
+    product.category?.toLowerCase().includes(term)
   );
 
   if (matchedProduct) {
-    // Atualiza histórico local
     const updatedHistory = [term, ...searchHistory.filter((t) => t !== term)].slice(0, 5);
     setSearchHistory(updatedHistory);
     localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
@@ -84,9 +91,6 @@ if (value.trim().length > 1) {
     alert('Produto não encontrado.');
   }
 
-  if (isMobile) {
-    setShowSearch(false);
-  }
   setSuggestions([]);
 };
 
