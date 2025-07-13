@@ -46,7 +46,7 @@
   max-width: 100%; /*mxwidth: 307px*/
   padding-top: 5px;
   top: -26%;
-  left: -35%;
+  left: -8%;
   border: solid blue 2px;
 }
 
@@ -85,7 +85,8 @@
   flex-direction: column;
   border: solid orange 2px;
   left: -10%;
-  top: -457%;
+  top: -466%;
+  font-size: small;
 }
 
 /*.footer-info-list {
@@ -124,6 +125,7 @@
   border: solid orange 2px;
   left: 1%;
   top: -526%;
+  font-size: small
 }
 
 .footer-categories-list {
@@ -144,8 +146,9 @@
   display: flex;
   flex-direction: column;
   border: solid orange 2px;
-  left: 24.2%;
-  top: -582%;
+  left: 22%;
+  top: -634%;
+  font-size: small;
 }
 
 .footer-address-title {
@@ -161,9 +164,10 @@
   display: flex;
   flex-direction: column;
   border: solid orange 2px;
-  left: 11.3%;
-  top: -580%;
+  left: 11.5%;
+  top: -634%;
   color: aliceblue;
+  font-size: small;
 }
 
 .footer-social {
@@ -171,8 +175,9 @@
   display: flex;
   flex-direction: column;
   /*border: solid orange 2px;*/
-  left: 10.1%;
-  top: -607%;
+  left: 10.7%;
+  top: -658%;
+  font-size: small;
 }
 
 /* Redes sociais */
@@ -216,7 +221,7 @@
   flex-direction: column;
   border: solid orange 2px;
   left: -4%;
-  top: -560%;
+  top: -590%;
 }
 
 /*.footer-content {
