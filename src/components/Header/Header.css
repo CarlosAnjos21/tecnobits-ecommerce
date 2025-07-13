@@ -103,13 +103,26 @@
 .search-suggestions {
   position: absolute;
   top: 100%;
+  left: 0;
   background: white;
   width: 100%;
   max-width: 559px;
+  max-height: 260px; /* altura suficiente para 5 itens com padding */
+  overflow-y: auto; /* ativa scroll se ultrapassar altura */
   border: 1px solid #ccc;
   border-radius: 0 0 8px 8px;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  scrollbar-width: thin; /* Firefox */
+}
+
+.search-suggestions::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
 }
 
 .suggestion-item {
@@ -171,8 +184,28 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    display: flex;
+    justify-content: space-around;
 }
-
+.user-actions .user-icons {
+    width: 40px;
+    height: 40px;
+}
+.user-actions .user {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espaço entre o ícone e o texto */
+}
+.user-actions .user-line {
+  font-size: 14px; /* mesmo tamanho para os dois */
+  color: #333; /* cor do texto */
+  text-align: left;
+}
+.user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
 .user-actions .icon-link {
     text-decoration: none;
     color: #2D2D36;
