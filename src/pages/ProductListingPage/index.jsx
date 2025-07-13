@@ -305,6 +305,7 @@ const ProductListingPage = () => {
         </div>
       </Section>
     </div>
+    </div>
   );
 };
 

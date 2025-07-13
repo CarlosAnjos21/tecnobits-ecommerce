@@ -9,7 +9,7 @@
   padding-bottom: 20px;
   border-bottom: 1px solid #eee;
   position: relative;
-  left: 433px;
+  
   top: 30px;
 }
 
@@ -60,6 +60,8 @@
 .content-container {
   display: flex;
   gap: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Sidebar de filtros */
@@ -69,7 +71,6 @@
   flex-shrink: 0;
   display: inline-flex;
   padding: 30px;
-  left: 50px;
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
