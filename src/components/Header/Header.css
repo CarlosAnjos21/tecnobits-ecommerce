@@ -187,24 +187,46 @@
     display: flex;
     justify-content: space-around;
 }
+.user-actions .user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.user-actions .user:hover {
+    background-color: #f0f2f5;
+}
 .user-actions .user-icons {
     width: 40px;
     height: 40px;
 }
-.user-actions .user {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* espaço entre o ícone e o texto */
-}
-.user-actions .user-line {
-  font-size: 14px; /* mesmo tamanho para os dois */
-  color: #333; /* cor do texto */
-  text-align: left;
-}
-.user-text {
+.user-actions .user .user-text {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
+}
+.user-actions .user .user-text .user-link {
+  all: unset;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+ 
+}
+.user-actions .user .user-text .user-link .user-icons {
+  all: unset;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+ 
+}
+.user-actions .user .user-text span.user-line {
+  font-size: 14px;
+  color: var(--professional-color);
+  white-space: nowrap;
+  text-decoration: none;
 }
 .user-actions .icon-link {
     text-decoration: none;
