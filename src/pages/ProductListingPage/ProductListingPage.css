@@ -3,16 +3,19 @@
 ========================== */
 .listing-header {
   width: 100%;
-  max-width: 1212px;
+/*max-width: 912px;
+  margin: 0 auto;*/
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 30px;
-  padding-bottom: 20px;
+  padding: 20px 40px;
+/*padding-bottom: 20px;*/
   border-bottom: 1px solid #eee;
-  position: relative;
-  left: 433px;
+  position: sticky;
   top: 30px;
+  background-color: white;
+  z-index: 10;
 }
 
 .results-info h2 {
@@ -30,8 +33,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  position: absolute;
-  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sort-container label {
@@ -60,6 +64,8 @@
 .content-container {
   display: flex;
   gap: 30px;
+  max-width: 1500px; 
+  margin: 0 auto;
 }
 
 /* ==========================
@@ -90,7 +96,7 @@
 }
 
 .filter-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .filter-group h4 {
@@ -103,7 +109,7 @@
 .filter-options {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 
 .filter-option {
@@ -111,6 +117,10 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  padding: 4px 40px 4px 10px;
+  background-color: transparent;      
+  border: 1px solid transparent;
+  border-radius: 6px;
   color: var(--dark-gray-2, #474747);
   font-feature-settings: 'liga' off, 'clig' off;
   font-family: Inter;
@@ -119,31 +129,21 @@
   font-weight: 500;
   line-height: 22px;
   letter-spacing: 0.25px;
-}
-
-.filter-option input[type='checkbox'] {
-  width: 22px;
-  height: 22px;
-  accent-color: #c92071;
-  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .filter-option:hover {
-  color: #c92071;
+  background-color: #e0e0e0; /* cinza escuro no hover */
+  border-color: #bbb;
+  color: #2070ef;
 }
 
-/* ==========================
-   GRID DE PRODUTOS
-========================== */
-.products-grid {
-  width: 100%;
-  max-width: 904px;
-  padding-bottom: 30px;
-}
-
-.products-container {
-  display: flex;
-  flex-direction: column;
+/* Checkbox */
+.filter-option input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  accent-color: #2070ef;
+  cursor: pointer;
 }
 
 /* ==========================
@@ -217,13 +217,17 @@
   .listing-header {
     width: 100%;
     min-width: 335px;
-    height: 100%;
-    min-height: 102px;
     display: flex;
-    flex-direction: column-reverse;
-    align-items: flex-start;
-    left: 20px;
-    top: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 10px 15px;
+    z-index: 10;
+    border-bottom: 1px solid #eee;
   }
 
   .results-info {
@@ -233,19 +237,24 @@
     min-height: 22px;
   }
 
+  .results-info h2 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+    max-width: 140px;
+  }
+
   .sort-container {
-    right: 125px;
-    top: 0;
+    flex: 1;
+    max-width: 140px;
   }
 
   .filter-icon-wrapper {
-    position: absolute;
-    right: 70px;
-    top: 0;
-    background-color: var(--primary-color);
-    width: 43px;
-    height: 43px;
+    width: 40px;
+    height: 40px;
     border-radius: 8px;
+    background-color: var(--primary-color, #c92071);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -265,7 +274,7 @@
     transition: transform 0.3s ease-in-out;
     overflow-y: auto;
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 5px rgba(243, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -285,20 +294,13 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
   }
-
-  .results-info h2 {
-    font-weight: 700;
-    font-size: 0.75rem;
-    line-height: 22px;
-    letter-spacing: 0.75px;
-  }
 }
 
 /* ==========================
    FILTROS POR CATEGORIA / MARCA (CARLOS)
 ========================== */
 .categoria-filtro {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .categoria-filtro h5 {
@@ -310,27 +312,17 @@
 }
 
 .categoria-filtro h5:hover {
-  color: #c92071;
+  color: #3B82F6;
 }
 
-.categoria-filtro .filter-options {
+/*Carlos*/
+.marcas-scroll {
   max-height: 150px;
   overflow-y: auto;
   padding-left: 10px;
-  margin-top: 5px;
-  border-left: 2px solid #eee;
+  scrollbar-width: none; /* Firefox */
 }
 
-/* Scroll bonito */
-.categoria-filtro .filter-options::-webkit-scrollbar {
-  width: 6px;
-}
-
-.categoria-filtro .filter-options::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 3px;
-}
-
-.categoria-filtro .filter-options::-webkit-scrollbar-track {
-  background-color: #f4f4f4;
+.marcas-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
 }
