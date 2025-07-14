@@ -61,11 +61,12 @@
 /* ==========================
    CONTAINER PRINCIPAL
 ========================== */
-.content-container {
+.content-container { /* Vini esteve aqui */
   display: flex;
   gap: 30px;
   max-width: 1500px; 
-  margin: 0 auto;
+  margin: 0 -20px; /* antes: 0 auto; Fiz isso para adicionar o overflowx */
+  overflow-x: hidden; /* serve para evitar aquele scroll horizontal */
 }
 
 /* ==========================
@@ -211,7 +212,7 @@
 
 @media (max-width: 460px) {
   .products-grid {
-    max-width: 335px;
+    max-width: 3235px;
   }
 
   .listing-header {
