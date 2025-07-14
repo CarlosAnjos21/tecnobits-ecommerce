@@ -9,6 +9,7 @@ import { InputDefault } from '../Input';
 import { useCart } from '../../contexts/CartContext';
 // 1. Caminho da imagem corrigido para 'icons'
 import logoIcon from '../../assets/icons/logo.png';
+import products from '../../data/products.json'; // Importando os produtos para o filtro
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +18,10 @@ const Header = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const navigate = useNavigate();
     const location = useLocation();
+    const [suggestions, setSuggestions] = useState([]);
+    const [searchHistory, setSearchHistory] = useState(() => {
+  return JSON.parse(localStorage.getItem('searchHistory')) || [];
+});
 
     // Contexto do Carrinho
     const cartContext = useCart();
@@ -38,18 +43,52 @@ const Header = () => {
     }, []);
 
     const handleMenuClick = () => setIsMenuOpen(!isMenuOpen);
-    const handleInputChange = event => setSearchTerm(event.target.value);
+    
+    
+// Função para lidar com a mudança no input de pesquisa
+const handleInputChange = (event) => {
+const value = event.target.value;
+setSearchTerm(value);
+
+// Sugestões de produtos por nome
+if (value.trim().length > 1) {
+    const filtered = products.filter((p) =>
+        p.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setSuggestions(filtered.slice(0, 5)); // no máximo 5 sugestões
+  } else {
+    setSuggestions([]);
+  }
+};
+
+
     const toggleSearch = () => isMobile && setShowSearch(!showSearch);
 
+    // Função para lidar com a pesquisa
     const handleSearch = () => {
-        if (searchTerm.trim()) {
-            const formattedSearchTerm = searchTerm.trim().toLowerCase().replace(/\s+/g, '-');
-            navigate(`/produtos?filter=${formattedSearchTerm}`);
-        }
-        if (isMobile && searchTerm.trim()) {
-            setShowSearch(false);
-        }
-    };
+  const term = searchTerm.trim().toLowerCase();
+  if (!term) return;
+
+  const matchedProduct = products.find((p) =>
+    p.name.toLowerCase().includes(term)
+  );
+
+  if (matchedProduct) {
+    // Atualiza histórico local
+    const updatedHistory = [term, ...searchHistory.filter((t) => t !== term)].slice(0, 5);
+    setSearchHistory(updatedHistory);
+    localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
+
+    navigate(`/produtos/${matchedProduct.id}`);
+  } else {
+    alert('Produto não encontrado.');
+  }
+
+  if (isMobile) {
+    setShowSearch(false);
+  }
+  setSuggestions([]);
+};
 
     const handleKeyPress = event => {
         if (event.key === 'Enter') handleSearch();
@@ -95,8 +134,49 @@ const Header = () => {
                                         value={searchTerm}
                                         onChange={handleInputChange}
                                         onKeyUp={handleKeyPress}
+                                        
                                     />
                                 )}
+                                {(suggestions.length > 0 || searchHistory.length > 0) && (
+                                <div className="search-suggestions">
+                                {suggestions.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="suggestion-item-visual"
+                                    onClick={() => {
+                                    navigate(`/produtos/${product.id}`);
+                                    setSearchTerm('');
+                                    setSuggestions([]);
+                                    }}
+                                >
+                                <img src={product.image} alt={product.name} className="suggestion-image" />
+                                <div className="suggestion-info">
+                                <span className="suggestion-name">{product.name}</span>
+                                <span className="suggestion-price">R$ {product.price.toFixed(2)}</span>
+                                </div>
+                                </div>
+                                ))}
+
+                                {suggestions.length === 0 && (
+                                <>
+                                <div className="history-title">Buscas recentes:</div>
+                                {searchHistory.map((term, i) => (
+                                <div
+                                    key={i}
+                                    className="suggestion-item"
+                                    onClick={() => {
+                                    setSearchTerm(term);
+                                    handleSearch();
+                                    }}
+                                >
+                                    🕘 {term}
+                                </div>
+                                ))}
+                                </>
+                                )}
+                                </div>
+                                )}
+
                                 <div className='search-icon' onClick={isMobile ? toggleSearch : handleSearch}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19ZM21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                                 </div>
