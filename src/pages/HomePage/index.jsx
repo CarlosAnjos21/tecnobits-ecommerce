@@ -23,34 +23,9 @@ const HomePage = () => {
       {/* Seção de Campeões de vendas */}
       <Section
         title='Campeões de vendas'
-        link={{ text: 'Ver todos', href: '/*' }}
+        link={{ text: 'Ver todos', href: '/produtos' }}
       >
         <BestSellers />
-      </Section>
-
-      {/* Seção Marketing Bottom */}
-      <Section $paddingBottom>
-        <section className='container-bottom'>
-          <div className='content-bottom-left'>
-            <div className='content-bottom-image'>
-              <img src="/images/iphone-15-pro-max.jpg" alt='Marketing Bottom' />
-            </div>
-          </div>
-
-          <div className='content-bottom-right'>
-            <h4>Oferta especial</h4>
-            <h3>Air Jordan edição de colecionador</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-              quam consequuntur dolorum laborum est neque quisquam assumenda.
-              Suscipit, provident? Debitis cum minima temporibus animi sint modi
-              nihil excepturi molestiae ipsa.
-            </p>
-            <ButtonPrimary className="mobile desktop">
-              Ver Oferta
-            </ButtonPrimary>
-          </div>
-        </section>
       </Section>
     </div>
   );

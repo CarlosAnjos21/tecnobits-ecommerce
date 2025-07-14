@@ -1,7 +1,10 @@
 import './BestSellerCard.css';
 import { priceUtils } from '../../utils/priceUtils';
+import { useNavigate } from 'react-router-dom';
 
 const BestSellerCard = ({ product, index }) => {
+  const navigate = useNavigate();
+  
   const {
     id,
     name,
@@ -30,8 +33,8 @@ const BestSellerCard = ({ product, index }) => {
   const badge = getBadgePosition();
 
   const handleCardClick = () => {
-    // Navegar para página 404
-    window.location.href = `/404`;
+    // Navegar para página do produto específico usando React Router
+    navigate(`/produtos/${id}`);
   };
 
   return (
