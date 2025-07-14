@@ -30,21 +30,19 @@
 }
 .esquerda {
     /*background-color: greenyellow;*/
+    display: flex;
+    justify-content: center;   /* Centraliza horizontalmente */
+    align-items: center;       /* Centraliza verticalmente */
     height: 100%;
     width: 50%;
     flex-direction: column;
-    align-items: center;
-    padding-left: 5em;
-
+    padding-left: 0; /* ou ajuste conforme necessário */
 }
 .esquerda .imagem-produto{
     width: auto;
-    height: 70vh;
+    height: 500px;           /* Altura fixa */
     object-fit: cover;
-    transition: transform 0.3s ease;
-}
-.esquerda .imagem-produto:hover {
-    transform: scale(1.1);
+    
 }
 .direita {
     background-color: var(--base-color); /*unico que vai ficar*/
