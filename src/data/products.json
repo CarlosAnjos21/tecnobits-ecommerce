@@ -1028,7 +1028,7 @@
   },
   {
     "id": 80,
-    "name": "Framework Laptop 13 DIY Edition",
+    "name": "TROCAR PRODUTO",
     "description": "NOTEBOOK modular Framework Laptop 13 com Intel Core i7-1360P, completamente customizável",
     "price": 7999.99,
     "priceDiscount": 7299.99,
@@ -1047,7 +1047,7 @@
     "priceDiscount": 5999.99,
     "category": "MOBILE-PC",
     "brand": "GPD",
-    "image": "/public/images/gpd-win-4.jpg",
+    "image": "/public/images/gpd-win-4.webp",
     "rating": 4.5,
     "inStock": true,
     "tagValue": "8% Off"
@@ -1086,7 +1086,7 @@
     "priceDiscount": 4399.99,
     "category": "MOBILE-PC",
     "brand": "Lenovo",
-    "image": "/public/images/lenovo-legion-go.jpg",
+    "image": "/public/images/lenovo-legion-go.webp",
     "rating": 4.4,
     "inStock": true,
     "tagValue": "8% Off"
@@ -1099,7 +1099,7 @@
     "priceDiscount": 5499.99,
     "category": "MOBILE-PC",
     "brand": "AYA",
-    "image": "/public/images/aya-neo-2s.jpg",
+    "image": "/public/images/aya-neo-2s.avif",
     "rating": 4.3,
     "inStock": true,
     "tagValue": "8% Off"
@@ -1125,7 +1125,7 @@
     "priceDiscount": 1999.99,
     "category": "MOBILE-PC",
     "brand": "Anbernic",
-    "image": "/public/images/anbernic-win600.jpg",
+    "image": "/public/images/anbernic-win600.avif",
     "rating": 4.1,
     "inStock": true,
     "tagValue": "9% Off"
@@ -1138,7 +1138,7 @@
     "priceDiscount": 3699.99,
     "category": "MOBILE-PC",
     "brand": "Intel",
-    "image": "/public/images/intel-nuc-13-pro.jpg",
+    "image": "/public/images/intel-nuc-13-pro.avif",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "8% Off"
