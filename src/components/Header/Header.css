@@ -44,6 +44,7 @@
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    gap: 60px;
 }
 
 
@@ -84,10 +85,9 @@
     display: flex;
     align-items: center;
 }
-
 .search-input input {
     width: 100%;
-    max-width: 559px;
+    max-width: 650px;
     height: 48px;
     background-color: #f0f2f5;
     border-radius: 8px;
@@ -183,13 +183,15 @@
 .user-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 60px;
     display: flex;
     justify-content: space-around;
+    padding-top: 10px;
 }
 .user-actions .user {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   cursor: pointer;
   padding: 6px 10px;
@@ -202,6 +204,8 @@
 .user-actions .user-icons {
     width: 40px;
     height: 40px;
+    color: #4B5B9D;
+  text-decoration: none;
 }
 .user-actions .user .user-text {
   display: flex;
@@ -211,8 +215,9 @@
 .user-actions .user .user-text .user-link {
   all: unset;
   cursor: pointer;
-  color: #333;
+  color: #4B5B9D;
   text-decoration: none;
+  font-weight: bold;
  
 }
 .user-actions .user .user-text .user-link .user-icons {
@@ -228,6 +233,11 @@
   white-space: nowrap;
   text-decoration: none;
 }
+.user-actions .functions {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
 .user-actions .icon-link {
     text-decoration: none;
     color: #2D2D36;
@@ -240,7 +250,11 @@
 .user-actions .icon-link:hover {
     color: #4B5B9D;
 }
-
+.user-actions .icon-link .icon-sun, .user-actions .icon-link .icon-heart, .user-actions .icon-link .cart-icon {
+    width: 30px;
+    height: 30px;
+    color: #4B5B9D;
+}
 .cart-badge {
     position: absolute;
     top: -8px;
