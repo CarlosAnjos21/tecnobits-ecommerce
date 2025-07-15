@@ -10,6 +10,7 @@ import { useCart } from '../../contexts/CartContext';
 // 1. Caminho da imagem corrigido para 'icons'
 import logoIcon from '../../assets/icons/logo.png';
 import products from '../../data/products.json'; // Importando os produtos para o filtro
+import { FaRegCircleUser } from 'react-icons/fa6';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,34 +48,41 @@ const Header = () => {
     
 // Função para lidar com a mudança no input de pesquisa
 const handleInputChange = (event) => {
-const value = event.target.value;
-setSearchTerm(value);
+  const value = event.target.value;
+  setSearchTerm(value);
 
-// Sugestões de produtos por nome
-if (value.trim().length > 1) {
-    const filtered = products.filter((p) =>
-        p.name.toLowerCase().includes(value.toLowerCase())
-    );
-    setSuggestions(filtered.slice(0, 5)); // no máximo 5 sugestões
+  if (value.trim().length > 1) {
+    const filtered = products.filter((product) => {
+      const term = value.toLowerCase();
+      return (
+        product.name.toLowerCase().includes(term) ||
+        product.brand?.toLowerCase().includes(term) ||
+        product.category?.toLowerCase().includes(term)
+      );
+    });
+
+    setSuggestions(filtered);
   } else {
     setSuggestions([]);
   }
 };
 
 
+
     const toggleSearch = () => isMobile && setShowSearch(!showSearch);
 
     // Função para lidar com a pesquisa
-    const handleSearch = () => {
+const handleSearch = () => {
   const term = searchTerm.trim().toLowerCase();
   if (!term) return;
 
-  const matchedProduct = products.find((p) =>
-    p.name.toLowerCase().includes(term)
+  const matchedProduct = products.find((product) =>
+    product.name.toLowerCase().includes(term) ||
+    product.brand?.toLowerCase().includes(term) ||
+    product.category?.toLowerCase().includes(term)
   );
 
   if (matchedProduct) {
-    // Atualiza histórico local
     const updatedHistory = [term, ...searchHistory.filter((t) => t !== term)].slice(0, 5);
     setSearchHistory(updatedHistory);
     localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
@@ -84,9 +92,6 @@ if (value.trim().length > 1) {
     alert('Produto não encontrado.');
   }
 
-  if (isMobile) {
-    setShowSearch(false);
-  }
   setSuggestions([]);
 };
 
@@ -180,13 +185,18 @@ if (value.trim().length > 1) {
                                 <div className='search-icon' onClick={isMobile ? toggleSearch : handleSearch}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19ZM21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                                 </div>
-                                <NavLink to='/create-account' className='nav-link'>Cadastre-se</NavLink>
+                               
                             </div>
 
                             <div className='user-actions'>
-                                <PrimaryBtn>
-                                    <Link to='/login' className='btn-nav-link'>Entrar</Link>
-                                </PrimaryBtn>
+                                <div className="user">
+                                <Link to='/login' className='user-link'><FaRegCircleUser className='user-icons'/></Link>
+                                <div className="user-text">
+                                <span className='user-line'>Olá, <Link to='/login' className='user-link'>Entre </Link>ou</span>
+                                <span className='user-line'><Link to='/create-account' className='user-link'>Cadastre-se</Link></span>
+                                </div>
+                                </div>
+
                                 <Link to="/shopping-cart" className="icon-link">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22ZM20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22ZM1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                                     {cartItemCount > 0 && (
