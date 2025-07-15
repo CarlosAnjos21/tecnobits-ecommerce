@@ -54,13 +54,7 @@ const Gallery = () => {
           </ButtonPrimary>
         </div>
 
-        <div className='content-image'>
-          <img
-            src="/images/tecnobits.png"
-            alt="TecnoBits - Sua loja de tecnologia"
-            className='brand-image'
-          />
-        </div>
+        
       </div>
     </div>
   );

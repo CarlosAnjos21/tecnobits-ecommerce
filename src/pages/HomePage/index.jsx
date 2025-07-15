@@ -12,6 +12,9 @@ const HomePage = () => {
 
   return (
     <div>
+      <div className='banner'>
+        <img src="/images/banner-principal.png" alt="asa" />
+      </div>
       <Gallery />
 
       {/* Seção de Produtos em destaque */}
