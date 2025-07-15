@@ -8,7 +8,7 @@
     "category": "SMARTPHONE",
     "brand": "Apple",
     "image": "/public/images/iphone-15-pro-max.png",
-    "rating": 4.8,
+    "rating": 3.0,
     "inStock": true,
     "tagValue": "11% Off"
   },
@@ -1100,7 +1100,7 @@
     "category": "CONSOLE PORTÁTIL",
     "brand": "AYA",
     "image": "/public/images/aya-neo-2s.avif",
-    "rating": 4.3,
+    "rating": 3.5,
     "inStock": true,
     "tagValue": "8% Off"
   },
