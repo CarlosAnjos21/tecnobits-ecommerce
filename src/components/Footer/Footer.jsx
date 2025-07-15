@@ -14,15 +14,17 @@ const Footer = () => (
   <footer className='footer'>
     {/* div cabeçalho */}
     <div className='footer-header'>
-      <img className='footer-logo' src="/images/tecnobits.png" alt='Logo da loja' />
-      <h3 className='footer-title'>Digital Store</h3>
+      <img className='footer-logo' src="/images/MaybeFooterLogo.png" alt='Logo da loja' />
     </div>
 
     {/* div descrição */}
     <div>
       <p className='footer-description'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        Na TecnoBits, tecnologia de ponta está ao seu alcance. Somos uma loja especializada em hardware,
+        oferecendo uma seleção completa de processadores, 
+        placas de vídeo, CPUs, memórias RAM, SSDs, fontes, periféricos, celulares e muito mais. 
+        Trabalhamos com as melhores marcas do mercado para garantir qualidade, desempenho e confiança em cada produto. 
+        Seja para montar seu setup gamer, turbinar seu PC ou encontrar o smartphone ideal, aqui você encontra tudo o que precisa com praticidade, segurança e suporte especializado.
       </p>
     </div>
 
@@ -33,7 +35,7 @@ const Footer = () => (
           <li className='footer-info-title'>
             <strong>Informações</strong>
           </li>
-          <li className='footer-a'>Sobre Drip Store</li>
+          <li className='footer-a'>Sobre TecnoBits</li>
           <li className='footer-a'>Segurança</li>
           <li className='footer-a'>Wishlist</li>
           <li className='footer-a'>Blog</li>
@@ -50,61 +52,58 @@ const Footer = () => (
           <li className='footer-categories-title'>
             <strong>Categorias</strong>
           </li>
-          <li className='footer-c'>Camisetas</li>
-          <li className='footer-c'>Calças</li>
-          <li className='footer-c'>Bonés</li>
-          <li className='footer-c'>Headphones</li>
-          <li className='footer-c'>Tênis</li>
+          <li className='footer-c'>Smartphone</li>
+          <li className='footer-c'>Notebook</li>
+          <li className='footer-c'>Headphone</li>
+          <li className='footer-c'>Tablet</li>
+          <li className='footer-c'>Smart-TV</li>
+          <li className='footer-c'>Gadget</li>
+          <li className='footer-c'>Processor</li>
+          <li className='footer-c'>Placa Gráfica</li>
+          <li className='footer-c'>Placa-Mãe</li>
+          <li className='footer-c'>Memória Ram</li>
+          <li className='footer-c'>Armazenamento</li>
+          <li className='footer-c'>Fonte de energia</li>
+          <li className='footer-c'>Resfriamento</li>
+          <li className='footer-c'>Gabinete</li>
+          <li className='footer-c'>Mobile-PC</li>
         </ul>
       </nav>
     </div>
 
     {/* address */}
+    <div className='contats-container'>
     <address className='footer-address'>
       <strong className='footer-address-title'>Contato</strong>
       <p className='p-address'>
-        Av. Santos Dumont, 1510 - 1 andar - Aldeota, Fortaleza - CE, 60150-160
+        Av. Carlos Jereissati, 100 - Centro, 
+        Maracanaú - CE,
+        61900-010
       </p>
     </address>
     <div className='footer-phone'>
-      <a href='tel: +558530513411'>(85) 3051-3411</a>
+      <p>(85) 9959-3879</p>
     </div>
 
     <div className='footer-social'>
       {/* Redes sociais */}
       <ul>
-        <li className='footer-social-icon'>
+        <li className='footer-social-icon-FB'>
           <FontAwesomeIcon icon={faFacebook} />
         </li>
-        <li className='footer-social-icon'>
+        <li className='footer-social-icon-IG'>
           <FontAwesomeIcon icon={faInstagram} />
         </li>
-        <li className='footer-social-icon'>
+        <li className='footer-social-icon-TW'>
           <FontAwesomeIcon icon={faTwitter} />
         </li>
       </ul>
     </div>
-
-    <div className='footer-line'>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='1240'
-        height='1'
-        viewBox='0 0 1240 1'
-        fill='none'
-      >
-        <path opacity='0.3' d='M1240 0H0V1H1240V0Z' fill='white' />
-      </svg>
     </div>
+
     {/* div copyright */}
     <div className='footer-copy'>
-      <FooterCopy>© {new Date().getFullYear()} Digital College</FooterCopy>
-    </div>
-    <div className='footer-content'>
-      <div className='footer-info'>...</div>
-      <div className='footer-categories'>...</div>
-      <address className='footer-address'>...</address>
-      <div className='footer-phone'>...</div>
+      <FooterCopy>© {new Date().getFullYear()} Projeto Integrador - Fullstack Capacita Brasil</FooterCopy>
     </div>
   </footer>
 );

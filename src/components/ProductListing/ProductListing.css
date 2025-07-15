@@ -1,11 +1,7 @@
 /* ProductListing Component Styles */
 
 .product-listing-container {
-  column-count: 3;
-  /* display: flex;
-  flex-direction: column; */
-  
-  /* flex-wrap: wrap; */
+  column-count: 4;
   gap: 30px;
   padding: 30px;
   width: 100%;
