@@ -20,36 +20,36 @@
     "priceDiscount": 6999.99,
     "category": "SMARTPHONE",
     "brand": "Samsung",
-    "image": "/public/images/galaxy-s24-ultra.jpg",
+    "image": "/public/images/galaxy-s24-ultra.png",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "13% Off"
   },
   {
     "id": 3,
-    "name": "MacBook Air M3 13\" 256GB",
-    "description": "MacBook Air com chip M3, 8GB de RAM unificada e SSD de 256GB. Tela Liquid Retina de 13,6 polegadas",
-    "price": 9999.99,
-    "priceDiscount": 8799.99,
+    "name": "Lenovo V14 14\" 256GB",
+    "description": "Notebook Lenovo V14, 14 Pol, AMD Ryzen 5 7520U, FHD, 8GB DDR5, SSD 256GB",
+    "price": 4177.64,
+    "priceDiscount": 3499.99,
     "category": "NOTEBOOK",
     "brand": "Apple",
-    "image": "/public/images/macbook-air-m3.jpg",
+    "image": "/public/images/lenovo-v14.jpg",
     "rating": 4.9,
     "inStock": true,
-    "tagValue": "12% Off"
+    "tagValue": "16% Off"
   },
   {
     "id": 4,
-    "name": "Dell XPS 13 Plus Intel i7",
-    "description": "NOTEBOOK Dell XPS 13 Plus com processador Intel Core i7-13700H, 16GB RAM e SSD 512GB",
-    "price": 8499.99,
-    "priceDiscount": 7299.99,
+    "name": "Asus Vivobook 15 Intel Core i5",
+    "description": "Notebook Asus Vivobook 15, 15.6 Pol, Intel Core i5-1235U, 16GB DDR4, SSD 512GB, Windows 11 Home, Intel Iris Xe",
+    "price": 5411.75,
+    "priceDiscount": 4599.99,
     "category": "NOTEBOOK",
     "brand": "Dell",
-    "image": "/public/images/dell-xps-13-plus.jpg",
+    "image": "/public/images/asus-vivobook-15.jpg",
     "rating": 4.6,
     "inStock": true,
-    "tagValue": "14% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 5,
@@ -59,7 +59,7 @@
     "priceDiscount": 1499.99,
     "category": "HEADPHONE",
     "brand": "Sony",
-    "image": "/public/images/sony-wh1000xm5.jpg",
+    "image": "/public/images/sony-wh1000xm5.avif",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "17% Off"
@@ -79,13 +79,13 @@
   },
   {
     "id": 7,
-    "name": "iPad Air 5ª Geração 256GB",
-    "description": "iPad Air com chip M1, tela Liquid Retina de 10,9 polegadas e compatibilidade com Apple Pencil",
+    "name": "Apple iPad Air M3 11\" 128GB/8GB",
+    "description": "iPad Air M3 com chip Apple M3, tela Liquid Retina de 11 polegadas, suporte ao Apple Pencil Pro e Touch ID",
     "price": 4999.99,
     "priceDiscount": 4299.99,
     "category": "TABLET",
     "brand": "Apple",
-    "image": "/public/images/ipad-air-5.jpg",
+    "image": "/public/images/ipad-air-m3.jpg",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "14% Off"
@@ -111,7 +111,7 @@
     "priceDiscount": 6799.99,
     "category": "SMART-TV",
     "brand": "Samsung",
-    "image": "/public/images/samsung-neo-qled-65.jpg",
+    "image": "/public/images/samsung-neo-qled-65.webp",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "15% Off"
@@ -137,7 +137,7 @@
     "priceDiscount": 2999.99,
     "category": "GADGET",
     "brand": "Apple",
-    "image": "/public/images/apple-watch-series-9.jpg",
+    "image": "/public/images/apple-watch-series-9.jpeg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "14% Off"
@@ -150,7 +150,7 @@
     "priceDiscount": 1899.99,
     "category": "GADGET",
     "brand": "Nintendo",
-    "image": "/public/images/nintendo-switch-oled.jpg",
+    "image": "/public/images/nintendo-switch-oled.webp",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "14% Off"
@@ -183,13 +183,13 @@
   },
   {
     "id": 15,
-    "name": "Lenovo ThinkPad X1 Carbon Gen 11",
-    "description": "NOTEBOOK empresarial Lenovo ThinkPad com Intel Core i7-1365U, 16GB RAM e SSD 512GB",
-    "price": 9999.99,
-    "priceDiscount": 8499.99,
+    "name": "Asus ROG Strix G16 16\" Core i9",
+    "description": "Notebook Gamer Asus ROG Strix G16, 16 Pol, Intel Core i9-13980HX, FHD, 16GB DDR5, SSD 512GB, RTX 4060 8GB",
+    "price": 14352.93,
+    "priceDiscount": 12199.99,
     "category": "NOTEBOOK",
     "brand": "Lenovo",
-    "image": "/public/images/thinkpad-x1-carbon-gen11.jpg",
+    "image": "/public/images/asus-rog-strix-g16.jpg",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "15% Off"
@@ -228,7 +228,7 @@
     "priceDiscount": 549.99,
     "category": "HEADPHONE",
     "brand": "JBL",
-    "image": "/public/images/jbl-tune-760nc.jpg",
+    "image": "/public/images/jbl-tune-760nc.png",
     "rating": 4.4,
     "inStock": true,
     "tagValue": "21% Off"
@@ -400,7 +400,7 @@
     "image": "/public/images/nvidia-rtx-4090.png",
     "rating": 4.9,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "10% Off"
   },
   {
     "id": 32,
@@ -413,7 +413,7 @@
     "image": "/public/images/nvidia-rtx-4080.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "23% Off"
   },
   {
     "id": 33,
@@ -426,7 +426,7 @@
     "image": "/public/images/nvidia-rtx-4070-ti.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "18% Off"
   },
   {
     "id": 34,
@@ -439,7 +439,7 @@
     "image": "/public/images/nvidia-rtx-4070.jpg",
     "rating": 4.6,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 35,
@@ -452,7 +452,7 @@
     "image": "/public/images/nvidia-rtx-4060-ti.jpg",
     "rating": 4.5,
     "inStock": true,
-    "tagValue": "9% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 36,
@@ -465,7 +465,7 @@
     "image": "/public/images/nvidia-rtx-4060.jpg",
     "rating": 4.4,
     "inStock": true,
-    "tagValue": "9% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 37,
@@ -478,7 +478,7 @@
     "image": "/public/images/amd-rx-7900-xtx.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "6% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 38,
@@ -491,7 +491,7 @@
     "image": "/public/images/amd-rx-7900-xt.jpg",
     "rating": 4.6,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 39,
@@ -504,7 +504,7 @@
     "image": "/public/images/amd-rx-7800-xt.jpg",
     "rating": 4.5,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "14% Off"
   },
   {
     "id": 40,
@@ -517,7 +517,7 @@
     "image": "/public/images/amd-rx-7700-xt.jpg",
     "rating": 4.4,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 41,
@@ -530,7 +530,7 @@
     "image": "/public/images/amd-rx-7600.jpg",
     "rating": 4.3,
     "inStock": true,
-    "tagValue": "10% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 42,
@@ -543,7 +543,7 @@
     "image": "/public/images/gigabyte-z790-aorus-elite.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "9% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 43,
@@ -556,7 +556,7 @@
     "image": "/public/images/msi-mag-b760-gaming-plus.jpg",
     "rating": 4.6,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 44,
@@ -569,7 +569,7 @@
     "image": "/public/images/gigabyte-h610m-h.jpg",
     "rating": 4.3,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 45,
@@ -582,7 +582,7 @@
     "image": "/public/images/asus-tuf-x670e-plus.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "11% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 46,
@@ -595,7 +595,7 @@
     "image": "/public/images/msi-mag-x670e-tomahawk.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "13% Off"
   },
   {
     "id": 47,
@@ -608,7 +608,7 @@
     "image": "/public/images/gigabyte-b650m-aorus-elite.jpg",
     "rating": 4.5,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 48,
@@ -621,7 +621,7 @@
     "image": "/public/images/asrock-a620m-hdv.jpg",
     "rating": 4.2,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 49,
@@ -647,7 +647,7 @@
     "image": "/public/images/corsair-vengeance-32gb-ddr5.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 51,
@@ -660,7 +660,7 @@
     "image": "/public/images/kingston-fury-beast-16gb-ddr4.jpg",
     "rating": 4.5,
     "inStock": true,
-    "tagValue": "10% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 52,
@@ -673,7 +673,7 @@
     "image": "/public/images/corsair-dominator-64gb-ddr5.jpg",
     "rating": 4.9,
     "inStock": true,
-    "tagValue": "9% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 53,
@@ -686,7 +686,7 @@
     "image": "/public/images/samsung-980-pro-1tb.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "10% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 54,
@@ -699,7 +699,7 @@
     "image": "/public/images/wd-black-sn850x-2tb.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 55,
@@ -712,7 +712,7 @@
     "image": "/public/images/kingston-nv2-500gb.jpg",
     "rating": 4.4,
     "inStock": true,
-    "tagValue": "10% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 56,
@@ -725,7 +725,7 @@
     "image": "/public/images/seagate-barracuda-4tb.jpg",
     "rating": 4.5,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 57,
@@ -738,7 +738,7 @@
     "image": "/public/images/wd-blue-1tb.jpg",
     "rating": 4.3,
     "inStock": true,
-    "tagValue": "10% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 58,
@@ -751,7 +751,7 @@
     "image": "/public/images/corsair-rm1000x.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 59,
@@ -764,7 +764,7 @@
     "image": "/public/images/seasonic-focus-gx-850.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 60,
@@ -777,7 +777,7 @@
     "image": "/public/images/evga-supernova-750w.jpg",
     "rating": 4.6,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 61,
@@ -790,7 +790,7 @@
     "image": "/public/images/coolermaster-mwe-gold-v2-650w.jpg",
     "rating": 4.4,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 62,
@@ -803,7 +803,7 @@
     "image": "/public/images/thermaltake-smart-500w.jpg",
     "rating": 4.2,
     "inStock": true,
-    "tagValue": "10% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 63,
@@ -816,7 +816,7 @@
     "image": "/public/images/deepcool-ag620-argb.jpg",
     "rating": 4.9,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 64,
@@ -829,7 +829,7 @@
     "image": "/public/images/corsair-h150i-elite.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 65,
@@ -842,7 +842,7 @@
     "image": "/public/images/nzxt-kraken-x63.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 66,
@@ -855,7 +855,7 @@
     "image": "/public/images/coolermaster-hyper-212.jpg",
     "rating": 4.5,
     "inStock": true,
-    "tagValue": "10% Off"
+    "tagValue": "16% Off"
   },
   {
     "id": 67,
@@ -868,7 +868,7 @@
     "image": "/public/images/bequiet-dark-rock-pro4.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 68,
@@ -881,7 +881,7 @@
     "image": "/public/images/corsair-4000d-airflow-rgb.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 69,
@@ -894,7 +894,7 @@
     "image": "/public/images/aigo-c285.jpg",
     "rating": 4.8,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 70,
@@ -920,7 +920,7 @@
     "image": "/public/images/nothing-phone-2.webp",
     "rating": 4.4,
     "inStock": true,
-    "tagValue": "9% Off"
+    "tagValue": "13% Off"
   },
   {
     "id": 72,
@@ -1028,16 +1028,16 @@
   },
   {
     "id": 80,
-    "name": "TROCAR PRODUTO",
-    "description": "NOTEBOOK modular Framework Laptop 13 com Intel Core i7-1360P, completamente customizável",
-    "price": 7999.99,
-    "priceDiscount": 7299.99,
+    "name": "Acer Nitro V 15",
+    "description": "Notebook Gamer Acer Nitro V 15, 15.6 Pol, Intel Core i7-13620H, 5GB DDR5, SSD 512GB, RTX 3050 6GB",
+    "price": 8235.28,
+    "priceDiscount": 6999.99,
     "category": "NOTEBOOK",
-    "brand": "Framework",
-    "image": "/public/images/framework-laptop-13.jpg",
+    "brand": "Acer",
+    "image": "/public/images/acer-nitro-v-15.jpg",
     "rating": 4.7,
     "inStock": true,
-    "tagValue": "9% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 81,
@@ -1107,12 +1107,12 @@
   {
     "id": 86,
     "name": "OneXPlayer 2 Pro",
-    "description": "Handheld gaming PC OneXPlayer 2 Pro com Intel Core i7-1360P e tela de 8,4 polegadas",
+    "description": "Handheld gaming PC OneXPlayer 2 Pro com AMD Ryzen 7 8840U e tela de 8,4 polegadas",
     "price": 6999.99,
     "priceDiscount": 6499.99,
     "category": "MOBILE-PC",
     "brand": "OneXPlayer",
-    "image": "/public/images/onexplayer-2-pro.jpg",
+    "image": "/public/images/onexplayer-2-pro.avif",
     "rating": 4.5,
     "inStock": true,
     "tagValue": "7% Off"
@@ -1145,13 +1145,13 @@
   },
   {
     "id": 89,
-    "name": "MINISFORUM EliteMini UM690",
-    "description": "Mini PC MINISFORUM com AMD Ryzen 9 6900HX, perfeito para escritório e entretenimento",
+    "name": "MINISFORUM UM880 Pro",
+    "description": "Mini PC MINISFORUM com AMD Ryzen 7 8845HS, perfeito para escritório e entretenimento",
     "price": 2999.99,
     "priceDiscount": 2799.99,
     "category": "MOBILE-PC",
     "brand": "MINISFORUM",
-    "image": "/public/images/minisforum-um690.jpg",
+    "image": "/public/images/minisforum-um880-pro.webp",
     "rating": 4.4,
     "inStock": true,
     "tagValue": "7% Off"
@@ -1164,7 +1164,7 @@
     "priceDiscount": 1999.99,
     "category": "MOBILE-PC",
     "brand": "Beelink",
-    "image": "/public/images/beelink-ser5-max.jpg",
+    "image": "/public/images/beelink-ser5-max.avif",
     "rating": 4.3,
     "inStock": true,
     "tagValue": "9% Off"
@@ -1203,7 +1203,7 @@
     "priceDiscount": 4999.99,
     "category": "SMART-TV",
     "brand": "Hisense",
-    "image": "/public/images/hisense-u8k-65.jpg",
+    "image": "/public/images/hisense-u8k-65.jpeg",
     "rating": 4.5,
     "inStock": true,
     "tagValue": "9% Off"
@@ -1216,7 +1216,7 @@
     "priceDiscount": 6299.99,
     "category": "SMART-TV",
     "brand": "Philips",
-    "image": "/public/images/philips-oled-908-55.jpg",
+    "image": "/public/images/philips-oled-908-55.webp",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "10% Off"
@@ -1229,7 +1229,7 @@
     "priceDiscount": 1099.99,
     "category": "HEADPHONE",
     "brand": "Samsung",
-    "image": "/public/images/samsung-galaxy-buds3-pro.jpg",
+    "image": "/public/images/samsung-galaxy-buds3-pro.avif",
     "rating": 4.5,
     "inStock": true,
     "tagValue": "15% Off"
@@ -1242,7 +1242,7 @@
     "priceDiscount": 1299.99,
     "category": "HEADPHONE",
     "brand": "Audio-Technica",
-    "image": "/public/images/audio-technica-ath-m50xbt2.jpg",
+    "image": "/public/images/audio-technica-ath-m50xbt2.avif",
     "rating": 4.7,
     "inStock": true,
     "tagValue": "13% Off"
@@ -1255,7 +1255,7 @@
     "priceDiscount": 1799.99,
     "category": "HEADPHONE",
     "brand": "SteelSeries",
-    "image": "/public/images/steelseries-arctis-nova-pro.jpg",
+    "image": "/public/images/steelseries-arctis-nova-pro.png",
     "rating": 4.6,
     "inStock": true,
     "tagValue": "10% Off"
@@ -1268,7 +1268,7 @@
     "priceDiscount": 1999.99,
     "category": "HEADPHONE",
     "brand": "Sennheiser",
-    "image": "/public/images/sennheiser-momentum-4.jpg",
+    "image": "/public/images/sennheiser-momentum-4.webp",
     "rating": 4.8,
     "inStock": true,
     "tagValue": "13% Off"
@@ -1301,54 +1301,67 @@
   },
   {
     "id": 101,
-    "name": "ASUS PRIME A520M-A WiFi",
-    "description": "PLACA-MÃE ASUS PRIME A520M-A WiFi, Socket AM4, Micro-ATX, DDR4, compatível com Ryzen 5 5500",
-    "price": 449.99,
-    "priceDiscount": 399.99,
+    "name": "ASUS PRIME A520M-K",
+    "description": "PLACA-MÃE ASUS PRIME A520M-K, Socket AM4, Micro-ATX, DDR4, compatível com Ryzen 5 5500",
+    "price": 588.22,
+    "priceDiscount": 499.99,
     "category": "PLACA-MÃE",
     "brand": "ASUS",
-    "image": "/public/images/asus-prime-a520m-a-wifi.jpg",
+    "image": "/public/images/asus-prime-a520m-k.jpg",
     "rating": 4.3,
     "inStock": true,
-    "tagValue": "11% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 102,
     "name": "MSI A520M-A PRO",
     "description": "PLACA-MÃE MSI A520M-A PRO, Socket AM4, Micro-ATX, DDR4, suporte para Ryzen série 5000",
-    "price": 329.99,
-    "priceDiscount": 299.99,
+    "price": 494.1,
+    "priceDiscount": 419.99,
     "category": "PLACA-MÃE",
     "brand": "MSI",
     "image": "/public/images/msi-a520m-a-pro.jpg",
     "rating": 4.2,
     "inStock": true,
-    "tagValue": "9% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 103,
-    "name": "GIGABYTE A520M DS3H",
-    "description": "PLACA-MÃE GIGABYTE A520M DS3H, Socket AM4, Micro-ATX, DDR4, ideal para Ryzen 5 5500",
-    "price": 379.99,
-    "priceDiscount": 349.99,
+    "name": "GIGABYTE A520M DS3H V2",
+    "description": "PLACA-MÃE GIGABYTE A520M DS3H V2, Socket AM4, Micro-ATX, DDR4, ideal para Ryzen 5 5500",
+    "price": 682.34,
+    "priceDiscount": 579.99,
     "category": "PLACA-MÃE",
     "brand": "GIGABYTE",
-    "image": "/public/images/gigabyte-a520m-ds3h.jpg",
+    "image": "/public/images/gigabyte-a520m-ds3h-v2.jpg",
     "rating": 4.1,
     "inStock": true,
-    "tagValue": "8% Off"
+    "tagValue": "15% Off"
   },
   {
     "id": 104,
-    "name": "Processador Intel Core Ultra 9 285K",
+    "name": "Intel Core Ultra 9 285K",
     "description": "Processador Intel Core Ultra 9 285K, 3.7 Ghz (5.7Ghz Turbo), Série 2, 24-Cores 24-Threads, LGA 1851",
-    "price": 6999.99,
+    "price": 4705.87,
     "priceDiscount": 3999.99,
     "category": "processor",
     "brand": "Intel",
     "image": "/public/images/core-ultra-9-285k.jpg",
     "rating": 4.2,
     "inStock": true,
-    "tagValue": "7% Off"
+    "tagValue": "15% Off"
+  },
+  {
+    "id": 105,
+    "name": "Intel Core Ultra 7 265K",
+    "description": "Processador Intel Core Ultra 7 265K, 20-Core, 20-Threads, 3.9GHz (5.5GHz Turbo), Cache 30MB, LGA1851",
+    "price": 3058.81,
+    "priceDiscount": 2599.99,
+    "category": "processor",
+    "brand": "Intel",
+    "image": "/public/images/core-ultra-7-265k.jpg",
+    "rating": 4.2,
+    "inStock": true,
+    "tagValue": "15% Off"
   }
 ]
