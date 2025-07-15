@@ -57,8 +57,8 @@
 }
 
 .auth-logo-icon {
-    height: 455px; 
-    width: 170px; /* Definir largura para criar um quadrado */
+    height: 495px; 
+    width: 210px; /* Definir largura para criar um quadrado */
     object-fit: contain; /* Garante que a imagem preencha o espaço sem distorcer */
     border-radius: 8px; /* Adiciona as bordas arredondadas */
     display: block;
