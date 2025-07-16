@@ -12,7 +12,7 @@ export default defineConfig({
     sourcemap: false,
     minify: 'esbuild',
   },
-  base: './',
+  base: '/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
