@@ -31,10 +31,6 @@
     "vite": "^7.0.0",
     "vite-plugin-svgr": "^4.3.0"
   },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
-  },
   "overrides": {
     "rollup": "^4.0.0"
   }
