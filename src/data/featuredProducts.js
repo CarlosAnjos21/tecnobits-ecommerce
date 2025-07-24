@@ -3,7 +3,7 @@ export const featuredProductsData = [
   {
     id: 1,
     title: 'Processadores',
-    image: '/images/rizenproc.png',
+    image: '/images/rizenproc.png', //trocar essa imagem depois
     discount: 15,
     buttonText: 'Ver mais',
     category: 'processors',

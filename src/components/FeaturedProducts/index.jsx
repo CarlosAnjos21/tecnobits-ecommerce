@@ -13,7 +13,7 @@ const FeaturedProducts = () => {
   if (!featuredProducts || featuredProducts.length === 0) {
     return (
       <section className='featured-products'>
-        <p>Nenhum produto em destaque disponível.</p>
+        
       </section>
     );
   }
