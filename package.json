@@ -1,9 +1,9 @@
 {
-  "name": "projeto-inter-capacita",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "projeto-inter-capacita-fullstack",
+  "version": "1.0.0",
+  "description": "E-commerce fullstack - Equipe Hardware",
   "scripts": {
+<<<<<<< HEAD
     "dev": "vite",
     "start": "vite",
     "build": "vite build --mode production",
@@ -18,8 +18,29 @@
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.3"
+=======
+    "install:all": "cd frontend && npm install && cd ../backend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "start": "cd backend && npm start",
+    "test": "cd frontend && npm test && cd ../backend && npm test"
+>>>>>>> develop
   },
+  "keywords": [
+    "ecommerce",
+    "react",
+    "nodejs",
+    "express",
+    "prisma",
+    "postgresql"
+  ],
+  "author": "Equipe Hardware - Daniely, Kaio, Antônio, Carlos, Maycon, Anderson",
+  "license": "MIT",
   "devDependencies": {
+<<<<<<< HEAD
     "@eslint/js": "^9.29.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -31,4 +52,12 @@
     "vite": "^6.0.5",
     "vite-plugin-svgr": "^4.3.0"
   }
+=======
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+>>>>>>> develop
 }

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
@@ -6,5 +7,17 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
+=======
+  "version": 2,
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "cd frontend && npm install",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+>>>>>>> develop
   ]
 }
