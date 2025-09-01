@@ -255,6 +255,11 @@ font-weight: bold;
   .frete-entrada button {
     width: 100%;
   }
+
+  .frete {
+    min-width: 0; /* Permite que a seção de frete encolha conforme necessário */
+  }
+  
   .direita h2.descricao {
     font-size: 14px; /* Diminui um pouco a fonte para caber melhor */
     line-height: 1.5; /* Aumenta o espaçamento entre as linhas para facilitar a leitura */
