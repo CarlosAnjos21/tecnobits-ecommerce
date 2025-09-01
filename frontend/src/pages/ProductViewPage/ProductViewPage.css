@@ -89,6 +89,12 @@
     align-items: center;
     gap: 0.5em;
 }
+
+.direita .direitatitulo span > div {
+  display: flex; /* Garante que é um container flex */
+  flex-wrap: wrap; /* A propriedade MÁGICA: permite que as estrelas quebrem a linha */
+  justify-content: flex-start; /* Alinha as estrelas à esquerda */
+}
 .direita h2.descricao{
     color: var(--text-light);
     
