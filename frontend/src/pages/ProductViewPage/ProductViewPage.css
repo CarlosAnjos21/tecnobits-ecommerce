@@ -272,4 +272,20 @@ font-weight: bold;
     white-space: normal; /* Garante que o texto possa quebrar a linha */
     word-wrap: break-word; /* Força a quebra de palavras longas para evitar transbordamento */
   }
+
+   .direita .preco {
+    font-size: 2.2em; /* Diminui drasticamente a fonte do preço */
+    word-break: break-word; /* Garante que quebre a linha se necessário */
+  }
+
+  .direita .botoes {
+    gap: 0.5rem; /* Diminui o espaço entre os botões */
+  }
+
+  /* Sobrescreve a largura mínima do botão que vem do arquivo global */
+  .direita .botoes .btn-primary {
+    min-width: auto; /* Remove a largura mínima herdada */
+    padding: 12px 10px; /* Ajusta o padding interno para o texto caber */
+    font-size: 0.8rem; /* Diminui a fonte do botão */
+  }
 }
