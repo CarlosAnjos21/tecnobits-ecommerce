@@ -23,11 +23,11 @@
     margin: 0 4px;
 }
 .conteudo{
-    display: flex;
-    /*background-color: blueviolet;*/
-    height: 900%;
-    width: 100%;
-    flex-direction: wrap;
+  display: flex;
+  /*background-color: blueviolet;*/
+  /* height: 900%; */ /* REMOVA OU COMENTE ESTA LINHA */
+  width: 100%;
+  flex-direction: row; /* CORRIGIDO: O layout principal é em linha (lado a lado) */
 }
 .esquerda {
     /*background-color: greenyellow;*/
