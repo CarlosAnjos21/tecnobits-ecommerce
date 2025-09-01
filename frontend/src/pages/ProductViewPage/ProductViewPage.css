@@ -251,4 +251,10 @@ font-weight: bold;
   .frete-entrada button {
     width: 100%;
   }
+  .direita h2.descricao {
+    font-size: 14px; /* Diminui um pouco a fonte para caber melhor */
+    line-height: 1.5; /* Aumenta o espaçamento entre as linhas para facilitar a leitura */
+    white-space: normal; /* Garante que o texto possa quebrar a linha */
+    word-wrap: break-word; /* Força a quebra de palavras longas para evitar transbordamento */
+  }
 }
