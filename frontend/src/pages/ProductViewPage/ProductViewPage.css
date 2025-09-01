@@ -246,6 +246,12 @@ font-weight: bold;
     align-items: stretch;
   }
 
+  .direita .direitainfo div.direitatitulo {
+    flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo */
+    justify-content: flex-start; /* Alinha os itens no início */
+    gap: 1rem; /* Adiciona um espaço mais generoso entre eles */
+  }
+
   .frete-entrada {
     flex-direction: column;
     align-items: stretch;
