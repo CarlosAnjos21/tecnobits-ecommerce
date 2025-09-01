@@ -138,10 +138,10 @@ function ProductViewPage() {
               </div>
             </div>
              <div className='botoes'>
-              <ButtonPrimary className='compraragr' onClick={() => {comprarAgora(); handleAddToCart();}}>
+              <ButtonPrimary className='compraragr mobile' onClick={() => {comprarAgora(); handleAddToCart();}}>
                 COMPRAR AGORA
               </ButtonPrimary>
-              <ButtonPrimary className='addcarrinho' onClick={handleAddToCart}>
+              <ButtonPrimary className='addcarrinho mobile' onClick={handleAddToCart}>
                 ADICIONAR AO CARRINHO
               </ButtonPrimary>
             </div>
