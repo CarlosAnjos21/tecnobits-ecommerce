@@ -246,16 +246,21 @@ font-weight: bold;
     align-items: stretch;
   }
 
-  .direita .direitainfo div.direitatitulo {
-    flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo */
-    justify-content: flex-start; /* Alinha os itens no início */
-    gap: 1rem; /* Adiciona um espaço mais generoso entre eles */
-  }
+.direita .direitainfo div.direitatitulo {
+  flex-direction: column; /* Força os itens a ficarem um sobre o outro */
+  align-items: flex-start; /* Alinha todos à esquerda */
+  gap: 0.5rem; /* Diminui o espaço entre eles */
+}
 
   .frete-entrada {
-    flex-direction: column;
-    align-items: stretch;
-  }
+  flex-direction: column; /* Garante que fiquem um sobre o outro */
+  align-items: stretch; /* Garante que ocupem 100% da largura */
+  gap: 0.5rem;
+}
+
+.frete-entrada .botao-ok {
+  min-width: auto; /* Remove a largura mínima do botão 'OK' */
+}
 
   .frete-entrada input,
   .frete-entrada button {
