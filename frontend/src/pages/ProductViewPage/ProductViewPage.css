@@ -343,4 +343,14 @@ font-weight: bold;
   word-break: break-word;
 }
 
+/* --- CORREÇÃO PARA O TÍTULO DO FRETE --- */
+  .frete h4 {
+    white-space: normal; /* Permite que o texto quebre a linha */
+    word-break: break-word; /* Garante a quebra de palavras */
+  }
+/* SUBSTITUA a regra antiga '.frete-entrada input' por esta mais forte: */
+.frete-entrada .input-default {
+  min-width: 0; /* Remove a largura mínima herdada */
+}
+
 }
