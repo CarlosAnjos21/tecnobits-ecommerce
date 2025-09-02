@@ -1,216 +1,194 @@
-/* CÓDIGO DE DEPURAÇÃO TEMPORÁRIO - ADICIONE AQUI NO TOPO */
-/** {
-  border: 1px solid red !important;
-}*/
+/* ================================== */
+/* 1. ESTILOS PRINCIPAIS (DESKTOP) */
+/* ================================== */
+
 .principal {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  width: 100%; /* Garante que o container ocupe toda a largura */
-  box-sizing: border-box; /* Faz com que o padding não "empurre" a largura para fora */
-  min-height: 90vh; /* MUITO IMPORTANTE: permite que o conteúdo cresça o quanto for necessário */
-}
-.titulo {
-
-    width: 100%;
-}
-.principal .titulo p.textotitulo {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 0.8em;
-    color: var(--professional-color);
-}
-.principal .titulo p span.pasta {
-    color: var(--text-muted);
-    font-weight: bold;
-    margin: 0 4px;
-}
-.conteudo{
-  display: flex;
-  /*background-color: blueviolet;*/
-  /* height: 900%; */ /* REMOVA OU COMENTE ESTA LINHA */
   width: 100%;
-  flex-direction: row; /* CORRIGIDO: O layout principal é em linha (lado a lado) */
+  box-sizing: border-box;
+  min-height: 90vh;
 }
+
+.titulo {
+  width: 100%;
+}
+
+.principal .titulo p.textotitulo {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8em;
+  color: var(--professional-color);
+}
+
+.principal .titulo p span.pasta {
+  color: var(--text-muted);
+  font-weight: bold;
+  margin: 0 4px;
+}
+
+.conteudo {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
 .esquerda {
-    /*background-color: greenyellow;*/
-    display: flex;
-    justify-content: center;   /* Centraliza horizontalmente */
-    align-items: center;       /* Centraliza verticalmente */
-    height: 100%;
-    width: 50%;
-    flex-direction: column;
-    padding-left: 0; /* ou ajuste conforme necessário */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  flex-direction: column;
+  padding-left: 0;
 }
-.esquerda .imagem-produto{
-    width: auto;
-    height: 500px;           /* Altura fixa */
-    object-fit: cover;
-    
+
+.esquerda .imagem-produto {
+  width: auto;
+  height: 500px;
+  object-fit: cover;
 }
+
 .direita {
-    background-color: var(--base-color); /*unico que vai ficar*/
-    border-radius: 0.8em;
-    height: 100%;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    margin-right: 5em;
-}
-.direita .direitainfo{
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    margin-top: 0.5em;
-   
-}
-.direita .direitainfo div.direitatitulo{
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    color: var(--text-light);
-    font-size: 1rem;
-    font-weight: bold;
-    justify-content: space-between;
-}
-.direita .direitainfo div.direitatitulo .prontaentrega{
-    width: 20px;
-    height: 20px;
-    color: #FFD700;
-}
-.direita .direitainfo div.direitatitulo .calendario{
-    width: 20px;
-    height: 20px;
-    color: #00D2FF;
-}
-.direita .direitainfo div.direitatitulo .estrela{
-    width: 20px;
-    height: 20px;
-    color: #FFD700;
-}
-.direita .direitainfo div.direitatitulo span{
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
+  background-color: var(--base-color);
+  border-radius: 0.8em;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5em;
 }
 
-.direita .direitatitulo span > div {
-  display: flex; /* Garante que é um container flex */
-  flex-wrap: wrap; /* A propriedade MÁGICA: permite que as estrelas quebrem a linha */
-  justify-content: flex-start; /* Alinha as estrelas à esquerda */
+.direita .direitainfo {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
 }
 
-.direita .direitatitulo span {
-  display: flex; /* Mantém o alinhamento do ícone com o texto */
-  flex-wrap: wrap; /* Permite que o texto quebre para baixo do ícone */
-  align-items: center; /* Alinha o ícone com o texto quebrado */
-  white-space: normal; /* Garante que o texto possa quebrar */
-  word-break: break-all; /* Força a quebra de qualquer palavra longa */
+.direita .direitainfo div.direitatitulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--text-light);
+  font-size: 1rem;
+  font-weight: bold;
+  justify-content: space-between;
 }
 
-   .direita .botoes .btn-primary {
-    white-space: normal;
-    height: auto;
-    min-height: 40px;
-  }
-  .direita .direitainfo div.direitatitulo .prontaentrega,
-  .direita .direitainfo div.direitatitulo .calendario {
-    width: 16px; /* Diminui o tamanho dos ícones */
-    height: 16px;
-  }
-.direita h2.descricao{
-    color: var(--text-light);
-    
-}
-.direita .desconto{
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    text-decoration: line-through;
-    
-}
-.direita .preco{
-font-size: 3em;
-color: var(--success-color);
-font-weight: bold;
+.direita .direitainfo div.direitatitulo .prontaentrega,
+.direita .direitainfo div.direitatitulo .calendario,
+.direita .direitainfo div.direitatitulo .estrela {
+  width: 20px;
+  height: 20px;
 }
 
-.direita div.avista{
-    color: var(--text-light);
-    font-size: 0.8em;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
+.direita .direitainfo div.direitatitulo .prontaentrega { color: #FFD700; }
+.direita .direitainfo div.direitatitulo .calendario { color: #00D2FF; }
+.direita .direitainfo div.direitatitulo .estrela { color: #FFD700; }
+
+.direita .direitainfo div.direitatitulo span {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
-.direita div.avista .pix{
-    width: 25px;
-    height: 25px;
-    color: #00B686;
+
+.direita h2.descricao {
+  color: var(--text-light);
 }
-.direita div.parcelado{
-    color: var(--text-light);
-    gap: 0.5em;
-    font-size: 0.8em;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    padding-top: 1em;
+
+.direita .desconto {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
 }
-.direita div.parcelado .cartao{
-    width: 25px;
-    height: 25px;
-    color: goldenrod;
-    gap: 0.5em;
+
+.direita .preco {
+  font-size: 3em;
+  color: var(--success-color);
+  font-weight: bold;
 }
-.direita .freteinfo{
-   color: var(--text-light);
-   font-size: 0.8em;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    
+
+.direita div.avista {
+  color: var(--text-light);
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
-.direita div.freteinfo .caminhao{
-    width: 25px;
-    height: 25px;
-    color: var(--text-muted);
+
+.direita div.avista .pix {
+  width: 25px;
+  height: 25px;
+  color: #00B686;
 }
-/* Seções de Cupom e Frete */
+
+.direita div.parcelado {
+  color: var(--text-light);
+  gap: 0.5em;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding-top: 1em;
+}
+
+.direita div.parcelado .cartao {
+  width: 25px;
+  height: 25px;
+  color: goldenrod;
+}
+
+.direita .freteinfo {
+  color: var(--text-light);
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.direita .freteinfo .caminhao {
+  width: 25px;
+  height: 25px;
+  color: var(--text-muted);
+}
+
 .direita .frete {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
 }
+
 .frete {
-    flex: 1;
-    min-width: 260px;
-    
+  flex: 1;
+  min-width: 260px;
 }
 
 .frete h4 {
-    font-size: 0.9em;
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #00D2FF;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    
+  font-size: 0.9em;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #00D2FF;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
 }
+
 .frete h4 .caminhao {
-    width: 20px;
-    height: 20px;
-    color: #00D2FF;
-    margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  color: #00D2FF;
+  margin-right: 5px;
 }
 
 .frete-entrada {
   display: flex;
-  align-items: stretch; /* A propriedade chave para igualar as alturas */
+  align-items: stretch;
   gap: 10px;
 }
 
-/* Garante que o texto dentro do botão fique centralizado verticalmente */
 .frete-entrada button {
   display: flex;
   align-items: center;
@@ -218,164 +196,133 @@ font-weight: bold;
 }
 
 .frete-entrada input {
-    flex-grow: 1;
-    padding: 10px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 0.95em;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    color: var(--text-light);
+  flex-grow: 1;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.95em;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  color: var(--text-light);
 }
+
 .frete-entrada input:focus {
-    border-color: #00D2FF;
-    box-shadow: 0 0 0 0.1rem #3B82F6;
-    outline: none;
+  border-color: #00D2FF;
+  box-shadow: 0 0 0 0.1rem #3B82F6;
+  outline: none;
 }
+
 .frete .valorfrete {
-    color: var(--text-light);
- 
-}
-.direita .botoes{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-.direta .compraragr{
-    width: 100%;
-}
-.direita .addcarrinho{
-    width: 100%;
-    margin-top: 0.5rem;
+  color: var(--text-light);
 }
 
+.direita .botoes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
 
-@media (max-width: 768px) {
+/* ======================================================= */
+/* ============== SEÇÃO DE RESPONSIVIDADE ============== */
+/* ======================================================= */
+
+/* 2. AJUSTES PARA TELAS MÉDIAS (TABLET: 769px - 1024px) */
+@media (max-width: 1024px) {
+  /* Mantém as 2 colunas, mas ajusta os espaçamentos */
   .principal {
-    padding: 1rem; /* Reduz o padding geral para telas menores */
+    padding: 1.5rem;
   }
-    .conteudo {
-    flex-direction: column;
-    
+  .conteudo {
+    gap: 2rem;
   }
+  .direita {
+    margin-right: 0;
+  }
+}
 
+/* 3. AJUSTES PARA TELAS MENORES (MOBILE: até 768px) */
+@media (max-width: 768px) {
+  /* Transforma o layout em coluna única */
+  .conteudo {
+    flex-direction: column;
+  }
   .esquerda, .direita {
     width: 100%;
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
-
-  .esquerda {
-    padding-left: 0;
+  .direita {
+    margin-top: 2rem;
   }
-
+  .principal {
+    padding: 1rem;
+  }
   .esquerda .imagem-produto {
     height: auto;
     max-width: 100%;
   }
 
-  .direita {
-    margin-top: 2rem;
-    margin-right: 0;
+  /* Ajustes finos de texto e componentes para o mobile */
+  .direita h2.descricao {
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: normal;
+    word-wrap: break-word;
   }
-
+  .direita .preco {
+    font-size: clamp(1.5em, 10vw, 2.2em);
+    word-break: break-word;
+  }
+  .direita .desconto {
+    font-size: 0.8rem;
+  }
   .direita .botoes {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.5rem;
   }
-
-.direita .direitainfo div.direitatitulo {
-  flex-direction: column; /* Força os itens a ficarem um sobre o outro */
-  align-items: flex-start; /* Alinha todos à esquerda */
-  gap: 0.5rem; /* Diminui o espaço entre eles */
-}
-
-  .frete-entrada {
-  flex-direction: column; /* Garante que fiquem um sobre o outro */
-  align-items: stretch; /* Garante que ocupem 100% da largura */
-  gap: 0.5rem;
-}
-
-.frete-entrada .botao-ok {
-  min-width: auto; /* Remove a largura mínima do botão 'OK' */
-}
-
-  .frete-entrada input,
-  .frete-entrada button {
-    width: 100%;
-  }
-
-  .frete {
-    min-width: 0; /* Permite que a seção de frete encolha conforme necessário */
-  }
-  
-  .direita h2.descricao {
-    font-size: 14px; /* Diminui um pouco a fonte para caber melhor */
-    line-height: 1.5; /* Aumenta o espaçamento entre as linhas para facilitar a leitura */
-    white-space: normal; /* Garante que o texto possa quebrar a linha */
-    word-wrap: break-word; /* Força a quebra de palavras longas para evitar transbordamento */
-  }
-
-   
-
-  .direita .botoes {
-    gap: 0.5rem; /* Diminui o espaço entre os botões */
-  }
-
-  /* Sobrescreve a largura mínima do botão que vem do arquivo global */
   .direita .botoes .btn-primary {
-    min-width: auto; /* Remove a largura mínima herdada */
-    padding: 12px 10px; /* Ajusta o padding interno para o texto caber */
-    font-size: 0.8rem; /* Diminui a fonte do botão */
+    min-width: auto;
+    padding: 12px 10px;
+    font-size: 0.8rem;
+    white-space: normal;
+    height: auto;
+    min-height: 40px;
   }
-
-   /* --- CORREÇÃO FINAL E LIMPA PARA AS ESTRELAS --- */
-.star-rating-container {
-  flex-direction: column !important; /* Força a prioridade máxima */
-  align-items: flex-start !important; /* Força a prioridade máxima */
-}
-
-/* --- CORREÇÃO ABSOLUTAMENTE FINAL PARA AS ESTRELAS --- */
-.star-icons {
-  flex-wrap: wrap !important; /* Força a quebra de linha das estrelas */
-  justify-content: flex-start !important; /* Garante o alinhamento à esquerda */
-}
-
-.direita .desconto {
-    font-size: 0.8rem; /* Sobrescreve o '1.1rem' apenas em telas pequenas */
+  .frete {
+    min-width: 0;
   }
-
-  .direita .preco {
-  /* clamp(VALOR MÍNIMO, VALOR IDEAL, VALOR MÁXIMO) */
-  font-size: clamp(1.5em, 10vw, 2.2em);
-  word-break: break-word;
-}
-
-/* --- CORREÇÃO PARA O TÍTULO DO FRETE --- */
   .frete h4 {
-    white-space: normal; /* Permite que o texto quebre a linha */
-    word-break: break-word; /* Garante a quebra de palavras */
+    white-space: normal;
+    word-break: break-word;
   }
-/* SUBSTITUA a regra antiga '.frete-entrada input' por esta mais forte: */
-.frete-entrada .input-default {
-  min-width: 0; /* Remove a largura mínima herdada */
-}
-
-}
-
-@media (max-width: 1024px) {
-  /* Regras para tablets na horizontal e notebooks pequenos */
-
-  .principal {
-    padding: 2rem 1.5rem; /* Diminui um pouco o padding lateral */
+  .frete-entrada {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
   }
-
-  .conteudo {
-  gap: 4rem; /* Aumenta o espaço entre as colunas.  */
-}
-  
-  .direita {
-    margin-right: 0; /* Remove a margem exagerada de 5em do desktop */
+  .frete-entrada .botao-ok,
+  .frete-entrada .input-default {
+    min-width: 0;
+  }
+  .direita .direitainfo div.direitatitulo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .direita .direitainfo div.direitatitulo span {
+    white-space: normal;
+    word-break: break-all;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .star-rating-container {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .star-icons {
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
   }
 }
