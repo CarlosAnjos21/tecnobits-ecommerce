@@ -181,124 +181,80 @@
 
 
 @media (max-width: 768px) {
+  /* 1. Regra para o container principal do rodapé */
   .footer {
-    flex-direction: column; /* Empilha as colunas do rodapé */
-    align-items: center; /* Centraliza o conteúdo empilhado */
-    text-align: center; /* Centraliza o texto dentro das colunas */
-    height: auto; /* Deixa a altura ser definida pelo conteúdo */
-    padding: 2rem 1rem; /* Ajusta o espaçamento interno */
-    gap: 2rem; /* Adiciona um espaço entre as seções empilhadas */
-
-    /* Garante que o footer ocupe a largura correta */
-    width: 100%;
-    max-width: 100%; 
-  }
-
-  .footer-header {
-    left: auto;
-    gap: 0px;
-  }
-
-  .footer-logo {
-    max-width: 100%;
-    gap: 20px;
-  }
-
-  .footer-description {
     flex-direction: column;
-    gap: 30px;
+    align-items: flex-start;
+    text-align: left;
+    height: auto;
+    padding: 3rem 1.5rem;
+    gap: 2.5rem;
+    overflow: visible; /* Permite ver todo o conteúdo */
   }
 
-  .footer-info {
-    top: -600px;
-    border: solid red 2px;
-    
+  /* 2. Resetando a posição de TODAS as seções filhas */
+  .footer-header,
+  .footer-description,
+  .footer-info,
+  .footer-info-title,
+  .footer-a,
+  .footer-categories,
+  .contats-container,
+  .footer-address,
+  .footer-phone,
+  .footer-social,
+  .footer-copy {
+    position: static; /* Desliga o sistema de 'top' e 'left' */
+    top: auto;
+    left: auto;
+    width: 100%; /* Faz cada seção ocupar a largura total */
+    height: auto;
+    text-align: left; /* Garante que o texto fique à esquerda */
   }
 
-  .footer-categories {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: 0.0%;
-  top: -203%;
-  font-size:larger;
-  color: aliceblue;
-}
+  /* 3. Estilizando os Títulos das seções para criar hierarquia */
+  /* (Adapte os seletores se os títulos usarem outras tags como h1, h2, etc.) */
+  .footer-info h3, 
+  .footer-categories h3,
+  .contats-container h3,
+  .footer-info-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #4A4A4A;
+  }
+  
+  /* 4. Organizando as listas de links */
+  .footer-info-list, /* Adapte se a classe for outra */
+  .footer-categories ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 
-/* address */
-
-.contats-container {
-  display: flex;
-  color: #ffffff;
-  flex-direction: column;
-  position: relative;
-  top: -212.0%;
-  left: 22.5%;
-}
-.footer-address {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: 20.5%;
-  top: -278%;
-  font-size: small;
-  width: 90%;
-}
-
-.footer-phone {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: 20%;
-  top: -260%;
-  font-size: small;
-}
-
-.footer-social {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: -21.5%;
-  top: -292.0%;
-  font-size: small;
-}
-
-/* Redes sociais */
-
-.footer-social-icon-FB {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: -6%;
-  top: 0%;
-}
-
-.footer-social-icon-IG {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: 0%;
-  top: -33%;
-}
-
-.footer-social-icon-TW {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: 6%;
-  top: -66%;
-}
-
-/* div copyright */
-
-.footer-copy {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  left: -4%;
-  top: -233%;
-  font-size: small;
-}
+  /* 5. Ajustes finos adicionais */
+  .footer-description {
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 40ch; /* Limita a largura da linha para melhor leitura */
+  }
+  
+  .footer-social-icon-FB,
+  .footer-social-icon-IG,
+  .footer-social-icon-TW {
+    position: static;
+    top: auto;
+    left: auto;
+  }
+  
+  .footer-social {
+    display: flex;
+    flex-direction: row; /* Coloca os ícones sociais lado a lado */
+    gap: 1.5rem;
+  }
 
 
 
