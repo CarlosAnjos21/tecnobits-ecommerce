@@ -182,11 +182,16 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 10px 10px 10px;
-    overflow: hidden;
-    width: 424px;
-    height: 424px;
-    max-width: max-content;
+    flex-direction: column; /* Empilha as colunas do rodapé */
+    align-items: center; /* Centraliza o conteúdo empilhado */
+    text-align: center; /* Centraliza o texto dentro das colunas */
+    height: auto; /* Deixa a altura ser definida pelo conteúdo */
+    padding: 2rem 1rem; /* Ajusta o espaçamento interno */
+    gap: 2rem; /* Adiciona um espaço entre as seções empilhadas */
+
+    /* Garante que o footer ocupe a largura correta */
+    width: 100%;
+    max-width: 100%; 
   }
 
   .footer-header {
