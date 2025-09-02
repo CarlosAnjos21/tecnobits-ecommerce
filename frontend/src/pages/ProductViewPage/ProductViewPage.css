@@ -1,3 +1,7 @@
+/* CÓDIGO DE DEPURAÇÃO TEMPORÁRIO - ADICIONE AQUI NO TOPO */
+* {
+  border: 1px solid red !important;
+}
 .principal {
   display: flex;
   flex-direction: column;
@@ -95,6 +99,25 @@
   flex-wrap: wrap; /* A propriedade MÁGICA: permite que as estrelas quebrem a linha */
   justify-content: flex-start; /* Alinha as estrelas à esquerda */
 }
+
+.direita .direitatitulo span {
+  display: flex; /* Mantém o alinhamento do ícone com o texto */
+  flex-wrap: wrap; /* Permite que o texto quebre para baixo do ícone */
+  align-items: center; /* Alinha o ícone com o texto quebrado */
+  white-space: normal; /* Garante que o texto possa quebrar */
+  word-break: break-all; /* Força a quebra de qualquer palavra longa */
+}
+
+   .direita .botoes .btn-primary {
+    white-space: normal;
+    height: auto;
+    min-height: 40px;
+  }
+  .direita .direitainfo div.direitatitulo .prontaentrega,
+  .direita .direitainfo div.direitatitulo .calendario {
+    width: 16px; /* Diminui o tamanho dos ícones */
+    height: 16px;
+  }
 .direita h2.descricao{
     color: var(--text-light);
     
@@ -299,4 +322,17 @@ font-weight: bold;
     padding: 12px 10px; /* Ajusta o padding interno para o texto caber */
     font-size: 0.8rem; /* Diminui a fonte do botão */
   }
+
+   /* --- CORREÇÃO FINAL E LIMPA PARA AS ESTRELAS --- */
+.star-rating-container {
+  flex-direction: column !important; /* Força a prioridade máxima */
+  align-items: flex-start !important; /* Força a prioridade máxima */
+}
+
+/* --- CORREÇÃO ABSOLUTAMENTE FINAL PARA AS ESTRELAS --- */
+.star-icons {
+  flex-wrap: wrap !important; /* Força a quebra de linha das estrelas */
+  justify-content: flex-start !important; /* Garante o alinhamento à esquerda */
+}
+
 }
