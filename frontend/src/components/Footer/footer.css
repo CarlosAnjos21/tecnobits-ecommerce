@@ -181,18 +181,18 @@
 
 
 @media (max-width: 768px) {
-  /* 1. Regra para o container principal do rodapé */
+  /* container principal do rodapé */
   .footer {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Alinha seções à esquerda por padrão */
     text-align: left;
     height: auto;
     padding: 3rem 1.5rem;
     gap: 2.5rem;
-    overflow: visible; /* Permite ver todo o conteúdo */
+    overflow: visible; /* Importante para vermos todo o conteúdo */
   }
 
-  /* 2. Resetando a posição de TODAS as seções filhas */
+  /* reseta a posição de todas as seções filhas */
   .footer-header,
   .footer-description,
   .footer-info,
@@ -203,21 +203,33 @@
   .footer-address,
   .footer-phone,
   .footer-social,
-  .footer-copy {
-    position: static; /* Desliga o sistema de 'top' e 'left' */
+  .footer-copy,
+  .footer-social-icon-FB,
+  .footer-social-icon-IG,
+  .footer-social-icon-TW {
+    position: static; /* DESLIGA o sistema de 'top' e 'left' */
     top: auto;
     left: auto;
-    width: 100%; /* Faz cada seção ocupar a largura total */
+    width: 100%;
     height: auto;
     text-align: left; /* Garante que o texto fique à esquerda */
   }
 
-  /* 3. Estilizando os Títulos das seções para criar hierarquia */
-  /* (Adapte os seletores se os títulos usarem outras tags como h1, h2, etc.) */
-  .footer-info h3, 
-  .footer-categories h3,
-  .contats-container h3,
-  .footer-info-title {
+  /* 3. cenrtaliza apenas a seção do logo */
+  .footer-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-logo p {
+    text-align: center;
+  }
+
+  /* estilizar os títulos das seções para criar hierarquia */
+  /* adapta os títulos usarem outras tags como h1, h2, etc. */
+  .footer-info-title,
+  .footer-categories h3 { /* Exemplo, pode precisar de ajuste */
     font-weight: 700;
     font-size: 1.1rem;
     margin-bottom: 1rem;
@@ -225,35 +237,26 @@
     border-bottom: 1px solid #4A4A4A;
   }
   
-  /* 4. Organizando as listas de links */
-  .footer-info-list, /* Adapte se a classe for outra */
-  .footer-categories ul {
-    list-style: none;
-    padding-left: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  /* 5. Ajustes finos adicionais */
-  .footer-description {
-    font-size: 0.9rem;
-    width: 100%;
-    max-width: 40ch; /* Limita a largura da linha para melhor leitura */
-  }
-  
-  .footer-social-icon-FB,
-  .footer-social-icon-IG,
-  .footer-social-icon-TW {
-    position: static;
-    top: auto;
-    left: auto;
-  }
-  
+  /* organizar os ícones de redes sociais */
   .footer-social {
     display: flex;
-    flex-direction: row; /* Coloca os ícones sociais lado a lado */
+    flex-direction: row; /* Coloca os ícones lado a lado */
     gap: 1.5rem;
+  }
+
+  
+
+  /* garante que o texto abaixo do logo também se centralize */
+  .footer-header {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* A propriedade chave para centralizar o filho */
+  }
+
+  /* posição do logo */
+  .footer-logo {
+    position: static; /* Reseta o posicionamento para o padrão */
+    width: auto;      /* Deixa a largura ser automática e não 90% */
   }
 
 
