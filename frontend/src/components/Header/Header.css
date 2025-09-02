@@ -324,42 +324,58 @@
     text-decoration: none;
 }
 
-/* Responsividade */
+@media (max-width: 1024px) {
+  /* Ajustes de espaçamento que valem para tablet e celular */
+  .header-container:not(.auth-page) {
+    min-height: auto;
+  }
+
+  .header-dropshadow:not(.auth-page) {
+    padding: 10px 1.5rem; /* Padding um pouco maior para tablets */
+    gap: 0;
+  }
+
+  .header-main {
+    gap: 1.5rem; /* Gap um pouco maior para tablets */
+  }
+}
+
+
+/* ========================================= */
+/* 3. AJUSTES PARA TELAS MENORES (MOBILE) */
+/* ========================================= */
 @media (max-width: 768px) {
-    .hamburger-menu {
-        display: flex;
-    }
-    .search-input, .header-nav, .user-actions {
+  /* Mostra o menu hambúrguer e esconde a navegação/busca/ações */
+  .hamburger-menu {
+    display: flex;
+  }
+  .search-input, .header-nav, .user-actions {
     display: none;
-}
-    .header-nav.mobile-open {
-        display: block;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: white;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-    .header-nav.mobile-open .nav-list {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-        gap: 15px;
-    }
-
-   .header-container:not(.auth-page) {
-    min-height: auto; /* Remove a altura mínima em telas mobile */
   }
 
-.header-dropshadow:not(.auth-page) {
-  padding: 10px 1rem; /* AJUSTE AQUI para 1rem nas laterais */
-  gap: 0;
-}
-
-.header-main {
-    gap: 1rem; /* Reduz drasticamente o espaço entre os elementos */
+  /* Ajusta espaçamentos para serem ainda menores no celular */
+  .header-dropshadow:not(.auth-page) {
+    padding: 10px 1rem;
   }
-    
+  .header-main {
+    gap: 1rem;
+  }
+
+  /* Regras para quando o menu mobile estiver aberto */
+  .header-nav.mobile-open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  .header-nav.mobile-open .nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 15px;
+  }
 }
