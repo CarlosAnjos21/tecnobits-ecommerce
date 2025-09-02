@@ -329,9 +329,9 @@
     .hamburger-menu {
         display: flex;
     }
-    .search-input, .header-nav, .user-actions .nav-link, .user-actions .primary-btn {
-        display: none;
-    }
+    .search-input, .header-nav, .user-actions {
+    display: none;
+}
     .header-nav.mobile-open {
         display: block;
         position: absolute;
@@ -348,4 +348,18 @@
         padding: 20px;
         gap: 15px;
     }
+
+   .header-container:not(.auth-page) {
+    min-height: auto; /* Remove a altura mínima em telas mobile */
+  }
+
+.header-dropshadow:not(.auth-page) {
+  padding: 10px 1rem; /* AJUSTE AQUI para 1rem nas laterais */
+  gap: 0;
+}
+
+.header-main {
+    gap: 1rem; /* Reduz drasticamente o espaço entre os elementos */
+  }
+    
 }

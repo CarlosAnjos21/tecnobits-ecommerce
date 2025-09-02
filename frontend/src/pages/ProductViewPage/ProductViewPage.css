@@ -1,7 +1,7 @@
 /* CÓDIGO DE DEPURAÇÃO TEMPORÁRIO - ADICIONE AQUI NO TOPO */
-* {
+/** {
   border: 1px solid red !important;
-}
+}*/
 .principal {
   display: flex;
   flex-direction: column;
