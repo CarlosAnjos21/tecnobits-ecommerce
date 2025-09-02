@@ -34,18 +34,29 @@ Daniely (Fullstack Leader)
 
 ### **🔧 BACKEND - Time Kaio (Líder)**
 
+
 **Kaio Vinícius** - Líder Backend
 - Arquitetura do backend e decisões técnicas
 - Configuração inicial (Express, Prisma, PostgreSQL)
 - Sistema de autenticação e autorização (JWT)
 - APIs de usuários e segurança
+- Implementação do sistema de login simples
+- Implementação e controle de perfis (cliente/vendedor)
+- Implementação do cancelamento de vendas (cliente e vendedor)
+- Controle de estoque e restrição de adicionar ao carrinho sem estoque
+- Opção de adicionar produtos ao estoque pelo vendedor
 - **Reporta para:** Daniely
+
 
 **Antônio Gabriel** - Dev Backend
 - APIs de produtos e categorias (CRUD)
 - Sistema de carrinho de compras
 - APIs de pedidos e histórico
 - Integração com banco de dados
+- Cadastro de vendedor e cliente (restrito ao vendedor)
+- Cadastro de produto (com fotos, preço, descrição, título)
+- Gravação de vendas no banco de dados
+- Listagem de vendas (vendedor vê todas, cliente vê só as próprias)
 - **Reporta para:** Kaio
 
 ### **🎨 FRONTEND - Time Carlos (Líder)**
@@ -55,18 +66,29 @@ Daniely (Fullstack Leader)
 - Sistema de roteamento e navegação
 - Gerenciamento de estado (Context/Redux)
 - Integração com APIs do backend
+- Garantir que o site tenha vários produtos para teste/apresentação
+- Implementar responsividade total do site (multi-telas)
+- Suporte aos devs front quando necessário.
 - **Reporta para:** Daniely
 
 **Maycon Andrade** - Dev Frontend
+- Implementar carrinho de compras (armazenar produtos, calcular preço)
 - Páginas principais (Home, Produtos, Carrinho)
 - Componentes reutilizáveis
 - Sistema de autenticação no frontend
+- Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor)
+- Implementar cadastro de produto (com upload de fotos)
+- Garantir responsividade total do site (multi-telas)
 - **Reporta para:** Carlos
 
 **Anderson Guimarães** - Dev Frontend
 - Páginas de produto individual
 - Checkout e finalização de compra
 - Responsividade e otimizações
+- Implementar listagem de compras do cliente
+- Implementar listagem de vendas do vendedor
+- Implementar cancelamento de vendas (cliente e vendedor)
+- Implementar responsividade total do site (multi-telas)
 - **Reporta para:** Carlos
 
 ---
@@ -104,6 +126,10 @@ Daniely (Fullstack Leader)
 □ Estabelecer Git Flow e branches
 □ Daily meetings, se possível, às 21h (15min)
 □ Code review de funcionalidades críticas
+□ Garantir que as novas orientações estejam sendo seguidas por todos
+□ Validar integração entre backend e frontend nas entregas
+□ Aprovar funcionalidades críticas antes do deploy
+□ Acompanhar e ajustar a divisão de tarefas conforme o progresso
 ```
 
 ### **SEMANA 2: CORE FEATURES (07/09 - 13/09)**
