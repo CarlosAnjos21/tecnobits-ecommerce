@@ -133,6 +133,7 @@ font-size: 3em;
 color: var(--success-color);
 font-weight: bold;
 }
+
 .direita div.avista{
     color: var(--text-light);
     font-size: 0.8em;
@@ -307,10 +308,7 @@ font-weight: bold;
     word-wrap: break-word; /* Força a quebra de palavras longas para evitar transbordamento */
   }
 
-   .direita .preco {
-    font-size: 2.2em; /* Diminui drasticamente a fonte do preço */
-    word-break: break-word; /* Garante que quebre a linha se necessário */
-  }
+   
 
   .direita .botoes {
     gap: 0.5rem; /* Diminui o espaço entre os botões */
@@ -333,6 +331,16 @@ font-weight: bold;
 .star-icons {
   flex-wrap: wrap !important; /* Força a quebra de linha das estrelas */
   justify-content: flex-start !important; /* Garante o alinhamento à esquerda */
+}
+
+.direita .desconto {
+    font-size: 0.8rem; /* Sobrescreve o '1.1rem' apenas em telas pequenas */
+  }
+
+  .direita .preco {
+  /* clamp(VALOR MÍNIMO, VALOR IDEAL, VALOR MÁXIMO) */
+  font-size: clamp(1.5em, 10vw, 2.2em);
+  word-break: break-word;
 }
 
 }
