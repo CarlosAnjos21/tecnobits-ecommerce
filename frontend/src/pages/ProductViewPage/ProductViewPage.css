@@ -249,6 +249,8 @@ font-weight: bold;
     width: 100%;
     margin-top: 0.5rem;
 }
+
+
 @media (max-width: 768px) {
   .principal {
     padding: 1rem; /* Reduz o padding geral para telas menores */
@@ -360,4 +362,20 @@ font-weight: bold;
   min-width: 0; /* Remove a largura mínima herdada */
 }
 
+}
+
+@media (max-width: 1024px) {
+  /* Regras para tablets na horizontal e notebooks pequenos */
+
+  .principal {
+    padding: 2rem 1.5rem; /* Diminui um pouco o padding lateral */
+  }
+
+  .conteudo {
+  gap: 4rem; /* Aumenta o espaço entre as colunas.  */
+}
+  
+  .direita {
+    margin-right: 0; /* Remove a margem exagerada de 5em do desktop */
+  }
 }
