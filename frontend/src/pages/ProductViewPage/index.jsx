@@ -154,9 +154,9 @@ function ProductViewPage() {
                               onChange={handleCepChange}
                               maxLength={9} // Formato XXXXX-XXX
                             />
-                            <ButtonPrimary className='botao-ok' onClick={handleCalculateShippingClick}>
-                              OK
-                            </ButtonPrimary>
+                            <ButtonPrimary className='botao-ok mobile' onClick={handleCalculateShippingClick}>
+  OK
+</ButtonPrimary>
                           </div>
                           {shippingMessage && <p className='valorfrete'>{shippingMessage}</p>}
                         </div>

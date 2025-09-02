@@ -205,9 +205,16 @@ font-weight: bold;
 }
 
 .frete-entrada {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  align-items: stretch; /* A propriedade chave para igualar as alturas */
+  gap: 10px;
+}
+
+/* Garante que o texto dentro do botão fique centralizado verticalmente */
+.frete-entrada button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .frete-entrada input {
