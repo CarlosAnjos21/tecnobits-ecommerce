@@ -107,6 +107,8 @@ Daniely (Fullstack Leader)
 □ APIs básicas de usuário funcionais
 □ Middleware de segurança configurado
 □ Seed inicial do banco com dados de teste
+□ Sistema de login simples implementado
+□ Controle de perfis (cliente/vendedor) iniciado
 ```
 
 **FRONTEND (Carlos + Maycon + Anderson):**
@@ -117,6 +119,7 @@ Daniely (Fullstack Leader)
 □ Context de autenticação implementado
 □ Páginas de login/registro funcionais
 □ Layout responsivo básico
+□ Estrutura inicial para cadastro restrito (vendedor, cliente, produto)
 ```
 
 **DANIELY (Coordenação):**
@@ -143,6 +146,9 @@ Daniely (Fullstack Leader)
 □ Upload e gerenciamento de imagens
 □ Validações robustas e tratamento de erros
 □ Testes unitários básicos
+□ Cadastro de vendedor e cliente (restrito ao vendedor)
+□ Cadastro de produto (com fotos, preço, descrição, título)
+□ Controle de estoque (restrição de adicionar ao carrinho sem estoque)
 ```
 
 **FRONTEND (Carlos + Maycon + Anderson):**
@@ -152,6 +158,9 @@ Daniely (Fullstack Leader)
 □ Sistema de carrinho funcional no frontend
 □ Integração completa com APIs
 □ Navegação fluida entre páginas
+□ Cadastro de vendedor, cliente e produto (restrito ao vendedor)
+□ Upload de fotos de produto
+□ Carrinho funcional com cálculo de preço
 ```
 
 ### **SEMANA 3: FUNCIONALIDADES AVANÇADAS (14/09 - 20/09)**
@@ -165,6 +174,10 @@ Daniely (Fullstack Leader)
 □ Dashboard admin básico
 □ Documentação completa da API
 □ Otimizações de performance
+□ Gravação de vendas no banco de dados
+□ Listagem de vendas (vendedor vê todas, cliente vê só as próprias)
+□ Cancelamento de vendas (cliente e vendedor)
+□ Adição de produtos ao estoque pelo vendedor
 ```
 
 **FRONTEND (Carlos + Maycon + Anderson):**
@@ -174,6 +187,10 @@ Daniely (Fullstack Leader)
 □ Perfil do usuário editável
 □ Responsividade total (mobile-first)
 □ UX polish e microinterações
+□ Listagem de compras do cliente
+□ Listagem de vendas do vendedor
+□ Cancelamento de vendas (cliente e vendedor)
+□ Responsividade total do site (multi-telas)
 ```
 
 ### **SEMANA 4: INTEGRAÇÃO E ENTREGA (21/09 - 23/09)**
