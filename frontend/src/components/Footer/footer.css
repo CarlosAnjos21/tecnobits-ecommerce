@@ -1,43 +1,47 @@
 /* ======================================================= */
-/* 1. NOVOS ESTILOS REATORADOS (DESKTOP) */
+/* 1. NOVOS ESTILOS COM GRID (DESKTOP) */
 /* ======================================================= */
 
 .footer {
-  display: flex;
-  flex-wrap: wrap; /* A propriedade mais importante: permite que as colunas quebrem a linha */
-  gap: 3rem 2rem;  /* 3rem de espaço vertical, 2rem horizontal */
+  display: grid;
+  /* Cria colunas flexíveis: tenta criar o máximo de colunas com no mínimo 220px */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 3rem 2rem; /* 3rem de espaço vertical, 2rem horizontal */
   background-color: #0B0E16;
   color: aliceblue;
   width: 100%;
   padding: 4rem 6%;
-  justify-content: center; /* Centraliza as colunas se houver espaço sobrando */
 }
 
-/* Regra geral para TODAS as seções/colunas dentro do rodapé */
-.footer > div {
-  /* O Flexbox agora controla a posição. Não precisamos mais de 'position', 'top' ou 'left' */
-  flex-grow: 1; /* Permite que as colunas cresçam */
-  flex-basis: 220px; /* Cada coluna tenta ter no mínimo 220px de largura */
-}
-
-/* Seção do Logo (que contém o header e a descrição) */
-/* (Baseado no seu JSX, o logo e a descrição não estão no mesmo container, então estilizamos separadamente) */
+/* Seção do Logo e Descrição */
 .footer-header {
-  flex-grow: 2; /* Permite que a seção do logo seja um pouco maior */
-  flex-basis: 300px;
+  /* Faz esta seção ocupar o espaço de 2 colunas no grid */
+  grid-column: span 2;
+  /* Garante que o conteúdo interno se alinhe corretamente */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* As outras seções (cada uma ocupará 1 coluna do grid) */
+.footer-info,
+.footer-categories,
+.contats-container {
+  /* O Grid já cuida do posicionamento, não precisamos de regras aqui */
 }
 
 .footer-logo {
-  display: block; /* Garante que a imagem se comporte como um bloco */
+  display: block;
   width: auto;
-  max-width: 200px; /* Limita o tamanho do logo */
+  max-width: 200px;
+  margin-bottom: 1rem;
 }
 
 .footer-description {
-  margin-top: 1rem;
   font-size: 0.9rem;
   color: #ccc;
   max-width: 45ch; /* Limita a largura da linha para melhor leitura */
+  
 }
 
 /* Títulos das colunas de links */
@@ -79,13 +83,16 @@
 
 /* Copyright */
 .footer-copy {
-  flex-basis: 100%; /* Ocupa a largura total da próxima linha */
+  /* Faz o copyright ocupar todas as colunas da sua linha */
+  grid-column: 1 / -1;
   text-align: center;
   margin-top: 2rem;
   padding-top: 2rem;
   border-top: 1px solid #4A4A4A;
   font-size: small;
 }
+
+/* ... Mantenha suas @media queries para 768px e 460px como estão ... */
 
 /* ======================================================= */
 /* ============== SEÇÃO DE RESPONSIVIDADE ============== */

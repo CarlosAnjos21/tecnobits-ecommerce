@@ -15,9 +15,8 @@ const Footer = () => (
     {/* div cabeçalho */}
     <div className='footer-header'>
       <img className='footer-logo' src="/images/MaybeFooterLogo.png" alt='Logo da loja' />
-    </div>
 
-    {/* div descrição */}
+        {/* div descrição */}
     <div>
       <p className='footer-description'>
         Na TecnoBits, tecnologia de ponta está ao seu alcance. Somos uma loja especializada em hardware,
@@ -27,6 +26,9 @@ const Footer = () => (
         Seja para montar seu setup gamer, turbinar seu PC ou encontrar o smartphone ideal, aqui você encontra tudo o que precisa com praticidade, segurança e suporte especializado.
       </p>
     </div>
+    </div>
+
+  
 
     {/* div links informações */}
     <div className='footer-info'>
