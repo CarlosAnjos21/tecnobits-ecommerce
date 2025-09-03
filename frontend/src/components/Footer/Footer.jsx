@@ -45,31 +45,7 @@ const Footer = () => (
       </nav>
     </div>
 
-    {/* div links categorias */}
-    <div className='footer-categories'>
-      <nav>
-        <ul className='footer-categories-list'>
-          <li className='footer-categories-title'>
-            <strong>Categorias</strong>
-          </li>
-          <li className='footer-c'>Smartphone</li>
-          <li className='footer-c'>Notebook</li>
-          <li className='footer-c'>Headphone</li>
-          <li className='footer-c'>Tablet</li>
-          <li className='footer-c'>Smart-TV</li>
-          <li className='footer-c'>Gadget</li>
-          <li className='footer-c'>Processor</li>
-          <li className='footer-c'>Placa Gráfica</li>
-          <li className='footer-c'>Placa-Mãe</li>
-          <li className='footer-c'>Memória Ram</li>
-          <li className='footer-c'>Armazenamento</li>
-          <li className='footer-c'>Fonte de energia</li>
-          <li className='footer-c'>Resfriamento</li>
-          <li className='footer-c'>Gabinete</li>
-          <li className='footer-c'>Mobile-PC</li>
-        </ul>
-      </nav>
-    </div>
+  
 
     {/* address */}
     <div className='contats-container'>
