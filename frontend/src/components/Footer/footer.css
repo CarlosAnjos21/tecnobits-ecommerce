@@ -1,12 +1,15 @@
 /* ======================================================= */
-/* 1. NOVOS ESTILOS COM GRID (DESKTOP) */
+/* 1. ESTILOS REATORADOS COM MELHORES PRÁTICAS (DESKTOP) */
 /* ======================================================= */
 
 .footer {
   display: grid;
-  /* Cria colunas flexíveis: tenta criar o máximo de colunas com no mínimo 220px */
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 3rem 2rem; /* 3rem de espaço vertical, 2rem horizontal */
+  /* REFACTOR 1: Grid mais flexível e robusto. 
+    Esta linha cria colunas automáticas que se adaptam ao tamanho da tela. 
+    O navegador vai criar quantas colunas de no mínimo 250px couberem no espaço.
+  */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem 2rem;
   background-color: #0B0E16;
   color: aliceblue;
   width: 100%;
@@ -15,19 +18,13 @@
 
 /* Seção do Logo e Descrição */
 .footer-header {
-  /* Faz esta seção ocupar o espaço de 2 colunas no grid */
+  /* REFACTOR 2: Faz esta seção ocupar 2 colunas no grid se houver espaço.
+    Em telas menores (como tablets), onde só couberem 2 colunas, ela ocupará a linha inteira.
+  */
   grid-column: span 2;
-  /* Garante que o conteúdo interno se alinhe corretamente */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-/* As outras seções (cada uma ocupará 1 coluna do grid) */
-.footer-info,
-.footer-categories,
-.contats-container {
-  /* O Grid já cuida do posicionamento, não precisamos de regras aqui */
 }
 
 .footer-logo {
@@ -40,18 +37,24 @@
 .footer-description {
   font-size: 0.9rem;
   color: #ccc;
-  max-width: 45ch; /* Limita a largura da linha para melhor leitura */
-  
+  max-width: 45ch;
+  /* REFACTOR 3: Melhorando a legibilidade do texto justificado.
+    A propriedade 'hyphens' ajuda o navegador a quebrar palavras longas com hífen,
+    reduzindo aqueles "rios" de espaço em branco que o 'justify' pode criar.
+  */
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto; /* Para compatibilidade com navegadores mais antigos */
 }
 
 /* Títulos das colunas de links */
-.footer-info-title strong,
-.footer-categories-title strong,
+.footer-info-title,
 .footer-address-title {
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   display: block;
+  color: #FFFFFF; /* Garante que a cor seja branca e visível */
 }
 
 /* Listas de links */
@@ -81,10 +84,19 @@
   gap: 1.5rem;
 }
 
+.footer-social a {
+  color: aliceblue; /* Cor dos ícones */
+  font-size: 1.5rem; /* Tamanho dos ícones */
+  transition: color 0.2s ease;
+}
+
+.footer-social a:hover {
+  color: #A9B3B3; /* Cor ao passar o mouse */
+}
+
 /* Copyright */
 .footer-copy {
-  /* Faz o copyright ocupar todas as colunas da sua linha */
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; /* Ocupa a linha inteira de baixo, de ponta a ponta */
   text-align: center;
   margin-top: 2rem;
   padding-top: 2rem;
@@ -92,7 +104,20 @@
   font-size: small;
 }
 
-/* ... Mantenha suas @media queries para 768px e 460px como estão ... */
+/* Estiliza os links dentro das listas do rodapé */
+.footer-info-list a,
+.footer-categories-list a {
+  color: inherit; /* Faz o link herdar a cor do texto do pai (aliceblue) */
+  text-decoration: none; /* Remove o sublinhado */
+  transition: color 0.2s ease; /* Adiciona uma transição suave para o hover */
+}
+
+/* Adiciona um efeito de hover para que o usuário saiba que é clicável */
+.footer-info-list a:hover,
+.footer-categories-list a:hover {
+  color: #A9B3B3; /* Um cinza claro, ou a cor que preferir */
+}
+
 
 /* ======================================================= */
 /* ============== SEÇÃO DE RESPONSIVIDADE ============== */
@@ -100,7 +125,9 @@
 
 @media (max-width: 768px) {
   .footer {
-    flex-direction: column; /* No mobile, empilha tudo em uma coluna */
+    /* REFACTOR 4: No mobile, trocamos para Flexbox, que é perfeito para colunas únicas. */
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
     text-align: left;
     gap: 2.5rem;
@@ -111,15 +138,11 @@
     width: 100%;
     display: flex;
     justify-content: center;
-  }
-
-  .footer-logo {
-    align-items: center;
-    margin: 0 auto; /* Garante a centralização */
+    align-items: center; /* Garante alinhamento vertical */
   }
 
   .footer-description,
-  .footer-logo p {
-    text-align: center; /* Centraliza o texto do logo e descrição no mobile */
+  .footer-logo p { /* O seletor para o parágrafo do logo estava faltando */
+    text-align: center;
   }
 }
