@@ -15,7 +15,7 @@ const ShoppingCartPage = lazy(() => import('./pages/ShoppingCartPage'));
 const Success = lazy(() => import('./pages/BuySuccess'));
 const FinaleBuyPage = lazy(() => import('./pages/FinalizarCompraPage'));
 const NotFoundPage = lazy(() => import('./pages/404'));
-const AdminPage = lazy(() => import('./pages/AdminPage')); // <-- ADICIONADO AQUI
+const AdminPage = lazy(() => import('./pages/AdminPage')); 
 
 const App = () => {
   return (
@@ -103,7 +103,7 @@ const App = () => {
           }
         />
 
-        {/* --- NOVA ROTA PARA O PAINEL ADMIN --- */}
+        {/* Rota Painel Admin */}
         <Route
           path='/admin/dashboard'
           element={
