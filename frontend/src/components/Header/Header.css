@@ -1,6 +1,5 @@
-/* ================================== */
-/* 1. ESTILOS PRINCIPAIS (DESKTOP) */
-/* ================================== */
+
+/* DESKTOP */
 
 .header-container {
   width: 100%;
@@ -174,11 +173,9 @@
   color: #4B5B9D;
 }
 
-/* ======================================================= */
-/* ============== SEÇÃO DE RESPONSIVIDADE ============== */
-/* ======================================================= */
+/* RESPONSIVIDADE*/
 
-/* 2. AJUSTES PARA TELAS MÉDIAS (TABLET) */
+/* AJUSTES PARA TELAS MÉDIAS (TABLET) */
 @media (max-width: 1024px) {
   .header-dropshadow:not(.auth-page) {
     padding: 10px 1.5rem;
@@ -189,9 +186,9 @@
   }
 }
 
-/* ========================================= */
-/* 3. AJUSTES PARA TELAS MENORES (MOBILE) */
-/* ========================================= */
+
+/* AJUSTES PARA TELAS MENORES (MOBILE) */
+
 @media (max-width: 768px) {
   /* --- Itens que DEVEM ser escondidos no mobile --- */
   .header-nav,

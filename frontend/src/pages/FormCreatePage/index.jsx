@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './FormCreatePage.module.css';
 
-// --- LÓGICA DE VALIDAÇÃO (Atualizada) ---
+// LÓGICA DE VALIDAÇÃO 
 
 const VALIDATION_RULES = {
   EMAIL_REGEX: /\S+@\S+\.\S+/,
@@ -16,7 +16,7 @@ const ERROR_MESSAGES = {
   PASSWORDS_DO_NOT_MATCH: 'As senhas não coincidem',
 };
 
-// A validação agora é a mesma para cliente e vendedor
+// validação para cliente e vendedor
 const validateForm = (formData) => {
   const errors = {};
   const { firstName, lastName, cpf, email, password, confirmPassword } = formData;
@@ -46,7 +46,7 @@ const validateForm = (formData) => {
   return errors;
 };
 
-// --- SUB-COMPONENTE: Formulário de Cadastro ---
+// Formulário de Cadastro ---
 const RegistrationForm = ({ userType }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -90,7 +90,7 @@ const RegistrationForm = ({ userType }) => {
       </div>
 
       <form onSubmit={handleSubmit} noValidate>
-        {/* Campos agora são os mesmos para ambos os tipos */}
+        
         <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="firstName">Nome *</label>
@@ -134,7 +134,7 @@ const RegistrationForm = ({ userType }) => {
   );
 };
 
-// --- SUB-COMPONENTE: Tela de Seleção de Tipo (sem alterações) ---
+// Tela de Seleção de Tipo
 const TypeSelection = ({ onSelect }) => (
   <div className={styles.formWrapper}>
     <div className={styles.titleContainer}>
@@ -157,7 +157,7 @@ const TypeSelection = ({ onSelect }) => (
   </div>
 );
 
-// --- COMPONENTE PRINCIPAL (sem alterações) ---
+// COMPONENTE PRINCIPAL
 const FormCreatePage = () => {
   const [userType, setUserType] = useState(null);
 

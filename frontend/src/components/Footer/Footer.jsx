@@ -2,9 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import './footer.css';
 
-// --- DADOS DO RODAPÉ ---
-// Manter os dados aqui facilita a manutenção. 
-// Se precisar mudar um link, você só mexe aqui.
+// DADOS DO RODAPÉ
+
 const infoLinks = [
   { href: '#', text: 'Sobre TecnoBits' },
   { href: '#', text: 'Segurança' },
@@ -20,7 +19,7 @@ const socialLinks = [
   { href: '#', icon: faTwitter, label: 'Twitter' },
 ];
 
-// --- COMPONENTE REUTILIZÁVEL PARA COLUNAS DE LINKS ---
+// coluna de links
 const FooterColumn = ({ title, links }) => (
   <div className="footer-info"> {/* Usando a classe genérica para as colunas de links */}
     <h3 className="footer-info-title">{title}</h3>
@@ -41,7 +40,7 @@ const Footer = () => {
 
   return (
     <footer className='footer'>
-      {/* Coluna 1: Logo e Descrição */}
+      {/*Logo e Descrição */}
       <div className='footer-header'>
         <a href="/" aria-label="Página Inicial">
           <img className='footer-logo' src="/images/MaybeFooterLogo.png" alt='Logo da loja TecnoBits' />
@@ -51,10 +50,10 @@ const Footer = () => {
         </p>
       </div>
 
-      {/* Coluna 2: Informações (usando o componente reutilizável) */}
+      {/*Informações  */}
       <FooterColumn title="Informações" links={infoLinks} />
 
-      {/* Coluna 3: Contato */}
+      {/*Contato */}
       <div className='contats-container'>
         <h3 className='footer-address-title'>Contato</h3>
         <address className='footer-address'>
@@ -76,7 +75,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Linha Final: Copyright */}
+      {/* Copyright */}
       <div className='footer-copy'>
         <p>© {currentYear} Projeto Integrador - Fullstack Capacita Brasil</p>
       </div>

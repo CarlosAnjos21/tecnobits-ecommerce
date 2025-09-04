@@ -1,11 +1,8 @@
-/* ======================================================= */
-/* 1. ESTILOS REATORADOS COM MELHORES PRÁTICAS (DESKTOP) */
-/* ======================================================= */
+/* DESKTOP*/
 
 .footer {
   display: grid;
-  /* REFACTOR 1: Grid mais flexível e robusto. 
-    Esta linha cria colunas automáticas que se adaptam ao tamanho da tela. 
+  /* cria colunas automáticas que se adaptam ao tamanho da tela. 
     O navegador vai criar quantas colunas de no mínimo 250px couberem no espaço.
   */
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -16,9 +13,9 @@
   padding: 4rem 6%;
 }
 
-/* Seção do Logo e Descrição */
+/* Logo e Descrição */
 .footer-header {
-  /* REFACTOR 2: Faz esta seção ocupar 2 colunas no grid se houver espaço.
+  /* Faz esta seção ocupar 2 colunas no grid se houver espaço.
     Em telas menores (como tablets), onde só couberem 2 colunas, ela ocupará a linha inteira.
   */
   grid-column: span 2;
@@ -38,9 +35,9 @@
   font-size: 0.9rem;
   color: #ccc;
   max-width: 45ch;
-  /* REFACTOR 3: Melhorando a legibilidade do texto justificado.
+  /* 
     A propriedade 'hyphens' ajuda o navegador a quebrar palavras longas com hífen,
-    reduzindo aqueles "rios" de espaço em branco que o 'justify' pode criar.
+    reduzindo espaço em branco que o 'justify' pode criar.
   */
   text-align: justify;
   hyphens: auto;
@@ -118,14 +115,11 @@
   color: #A9B3B3; /* Um cinza claro, ou a cor que preferir */
 }
 
-
-/* ======================================================= */
-/* ============== SEÇÃO DE RESPONSIVIDADE ============== */
-/* ======================================================= */
+/*RESPONSIVIDADE*/
 
 @media (max-width: 768px) {
   .footer {
-    /* REFACTOR 4: No mobile, trocamos para Flexbox, que é perfeito para colunas únicas. */
+    /* Flexbox, que é perfeito para colunas únicas. */
     display: flex;
     flex-direction: column;
     align-items: flex-start;

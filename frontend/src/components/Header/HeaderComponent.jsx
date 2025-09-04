@@ -6,7 +6,7 @@ import './Header.css'; // A usar CSS normal
 import Logo from '../Logo';
 import { InputDefault } from '../Input';
 import { useCart } from '../../contexts/CartContext';
-// 1. Caminho da imagem corrigido para 'icons'
+// Caminho da imagem corrigido para 'icons'
 import logoIcon from '../../assets/icons/logo.png';
 import products from '../../data/products.json'; // Importando os produtos para o filtro
 import { FaRegCircleUser, FaCartShopping, FaRegHeart } from 'react-icons/fa6';
@@ -93,7 +93,7 @@ const handleSearch = () => {
         if (event.key === 'Enter') handleSearch();
     };
 
-    // A lógica 'isAuthPage' foi removida das classes
+    
     const headerClasses = `header-container`;
     const dropshadowClasses = `header-dropshadow`;
     const navClasses = `header-nav ${isMenuOpen ? 'mobile-open' : ''}`;
@@ -101,7 +101,7 @@ const handleSearch = () => {
     return (
         <header className={headerClasses}>
             <div className={dropshadowClasses}>
-                {/* A condição 'isAuthPage' foi removida, mostrando sempre o header completo */}
+                
                 <>
                     <div className='header-main'>
                         <button className='hamburger-menu' onClick={handleMenuClick}>

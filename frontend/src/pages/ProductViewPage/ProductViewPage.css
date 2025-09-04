@@ -1,6 +1,5 @@
-/* ================================== */
-/* 1. ESTILOS PRINCIPAIS (DESKTOP) */
-/* ================================== */
+
+/* DESKTOP */
 
 .principal {
   display: flex;
@@ -223,11 +222,9 @@
   margin-bottom: 1em;
 }
 
-/* ======================================================= */
-/* ============== SEÇÃO DE RESPONSIVIDADE ============== */
-/* ======================================================= */
+/* RESPONSIVIDADE 
 
-/* 2. AJUSTES PARA TELAS MÉDIAS (TABLET: 769px - 1024px) */
+/* TELAS MÉDIAS (TABLET: 769px - 1024px) */
 @media (max-width: 1024px) {
   /* Mantém as 2 colunas, mas ajusta os espaçamentos */
   .principal {
@@ -241,7 +238,7 @@
   }
 }
 
-/* 3. AJUSTES PARA TELAS MENORES (MOBILE: até 768px) */
+/* TELAS MENORES (MOBILE: até 768px) */
 @media (max-width: 768px) {
   /* Transforma o layout em coluna única */
   .conteudo {
@@ -263,7 +260,7 @@
     max-width: 100%;
   }
 
-  /* Ajustes finos de texto e componentes para o mobile */
+  
   .direita h2.descricao {
     font-size: 14px;
     line-height: 1.5;
