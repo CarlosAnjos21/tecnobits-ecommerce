@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './FormCreatePage.module.css';
 
-// --- LÓGICA DE VALIDAÇÃO (Atualizada para múltiplos perfis) ---
+// --- LÓGICA DE VALIDAÇÃO (Atualizada) ---
 
 const VALIDATION_RULES = {
   EMAIL_REGEX: /\S+@\S+\.\S+/,
@@ -16,20 +16,15 @@ const ERROR_MESSAGES = {
   PASSWORDS_DO_NOT_MATCH: 'As senhas não coincidem',
 };
 
-const validateForm = (formData, userType) => {
+// A validação agora é a mesma para cliente e vendedor
+const validateForm = (formData) => {
   const errors = {};
-  const { firstName, lastName, storeName, cnpj, email, password, confirmPassword } = formData;
+  const { firstName, lastName, cpf, email, password, confirmPassword } = formData;
 
-  // Validação específica para cada tipo de usuário
-  if (userType === 'cliente') {
-    if (!firstName) errors.firstName = ERROR_MESSAGES.REQUIRED('nome');
-    if (!lastName) errors.lastName = ERROR_MESSAGES.REQUIRED('sobrenome');
-  } else if (userType === 'vendedor') {
-    if (!storeName) errors.storeName = ERROR_MESSAGES.REQUIRED('nome da loja');
-    if (!cnpj) errors.cnpj = ERROR_MESSAGES.REQUIRED('CNPJ');
-  }
+  if (!firstName) errors.firstName = ERROR_MESSAGES.REQUIRED('nome');
+  if (!lastName) errors.lastName = ERROR_MESSAGES.REQUIRED('sobrenome');
+  if (!cpf) errors.cpf = ERROR_MESSAGES.REQUIRED('CPF');
 
-  // Validações comuns
   if (!email) {
     errors.email = ERROR_MESSAGES.REQUIRED('email');
   } else if (!VALIDATION_RULES.EMAIL_REGEX.test(email)) {
@@ -57,8 +52,7 @@ const RegistrationForm = ({ userType }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    storeName: '',
-    cnpj: '',
+    cpf: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -73,12 +67,12 @@ const RegistrationForm = ({ userType }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newErrors = validateForm(formData, userType);
+    const newErrors = validateForm(formData);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
-      console.log(`Formulário de ${userType} enviado:`, formData);
+      console.log(`Formulário de ${userType} enviado:`, { ...formData, userType });
       setTimeout(() => {
         setIsSubmitting(false);
         navigate('/login');
@@ -96,8 +90,8 @@ const RegistrationForm = ({ userType }) => {
       </div>
 
       <form onSubmit={handleSubmit} noValidate>
-        {userType === 'cliente' && (
-          <div className={styles.formRow}>
+        {/* Campos agora são os mesmos para ambos os tipos */}
+        <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="firstName">Nome *</label>
               <input id="firstName" name="firstName" type="text" value={formData.firstName} onChange={handleChange} className={errors.firstName ? styles.inputError : ''} placeholder="Seu nome" />
@@ -108,25 +102,14 @@ const RegistrationForm = ({ userType }) => {
               <input id="lastName" name="lastName" type="text" value={formData.lastName} onChange={handleChange} className={errors.lastName ? styles.inputError : ''} placeholder="Seu sobrenome" />
               {errors.lastName && <p className={styles.errorMessage}>{errors.lastName}</p>}
             </div>
-          </div>
-        )}
+        </div>
 
-        {userType === 'vendedor' && (
-          <div className={styles.formRow}>
-            <div className={styles.formGroup}>
-              <label htmlFor="storeName">Nome da Loja *</label>
-              <input id="storeName" name="storeName" type="text" value={formData.storeName} onChange={handleChange} className={errors.storeName ? styles.inputError : ''} placeholder="Nome da sua loja" />
-              {errors.storeName && <p className={styles.errorMessage}>{errors.storeName}</p>}
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="cnpj">CNPJ *</label>
-              <input id="cnpj" name="cnpj" type="text" value={formData.cnpj} onChange={handleChange} className={errors.cnpj ? styles.inputError : ''} placeholder="Seu CNPJ" />
-              {errors.cnpj && <p className={styles.errorMessage}>{errors.cnpj}</p>}
-            </div>
-          </div>
-        )}
+        <div className={styles.formGroup}>
+          <label htmlFor="cpf">CPF *</label>
+          <input id="cpf" name="cpf" type="text" value={formData.cpf} onChange={handleChange} className={errors.cpf ? styles.inputError : ''} placeholder="000.000.000-00" />
+          {errors.cpf && <p className={styles.errorMessage}>{errors.cpf}</p>}
+        </div>
 
-        {/* Campos Comuns */}
         <div className={styles.formGroup}>
           <label htmlFor="email">Email *</label>
           <input id="email" name="email" type="email" value={formData.email} onChange={handleChange} className={errors.email ? styles.inputError : ''} placeholder="exemplo@email.com" />
@@ -151,32 +134,32 @@ const RegistrationForm = ({ userType }) => {
   );
 };
 
-// --- SUB-COMPONENTE: Tela de Seleção de Tipo ---
+// --- SUB-COMPONENTE: Tela de Seleção de Tipo (sem alterações) ---
 const TypeSelection = ({ onSelect }) => (
   <div className={styles.formWrapper}>
     <div className={styles.titleContainer}>
-      <h1 className={styles.title}>Crie sua Conta</h1>
-      <p className={styles.subtitle}>Escolha o tipo de conta que deseja criar.</p>
+        <h1 className={styles.title}>Crie sua Conta</h1>
+        <p className={styles.subtitle}>Escolha o tipo de conta que deseja criar.</p>
     </div>
     <div className={styles.selectionContainer}>
-      <button onClick={() => onSelect('cliente')} className={styles.selectionButton}>
-        Quero Comprar
-        <span>Cadastro de Cliente</span>
-      </button>
-      <button onClick={() => onSelect('vendedor')} className={styles.selectionButton}>
-        Quero Vender
-        <span>Cadastro de Vendedor</span>
-      </button>
+        <button onClick={() => onSelect('cliente')} className={styles.selectionButton}>
+            Quero Comprar
+            <span>Cadastro de Cliente</span>
+        </button>
+        <button onClick={() => onSelect('vendedor')} className={styles.selectionButton}>
+            Quero Vender
+            <span>Cadastro de Vendedor</span>
+        </button>
     </div>
     <p className={styles.subtitle} style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-      Já possui uma conta? <Link to="/login" className={styles.link}>Faça login aqui</Link>
+        Já possui uma conta? <Link to="/login" className={styles.link}>Faça login aqui</Link>
     </p>
   </div>
 );
 
-// --- COMPONENTE PRINCIPAL ---
+// --- COMPONENTE PRINCIPAL (sem alterações) ---
 const FormCreatePage = () => {
-  const [userType, setUserType] = useState(null); // null, 'cliente', ou 'vendedor'
+  const [userType, setUserType] = useState(null);
 
   if (!userType) {
     return (
