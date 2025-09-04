@@ -73,18 +73,18 @@ Daniely (Fullstack Leader)
 
 **Maycon Andrade** - Dev Frontend
 - Implementar carrinho de compras (armazenar produtos, calcular preço)
+- Checkout e finalização de compra
 - Páginas principais (Home, Produtos, Carrinho)
 - Componentes reutilizáveis
 - Sistema de autenticação no frontend
-- Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor)
 - Implementar cadastro de produto (com upload de fotos)
 - Garantir responsividade total do site (multi-telas)
 - **Reporta para:** Carlos
 
 **Anderson Guimarães** - Dev Frontend
 - Páginas de produto individual
-- Checkout e finalização de compra
 - Responsividade e otimizações
+- Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor)
 - Implementar listagem de compras do cliente
 - Implementar listagem de vendas do vendedor
 - Implementar cancelamento de vendas (cliente e vendedor)
