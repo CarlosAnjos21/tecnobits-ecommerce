@@ -78,6 +78,7 @@ Daniely (Fullstack Leader)
 - Componentes reutilizáveis
 - Sistema de autenticação no frontend
 - Implementar cadastro de produto (com upload de fotos)
+- Implementar cancelamento de vendas (cliente e vendedor)
 - Garantir responsividade total do site (multi-telas)
 - **Reporta para:** Carlos
 
@@ -85,9 +86,9 @@ Daniely (Fullstack Leader)
 - Páginas de produto individual
 - Responsividade e otimizações
 - Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor)
+- Implementar página de redirecionamento após cadastro do vendedor
 - Implementar listagem de compras do cliente
 - Implementar listagem de vendas do vendedor
-- Implementar cancelamento de vendas (cliente e vendedor)
 - Implementar responsividade total do site (multi-telas)
 - **Reporta para:** Carlos
 
