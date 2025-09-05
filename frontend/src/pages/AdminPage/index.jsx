@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './AdminPage.module.css'; 
 
-// Nossos dados falsos (mock data) para construir o layout
+// dados falsos (mock data) para construir o layout
 const mockPendingSellers = [
   { id: 1, name: 'João da Silva LTDA', registrationDate: '04/09/2025' },
   { id: 2, name: 'Maria Eletrônicos', registrationDate: '03/09/2025' },
