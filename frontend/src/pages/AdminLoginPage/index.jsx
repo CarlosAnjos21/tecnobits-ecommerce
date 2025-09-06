@@ -1,6 +1,8 @@
+//Página de Login do Administrador
+
 import React, { useState } from 'react';
-import './AdminLoginPage.css'; // MUDANÇA 1: Import do CSS normal
-import { useNavigate, Link } from 'react-router-dom'; // MUDANÇA 2: Import do Link
+import './AdminLoginPage.css'; 
+import { useNavigate, Link } from 'react-router-dom';
 
 const AdminLoginPage = () => {
   const [email, setEmail] = useState('');
@@ -10,8 +12,10 @@ const AdminLoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // No futuro, aqui entrará a lógica de chamada à API de login do backend
     console.log('Tentativa de login com:', { email, password });
     
+    // Simulação de login bem-sucedido para teste
     if (email === 'admin@tecnobits.com' && password === 'admin123') {
       navigate('/admin/dashboard');
     } else {
@@ -19,7 +23,7 @@ const AdminLoginPage = () => {
     }
   };
 
-  // MUDANÇA 3: Todas as 'className' agora usam strings
+  // MUDANÇA 2: Todas as 'className' agora usam strings de texto normais
   return (
     <div className="loginContainer">
       <div className="loginBox">
@@ -49,11 +53,9 @@ const AdminLoginPage = () => {
           <button type="submit" className="loginButton">Entrar</button>
         </form>
         
-        {/* MUDANÇA 4: Adicionado o link de 'voltar' */}
         <div className="backLinkContainer">
             <Link to="/" className="backLink">&larr; Voltar ao site</Link>
         </div>
-
       </div>
     </div>
   );
