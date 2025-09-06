@@ -1,3 +1,4 @@
+/* Página de Detalhes do Vendedor */
 import React from 'react';
 import { Link } from 'react-router-dom'; // Para o botão de voltar
 import styles from './AdminSellerDetailsPage.module.css';
