@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './pages/Layout';
@@ -18,13 +19,15 @@ const Success = lazy(() => import('./pages/BuySuccess'));
 const FinaleBuyPage = lazy(() => import('./pages/FinalizarCompraPage'));
 const NotFoundPage = lazy(() => import('./pages/404'));
 const AdminPage = lazy(() => import('./pages/AdminPage')); 
-const AdminSellerDetailsPage = lazy(() => import('./pages/AdminSellerDetailsPage')); // <-- ADICIONADO AQUI
+const AdminSellerDetailsPage = lazy(() => import('./pages/AdminSellerDetailsPage')); 
+const CadastroProdutosPage = lazy(() => import('./pages/CadastroProdutosPage')); /*temporariamente como uma rota pública.*/
 
 const App = () => {
   return (
     <Suspense fallback={<div>Carregando...</div>}>
       <ResetScroll />
       <Routes>
+        
         {/*  ROTAS PÚBLICAS  */}
         <Route path='/' element={<Layout><HomePage /></Layout>} />
         <Route path='/produtos' element={<Layout><ProductListingPage /></Layout>} />
@@ -32,6 +35,8 @@ const App = () => {
         <Route path='/login' element={<Layout><LoginPage /></Layout>} />
         <Route path='/create-account' element={<Layout><FormCreatePage /></Layout>} />
         <Route path='/shopping-cart' element={<Layout><ShoppingCartPage /></Layout>} />
+        <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} /> /
+
         
         {/* ROTAS PRIVADAS */}
         <Route path='/orders' element={<Layout><UserDashboard /></Layout>} />
