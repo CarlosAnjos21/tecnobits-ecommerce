@@ -21,6 +21,7 @@ const NotFoundPage = lazy(() => import('./pages/404'));
 const AdminPage = lazy(() => import('./pages/AdminPage')); 
 const AdminSellerDetailsPage = lazy(() => import('./pages/AdminSellerDetailsPage')); 
 const CadastroProdutosPage = lazy(() => import('./pages/CadastroProdutosPage')); /*temporariamente como uma rota pública.*/
+const PendingApprovalPage = lazy(() => import('./pages/PendingApprovalPage'));
 
 const App = () => {
   return (
@@ -35,8 +36,8 @@ const App = () => {
         <Route path='/login' element={<Layout><LoginPage /></Layout>} />
         <Route path='/create-account' element={<Layout><FormCreatePage /></Layout>} />
         <Route path='/shopping-cart' element={<Layout><ShoppingCartPage /></Layout>} />
-        <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} /> /
-
+        <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} /> {/*temporariamente como uma rota pública, Apenas um usuário autenticado com o perfil de vendedor pode ter a permissão*/}
+        <Route path='/cadastro/pendente' element={<Layout><PendingApprovalPage /></Layout>} />
         
         {/* ROTAS PRIVADAS */}
         <Route path='/orders' element={<Layout><UserDashboard /></Layout>} />
