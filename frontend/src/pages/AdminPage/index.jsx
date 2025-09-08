@@ -1,3 +1,4 @@
+/*Página de Dashboard para listar vendedores pendentes*/
 import React from 'react';
 import styles from './AdminPage.module.css'; 
 

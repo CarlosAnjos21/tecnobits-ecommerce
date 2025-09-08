@@ -1,4 +1,4 @@
-/* Página de Detalhes do Vendedor */
+/*Página de Detalhes do Vendedor para aprovação/rejeição*/
 import React from 'react';
 import { Link } from 'react-router-dom'; // Para o botão de voltar
 import styles from './AdminSellerDetailsPage.module.css';
