@@ -36,7 +36,6 @@ const App = () => {
         <Route path='/login' element={<Layout><LoginPage /></Layout>} />
         <Route path='/create-account' element={<Layout><FormCreatePage /></Layout>} />
         <Route path='/shopping-cart' element={<Layout><ShoppingCartPage /></Layout>} />
-        <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} /> {/*temporariamente como uma rota pública, Apenas um usuário autenticado com o perfil de vendedor pode ter a permissão*/}
         <Route path='/cadastro/pendente' element={<Layout><PendingApprovalPage /></Layout>} />
         
         {/* ROTAS PRIVADAS */}
@@ -44,6 +43,7 @@ const App = () => {
         <Route path='/checkout' element={<Layout><FinaleBuyPage /></Layout>} />
         <Route path='/success' element={<Layout><Success/></Layout>} />
         <Route path='/product-success' element={<Layout><BuySuccessPage /></Layout>} />
+        <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} /> {/*temporariamente como uma rota pública, Apenas um usuário autenticado com o perfil de vendedor pode ter a permissão*/}
 
 
 {/* --- ROTAS DE ADMIN --- */}
