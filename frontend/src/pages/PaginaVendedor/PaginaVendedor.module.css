@@ -1,0 +1,119 @@
+/* Estilos para a PaginaVendedor */
+
+.dashboardContainer {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: sans-serif;
+  color: #333;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1.5rem;
+}
+
+.section {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2.5rem;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.addProductButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addProductButton:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para as listas de Vendas e Produtos */
+.salesList, .productsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.productsHeader {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e0e0;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.saleItem, .productItem {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+}
+
+.productItem {
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+}
+
+.saleItem {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+
+.saleItem:last-child, .productItem:last-child {
+    border-bottom: none;
+}
+
+.saleItem .status {
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background-color: #eee;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.editButton {
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    justify-self: start; /* Alinha o botão à esquerda da sua célula */
+}
+
+.editButton:hover {
+    background-color: #e0e0e0;
+}
