@@ -1,29 +1,30 @@
-//Página de Login do Administrador
+//Página de Login do Administrador 
 
 import React, { useState } from 'react';
 import './AdminLoginPage.css'; 
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext'; // 1. IMPORTAR O useAuth
 
 const AdminLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { loginAdmin } = useAuth(); // 2. PEGAR A FUNÇÃO DE LOGIN DO CONTEXTO
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // No futuro, aqui entrará a lógica de chamada à API de login do backend
-    console.log('Tentativa de login com:', { email, password });
     
-    // Simulação de login bem-sucedido para teste
-    if (email === 'admin@tecnobits.com' && password === 'admin123') {
-      navigate('/admin/dashboard');
+    // 3. USAR A FUNÇÃO DO CONTEXTO PARA FAZER O LOGIN
+    const success = loginAdmin(email, password);
+
+    if (success) {
+      navigate('/admin/dashboard'); // Se o login do contexto deu certo, navegue
     } else {
-      setError('Email ou senha inválidos.');
+      setError('Email ou senha inválidos.'); // Se não, mostre o erro
     }
   };
 
-  // MUDANÇA 2: Todas as 'className' agora usam strings de texto normais
   return (
     <div className="loginContainer">
       <div className="loginBox">

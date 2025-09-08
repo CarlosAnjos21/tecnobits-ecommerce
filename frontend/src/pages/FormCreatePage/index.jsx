@@ -76,7 +76,7 @@ const RegistrationForm = ({ userType }) => {
       setTimeout(() => {
         setIsSubmitting(false);
         
-        // --- LÓGICA DE REDIRECIONAMENTO ATUALIZADA ---
+        // --- LÓGICA DE REDIRECIONAMENTO  ---
         if (userType === 'vendedor') {
           navigate('/cadastro/pendente'); // Redireciona o vendedor para a página de aprovação
         } else {
