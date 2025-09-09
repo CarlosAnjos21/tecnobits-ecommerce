@@ -98,22 +98,183 @@
     font-weight: 500;
     padding: 4px 8px;
     border-radius: 12px;
-    background-color: #eee;
+    background-color: #eee; /* Cor Padrão / Fallback */
     text-align: center;
     font-size: 0.85rem;
 }
 
+/* --- ESTILOS DE STATUS --- */
+.statusEntregue {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.statusEnviado {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.statusCancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* --- NOVO ESTILO DO BOTÃO EDITAR (PRODUTO) --- */
 .editButton {
-    padding: 6px 12px;
-    background-color: #f0f0f0;
-    color: #333;
-    border: 1px solid #ccc;
+    padding: 6px 14px;
+    background-color: #e7f3ff;
+    color: #0056b3;
+    border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    justify-self: start; /* Alinha o botão à esquerda da sua célula */
+    justify-self: start;
+    font-weight: 500;
 }
 
 .editButton:hover {
+    background-color: #d0e7ff;
+}
+
+/* --- ESTILOS PARA DADOS DO VENDEDOR --- */
+
+/* --- NOVO ESTILO DO BOTÃO EDITAR (DADOS) --- */
+.actionButton {
+  padding: 8px 20px; /* Ajuste no padding vertical */
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actionButton:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Lista de dados do vendedor */
+.dataList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Cada campo individual (ex: "Nome da Loja: ...") */
+.dataField {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+.dataField strong {
+    color: #555;
+    font-weight: 600;
+}
+
+/* --- ESTILOS PARA O MODAL DE EDIÇÃO --- */
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modalHeader h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #888;
+    padding: 0;
+    line-height: 1;
+}
+
+.modalForm .formGroup {
+    margin-bottom: 1rem;
+}
+
+.modalForm .formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.modalForm .formGroup input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modalActions button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cancelButton {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.cancelButton:hover {
     background-color: #e0e0e0;
 }
+
+.saveButton {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.saveButton:hover {
+    background-color: #0056b3;
+}
+
