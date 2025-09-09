@@ -13,6 +13,10 @@
 - **Resolução** de conflitos técnicos
 - **Mentoria** da equipe
 - **Gerenciamento** de prazos e entregas
+- Sistema de autenticação e autorização (JWT)
+- APIs de usuários e segurança
+- Implementação do sistema de login simples
+
 
 ### **Estrutura Hierárquica:**
 ```
@@ -38,20 +42,17 @@ Daniely (Fullstack Leader)
 **Kaio Vinícius** - Líder Backend
 - Arquitetura do backend e decisões técnicas
 - Configuração inicial (Express, Prisma, PostgreSQL)
-- Sistema de autenticação e autorização (JWT)
-- APIs de usuários e segurança
-- Implementação do sistema de login simples
 - Implementação e controle de perfis (cliente/vendedor)
 - Implementação do cancelamento de vendas (cliente e vendedor)
 - Controle de estoque e restrição de adicionar ao carrinho sem estoque
 - Opção de adicionar produtos ao estoque pelo vendedor
+- APIs de pedidos e histórico
 - **Reporta para:** Daniely
 
 
 **Antônio Gabriel** - Dev Backend
 - APIs de produtos e categorias (CRUD)
 - Sistema de carrinho de compras
-- APIs de pedidos e histórico
 - Integração com banco de dados
 - Cadastro de vendedor e cliente (restrito ao vendedor)
 - Cadastro de produto (com fotos, preço, descrição, título)
@@ -75,7 +76,6 @@ Daniely (Fullstack Leader)
 - Implementar carrinho de compras (armazenar produtos, calcular preço)
 - Checkout e finalização de compra
 - Páginas principais (Home, Produtos, Carrinho)
-- Componentes reutilizáveis
 - Sistema de autenticação no frontend
 - Implementar cadastro de produto (com upload de fotos)
 - Implementar cancelamento de vendas (cliente e vendedor)
