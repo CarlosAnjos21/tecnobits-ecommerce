@@ -22,8 +22,8 @@ const AdminSellerDetailsPage = lazy(() => import('./pages/AdminSellerDetailsPage
 const CadastroProdutosPage = lazy(() => import('./pages/CadastroProdutosPage')); 
 const PendingApprovalPage = lazy(() => import('./pages/PendingApprovalPage'));
 const PaginaVendedor = lazy(() => import('./pages/PaginaVendedor'));
-const PaginaCliente = lazy(() => import('./pages/PaginaCliente')); // <-- ADICIONADO ANTERIORMENTE
-const EditarProdutoPage = lazy(() => import('./pages/EditarProdutoPage')); // <-- NOVO IMPORT
+const PaginaCliente = lazy(() => import('./pages/PaginaCliente')); 
+const EditarProdutoPage = lazy(() => import('./pages/EditarProdutoPage')); 
 
 const App = () => {
   return (
@@ -52,7 +52,7 @@ const App = () => {
         {/* ROTAS DE VENDEDOR */}
         <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} />
         <Route path='/vendedor/dashboard' element={<Layout><PaginaVendedor /></Layout>}  />
-        <Route path='/vendedor/produtos/editar/:id' element={<Layout><EditarProdutoPage /></Layout>} /> {/* <-- NOVA ROTA */}
+        <Route path='/vendedor/produtos/editar/:id' element={<Layout><EditarProdutoPage /></Layout>} /> 
 
         {/* --- ROTAS DE ADMIN --- */}
         {/* rota de login */}

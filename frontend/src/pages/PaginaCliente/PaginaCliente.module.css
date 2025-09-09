@@ -38,60 +38,21 @@
   color: #333;
 }
 
+/* Estilo "outline" para o botão de editar, igual ao do vendedor */
 .actionButton {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
+  padding: 8px 20px;
+  background-color: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .actionButton:hover {
-  background-color: #0056b3;
-}
-
-/* Estilos para a lista de Pedidos */
-.orderList {
-  display: flex;
-  flex-direction: column;
-}
-
-.orderHeader {
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #e0e0e0;
-    font-weight: 600;
-    color: #666;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-}
-
-.orderItem {
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #f0f0f0;
-    align-items: center;
-}
-
-.orderItem:last-child {
-    border-bottom: none;
-}
-
-.orderItem .status {
-    font-weight: 500;
-    padding: 4px 8px;
-    border-radius: 12px;
-    background-color: #d4edda; /* Verde para sucesso/entregue */
-    color: #155724;
-    text-align: center;
-    font-size: 0.85rem;
+  background-color: #007bff;
+  color: #fff;
 }
 
 /* Estilos para a lista de Dados */
@@ -110,4 +71,108 @@
 
 .dataField strong {
     color: #555;
+    font-weight: 600;
+}
+
+/* --- ESTILOS PARA O MODAL DE EDIÇÃO --- */
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modalHeader h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #888;
+    padding: 0;
+    line-height: 1;
+}
+
+.modalForm .formGroup {
+    margin-bottom: 1rem;
+}
+
+.modalForm .formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.modalForm .formGroup input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modalActions button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cancelButton {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.cancelButton:hover {
+    background-color: #e0e0e0;
+}
+
+.saveButton {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.saveButton:hover {
+    background-color: #0056b3;
 }
