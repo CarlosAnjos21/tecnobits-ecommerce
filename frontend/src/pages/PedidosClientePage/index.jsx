@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './PedidosClientePage.css';
+// Atenção: Renomeie seu CSS para usar .module.css para consistência
+import styles from './PedidosClientePage.module.css'; 
 
 // Dados falsos (mock data) para o histórico de pedidos
 const mockOrders = [
@@ -9,12 +10,10 @@ const mockOrders = [
   { id: 'ef789', date: '15/07/2025', total: 89.90, status: 'Entregue' },
 ];
 
-const PedidosClientePage = () => {
-  return (
-    <div className={styles.ordersContainer}>
-      <h1 className={styles.title}>Meus Pedidos</h1>
-
-      <div className={styles.ordersList}>
+// Este agora é o componente que lista os pedidos
+const ListaPedidos = () => {
+    return (
+        <div className={styles.ordersList}>
         {mockOrders.length > 0 ? (
           mockOrders.map(order => (
             <div key={order.id} className={styles.orderCard}>
@@ -35,8 +34,19 @@ const PedidosClientePage = () => {
           <p>Você ainda não fez nenhum pedido.</p>
         )}
       </div>
+    );
+}
+
+// Este continua sendo o componente da PÁGINA, mas agora ele usa o componente acima
+const PedidosClientePage = () => {
+  return (
+    <div className={styles.ordersContainer}>
+      <h1 className={styles.title}>Meus Pedidos</h1>
+      <ListaPedidos /> {/* Usando o componente aqui */}
     </div>
   );
 };
 
+// Exportamos AMBOS para podermos usar a lista em outros lugares
+export { ListaPedidos };
 export default PedidosClientePage;

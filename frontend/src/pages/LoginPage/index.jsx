@@ -53,7 +53,9 @@ const LoginPage = () => {
                     navigate('/vendedor/dashboard'); // Redireciona para a página do vendedor
                 } else if (formData.email === 'cliente@tecnobits.com' && formData.password === 'cliente123') {
                     alert('Login de Cliente efetuado com sucesso!');
-                    navigate('/'); // Redireciona para a página inicial
+                    // --- ALTERAÇÃO AQUI ---
+                    // Redireciona para o painel do cliente ao invés da página inicial
+                    navigate('/cliente/dashboard'); 
                 } else {
                     // Define um erro geral se as credenciais não corresponderem
                     setErrors({ general: 'Email ou senha inválidos.' });
@@ -127,4 +129,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
