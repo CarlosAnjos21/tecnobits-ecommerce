@@ -1,15 +1,15 @@
-/*Página de Detalhes do Vendedor para aprovação/rejeição*/
 import React from 'react';
-import { Link } from 'react-router-dom'; // Para o botão de voltar
+import { Link } from 'react-router-dom';
 import styles from './AdminSellerDetailsPage.module.css';
 
-// Nossos dados falsos de um único vendedor para construir o layout
+// Dados falsos atualizados com as novas informações
 const mockSellerDetails = {
   id: 1,
-  name: 'João da Silva',
-  lastName: 'LTDA',
-  cpf: '123.456.789-00',
+  name: 'João da Silva LTDA',
+  cnpj: '12.345.678/0001-99',
   email: 'joao.silva@email.com',
+  phone: '(11) 98765-4321',
+  address: 'Rua das Indústrias, 789, São Paulo, SP',
   registrationDate: '04/09/2025',
 };
 
@@ -35,16 +35,24 @@ const AdminSellerDetailsPage = () => {
       
       <div className={styles.detailsCard}>
         <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>Nome Completo:</span>
-          <span className={styles.detailValue}>{`${seller.name} ${seller.lastName}`}</span>
+          <span className={styles.detailLabel}>Nome da Empresa:</span>
+          <span className={styles.detailValue}>{seller.name}</span>
         </div>
         <div className={styles.detailItem}>
-          <span className={styles.detailLabel}>CPF:</span>
-          <span className={styles.detailValue}>{seller.cpf}</span>
+          <span className={styles.detailLabel}>CNPJ:</span>
+          <span className={styles.detailValue}>{seller.cnpj}</span>
         </div>
         <div className={styles.detailItem}>
           <span className={styles.detailLabel}>Email:</span>
           <span className={styles.detailValue}>{seller.email}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Telefone:</span>
+          <span className={styles.detailValue}>{seller.phone}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Endereço:</span>
+          <span className={styles.detailValue}>{seller.address}</span>
         </div>
         <div className={styles.detailItem}>
           <span className={styles.detailLabel}>Data do Cadastro:</span>
