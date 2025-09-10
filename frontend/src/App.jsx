@@ -22,8 +22,9 @@ const AdminSellerDetailsPage = lazy(() => import('./pages/AdminSellerDetailsPage
 const CadastroProdutosPage = lazy(() => import('./pages/CadastroProdutosPage')); 
 const PendingApprovalPage = lazy(() => import('./pages/PendingApprovalPage'));
 const PaginaVendedor = lazy(() => import('./pages/PaginaVendedor'));
-const PaginaCliente = lazy(() => import('./pages/PaginaCliente')); 
-const EditarProdutoPage = lazy(() => import('./pages/EditarProdutoPage')); 
+const PaginaCliente = lazy(() => import('./pages/PaginaCliente'));
+const EditarProdutoPage = lazy(() => import('./pages/EditarProdutoPage'));
+const DetalhesPedidoClientePage = lazy(() => import('./pages/DetalhesPedidoClientePage')); 
 
 const App = () => {
   return (
@@ -41,27 +42,24 @@ const App = () => {
         <Route path='/cadastro/pendente' element={<Layout><PendingApprovalPage /></Layout>} />
         
         {/* ROTAS PRIVADAS */}
-        <Route path='/orders' element={<Layout><UserDashboard /></Layout>} />
         <Route path='/checkout' element={<Layout><FinaleBuyPage /></Layout>} />
         <Route path='/success' element={<Layout><Success/></Layout>} />
         <Route path='/product-success' element={<Layout><BuySuccessPage /></Layout>} />
 
         {/* ROTAS DE CLIENTE */}
         <Route path='/cliente/dashboard' element={<Layout><PaginaCliente /></Layout>} />
+        <Route path='/orders/:id' element={<Layout><DetalhesPedidoClientePage /></Layout>} />
 
         {/* ROTAS DE VENDEDOR */}
         <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} />
         <Route path='/vendedor/dashboard' element={<Layout><PaginaVendedor /></Layout>}  />
-        <Route path='/vendedor/produtos/editar/:id' element={<Layout><EditarProdutoPage /></Layout>} /> 
+        <Route path='/vendedor/produtos/editar/:id' element={<Layout><EditarProdutoPage /></Layout>} />
 
         {/* --- ROTAS DE ADMIN --- */}
-        {/* rota de login */}
         <Route path='/admin/login' element={<AdminLoginPage />} />
-
-        {/* rotas protegidas pelo AdminRoute */}
         <Route element={<AdminRoute />}>
-          <Route path='/admin/dashboard' element={<Layout><AdminPage /></Layout>} />
-          <Route path='/admin/seller/:sellerId' element={<Layout><AdminSellerDetailsPage /></Layout>} />
+        <Route path='/admin/dashboard' element={<Layout><AdminPage /></Layout>} />
+        <Route path='/admin/seller/:sellerId' element={<Layout><AdminSellerDetailsPage /></Layout>} />
         </Route>
 
         {/* Rota de fallback para 404  */}
@@ -72,4 +70,3 @@ const App = () => {
 };
 
 export default App;
-
