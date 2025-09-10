@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const authRoutes = require('./src/routes/authRoutes');
-const { protect, authorize } = require('./src/middleware/authMiddleware');
+import express from 'express';
+import cors from 'cors';
+import authRoutes from './src/routes/authRoutes.js';
+import { protect, authorize } from './src/middleware/authMiddleware.js';
 
 const app = express();
 
@@ -21,4 +21,4 @@ app.post('/api/products', protect, authorize('vendedor'), (req, res) => {
     res.status(201).json({ message: `Produto criado pelo vendedor ${req.user.name}` });
 });
 
-module.exports = app;
+export default app;

@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
-const { PrismaClient } = require('@prisma/client');
-const { JWT_SECRET } = require('../config/env');
+import jwt from 'jsonwebtoken';
+import { promisify } from 'util';
+import { PrismaClient } from '@prisma/client';
+import { JWT_SECRET } from '../config/env.js';
 
 const prisma = new PrismaClient();
 
 //middleware para proteção de rotas (ver se user está logado)
-exports.protect = async (req, res, next) => {
+export const protect = async (req, res, next) => {
     try {
         let token;
 
@@ -33,8 +33,8 @@ exports.protect = async (req, res, next) => {
     }
 };
 
-//midlleware para autorizar com basse na role
-exports.authorize = (...roles) => {
+//middleware para autorizar com base na role
+export const authorize = (...roles) => {
     return (req, res, next) => {
         //roles sera um arrray
         if (!roles.includes(req.user.role)) {

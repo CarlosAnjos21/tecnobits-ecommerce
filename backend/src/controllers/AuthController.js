@@ -1,7 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET, JWT_EXPIRES_IN } = require('../config/env');
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env.js';
 
 
 const prisma = new PrismaClient();
@@ -12,7 +12,7 @@ const generateToken = (id, role) => {
     });
 };
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
     try {
         const { name, email, password, role } = req.body; //cliente ou vendedor
 
@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
         }
     };
 
-    exports.login = async (req, res) => {
+    export const login = async (req, res) => {
         try {
             const { email, password } = req.body;
 
