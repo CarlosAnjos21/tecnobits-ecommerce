@@ -1,4 +1,3 @@
-
 /* DESKTOP */
 
 .header-container {
@@ -173,9 +172,63 @@
   color: #4B5B9D;
 }
 
+/* --- NOVOS ESTILOS PARA O MENU DO USUÁRIO LOGADO --- */
+
+.user-logged-in {
+    position: relative; /* Container principal para o menu dropdown */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.user-logged-in .user-text .subtle {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    width: 180px;
+    z-index: 1001;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0; /* Espaçamento interno */
+}
+
+.user-dropdown-menu a,
+.user-dropdown-menu button {
+    all: unset;
+    display: block;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.user-dropdown-menu a:hover,
+.user-dropdown-menu button:hover {
+    background-color: #f0f2f5;
+    color: #4B5B9D;
+}
+
 /* RESPONSIVIDADE*/
 
-/* AJUSTES PARA TELAS MÉDIAS (TABLET) */
 @media (max-width: 1024px) {
   .header-dropshadow:not(.auth-page) {
     padding: 10px 1.5rem;
@@ -186,57 +239,39 @@
   }
 }
 
-
-/* AJUSTES PARA TELAS MENORES (MOBILE) */
-
 @media (max-width: 768px) {
-  /* --- Itens que DEVEM ser escondidos no mobile --- */
   .header-nav,
   .user-actions .user,
-  .user-actions .icon-heart,
-  .user-actions .icon-sun {
+  .user-actions .user-logged-in .user-text, /* Esconde o texto no mobile */
+  .functions { 
     display: none;
   }
 
-  /* --- Itens que DEVEM ser mostrados no mobile --- */
+  .user-actions {
+    gap: 1rem;
+  }
+
   .hamburger-menu {
     display: flex;
   }
   
-  /* --- Novo layout com GRID para o container principal --- */
   .header-main {
     display: grid;
-    /* Define 3 colunas: (hambúrguer) (logo) (ações) e 2 linhas */
     grid-template-columns: auto 1fr auto;
     grid-template-rows: auto auto;
-    /* Define um "mapa" visual para o layout */
     grid-template-areas:
       "hamburger logo actions"
       "search    search  search";
     align-items: center;
-    gap: 10px 1rem; /* Espaçamento vertical e horizontal */
-    justify-content: unset; /* Reseta o justify-content do flexbox */
+    gap: 10px 1rem;
+    justify-content: unset;
   }
   
-  /* --- Associa cada elemento à sua área no "mapa" do Grid --- */
-  .hamburger-menu {
-    grid-area: hamburger;
-  }
-  .content-logo {
-    grid-area: logo;
-    justify-self: center; /* Centraliza o logo na sua coluna */
-  }
-  .user-actions {
-    grid-area: actions;
-    display: flex; /* Garante que o container interno se comporte bem */
-  }
-  .search-input {
-    grid-area: search;
-    margin: 0; /* Remove margens que possam atrapalhar */
-    width: 100%;
-  }
+  .hamburger-menu { grid-area: hamburger; }
+  .content-logo { grid-area: logo; justify-self: center; }
+  .user-actions { grid-area: actions; display: flex; }
+  .search-input { grid-area: search; margin: 0; width: 100%; }
 
-  /* --- Regras para o menu mobile aberto --- */
   .header-nav.mobile-open {
     display: block;
     position: absolute;
@@ -247,6 +282,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
   }
+
   .header-nav.mobile-open .nav-list {
     flex-direction: column;
     align-items: flex-start;
@@ -254,3 +290,4 @@
     gap: 15px;
   }
 }
+
