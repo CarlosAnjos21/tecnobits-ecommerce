@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // 1. IMPORTAR useRef
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import './Header.css';
-import { useAuth } from '../../contexts/AuthContext'; // 1. Importar o hook do contexto
+import { useAuth } from '../../contexts/AuthContext';
 
 // Componentes e Ícones
 import Logo from '../Logo';
@@ -11,10 +11,9 @@ import products from '../../data/products.json';
 import { FaRegCircleUser, FaCartShopping, FaRegHeart, FaAngleDown } from 'react-icons/fa6';
 
 const Header = () => {
-    // 2. Pegar os dados do usuário e a função de logout do contexto global
     const { user, logout } = useAuth();
     
-    // Estados do componente (sem a simulação de login)
+    // Estados do componente
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -22,21 +21,39 @@ const Header = () => {
     const [searchHistory, setSearchHistory] = useState(() => {
         return JSON.parse(localStorage.getItem('searchHistory')) || [];
     });
+
+    // 2. NOVO ESTADO E REF PARA CONTROLAR A VISIBILIDADE DAS SUGESTÕES
+    const [areSuggestionsVisible, setAreSuggestionsVisible] = useState(false);
+    const searchContainerRef = useRef(null);
     
     const navigate = useNavigate();
     const { getCartItemCount } = useCart();
     const cartItemCount = getCartItemCount();
     
-    // Função de logout agora usa a função global do contexto
+    // 3. EFEITO PARA DETETAR CLIQUES FORA DA ÁREA DE PESQUISA
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+                setAreSuggestionsVisible(false); // Esconde as sugestões
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    // Função de logout
     const handleLogout = () => {
         logout();
         setIsUserMenuOpen(false);
         navigate('/');
     };
 
-    // Gera o link do painel correto com base no usuário do contexto
+    // Gera o link do painel correto
     const getDashboardLink = () => {
-        if (!user) return "/login"; // Se não há usuário, o link leva para o login
+        if (!user) return "/login";
         switch (user.role) {
             case 'cliente': return "/cliente/dashboard";
             case 'vendedor': return "/vendedor/dashboard";
@@ -45,7 +62,7 @@ const Header = () => {
         }
     };
 
-    // Lógica de busca e responsividade (sem alterações)
+    // Lógica de busca
     const handleInputChange = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
@@ -87,6 +104,7 @@ const Header = () => {
         }
       
         setSuggestions([]);
+        setAreSuggestionsVisible(false); // Esconde as sugestões após a busca
     };
     
     const handleKeyPress = event => {
@@ -109,18 +127,21 @@ const Header = () => {
                         <Link to="/"><Logo /></Link>
                     </div>
 
-                    <div className='search-input'>
+                    {/* 4. ADICIONAR A REF E O EVENTO onFocus */}
+                    <div className='search-input' ref={searchContainerRef}>
                         <InputDefault
                             type='text'
                             placeholder='Pesquisar produtos...'
                             value={searchTerm}
                             onChange={handleInputChange}
                             onKeyUp={handleKeyPress}
+                            onFocus={() => setAreSuggestionsVisible(true)} // Mostra as sugestões ao focar
                         />
-                         {(suggestions.length > 0 || searchHistory.length > 0) && (
+                        {/* 5. ATUALIZAR A CONDIÇÃO DE RENDERIZAÇÃO */}
+                         {areSuggestionsVisible && (suggestions.length > 0 || searchHistory.length > 0) && (
                             <div className="search-suggestions">
                                 {suggestions.map((product) => (
-                                    <div key={product.id} className="suggestion-item-visual" onClick={() => { navigate(`/produtos/${product.id}`); setSearchTerm(''); setSuggestions([]); }}>
+                                    <div key={product.id} className="suggestion-item-visual" onClick={() => { navigate(`/produtos/${product.id}`); setSearchTerm(''); setSuggestions([]); setAreSuggestionsVisible(false); }}>
                                         <img src={product.image} alt={product.name} className="suggestion-image" />
                                         <div className="suggestion-info">
                                             <span className="suggestion-name">{product.name}</span>
@@ -173,9 +194,7 @@ const Header = () => {
                         )}
                         
                         <div className="functions">
-                            <Link to="/*" className="icon-link">
-                                <FaRegHeart />
-                            </Link>
+                            <Link to="/*" className="icon-link"><FaRegHeart /></Link>
                             <Link to="/shopping-cart" className="icon-link">
                                 <FaCartShopping />
                                 {cartItemCount > 0 && <span className="cart-badge">{cartItemCount}</span>}
