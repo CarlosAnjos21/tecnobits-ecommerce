@@ -9,7 +9,6 @@ import { InputDefault } from '../Input';
 import { useCart } from '../../contexts/CartContext';
 import products from '../../data/products.json';
 import { FaRegCircleUser, FaCartShopping, FaRegHeart, FaAngleDown } from 'react-icons/fa6';
-import { IoSunny } from 'react-icons/io5';
 
 const Header = () => {
     // 2. Pegar os dados do usuário e a função de logout do contexto global
@@ -174,8 +173,9 @@ const Header = () => {
                         )}
                         
                         <div className="functions">
-                            <Link to="/*" className="icon-link"><IoSunny /></Link>
-                            <Link to="/*" className="icon-link"><FaRegHeart /></Link>
+                            <Link to="/*" className="icon-link">
+                                <FaRegHeart />
+                            </Link>
                             <Link to="/shopping-cart" className="icon-link">
                                 <FaCartShopping />
                                 {cartItemCount > 0 && <span className="cart-badge">{cartItemCount}</span>}
