@@ -96,17 +96,20 @@
     height: 80px;
     object-fit: cover;
     border-radius: 6px;
+    flex-shrink: 0; /* Impede que a imagem encolha */
 }
 
 .itemDetails {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    min-width: 0; /* Permite que o container encolha e o texto quebre a linha */
 }
 
 .itemName {
     font-weight: 600;
     color: #343a40;
+    word-break: break-word; /* Garante que o nome do produto quebre a linha */
 }
 
 .itemQuantity {
@@ -118,6 +121,7 @@
     font-size: 1.1rem;
     font-weight: 500;
     color: #495057;
+    white-space: nowrap; /* Impede que o preço quebre a linha */
 }
 
 .totalSection {
@@ -133,4 +137,24 @@
 
 .totalPrice {
     color: #28a745;
+}
+
+/* --- REGRAS DE RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    .title {
+        font-size: 1.5rem;
+    }
+    .itemsSection, .summaryCard {
+        padding: 1.5rem;
+    }
+    .itemCard {
+        gap: 1rem;
+    }
+    .itemImage {
+        width: 60px;
+        height: 60px;
+    }
 }
