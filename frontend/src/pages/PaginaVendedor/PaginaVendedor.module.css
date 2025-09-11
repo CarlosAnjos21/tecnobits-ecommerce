@@ -19,6 +19,8 @@
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: grid; 
+  grid-template-columns: minmax(0, 1fr);
 }
 .sectionHeader {
     display: flex;
@@ -41,7 +43,7 @@
   cursor: pointer;
 }
 .salesList, .productsList {
-  overflow-x: auto; /* Permite rolagem horizontal se a tabela for muito larga */
+  overflow-x: auto; 
 }
 .productsHeader, .salesHeader {
     display: grid;
@@ -51,7 +53,7 @@
     font-weight: 600;
     color: #666;
     font-size: 0.8rem;
-    min-width: 600px; /* Largura mínima para forçar rolagem se necessário */
+    min-width: 600px; 
 }
 .productsHeader { grid-template-columns: 3fr 1fr 1fr 1fr; }
 .saleItem, .productItem {
@@ -60,7 +62,7 @@
     padding: 1rem 0;
     border-bottom: 1px solid #f0f0f0;
     align-items: center;
-    min-width: 600px; /* Largura mínima para forçar rolagem se necessário */
+    min-width: 600px;
 }
 .productItem { grid-template-columns: 3fr 1fr 1fr 1fr; }
 .salesHeader, .saleItem { grid-template-columns: 2fr 1fr 1fr 1fr; }
@@ -96,6 +98,9 @@
     border-radius: 8px;
     width: 90%;
     max-width: 500px;
+    /* --- CORREÇÃO ADICIONADA --- */
+    max-height: 90vh; /* Limita a altura máxima do modal */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical SE necessário */
 }
 .modalHeader {
     display: flex;
@@ -133,6 +138,7 @@
     gap: 0.5rem;
     font-size: 1rem;
     padding: 0.5rem 0;
+    flex-wrap: wrap;
 }
 .dataField strong { font-weight: 600; }
 .dashboardLayout {
@@ -172,12 +178,26 @@
     color: #fff;
     font-weight: 600;
 }
-.content { flex-grow: 1; }
+.content { 
+    flex-grow: 1;
+    min-width: 0;
+}
 
 /* --- REGRAS DE RESPONSIVIDADE --- */
 @media (max-width: 900px) {
     .dashboardContainer {
         padding: 1rem;
+    }
+    .title {
+        font-size: 1.8rem;
+    }
+    .section {
+        padding: 1.5rem;
+    }
+    .sectionHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
     }
     .dashboardLayout {
         flex-direction: column;
@@ -194,5 +214,13 @@
     .sidebar button {
         flex-grow: 1;
         justify-content: center;
+        min-width: 150px; 
+    }
+    .modalActions {
+        flex-direction: column-reverse; 
+        align-items: stretch;
+        gap: 0.8rem;
+        justify-content: flex-end; 
     }
 }
+
