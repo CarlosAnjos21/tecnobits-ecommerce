@@ -20,6 +20,7 @@ datasource db {
 enum Role {
   cliente
   vendedor
+  admin
 }
 
 enum OrderStatus {
@@ -89,7 +90,7 @@ model Product {
 }
 
 model Order {
-  id                    String      @id @default(cuid())
+  id                   String      @id @default(cuid())
   createdAt            DateTime    @default(now())
   status               OrderStatus @default(AGUARDANDO_PAGAMENTO)
   total                Float

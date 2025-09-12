@@ -28,32 +28,57 @@ const LoginPage = () => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateLoginForm(formData);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
-      const loggedInUser = login(formData.email, formData.password);
+      setErrors({}); // Limpa erros antigos
 
-      if (loggedInUser) {
+      try {
+        const backendUrl = 'http://localhost:3001'; // Endereço do seu backend
+        const response = await fetch(`${backendUrl}/api/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Email ou senha inválidos.');
+        }
+
+        // Sucesso no login
+        console.log('Login bem-sucedido:', data);
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
         // Navega para o painel correto após o sucesso
-        switch (loggedInUser.role) {
+        switch (data.user.role) {
           case 'cliente':
-            navigate('/cliente/dashboard');
+            navigate('/cliente/dashboard'); // Mude para a rota correta do cliente
             break;
           case 'vendedor':
-            navigate('/vendedor/dashboard');
+            navigate('/vendedor/dashboard'); // Mude para a rota correta do vendedor
             break;
           default:
-            // Impede que admins façam login por aqui
-            setErrors({ general: 'Utilize a página de login de administrador.' });
+            setErrors({ general: 'Tipo de usuário não reconhecido.' });
+            break;
         }
-      } else {
-        setErrors({ general: 'Email ou senha inválidos.' });
+
+      } catch (error) {
+        setErrors({ general: error.message });
+      } finally {
+        setIsSubmitting(false);
       }
-      setIsSubmitting(false);
     }
   };
 
