@@ -8,7 +8,7 @@ router.get('/', userController.getAllUsers);
 router.get('/:id', userController.getUserById);
 
 //apenas admin
-// router.put('/:id', protect, authorize('admin'), userController.updateUser);
+router.put('/:id', protect, authorize('admin'), userController.updateUser);
 
 
 export default router;
