@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import authRoutes from './src/routes/authRoutes.js';
+import userRoutes from './src/routes/userRoutes.js'
 import { protect, authorize } from './src/middleware/authMiddleware.js';
+
 
 const app = express();
 
@@ -10,6 +12,7 @@ app.use(express.json());
 
 //publicas
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 //protegidas
 app.get('/api/profile', protect, (req, res) => {

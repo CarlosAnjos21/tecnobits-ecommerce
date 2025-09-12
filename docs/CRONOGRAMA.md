@@ -13,9 +13,9 @@
 - **Resolução** de conflitos técnicos
 - **Mentoria** da equipe
 - **Gerenciamento** de prazos e entregas
-- Sistema de autenticação e autorização (JWT)
+- Sistema de autenticação e autorização (JWT) OK
 - APIs de usuários e segurança
-- Implementação do sistema de login simples
+- Implementação do sistema de login simples OK
 
 
 ### **Estrutura Hierárquica:**
