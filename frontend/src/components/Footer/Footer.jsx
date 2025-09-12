@@ -11,6 +11,7 @@ const infoLinks = [
   { href: '#', text: 'Blog' },
   { href: '#', text: 'Trabalhe conosco' },
   { href: '#', text: 'Meus pedidos' },
+  { href: '/admin/dashboard', text: 'Painel do Administrador' },
 ];
 
 const socialLinks = [
