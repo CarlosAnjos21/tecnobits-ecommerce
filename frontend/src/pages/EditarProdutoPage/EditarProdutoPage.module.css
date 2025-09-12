@@ -98,3 +98,22 @@
     font-size: 1.5rem;
     color: #666;
 }
+
+/* --- REGRAS DE RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .pageContainer {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+    .formWrapper {
+        padding: 1.5rem;
+    }
+    .formRow {
+        flex-direction: column; /* Coloca os inputs de estoque e preço um embaixo do outro */
+        gap: 0;
+    }
+    .actions {
+        flex-direction: column-reverse; /* Coloca o botão principal em cima */
+        align-items: stretch; /* Faz os botões ocuparem toda a largura */
+    }
+}

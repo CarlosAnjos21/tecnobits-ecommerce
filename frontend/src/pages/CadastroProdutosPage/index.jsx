@@ -36,6 +36,7 @@ const CadastroProdutosPage = () => {
     
     console.log('Dados do produto para enviar:', { ...productData, image: productImage.name });
     alert('Produto cadastrado com sucesso! (Simulação)');
+    navigate('/vendedor/dashboard'); // Volta para o painel após salvar
   };
 
   return (
@@ -106,12 +107,23 @@ const CadastroProdutosPage = () => {
 
         {error && <p className={styles.errorMessage}>{error}</p>}
 
-        <button type="submit" className={styles.submitButton}>
-          Cadastrar Produto
-        </button>
+        {/* --- ÁREA DOS BOTÕES ATUALIZADA --- */}
+        <div className={styles.actions}>
+            <button 
+                type="button" 
+                className={styles.backButton} 
+                onClick={() => navigate('/vendedor/dashboard')}
+            >
+                Voltar
+            </button>
+            <button type="submit" className={styles.submitButton}>
+                Cadastrar Produto
+            </button>
+        </div>
       </form>
     </div>
   );
 };
 
 export default CadastroProdutosPage;
+

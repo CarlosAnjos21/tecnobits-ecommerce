@@ -1,10 +1,7 @@
 /* --- ESTILOS DE LAYOUT DE GRADE PARA A LISTA --- */
-
 .ordersList {
-  display: flex;
-  flex-direction: column;
+  overflow-x: auto; /* Garante que a tabela possa rolar horizontalmente se necessário */
 }
-
 .orderHeader {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -15,9 +12,8 @@
     color: #666;
     text-transform: uppercase;
     font-size: 0.8rem;
-    align-items: center;
+    min-width: 600px; /* Largura mínima para forçar rolagem */
 }
-
 .orderItem {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -25,73 +21,43 @@
     padding: 1rem 0;
     border-bottom: 1px solid #f0f0f0;
     align-items: center;
+    min-width: 600px; /* Largura mínima para forçar rolagem */
 }
-
-.orderItem:last-child {
-    border-bottom: none;
-}
-
-.orderId {
-    font-weight: 500;
-}
-
+.orderItem:last-child { border-bottom: none; }
+.orderId { font-weight: 500; }
 .status {
     font-weight: 500;
     padding: 4px 8px;
     border-radius: 12px;
-    background-color: #eee;
     text-align: center;
     font-size: 0.85rem;
 }
-
-/* --- CORES DINÂMICAS DE STATUS --- */
-.statusEntregue {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.statusEnviado {
-    background-color: #fff3cd;
-    color: #856404;
-}
-
-.statusCancelado {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-/* Link de detalhes com estilo de botão */
+.statusEntregue { background-color: #d4edda; color: #155724; }
+.statusEnviado { background-color: #fff3cd; color: #856404; }
+.statusCancelado { background-color: #f8d7da; color: #721c24; }
 .detailsLink {
     padding: 6px 12px;
     background-color: #f0f0f0;
-    color: #333;
     border: 1px solid #ccc;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
     justify-self: start;
     text-decoration: none;
     text-align: center;
+    white-space: nowrap; /* Impede que o texto quebre a linha */
 }
+.detailsLink:hover { background-color: #e0e0e0; }
 
-.detailsLink:hover {
-    background-color: #e0e0e0;
-}
-
-/* --- Estilos para a página completa (se usada de forma independente) --- */
 .ordersContainer {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 2rem;
-  font-family: sans-serif;
-  color: #333;
 }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1.5rem;
+/* --- RESPONSIVIDADE PARA A LISTA DE PEDIDOS --- */
+@media (max-width: 768px) {
+    .ordersContainer {
+        padding: 1rem;
+    }
 }
+

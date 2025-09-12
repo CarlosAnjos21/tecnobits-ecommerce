@@ -2,9 +2,6 @@
 
 .footer {
   display: grid;
-  /* cria colunas automáticas que se adaptam ao tamanho da tela. 
-    O navegador vai criar quantas colunas de no mínimo 250px couberem no espaço.
-  */
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 3rem 2rem;
   background-color: #0B0E16;
@@ -15,9 +12,6 @@
 
 /* Logo e Descrição */
 .footer-header {
-  /* Faz esta seção ocupar 2 colunas no grid se houver espaço.
-    Em telas menores (como tablets), onde só couberem 2 colunas, ela ocupará a linha inteira.
-  */
   grid-column: span 2;
   display: flex;
   flex-direction: column;
@@ -35,13 +29,9 @@
   font-size: 0.9rem;
   color: #ccc;
   max-width: 45ch;
-  /* 
-    A propriedade 'hyphens' ajuda o navegador a quebrar palavras longas com hífen,
-    reduzindo espaço em branco que o 'justify' pode criar.
-  */
   text-align: justify;
   hyphens: auto;
-  -webkit-hyphens: auto; /* Para compatibilidade com navegadores mais antigos */
+  -webkit-hyphens: auto;
 }
 
 /* Títulos das colunas de links */
@@ -51,12 +41,11 @@
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   display: block;
-  color: #FFFFFF; /* Garante que a cor seja branca e visível */
+  color: #FFFFFF;
 }
 
 /* Listas de links */
-.footer-info-list,
-.footer-categories-list {
+.footer-info-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -82,18 +71,18 @@
 }
 
 .footer-social a {
-  color: aliceblue; /* Cor dos ícones */
-  font-size: 1.5rem; /* Tamanho dos ícones */
+  color: aliceblue;
+  font-size: 1.5rem;
   transition: color 0.2s ease;
 }
 
 .footer-social a:hover {
-  color: #A9B3B3; /* Cor ao passar o mouse */
+  color: #A9B3B3;
 }
 
 /* Copyright */
 .footer-copy {
-  grid-column: 1 / -1; /* Ocupa a linha inteira de baixo, de ponta a ponta */
+  grid-column: 1 / -1;
   text-align: center;
   margin-top: 2rem;
   padding-top: 2rem;
@@ -102,41 +91,38 @@
 }
 
 /* Estiliza os links dentro das listas do rodapé */
-.footer-info-list a,
-.footer-categories-list a {
-  color: inherit; /* Faz o link herdar a cor do texto do pai (aliceblue) */
-  text-decoration: none; /* Remove o sublinhado */
-  transition: color 0.2s ease; /* Adiciona uma transição suave para o hover */
+.footer-info-list a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* Adiciona um efeito de hover para que o usuário saiba que é clicável */
-.footer-info-list a:hover,
-.footer-categories-list a:hover {
-  color: #A9B3B3; /* Um cinza claro, ou a cor que preferir */
+.footer-info-list a:hover {
+  color: #A9B3B3;
 }
 
 /*RESPONSIVIDADE*/
 
 @media (max-width: 768px) {
   .footer {
-    /* Flexbox, que é perfeito para colunas únicas. */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Alinha tudo à esquerda por padrão */
     text-align: left;
     gap: 2.5rem;
+    padding: 2rem 1.5rem; /* Reduz o padding para telas menores */
   }
 
-  /* Centraliza APENAS a seção do logo no mobile */
   .footer-header {
+    align-items: center; /* Centraliza a logo e descrição */
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Garante alinhamento vertical */
   }
 
-  .footer-description,
-  .footer-logo p { /* O seletor para o parágrafo do logo estava faltando */
-    text-align: center;
+  .footer-description {
+    text-align: center; /* Centraliza o texto da descrição */
+  }
+  
+  .footer-info, .contats-container {
+    width: 100%; /* Garante que as colunas ocupem toda a largura */
   }
 }

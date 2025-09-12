@@ -1,38 +1,43 @@
-// Caminho: src/contexts/AuthContext.jsx
 import React, { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext(null);
+export const useAuth = () => useContext(AuthContext);
 
+// Simulação de banco de dados de usuários
+const mockUsers = {
+    'cliente@tecnobits.com': { name: 'Nome Cliente', role: 'cliente', password: 'cliente123' },
+    'vendedor@tecnobits.com': { name: 'Nome Vendedor', role: 'vendedor', password: 'vendedor123' },
+    'admin@tecnobits.com': { name: 'Admin', role: 'admin', password: 'admin123' },
+};
+
+// Componente "Provedor" que irá compartilhar os dados de login
 export const AuthProvider = ({ children }) => {
-  // Por enquanto, vamos simular o estado de login. 
-  // 'null' significa não logado. No futuro, guardaremos os dados do admin aqui.
-  const [adminUser, setAdminUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-  // Simulação de uma função de login
-  const loginAdmin = (email, password) => {
-    // Lógica de API virá aqui. Por agora, usamos dados fixos para teste.
-    if (email === 'admin@tecnobits.com' && password === 'admin123') {
-      const userData = { email, role: 'admin' };
-      setAdminUser(userData); // "Loga" o usuário
-      return true;
-    }
-    return false;
-  };
+    // Função de login que atualiza o estado global
+    const login = (email, password) => {
+        const foundUser = mockUsers[email];
+        if (foundUser && foundUser.password === password) {
+            const userData = { name: foundUser.name, role: foundUser.role };
+            setUser(userData);
+            return userData; // Retorna os dados do usuário em caso de sucesso
+        }
+        return null; // Retorna nulo em caso de falha
+    };
 
-  const logoutAdmin = () => {
-    setAdminUser(null); // "Desloga" o usuário
-  };
+    // Função de logout que limpa o estado global
+    const logout = () => {
+        setUser(null);
+    };
 
-  const value = {
-    isAdmin: !!adminUser, // Converte o usuário para um booleano (true se logado, false se não)
-    loginAdmin,
-    logoutAdmin,
-  };
+    // Os valores que serão compartilhados com toda a aplicação
+    const value = {
+        user,
+        login,
+        logout,
+        isAdmin: user?.role === 'admin', // Variável para a rota de admin
+    };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-// Hook customizado para facilitar o uso do contexto
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
