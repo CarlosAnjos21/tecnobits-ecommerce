@@ -54,10 +54,10 @@ Daniely (Fullstack Leader)
 - APIs de produtos e categorias (CRUD)
 - Sistema de carrinho de compras
 - Integração com banco de dados
-- Cadastro de vendedor e cliente (restrito ao vendedor)
+- Cadastro de vendedor e cliente (vendedor restrito ao admin)
 - Cadastro de produto (com fotos, preço, descrição, título)
 - Gravação de vendas no banco de dados
-- Listagem de vendas (vendedor vê todas, cliente vê só as próprias)
+- Listagem de vendas (vendedor vê todas, cliente vê só as próprias, admin vê ambos)
 - **Reporta para:** Kaio
 
 ### **🎨 FRONTEND - Time Carlos (Líder)**
