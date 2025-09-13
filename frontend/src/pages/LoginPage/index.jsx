@@ -38,36 +38,18 @@ const LoginPage = () => {
       setErrors({}); // Limpa erros antigos
 
       try {
-        const backendUrl = 'http://localhost:3001'; // Endereço do seu backend
-        const response = await fetch(`${backendUrl}/api/auth/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-          }),
-        });
+        // Utiliza a função de login centralizada do AuthContext
+        const user = await login(formData.email, formData.password);
 
-        const data = await response.json();
+        console.log('Login bem-sucedido:', user);
 
-        if (!response.ok) {
-          throw new Error(data.message || 'Email ou senha inválidos.');
-        }
-
-        // Sucesso no login
-        console.log('Login bem-sucedido:', data);
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-
-        // Navega para o painel correto após o sucesso
-        switch (data.user.role) {
+        // Navega para o painel correto com base na role do usuário
+        switch (user.role) {
           case 'cliente':
-            navigate('/cliente/dashboard'); // Mude para a rota correta do cliente
+            navigate('/cliente/dashboard');
             break;
           case 'vendedor':
-            navigate('/vendedor/dashboard'); // Mude para a rota correta do vendedor
+            navigate('/vendedor/dashboard');
             break;
           default:
             setErrors({ general: 'Tipo de usuário não reconhecido.' });
@@ -75,6 +57,7 @@ const LoginPage = () => {
         }
 
       } catch (error) {
+        // O erro lançado pelo contexto é capturado e exibido aqui
         setErrors({ general: error.message });
       } finally {
         setIsSubmitting(false);

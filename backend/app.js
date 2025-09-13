@@ -10,16 +10,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//publicas
+// Rotas de Autenticação e Perfil (públicas e privadas)
 app.use('/api/auth', authRoutes);
+
+// Rotas de Gerenciamento de Usuários (apenas admin)
 app.use('/api/users', userRoutes);
 
-//protegidas
-app.get('/api/profile', protect, (req, res) => {
-    res.status(200).json({ user: req.user });
-});
-
-//rota com autorização = vendedores
+// Exemplo de rota protegida para vendedores
 app.post('/api/products', protect, authorize('vendedor'), (req, res) => {
     res.status(201).json({ message: `Produto criado pelo vendedor ${req.user.name}` });
 });

@@ -1,17 +1,23 @@
 import express from 'express';
-import * as userController from '../controllers/UserController.js';
-import { authorize, protect } from '../middleware/authMiddleware.js';
-
+import {
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+} from '../controllers/UserController.js';
+import { protect, authorize } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', userController.getAllUsers);
-router.get('/:id', userController.getUserById);
-router.get('/me', protect, userController.getMe);
+// Aplica a proteção de autenticação e autorização de admin para todas as rotas neste arquivo.
+router.use(protect, authorize('admin'));
 
-//apenas admin
-router.put('/:id', protect, authorize('admin'), userController.updateUser);
-router.delete('/:id', protect, authorize('admin'), userController.deleteUser)
+router.route('/')
+  .get(getAllUsers);
 
+router.route('/:id')
+  .get(getUserById)
+  .put(updateUser)
+  .delete(deleteUser);
 
 export default router;
