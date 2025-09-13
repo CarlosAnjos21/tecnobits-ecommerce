@@ -6,16 +6,16 @@
 ## 🎯 ESTRUTURA DE LIDERANÇA DA EQUIPE
 
 ### **Daniely Mélo - Fullstack Leader:**
-- **Arquitetura geral** do sistema (frontend + backend)
-- **Coordenação** entre front e back
-- **Code review** e padrões de qualidade
-- **Integração** das funcionalidades
-- **Resolução** de conflitos técnicos
-- **Mentoria** da equipe
-- **Gerenciamento** de prazos e entregas
-- Sistema de autenticação e autorização (JWT) OK
-- APIs de usuários e segurança
-- Implementação do sistema de login simples OK
+- **Arquitetura geral** do sistema (frontend + backend) - OK
+- **Coordenação** entre front e back - OK
+- **Code review** e padrões de qualidade - OK
+- **Gerenciamento** de prazos e entregas - OK
+- **Sistema de autenticação e autorização (JWT)** - OK
+- **APIs de usuários e segurança (CRUD Admin & Perfil)** - OK
+- **Implementação do sistema de login simples** - OK
+- **Refatoração do Backend (CJS para ESM)** - OK
+- **Script de Seed do Banco de Dados** - OK
+- **Integração e Depuração do Frontend (Login & Perfil)** - OK
 
 
 ### **Estrutura Hierárquica:**
