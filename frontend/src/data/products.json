@@ -1058,12 +1058,7 @@
     "description": "Console portátil Steam Deck OLED com tela de 7,4 polegadas e armazenamento de 1TB",
     "price": 4999.99,
     "priceDiscount": 4699.99,
-<<<<<<< HEAD:src/data/products.json
-    "category": "PC PORTÁTIL",
-=======
     "category": "CONSOLE PORTÁTIL",
-    "category": "CONSOLE PORTÁTIL",
->>>>>>> c11651da7ae989c4d4b5f01f7576a7ad711e82f4:frontend/src/data/products.json
     "brand": "Valve",
     "image": "/images/steam-deck-oled.jpg",
     "rating": 4.8,
@@ -1076,12 +1071,7 @@
     "description": "Console Portátil Gamer PC ASUS ROG Ally X com AMD Ryzen Z1 Extreme e tela de 7 polegadas",
     "price": 5499.99,
     "priceDiscount": 4999.99,
-<<<<<<< HEAD:src/data/products.json
-    "category": "PC PORTÁTIL",
-=======
     "category": "CONSOLE PORTÁTIL",
-    "category": "CONSOLE PORTÁTIL",
->>>>>>> c11651da7ae989c4d4b5f01f7576a7ad711e82f4:frontend/src/data/products.json
     "brand": "ASUS",
     "image": "/images/asus-rog-ally-x.jpg",
     "rating": 4.6,
@@ -1094,12 +1084,7 @@
     "description": "Console Portátil Gamer PC Lenovo Legion Go com AMD Ryzen Z1 Extreme, controles destacáveis",
     "price": 4799.99,
     "priceDiscount": 4399.99,
-<<<<<<< HEAD:src/data/products.json
-    "category": "PC PORTÁTIL",
-=======
     "category": "CONSOLE PORTÁTIL",
-    "category": "CONSOLE PORTÁTIL",
->>>>>>> c11651da7ae989c4d4b5f01f7576a7ad711e82f4:frontend/src/data/products.json
     "brand": "Lenovo",
     "image": "/images/lenovo-legion-go.webp",
     "rating": 4.4,
@@ -1112,12 +1097,7 @@
     "description": "Console Portátil Gamer PC AYA Neo 2S com AMD Ryzen 7 7840U, design compacto e elegante",
     "price": 5999.99,
     "priceDiscount": 5499.99,
-<<<<<<< HEAD:src/data/products.json
-    "category": "PC PORTÁTIL",
-=======
     "category": "CONSOLE PORTÁTIL",
-    "category": "CONSOLE PORTÁTIL",
->>>>>>> c11651da7ae989c4d4b5f01f7576a7ad711e82f4:frontend/src/data/products.json
     "brand": "AYA",
     "image": "/images/aya-neo-2s.avif",
     "rating": 3.5,
@@ -1130,12 +1110,7 @@
     "description": "Console Portátil Gamer PC OneXPlayer 2 Pro com AMD Ryzen 7 8840U e tela de 8,4 polegadas",
     "price": 6999.99,
     "priceDiscount": 6499.99,
-<<<<<<< HEAD:src/data/products.json
-    "category": "PC PORTÁTIL",
-=======
     "category": "CONSOLE PORTÁTIL",
-    "category": "CONSOLE PORTÁTIL",
->>>>>>> c11651da7ae989c4d4b5f01f7576a7ad711e82f4:frontend/src/data/products.json
     "brand": "OneXPlayer",
     "image": "/images/onexplayer-2-pro.avif",
     "rating": 4.5,
@@ -1148,12 +1123,7 @@
     "description": "Console Portátil Gamer Anbernic Win600 com AMD Athlon Silver 3050e, entrada no mundo PC portátil",
     "price": 2199.99,
     "priceDiscount": 1999.99,
-<<<<<<< HEAD:src/data/products.json
-    "category": "PC PORTÁTIL",
-=======
     "category": "CONSOLE PORTÁTIL",
-    "category": "CONSOLE PORTÁTIL",
->>>>>>> c11651da7ae989c4d4b5f01f7576a7ad711e82f4:frontend/src/data/products.json
     "brand": "Anbernic",
     "image": "/images/anbernic-win600.avif",
     "rating": 4.1,
