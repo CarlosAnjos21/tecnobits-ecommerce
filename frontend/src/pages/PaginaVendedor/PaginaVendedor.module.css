@@ -1,0 +1,226 @@
+/* Estilos para a PaginaVendedor */
+.dashboardContainer {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: sans-serif;
+  color: #333;
+}
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1.5rem;
+}
+.section {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: grid; 
+  grid-template-columns: minmax(0, 1fr);
+}
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+.addProductButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.salesList, .productsList {
+  overflow-x: auto; 
+}
+.productsHeader, .salesHeader {
+    display: grid;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e0e0;
+    font-weight: 600;
+    color: #666;
+    font-size: 0.8rem;
+    min-width: 600px; 
+}
+.productsHeader { grid-template-columns: 3fr 1fr 1fr 1fr; }
+.saleItem, .productItem {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+    min-width: 600px;
+}
+.productItem { grid-template-columns: 3fr 1fr 1fr 1fr; }
+.salesHeader, .saleItem { grid-template-columns: 2fr 1fr 1fr 1fr; }
+.saleItem:last-child, .productItem:last-child { border-bottom: none; }
+.status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+.editButton {
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.statusEntregue { background-color: #d4edda; color: #155724; }
+.statusEnviado { background-color: #fff3cd; color: #856404; }
+.statusCancelado { background-color: #f8d7da; color: #721c24; }
+.modalOverlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modalContent {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    /* --- CORREÇÃO ADICIONADA --- */
+    max-height: 90vh; /* Limita a altura máxima do modal */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical SE necessário */
+}
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+.modalHeader h2 { margin: 0; font-size: 1.5rem; }
+.closeButton { background: none; border: none; font-size: 2rem; cursor: pointer; color: #888; }
+.modalForm .formGroup { margin-bottom: 1rem; }
+.modalForm .formGroup label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+.modalForm .formGroup input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+.modalActions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; }
+.modalActions button { padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; }
+.cancelButton { background-color: #f0f0f0; border: 1px solid #ccc; }
+.saveButton { background-color: #007bff; color: #fff; }
+.actionButton {
+  padding: 10px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dataList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.dataField {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    flex-wrap: wrap;
+}
+.dataField strong { font-weight: 600; }
+.dashboardLayout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+}
+.sidebar {
+    flex: 0 0 250px;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.sidebar button {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 12px 15px;
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+}
+.sidebar button:hover { background-color: #f0f0f0; }
+.sidebar button.active {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+}
+.content { 
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* --- REGRAS DE RESPONSIVIDADE --- */
+@media (max-width: 900px) {
+    .dashboardContainer {
+        padding: 1rem;
+    }
+    .title {
+        font-size: 1.8rem;
+    }
+    .section {
+        padding: 1.5rem;
+    }
+    .sectionHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .dashboardLayout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        flex-basis: auto;
+    }
+    .sidebar nav {
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .sidebar button {
+        flex-grow: 1;
+        justify-content: center;
+        min-width: 150px; 
+    }
+    .modalActions {
+        flex-direction: column-reverse; 
+        align-items: stretch;
+        gap: 0.8rem;
+        justify-content: flex-end; 
+    }
+}
+
