@@ -12,6 +12,9 @@
     "start": "cd backend && npm start",
     "test": "cd frontend && npm test && cd ../backend && npm test"
   },
+  "prisma": {
+    "schema": "backend/prisma/schema.prisma"
+  },
   "keywords": [
     "ecommerce",
     "react",
