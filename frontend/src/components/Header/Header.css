@@ -75,64 +75,6 @@
   align-items: center;
 }
 
-/* --- Estilos para a caixa de sugestões/histórico --- */
-.search-suggestions {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 1px solid #eee;
-  z-index: 999;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.suggestion-item-visual {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  cursor: pointer;
-  gap: 15px;
-}
-.suggestion-item-visual:hover {
-  background-color: #f0f2f5;
-}
-.suggestion-image {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  border-radius: 4px;
-}
-.suggestion-info {
-  display: flex;
-  flex-direction: column;
-}
-.suggestion-name {
-  font-weight: 500;
-}
-.suggestion-price {
-  font-size: 0.9rem;
-  color: #555;
-}
-.history-title {
-  padding: 10px 15px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #888;
-  text-transform: uppercase;
-}
-.suggestion-item {
-  padding: 10px 15px;
-  cursor: pointer;
-}
-.suggestion-item:hover {
-  background-color: #f0f2f5;
-}
-
-
 /* --- Seção de Ações do Usuário --- */
 .user-actions {
   display: flex;
@@ -230,19 +172,20 @@
   color: #4B5B9D;
 }
 
-/* --- NOVOS ESTILOS PARA O MENU DO USUÁRIO LOGADO --- */
-
-.user-logged-in {
-    position: relative; /* Container principal para o menu dropdown */
+.mobile-auth-link {
+    display: none; /* Esconde os links de login/cadastro no desktop */
 }
 
+/* --- ESTILOS PARA O MENU DO USUÁRIO LOGADO --- */
+.user-logged-in {
+    position: relative;
+}
 .user-info {
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
 }
-
 .user-logged-in .user-text .subtle {
     font-size: 12px;
     color: #666;
@@ -250,7 +193,6 @@
     align-items: center;
     gap: 4px;
 }
-
 .user-dropdown-menu {
     position: absolute;
     top: 100%; 
@@ -264,9 +206,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 0; /* Espaçamento interno */
+    padding: 0.5rem 0;
 }
-
 .user-dropdown-menu a,
 .user-dropdown-menu button {
     all: unset;
@@ -278,7 +219,6 @@
     text-align: left;
     transition: background-color 0.2s ease;
 }
-
 .user-dropdown-menu a:hover,
 .user-dropdown-menu button:hover {
     background-color: #f0f2f5;
@@ -286,7 +226,6 @@
 }
 
 /* RESPONSIVIDADE*/
-
 @media (max-width: 1024px) {
   .header-dropshadow:not(.auth-page) {
     padding: 10px 1.5rem;
@@ -297,15 +236,12 @@
   }
 }
 
+/* --- SECÇÃO DE RESPONSIVIDADE ATUALIZADA --- */
 @media (max-width: 768px) {
-  .header-dropshadow:not(.auth-page) {
-    padding: 1rem; /* Aumenta o padding para dar mais respiro */
-  }
-
-  .header-nav,
-  .user-actions .user,
-  .user-logged-in .user-text, /* Esconde o texto "Olá, Maria" etc. */
-  .user-actions .functions a:not(:last-child) { /* Esconde todos os ícones de função, exceto o último (carrinho) */
+  .header-nav:not(.mobile-open),
+  .user-actions .user .user-text,
+  .user-logged-in .user-text,
+  .functions a:not(:last-child) {
     display: none;
   }
 
@@ -322,12 +258,12 @@
       "search    search  search";
     align-items: center;
     gap: 1rem;
-    width: 100%; /* Garante que o grid ocupe toda a largura */
+    width: 100%;
   }
   
   .hamburger-menu { grid-area: hamburger; }
   .content-logo { grid-area: logo; justify-self: center; }
-  .user-actions { grid-area: actions; justify-self: end; } /* Alinha as ações à direita */
+  .user-actions { grid-area: actions; justify-self: end; }
   .search-input { grid-area: search; margin: 0; width: 100%; }
 
   .header-nav.mobile-open {
@@ -347,15 +283,9 @@
     padding: 20px;
     gap: 15px;
   }
-
-  /* --- CORREÇÃO PARA A CAIXA DE SUGESTÕES NO MOBILE --- */
-  .search-suggestions {
-    /* Garante que a caixa flutue sobre o conteúdo */
-    position: absolute;
-    top: calc(100% + 5px); /* Posiciona logo abaixo da barra de busca */
-    left: 0;
-    right: 0;
-    width: 100%;
+  
+  .mobile-auth-link {
+    display: list-item; /* Mostra os links no menu mobile */
   }
 }
 
