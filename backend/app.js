@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import authRoutes from './src/routes/authRoutes.js';
-import userRoutes from './src/routes/userRoutes.js'
+import userRoutes from './src/routes/userRoutes.js';
+import productRoutes from './src/routes/productRoutes.js';
 import { protect, authorize } from './src/middleware/authMiddleware.js';
 
 
@@ -15,6 +16,9 @@ app.use('/api/auth', authRoutes);
 
 // Rotas de Gerenciamento de Usuários (apenas admin)
 app.use('/api/users', userRoutes);
+
+// Rotas de Gerenciamento de Produtos
+app.use("/api/products", productRoutes);
 
 // Exemplo de rota protegida para vendedores
 app.post('/api/products', protect, authorize('vendedor'), (req, res) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'; // 1. IMPORTAR useRef
+import React, { useState, useEffect } from 'react';
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from '../../contexts/AuthContext';
@@ -13,7 +13,6 @@ import { FaRegCircleUser, FaCartShopping, FaRegHeart, FaAngleDown } from 'react-
 const Header = () => {
     const { user, logout } = useAuth();
     
-    // Estados do componente
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -21,37 +20,17 @@ const Header = () => {
     const [searchHistory, setSearchHistory] = useState(() => {
         return JSON.parse(localStorage.getItem('searchHistory')) || [];
     });
-
-    // 2. NOVO ESTADO E REF PARA CONTROLAR A VISIBILIDADE DAS SUGESTÕES
-    const [areSuggestionsVisible, setAreSuggestionsVisible] = useState(false);
-    const searchContainerRef = useRef(null);
     
     const navigate = useNavigate();
     const { getCartItemCount } = useCart();
     const cartItemCount = getCartItemCount();
     
-    // 3. EFEITO PARA DETETAR CLIQUES FORA DA ÁREA DE PESQUISA
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
-                setAreSuggestionsVisible(false); // Esconde as sugestões
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    // Função de logout
     const handleLogout = () => {
         logout();
         setIsUserMenuOpen(false);
         navigate('/');
     };
 
-    // Gera o link do painel correto
     const getDashboardLink = () => {
         if (!user) return "/login";
         switch (user.role) {
@@ -62,7 +41,6 @@ const Header = () => {
         }
     };
 
-    // Lógica de busca
     const handleInputChange = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
@@ -104,7 +82,6 @@ const Header = () => {
         }
       
         setSuggestions([]);
-        setAreSuggestionsVisible(false); // Esconde as sugestões após a busca
     };
     
     const handleKeyPress = event => {
@@ -127,43 +104,15 @@ const Header = () => {
                         <Link to="/"><Logo /></Link>
                     </div>
 
-                    {/* 4. ADICIONAR A REF E O EVENTO onFocus */}
-                    <div className='search-input' ref={searchContainerRef}>
+                    <div className='search-input'>
                         <InputDefault
                             type='text'
                             placeholder='Pesquisar produtos...'
                             value={searchTerm}
                             onChange={handleInputChange}
                             onKeyUp={handleKeyPress}
-                            onFocus={() => setAreSuggestionsVisible(true)} // Mostra as sugestões ao focar
                         />
-                        {/* 5. ATUALIZAR A CONDIÇÃO DE RENDERIZAÇÃO */}
-                         {areSuggestionsVisible && (suggestions.length > 0 || searchHistory.length > 0) && (
-                            <div className="search-suggestions">
-                                {suggestions.map((product) => (
-                                    <div key={product.id} className="suggestion-item-visual" onClick={() => { navigate(`/produtos/${product.id}`); setSearchTerm(''); setSuggestions([]); setAreSuggestionsVisible(false); }}>
-                                        <img src={product.image} alt={product.name} className="suggestion-image" />
-                                        <div className="suggestion-info">
-                                            <span className="suggestion-name">{product.name}</span>
-                                            <span className="suggestion-price">R$ {product.price.toFixed(2)}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                                {suggestions.length === 0 && (
-                                    <>
-                                        <div className="history-title">Buscas recentes:</div>
-                                        {searchHistory.map((term, i) => (
-                                            <div key={i} className="suggestion-item" onClick={() => { setSearchTerm(term); handleSearch(); }}>
-                                                🕘 {term}
-                                            </div>
-                                        ))}
-                                    </>
-                                )}
-                            </div>
-                        )}
-                        <div className='search-icon' onClick={handleSearch}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19ZM21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        </div>
+                         {/* As suas sugestões de busca aqui */}
                     </div>
 
                     <div className='user-actions'>
@@ -208,7 +157,17 @@ const Header = () => {
                         <li><NavLink to='/' end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink></li>
                         <li><NavLink to='/produtos' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Produtos</NavLink></li>
                         <li><NavLink to='/categorias' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Categorias</NavLink></li>
-                        <li><NavLink to={getDashboardLink()} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Meu Painel</NavLink></li>
+                        
+                        {/* --- LÓGICA ATUALIZADA PARA O MENU --- */}
+                        {user ? (
+                             <li><NavLink to={getDashboardLink()} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Meu Painel</NavLink></li>
+                        ) : (
+                            <>
+                                {/* Estes links só serão visíveis no menu hamburguer */}
+                                <li className="mobile-auth-link"><NavLink to="/login" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Entrar</NavLink></li>
+                                <li className="mobile-auth-link"><NavLink to="/create-account" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Cadastre-se</NavLink></li>
+                            </>
+                        )}
                     </ul>
                 </nav>
             </div>
