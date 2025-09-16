@@ -7,15 +7,20 @@
 
 ### **Daniely Mélo - Fullstack Leader:**
 - **Arquitetura geral** do sistema (frontend + backend) - OK
-- **Coordenação** entre front e back - OK
-- **Code review** e padrões de qualidade - OK
-- **Gerenciamento** de prazos e entregas - OK
+- **Coordenação** entre front e back - 
+- **Code review** e padrões de qualidade - 
+- **Gerenciamento** de prazos e entregas - 
 - **Sistema de autenticação e autorização (JWT)** - OK
 - **APIs de usuários e segurança (CRUD Admin & Perfil)** - OK
 - **Implementação do sistema de login simples** - OK
 - **Refatoração do Backend (CJS para ESM)** - OK
 - **Script de Seed do Banco de Dados** - OK
 - **Integração e Depuração do Frontend (Login & Perfil)** - OK
+- **Configuração inicial (Express, Prisma, PostgreSQL)** - OK
+- **Arquitetura do backend e decisões técnicas** - OK
+- **Implementação e controle de perfis (cliente/vendedor)** - OK
+- **Cadastro de vendedor e cliente (vendedor restrito ao admin)** - OK
+- **Integração com banco de dados** - OK
 
 
 ### **Estrutura Hierárquica:**
@@ -40,24 +45,33 @@ Daniely (Fullstack Leader)
 
 
 **Kaio Vinícius** - Líder Backend
-- Arquitetura do backend e decisões técnicas
-- Configuração inicial (Express, Prisma, PostgreSQL)
-- Implementação e controle de perfis (cliente/vendedor)
 - Implementação do cancelamento de vendas (cliente e vendedor)
 - Controle de estoque e restrição de adicionar ao carrinho sem estoque
 - Opção de adicionar produtos ao estoque pelo vendedor
 - APIs de pedidos e histórico
+
+❌ PENDENTE
+Implementar sistema de pedidos com status (incluindo cancelamento)
+Criar sistema de controle de estoque
+Desenvolver endpoints para gerenciamento de estoque pelo vendedor
+Implementar APIs de histórico de pedidos
 - **Reporta para:** Daniely
 
 
 **Antônio Gabriel** - Dev Backend
 - APIs de produtos e categorias (CRUD)
 - Sistema de carrinho de compras
-- Integração com banco de dados
-- Cadastro de vendedor e cliente (vendedor restrito ao admin)
 - Cadastro de produto (com fotos, preço, descrição, título)
-- Gravação de vendas no banco de dados
-- Listagem de vendas (vendedor vê todas, cliente vê só as próprias, admin vê ambos)
+- Gravação de vendas no banco de dados (parcialmente feito, falta Controllers e rotas para pedidos não implementados)
+- Listagem de vendas (parcialmente feito, falta Endpoints para listagem de vendas)(vendedor vê todas, cliente vê só as próprias, admin vê ambos)
+
+❌ PENDENTE DE IMPLEMENTAÇÃO:
+APIs de produtos (CRUD)
+APIs de categorias (CRUD)
+Sistema de carrinho
+APIs de cadastro de produtos
+APIs de vendas e pedidos
+Endpoints de listagem de vendas
 - **Reporta para:** Kaio
 
 ### **🎨 FRONTEND - Time Carlos (Líder)**
@@ -84,8 +98,8 @@ Daniely (Fullstack Leader)
 
 **Anderson Guimarães** - Dev Frontend
 - Páginas de produto individual
-- Responsividade e otimizações
-- Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor)
+- Responsividade e otimizações - OK
+- Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor) - OK
 - Implementar página de redirecionamento após cadastro do vendedor
 - Implementar listagem de compras do cliente
 - Implementar listagem de vendas do vendedor
