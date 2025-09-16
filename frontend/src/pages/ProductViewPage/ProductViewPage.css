@@ -6,12 +6,11 @@
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
-  min-height: 90vh;
 }
 
 .titulo {
   width: 100%;
-  max-width: 1200px; /* Alinha com o conteúdo */
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -31,14 +30,14 @@
 .conteudo {
   display: flex;
   width: 100%;
-  max-width: 1200px; /* Centraliza e limita a largura */
+  max-width: 1200px;
   margin: 1rem auto;
   gap: 2rem;
   flex-direction: row;
 }
 
 .esquerda {
-  flex: 1; /* Ocupa 50% do espaço */
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -51,22 +50,25 @@
   object-fit: contain;
 }
 
-/* SEÇÃO DE DADOS  */
+/* SEÇÃO DE DADOS */
 .product-info-container {
-  flex: 1; /* Ocupa 50% do espaço */
-  background-color: #F3F4F6; /* Tom de cinza bem claro */
+  flex: 1;
+  background-color: #F3F4F6;
   border-radius: 0.8em;
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Espaçamento entre seções internas */
-  border: 1px solid #D1D5DB; /* Borda escura sutil para definir a área */
+  gap: 1.5rem;
+  border: 1px solid #D1D5DB;
+  /* --- CORREÇÃO ADICIONADA --- */
+  max-height: 85vh; /* Limita a altura máxima */
+  overflow-y: auto; /* Adiciona rolagem vertical SE necessário */
 }
 
 /* Cabeçalho */
 .product-header .product-title {
   font-size: 1.8rem;
-  color: #111827; /* Cor de texto escura */
+  color: #111827;
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 1rem;
@@ -79,10 +81,10 @@
   flex-wrap: wrap;
   gap: 1rem;
   font-size: 0.9rem;
-  color: #6B7280; /* Tom de cinza para texto secundário */
+  color: #6B7280;
   font-weight: 500;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #E5E7EB; /* Borda clara */
+  border-bottom: 1px solid #E5E7EB;
 }
 
 .product-meta span {
@@ -131,7 +133,7 @@
   flex-direction: column;
   gap: 0.8rem;
   font-size: 0.95rem;
-  color: #374151; /* Cor de texto escura */
+  color: #374151;
 }
 
 .payment-option {
@@ -148,25 +150,17 @@
   flex-direction: column;
   gap: 0.8rem;
   margin-top: 1rem;
+  width: 100%;
 }
 
-.action-buttons .comprar-agora {
-  /* Estilo primário já vem do componente */
-}
-
+.action-buttons .comprar-agora,
 .action-buttons .add-carrinho {
-  background-color: transparent;
-  border: 1px solid var(--professional-color);
-  color: var(--professional-color);
-}
-.action-buttons .add-carrinho:hover {
-  background-color: var(--professional-color);
-  color: #fff; /* O texto passa a ser branco no hover */
+  width: 100%;
 }
 
 /* Calculadora de Frete */
 .shipping-calculator {
-  background-color: #E5E7EB; /* Fundo sutilmente mais escuro */
+  background-color: #E5E7EB;
   border-radius: 6px;
   padding: 1.5rem;
 }
@@ -175,7 +169,7 @@
   font-size: 0.9em;
   margin-top: 0;
   margin-bottom: 1rem;
-  color: #1F2937; /* Cor de texto escura */
+  color: #1F2937;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -198,7 +192,7 @@
 
 .shipping-result {
   margin-top: 1rem;
-  color: #374151; /* Cor de texto escura */
+  color: #374151;
   font-weight: 500;
 }
 
@@ -210,8 +204,15 @@
 }
 
 @media (max-width: 768px) {
+  .principal {
+    padding: 1rem;
+    min-height: auto;
+  }
+
   .conteudo {
     flex-direction: column;
+    width: 100%; 
+    padding: 0; 
   }
   .esquerda, .product-info-container {
     width: 100%;
@@ -219,9 +220,6 @@
   }
   .product-info-container {
     margin-top: 2rem;
-  }
-  .principal {
-    padding: 1rem;
   }
   .current-price {
     font-size: 2.2rem;
@@ -232,6 +230,32 @@
   .product-header .product-meta {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .action-buttons button,
+  .action-buttons .comprar-agora,
+  .action-buttons .add-carrinho {
+    width: 100% !important;
+    min-height: 50px;
+    font-size: 1rem;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .shipping-input-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .shipping-input-group input,
+  .shipping-input-group .botao-ok { 
+    width: 100% !important;
+    min-height: 45px;
+    font-size: 1rem;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
   }
 }
 
