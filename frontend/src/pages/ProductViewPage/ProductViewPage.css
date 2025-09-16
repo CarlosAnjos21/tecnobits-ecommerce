@@ -51,7 +51,7 @@
   object-fit: contain;
 }
 
-/* SEÇÃO DE DADOS  */
+/* SEÇÃO DE DADOS */
 .product-info-container {
   flex: 1; /* Ocupa 50% do espaço */
   background-color: #F3F4F6; /* Tom de cinza bem claro */
@@ -210,8 +210,16 @@
 }
 
 @media (max-width: 768px) {
+  /* --- CORREÇÃO ADICIONADA --- */
+  .principal {
+    padding: 1rem;
+    overflow-x: hidden; /* Impede o conteúdo de vazar horizontalmente */
+  }
+
   .conteudo {
     flex-direction: column;
+    width: 100%; /* Garante que o container ocupe a largura disponível */
+    padding: 0; /* Remove padding lateral que pode causar quebra */
   }
   .esquerda, .product-info-container {
     width: 100%;
@@ -219,9 +227,6 @@
   }
   .product-info-container {
     margin-top: 2rem;
-  }
-  .principal {
-    padding: 1rem;
   }
   .current-price {
     font-size: 2.2rem;
