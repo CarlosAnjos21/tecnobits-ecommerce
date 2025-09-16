@@ -60,6 +60,9 @@
   flex-direction: column;
   gap: 1.5rem;
   border: 1px solid #D1D5DB;
+  /* --- CORREÇÃO ADICIONADA --- */
+  max-height: 85vh; /* Limita a altura máxima */
+  overflow-y: auto; /* Adiciona rolagem vertical SE necessário */
 }
 
 /* Cabeçalho */
@@ -153,7 +156,6 @@
 .action-buttons .comprar-agora,
 .action-buttons .add-carrinho {
   width: 100%;
-  /* Ambos os botões agora usam o estilo primário que já vem do seu componente ButtonPrimary */
 }
 
 /* Calculadora de Frete */
