@@ -34,6 +34,7 @@
     "backend"
   ],
   "dependencies": {
+    "@prisma/client": "^6.16.1",
     "axios": "^1.12.1",
     "cors": "^2.8.5",
     "express": "^5.1.0"
