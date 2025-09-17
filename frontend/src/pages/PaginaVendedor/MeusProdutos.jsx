@@ -42,6 +42,33 @@ const MeusProdutos = () => {
         navigate('/vendedor/cadastrar-produto');
     };
 
+    const handleDeleteProduct = async (productId) => {
+        if (!window.confirm('Tem certeza que deseja excluir este produto?')) {
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('authToken');
+            const response = await fetch(`http://localhost:3001/api/products/${productId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Falha ao excluir produto');
+            }
+
+            // Remove o produto da lista local
+            setProducts(products.filter(product => product.id !== productId));
+            alert('Produto excluído com sucesso!');
+        } catch (err) {
+            console.error('Erro ao excluir produto:', err);
+            alert('Erro ao excluir produto: ' + err.message);
+        }
+    };
+
     return (
         <section className={styles.section}>
             <div className={styles.sectionHeader}>
