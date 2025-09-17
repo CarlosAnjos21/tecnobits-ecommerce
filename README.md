@@ -4,7 +4,23 @@ Bem-vindo ao repositório oficial da **Tecnobits E-commerce**, sua loja virtual 
 
 -----
 
-## 🎯 Sobre o Projeto
+## 📋 Sumário
+
+- [🎯 Sobre o Projeto](#-sobre-o-projeto)
+- [✨ Principais Funcionalidades](#-principais-funcionalidades)
+- [🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+- [📊 Modelo de Dados](#-modelo-de-dados)
+- [👥 Contribuições Detalhadas da Equipe](#-contribuições-detalhadas-da-equipe)
+- [🏗️ Estrutura do Projeto](#️-estrutura-do-projeto)
+- [🚀 Como Executar o Projeto Localmente](#-como-executar-o-projeto-localmente)
+- [📋 API Endpoints](#-api-endpoints)
+- [🔄 Estratégia de Branches e Desenvolvimento](#-estratégia-de-branches-e-desenvolvimento)
+- [📊 Resultados e Conquistas](#-resultados-e-conquistas)
+- [🤝 Como Contribuir](#-como-contribuir)
+- [📝 Licença](#-licença)
+- [📞 Contato](#-contato)
+
+---
 
 A Tecnobits é um e-commerce moderno e responsivo, focado em otimizar a jornada do usuário, desde a busca por produtos até a finalização da compra.
 

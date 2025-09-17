@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env.js';
 
-
 const prisma = new PrismaClient();
 
 const generateToken = (id, role) => {
@@ -14,17 +13,32 @@ const generateToken = (id, role) => {
 
 export const register = async (req, res) => {
     try {
-        const { name, email, password, role } = req.body; //cliente ou vendedor
+        const { name, email, password, role, phone, address, cnpj } = req.body;
 
         //validação
         if (!name || !email || !password || !role) {
             return res.status(400).json({ message: 'Todos os campos são obrigatórios.'})
         }
+
+        // Validação adicional para vendedor
+        if (role === 'vendedor' && !cnpj) {
+            return res.status(400).json({ message: 'CNPJ é obrigatório para vendedores.'})
+        }
+
         //para verificar se o usário já existe
         const existingUser = await prisma.user.findUnique({ where: { email } });
             if (existingUser) {
                 return res.status(409).json({ message: 'Email em uso.'})
             }
+        
+        // Verificar se já existe um vendedor com esse CNPJ
+        if (role === 'vendedor' && cnpj) {
+            const existingCNPJ = await prisma.user.findFirst({ where: { cnpj } });
+            if (existingCNPJ) {
+                return res.status(409).json({ message: 'CNPJ já cadastrado.'})
+            }
+        }
+
         //critp senha
         const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -35,15 +49,28 @@ export const register = async (req, res) => {
                 email,
                 password: hashedPassword,
                 role,
+                phone,
+                address,
+                ...(role === 'vendedor' && { cnpj }),
+                status: role === 'vendedor' ? 'pending' : 'active'
             },
         });
+
         //para gerar o token e enviar a res
         const token = generateToken(user.id, user.role);
 
         res.status(201).json({
-            message: 'Usuário registrado com sucesso!',
+            message: role === 'vendedor' 
+                ? 'Cadastro enviado com sucesso! Aguarde a aprovação do administrador.'
+                : 'Usuário registrado com sucesso!',
             token,
-            user: { id: user.id, name: user.name, email: user.email, role: user.role},
+            user: { 
+                id: user.id, 
+                name: user.name, 
+                email: user.email, 
+                role: user.role,
+                status: user.status
+            },
         });
     } catch (error) {
             res.status(500).json({ message: 'Erro no servidor', error: error.message})
@@ -54,17 +81,23 @@ export const register = async (req, res) => {
         try {
             const { email, password } = req.body;
 
-            //validação
+            // Validação
             if (!email || !password) {
                 return res.status(400).json({ message: 'Email e senha são obrigatórios.' });
             }
-            //encontrar usuário3
+
+            // Encontrar usuário
             const user = await prisma.user.findUnique({ where: { email } });
             if (!user || !(await bcrypt.compare(password, user.password))) {
                 return res.status(401).json({ message: 'Credenciais inválidas.' });
             }
 
-            //gerar token e env res
+            // Verificar se o vendedor foi aprovado
+            if (user.role === 'vendedor' && user.status !== 'active') {
+                return res.status(403).json({ message: 'Seu cadastro ainda não foi aprovado. Aguarde a aprovação para acessar a plataforma.' });
+            }
+
+            // Gerar token e enviar resposta
             const token = generateToken(user.id, user.role);
             res.status(200).json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role }});
         } catch (error) {
