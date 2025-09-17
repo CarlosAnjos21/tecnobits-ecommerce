@@ -7,9 +7,9 @@
 
 ### **Daniely Mélo - Fullstack Leader:**
 - **Arquitetura geral** do sistema (frontend + backend) - OK
-- **Coordenação** entre front e back - 
-- **Code review** e padrões de qualidade - 
-- **Gerenciamento** de prazos e entregas - 
+- **Coordenação** entre front e back - OK
+- **Code review** e padrões de qualidade - OK
+- **Gerenciamento** de prazos e entregas - OK
 - **Sistema de autenticação e autorização (JWT)** - OK
 - **APIs de usuários e segurança (CRUD Admin & Perfil)** - OK
 - **Implementação do sistema de login simples** - OK
@@ -24,6 +24,10 @@
 - **Sistema de aprovação de vendedores (Admin Dashboard)** - OK
 - **APIs de administração para gerenciamento de vendedores** - OK
 - **Interface de administração para aprovação/rejeição de vendedores** - OK
+- **Correção e integração do gerenciamento de produtos de vendedor** - OK
+- **Implementação da exclusão e edição de produtos** - OK
+- **Correção de rotas para edição de produtos** - OK
+- **Validação de permissões para gerenciamento de produtos** - OK
 
 
 ### **Estrutura Hierárquica:**
