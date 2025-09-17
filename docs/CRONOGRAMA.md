@@ -11,6 +11,7 @@
 - **Code review** e padrões de qualidade - OK
 - **Gerenciamento** de prazos e entregas - OK
 - **Sistema de autenticação e autorização (JWT)** - OK
+- **Models** - OK
 - **APIs de usuários e segurança (CRUD Admin & Perfil)** - OK
 - **Implementação do sistema de login simples** - OK
 - **Refatoração do Backend (CJS para ESM)** - OK
