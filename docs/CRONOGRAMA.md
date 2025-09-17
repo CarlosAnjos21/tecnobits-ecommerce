@@ -21,6 +21,9 @@
 - **Implementação e controle de perfis (cliente/vendedor)** - OK
 - **Cadastro de vendedor e cliente (vendedor restrito ao admin)** - OK
 - **Integração com banco de dados** - OK
+- **Sistema de aprovação de vendedores (Admin Dashboard)** - OK
+- **APIs de administração para gerenciamento de vendedores** - OK
+- **Interface de administração para aprovação/rejeição de vendedores** - OK
 
 
 ### **Estrutura Hierárquica:**
@@ -97,13 +100,13 @@ Endpoints de listagem de vendas
 - **Reporta para:** Carlos
 
 **Anderson Guimarães** - Dev Frontend
-- Páginas de produto individual
+- Páginas de produto individual - OK
 - Responsividade e otimizações - OK
 - Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor) - OK
-- Implementar página de redirecionamento após cadastro do vendedor
-- Implementar listagem de compras do cliente
-- Implementar listagem de vendas do vendedor
-- Implementar responsividade total do site (multi-telas)
+- Implementar página de redirecionamento após cadastro do vendedor - OK
+- Implementar listagem de compras do cliente - OK
+- Implementar listagem de vendas do vendedor - OK
+- Implementar responsividade total do site (multi-telas) - OK
 - **Reporta para:** Carlos
 
 ---
