@@ -3,6 +3,7 @@ import cors from 'cors';
 import authRoutes from './src/routes/authRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
+import orderRoutes from './src/routes/orderRoutes.js';
 import { protect, authorize } from './src/middleware/authMiddleware.js';
 
 
@@ -24,5 +25,8 @@ app.use("/api/products", productRoutes);
 app.post('/api/products', protect, authorize('vendedor'), (req, res) => {
     res.status(201).json({ message: `Produto criado pelo vendedor ${req.user.name}` });
 });
+
+//Rotas de pedidos
+app.use("/api/orders", orderRoutes);
 
 export default app;
