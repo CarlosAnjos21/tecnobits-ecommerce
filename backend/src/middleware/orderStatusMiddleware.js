@@ -1,6 +1,6 @@
 import { prisma } from '../config/prisma.js';
 
-const prisma = new PrismaClient;
+
 
 //garantir que so usuarios permitidos mudem status
 export const canUpdateStatus = ( req, res, next ) => {
