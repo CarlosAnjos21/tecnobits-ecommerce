@@ -97,7 +97,6 @@ Endpoints de listagem de vendas
 - Implementar carrinho de compras (armazenar produtos, calcular preço)
 - Checkout e finalização de compra
 - Páginas principais (Home, Produtos, Carrinho)
-- Sistema de autenticação no frontend
 - Implementar cadastro de produto (com upload de fotos)
 - Implementar cancelamento de vendas (cliente e vendedor)
 - Garantir responsividade total do site (multi-telas)
@@ -106,6 +105,7 @@ Endpoints de listagem de vendas
 **Anderson Guimarães** - Dev Frontend
 - Páginas de produto individual - OK
 - Responsividade e otimizações - OK
+- Sistema de autenticação no frontend - OK
 - Implementar páginas de cadastro de vendedor, cliente e produto (restrito ao vendedor) - OK
 - Implementar página de redirecionamento após cadastro do vendedor - OK
 - Implementar listagem de compras do cliente - OK

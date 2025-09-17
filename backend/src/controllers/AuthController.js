@@ -81,17 +81,23 @@ export const register = async (req, res) => {
         try {
             const { email, password } = req.body;
 
-            //validação
+            // Validação
             if (!email || !password) {
                 return res.status(400).json({ message: 'Email e senha são obrigatórios.' });
             }
-            //encontrar usuário3
+
+            // Encontrar usuário
             const user = await prisma.user.findUnique({ where: { email } });
             if (!user || !(await bcrypt.compare(password, user.password))) {
                 return res.status(401).json({ message: 'Credenciais inválidas.' });
             }
 
-            //gerar token e env res
+            // Verificar se o vendedor foi aprovado
+            if (user.role === 'vendedor' && user.status !== 'active') {
+                return res.status(403).json({ message: 'Seu cadastro ainda não foi aprovado. Aguarde a aprovação para acessar a plataforma.' });
+            }
+
+            // Gerar token e enviar resposta
             const token = generateToken(user.id, user.role);
             res.status(200).json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role }});
         } catch (error) {
