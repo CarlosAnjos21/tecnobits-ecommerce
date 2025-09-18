@@ -1,24 +1,84 @@
 import './ProductViewPage.css';
 import { useParams } from "react-router-dom";
-import products from '../../data/products.json';
 import { ButtonPrimary } from '../../components/Buttons/ButtonComponents';
 import { useCart } from '../../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { FaCreditCard, FaBoltLightning, FaPix, FaTruck, FaCalendarDays } from 'react-icons/fa6';
 import { InputDefault } from '../../components/Input';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StarRating from '../../components/StarRating';
 
 function ProductViewPage() {
-  // --- TODA A LÓGICA EXISTENTE PERMANECE A MESMA ---
   const { id } = useParams();
-  const product = products.find((p) => p.id === Number(id));
+  const { addToCart } = useCart(); // Mover para o início, antes dos outros hooks
+  const navigate = useNavigate();
+  
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [cep, setCep] = useState('');
+  const [shippingMessage, setShippingMessage] = useState("");
+
+  // Buscar produto do backend
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/products/${id}`);
+        
+        if (!response.ok) {
+          throw new Error(`Erro ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Adaptar os dados do backend para o formato esperado pelo frontend
+        const adaptedProduct = {
+          id: data.id,
+          name: data.title,
+          description: data.description,
+          price: data.price,
+          priceDiscount: data.priceDiscount || 0,
+          category: data.category?.name || 'Sem categoria',
+          brand: data.brand || 'Marca',
+          image: data.images?.[0] || '/images/404.png',
+          rating: data.rating || 4.0,
+          inStock: data.stock > 0,
+          tagValue: data.tagValue || (data.stock > 0 ? null : 'Fora de estoque')
+        };
+        
+        setProduct(adaptedProduct);
+        setError(null);
+      } catch (err) {
+        console.error('❌ Erro ao buscar produto:', err);
+        setError('Erro ao carregar produto. Tente novamente.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchProduct();
+    }
+  }, [id]);
+
+  // Mostrar loading
+  if (loading) {
+    return <div className="loading">Carregando produto...</div>;
+  }
+
+  // Mostrar erro
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
+  // Produto não encontrado
+  if (!product) {
+    return <div className="not-found">Produto não encontrado.</div>;
+  }
 
   const descontoPercentual = product.priceDiscount && product.priceDiscount > 0
     ? `${Math.round(((product.price - product.priceDiscount) / product.price) * 100)}%`
     : "0%";
-
-  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
     addToCart({
@@ -29,16 +89,12 @@ function ProductViewPage() {
     });
   };
 
-  const navigate = useNavigate();
   const comprarAgora = () => {
     handleAddToCart(); // Adiciona ao carrinho antes de navegar
     navigate('/shopping-cart');
   }
 
   const parcela = (product.price / 10).toFixed(2);
-
-  const [cep, setCep] = useState('');
-  const [shippingMessage, setShippingMessage] = useState("");
 
   const calculateShipping = async (currentCep) => {
     if (currentCep.replace(/\D/g, '').length === 8) {

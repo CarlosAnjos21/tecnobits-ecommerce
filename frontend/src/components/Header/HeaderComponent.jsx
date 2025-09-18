@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, NavLink, Link } from 'react-router-dom';
+import { useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -12,6 +12,7 @@ import { FaRegCircleUser, FaCartShopping, FaRegHeart, FaAngleDown } from 'react-
 
 const Header = () => {
     const { user, logout } = useAuth();
+    const location = useLocation();
     
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,6 +40,13 @@ const Header = () => {
             case 'admin': return "/admin/dashboard";
             default: return "/login";
         }
+    };
+
+    // Verifica se estamos nas páginas de painel (cliente, vendedor, admin)
+    const isDashboardPage = () => {
+        return location.pathname.includes('/cliente/dashboard') || 
+               location.pathname.includes('/vendedor/dashboard') || 
+               location.pathname.includes('/admin/dashboard');
     };
 
     const handleInputChange = (event) => {
@@ -156,7 +164,9 @@ const Header = () => {
                     <ul className="nav-list">
                         <li><NavLink to='/' end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink></li>
                         <li><NavLink to='/produtos' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Produtos</NavLink></li>
-                        <li><NavLink to='/categorias' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Categorias</NavLink></li>
+                        {!isDashboardPage() && (
+                            <li><NavLink to='/categorias' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Categorias</NavLink></li>
+                        )}
                         
                         {/* --- LÓGICA ATUALIZADA PARA O MENU --- */}
                         {user ? (

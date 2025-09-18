@@ -8,45 +8,57 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
+  id        String   @id @default(cuid())
+  email     String   @unique
   name      String
   password  String
-  role      Role      @default(cliente)
-  status    String    @default("active") // active, pending, rejected
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  role      Role     @default(cliente)
+  status    String   @default("active") // active, pending, rejected
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   address   String?
   phone     String?
-  cnpj      String?   // Campo opcional para vendedores
-  orders    Order[]
-  products  Product[]
+  cnpj      String? // Campo opcional para vendedores
+
+  // Relações
+  orders   Order[]
+  products Product[]
+  carts    Cart[] // 🔹 lado inverso da relação com Cart
 
   @@map("users")
 }
 
 model Category {
-  id       String    @id @default(cuid())
-  name     String    @unique
+  id   String @id @default(cuid())
+  name String @unique
+
+  // Relações
   products Product[]
 
   @@map("categories")
 }
 
 model Product {
-  id          String      @id @default(cuid())
-  title       String
-  description String
-  price       Float
-  stock       Int         @default(0)
-  images      String[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  sellerId    String
-  categoryId  String
-  orderItems  OrderItem[]
-  category    Category    @relation(fields: [categoryId], references: [id])
-  seller      User        @relation(fields: [sellerId], references: [id])
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  price         Float
+  priceDiscount Float?   // Preço com desconto (opcional)
+  brand         String?  // Marca do produto (opcional)
+  rating        Float?   // Avaliação do produto (opcional)
+  tagValue      String?  // Tag de desconto (opcional, ex: "15% Off")
+  stock         Int      @default(0)
+  images        String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  sellerId      String
+  categoryId    String
+
+  // Relações
+  orderItems OrderItem[]
+  cartItems  CartItem[] // 🔹 lado inverso da relação com CartItem
+  category   Category    @relation(fields: [categoryId], references: [id])
+  seller     User        @relation(fields: [sellerId], references: [id])
 
   @@map("products")
 }
@@ -66,22 +78,50 @@ model Order {
   metodoPagamento      PaymentMethod
   statusPagamento      String        @default("PENDENTE")
   status               OrderStatus   @default(AGUARDANDO_PAGAMENTO)
-  items                OrderItem[]
-  buyer                User          @relation(fields: [buyerId], references: [id])
+
+  // Relações
+  items OrderItem[]
+  buyer User        @relation(fields: [buyerId], references: [id])
 
   @@map("orders")
 }
 
 model OrderItem {
-  id        String  @id @default(cuid())
+  id        String @id @default(cuid())
   quantity  Int
   price     Float
   orderId   String
   productId String
-  order     Order   @relation(fields: [orderId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
+
+  // Relações
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 
   @@map("order_items")
+}
+
+model Cart {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  // Relações
+  user  User       @relation(fields: [userId], references: [id])
+  items CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id        String @id @default(cuid())
+  cartId    String
+  productId String
+
+  // Relações
+  cart    Cart    @relation(fields: [cartId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  quantity Int @default(1)
 }
 
 enum Role {
