@@ -6,7 +6,7 @@ import productRoutes from './src/routes/productRoutes.js';
 import adminRoutes from './src/routes/adminRoutes.js';
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import cartRoutes from "./src/routes/cartRoutes.js";
-// import orderRoutes from "./src/routes/orderRoutes.js";
+import orderRoutes from "./src/routes/orderRoutes.js";
 import { protect, authorize } from './src/middleware/authMiddleware.js';
 
 
