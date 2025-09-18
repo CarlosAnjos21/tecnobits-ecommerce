@@ -33,12 +33,12 @@ app.post('/api/products', protect, authorize('vendedor'), (req, res) => {
 });
 
 // Rotas de Gerenciamento de Categorias
-// app.use("/api/categories", categoryRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // Rotas do Carrinho de Compras
 app.use("/api/cart", cartRoutes);
 
 // Rotas de Pedidos
-// app.use("/api/orders", orderRoutes);
+app.use("/api/orders", orderRoutes);
 
 export default app;
