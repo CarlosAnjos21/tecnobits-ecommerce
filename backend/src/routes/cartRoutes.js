@@ -1,14 +1,27 @@
 import express from "express";
 import { protect } from "../middleware/authMiddleware.js";
-import * as CartController from "../controllers/CartController.js";
+import {
+  buscarCarrinho,
+  adicionarItem,
+  atualizarItem,
+  removerItem,
+} from "../controllers/cartController.js";
 
 const router = express.Router();
 
-router.use(protect); // todas rotas precisam de login
+// Todas as rotas exigem login
+router.use(protect);
 
-router.get("/", CartController.buscarCarrinho);
-router.post("/items", CartController.adicionarItem);
-router.put("/items/:id", CartController.atualizarItem);
-router.delete("/items/:id", CartController.removerItem);
+// Buscar carrinho do usuário logado
+router.get("/", buscarCarrinho);
+
+// Adicionar item ao carrinho
+router.post("/add", adicionarItem);
+
+// Atualizar quantidade de um item
+router.put("/update/:id", atualizarItem);
+
+// Remover item do carrinho
+router.delete("/remove/:id", removerItem);
 
 export default router;

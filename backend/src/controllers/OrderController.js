@@ -71,7 +71,7 @@ export const criarPedido = async (req, res) => {
 /**
  * Listar pedidos do usuário logado
  */
-export const listarPedidosUsuarios = async (req, res) => {
+export const listarMeusPedidos = async (req, res) => {
   try {
     const userId = req.user.id;
     const orders = await prisma.order.findMany({
@@ -93,7 +93,7 @@ export const listarPedidosUsuarios = async (req, res) => {
 /**
  * Listar todos os pedidos (admin)
  */
-export const listarPedidosAdmin = async (req, res) => {
+export const listarTodosPedidos = async (req, res) => {
   try {
     const orders = await prisma.order.findMany({
       include: {

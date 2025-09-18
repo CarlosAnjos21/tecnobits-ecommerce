@@ -16,7 +16,7 @@ export const buscarCarrinho = async (req, res) => {
     });
 
     if (!carrinho) {
-      return res.json({ items: [] });
+      return res.json({ items: [] }); // carrinho vazio
     }
 
     res.json(carrinho);
@@ -32,17 +32,20 @@ export const adicionarItem = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
 
-    let carrinho = await prisma.cart.findUnique({ where: { userId: req.user.id } });
+    let carrinho = await prisma.cart.findUnique({
+      where: { userId: req.user.id }
+    });
 
+    // Se não existe carrinho, cria um novo
     if (!carrinho) {
       carrinho = await prisma.cart.create({
         data: { userId: req.user.id }
       });
     }
 
-    // Se item já existe no carrinho → soma quantidade
+    // Verifica se item já existe no carrinho
     const itemExiste = await prisma.cartItem.findFirst({
-      where: { cartId: cart.id, productId }
+      where: { cartId: carrinho.id, productId }
     });
 
     let item;
@@ -54,14 +57,20 @@ export const adicionarItem = async (req, res) => {
     } else {
       item = await prisma.cartItem.create({
         data: {
-          cartId: cart.id,
+          cartId: carrinho.id,
           productId,
           quantity
         }
       });
     }
 
-    res.status(201).json(item);
+    // Retorna carrinho atualizado
+    const carrinhoAtualizado = await prisma.cart.findUnique({
+      where: { id: carrinho.id },
+      include: { items: { include: { product: true } } }
+    });
+
+    res.status(201).json(carrinhoAtualizado);
   } catch (error) {
     res.status(500).json({ error: "Erro ao adicionar item", details: error.message });
   }
