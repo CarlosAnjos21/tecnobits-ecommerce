@@ -4,7 +4,23 @@ Bem-vindo ao repositório oficial da **Tecnobits E-commerce**, sua loja virtual 
 
 -----
 
-## 🎯 Sobre o Projeto
+## 📋 Sumário
+
+- [🎯 Sobre o Projeto](#-sobre-o-projeto)
+- [✨ Principais Funcionalidades](#-principais-funcionalidades)
+- [🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+- [📊 Modelo de Dados](#-modelo-de-dados)
+- [👥 Contribuições Detalhadas da Equipe](#-contribuições-detalhadas-da-equipe)
+- [🏗️ Estrutura do Projeto](#️-estrutura-do-projeto)
+- [🚀 Como Executar o Projeto Localmente](#-como-executar-o-projeto-localmente)
+- [📋 API Endpoints](#-api-endpoints)
+- [🔄 Estratégia de Branches e Desenvolvimento](#-estratégia-de-branches-e-desenvolvimento)
+- [📊 Resultados e Conquistas](#-resultados-e-conquistas)
+- [🤝 Como Contribuir](#-como-contribuir)
+- [📝 Licença](#-licença)
+- [📞 Contato](#-contato)
+
+---
 
 A Tecnobits é um e-commerce moderno e responsivo, focado em otimizar a jornada do usuário, desde a busca por produtos até a finalização da compra.
 
@@ -148,6 +164,41 @@ npm run dev
 # 5. Acesse o projeto em seu navegador
 # Geralmente, ele estará disponível em: http://localhost:5173
 ```
+
+### 🧪 Setup do Postman para Testes da API
+
+Para testar todas as funcionalidades da API de forma automatizada, utilizamos uma coleção completa do Postman:
+
+#### 🚀 **Método Automático (Recomendado)**
+```bash
+# Execute o script de setup automático
+node setup-postman.js
+
+# Ou abra a interface visual
+start postman-setup.html
+```
+
+#### 📋 **Método Manual**
+1. **Importe os arquivos no Postman:**
+   - `tecnobits-postman-collection.json` (coleção)
+   - `tecnobits-postman-environment.json` (ambiente)
+
+2. **Configure o ambiente:**
+   - Selecione "Tecnobits E-commerce - Desenvolvimento"
+   - Verifique as variáveis: `base_url`, `jwt_token`, etc.
+
+3. **Teste a autenticação:**
+   - Execute: `🔐 Autenticação → 🔑 Login Admin`
+   - Teste rotas protegidas: `👥 Administração de Usuários → 📋 Listar Todos os Usuários`
+
+#### 📚 **Sobre a Coleção**
+- **40+ requests** organizadas por categoria
+- Autenticação JWT automática
+- Scripts de teste integrados
+- Variáveis de ambiente dinâmicas
+- Exemplos para todas as operações CRUD
+
+**Pré-requisito:** Backend rodando na porta 3001
 
 -----
 

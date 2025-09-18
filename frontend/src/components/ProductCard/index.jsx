@@ -28,6 +28,8 @@ function ProductCard({ product }) {
   };
 
   const handleAddToCart = () => {
+    console.log('🛒 ProductCard: Tentando adicionar produto:', product);
+    console.log('🛒 ProductCard: ID do produto:', product.id);
     // Pass the image URL as 'imageUrl' when adding to cart
     // Certifique-se que product.id está disponível se for usado no CartContext
     addToCart({ ...product, imageUrl: image }); // Usar a imagem do produto desestruturada

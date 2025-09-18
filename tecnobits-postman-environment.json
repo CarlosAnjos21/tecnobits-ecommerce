@@ -1,0 +1,37 @@
+{
+  "id": "tecnobits-env",
+  "name": "Tecnobits E-commerce - Desenvolvimento",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001/api",
+      "description": "URL base da API do backend",
+      "enabled": true
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "description": "Token JWT para autenticação (será preenchido automaticamente após login)",
+      "enabled": true
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "description": "ID do usuário logado (será preenchido automaticamente)",
+      "enabled": true
+    },
+    {
+      "key": "user_email",
+      "value": "",
+      "description": "Email do usuário logado (será preenchido automaticamente)",
+      "enabled": true
+    },
+    {
+      "key": "user_role",
+      "value": "",
+      "description": "Role do usuário logado (cliente, vendedor, admin)",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
