@@ -11,6 +11,9 @@ const router = express.Router();
 
 router.use(protect);  // todas rotas exigem usuário autenticado
 
+// Todas as rotas exigem login
+router.use(protect);
+
 // Usuário vê seus pedidos
 router.get("/", listarMeusPedidos);
 
@@ -18,9 +21,9 @@ router.get("/", listarMeusPedidos);
 router.post("/", criarPedido);
 
 // Admin vê todos pedidos
-router.get("/all", authorize("admin"), listarTodosPedidos);
+router.get("/", authorize("admin"), listarTodosPedidos); // mesma rota GET /, middleware controla acesso
 
-// Admin atualiza status
-router.put("/:id/status", authorize("admin"), atualizarStatusPedido);
+// Admin atualiza pedido parcialmente (status)
+router.patch("/:id", authorize("admin"), atualizarStatusPedido); // PATCH indica atualização parcial
 
 export default router;

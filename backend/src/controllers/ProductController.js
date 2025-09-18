@@ -4,26 +4,35 @@ const prisma = new PrismaClient();
 // Criar produto
 export const criarProduto = async (req, res) => {
   try {
-const { title, description, price, stock, images, sellerId, categoryId } = req.body;
+    const { title, description, price, stock, images, categoryId } = req.body;
 
-const produto = await prisma.product.create({
-  data: {
-    title,
-    description,
-    price,
-    stock,
-    images,
-    sellerId,     
-    categoryId,   
-  },
-});
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ error: "Usuário não autenticado" });
+    }
+
+    const produto = await prisma.product.create({
+      data: {
+        title,
+        description,
+        price: parseFloat(price),
+        stock: parseInt(stock),
+        images,
+        seller: { connect: { id: req.user.id } },
+        category: { connect: { id: categoryId } }
+      }
+    });
 
     res.status(201).json(produto);
   } catch (error) {
-    console.error(error);
-    res.status(400).json({ error: error.message });
+    console.error("Erro ao criar produto:", error);
+    res.status(500).json({
+      error: "Erro ao criar produto",
+      details: error.message
+    });
   }
 };
+
+
 
 // Listar todos os produtos
 export const listarProduto = async (req, res) => {

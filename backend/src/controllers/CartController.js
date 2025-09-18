@@ -81,11 +81,19 @@ export const adicionarItem = async (req, res) => {
  */
 export const atualizarItem = async (req, res) => {
   try {
-    const { id } = req.params; // id do CartItem
+    const { itemId } = req.params; // deve ser 'itemId'
     const { quantity } = req.body;
 
+    if (!itemId) {
+      return res.status(400).json({ error: "ID do item não informado" });
+    }
+
+    if (!item || item.cartId !== carrinho.id) {
+      return res.status(403).json({ error: "Você não pode atualizar este item" });
+    }
+
     const item = await prisma.cartItem.update({
-      where: { id },
+      where: { id: itemId },
       data: { quantity }
     });
 
@@ -98,11 +106,16 @@ export const atualizarItem = async (req, res) => {
 /**
  * Remover item do carrinho
  */
+
 export const removerItem = async (req, res) => {
   try {
-    const { id } = req.params; // id do CartItem
+    const { itemId } = req.params;
 
-    await prisma.cartItem.delete({ where: { id } });
+    if (!item || item.cartId !== carrinho.id) {
+      return res.status(403).json({ error: "Você não pode remover este item" });
+    }
+
+    await prisma.cartItem.delete({ where: { id: itemId } });
 
     res.json({ message: "Item removido com sucesso" });
   } catch (error) {

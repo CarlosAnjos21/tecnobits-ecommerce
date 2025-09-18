@@ -12,16 +12,17 @@ const router = express.Router();
 // Todas as rotas exigem login
 router.use(protect);
 
-// Buscar carrinho do usuário logado
+// GET /api/cart → Buscar carrinho do usuário logado
 router.get("/", buscarCarrinho);
 
-// Adicionar item ao carrinho
-router.post("/add", adicionarItem);
+// POST /api/cart → Adicionar item ou somar quantidade
+router.post("/", adicionarItem);
 
-// Atualizar quantidade de um item
-router.put("/update/:id", atualizarItem);
+// PATCH /api/cart/:itemId → Atualizar quantidade de um item específico
+router.patch("/:itemId", atualizarItem);
 
-// Remover item do carrinho
-router.delete("/remove/:id", removerItem);
+// DELETE /api/cart/:itemId → Remover item específico do carrinho
+router.delete("/:itemId", removerItem);
 
 export default router;
+
