@@ -39,16 +39,20 @@ model Category {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  price       Float
-  stock       Int      @default(0)
-  images      String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  sellerId    String
-  categoryId  String
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  price         Float
+  priceDiscount Float?   // Preço com desconto (opcional)
+  brand         String?  // Marca do produto (opcional)
+  rating        Float?   // Avaliação do produto (opcional)
+  tagValue      String?  // Tag de desconto (opcional, ex: "15% Off")
+  stock         Int      @default(0)
+  images        String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  sellerId      String
+  categoryId    String
 
   // Relações
   orderItems OrderItem[]

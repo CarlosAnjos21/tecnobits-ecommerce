@@ -18,7 +18,7 @@ export const criarProduto = async (req, res) => {
         stock: parseInt(stock),
         images,
         seller: { connect: { id: req.user.id } },
-        category: { connect: { id: categoryId } }
+        category: { connect: { id: String(categoryId) } }
       }
     });
 
@@ -38,6 +38,16 @@ export const criarProduto = async (req, res) => {
 export const listarProduto = async (req, res) => {
   try {
     const produtos = await prisma.product.findMany({
+      include: {
+        category: true,  // Incluir dados da categoria
+        seller: {        // Incluir dados do vendedor (opcional)
+          select: {
+            id: true,
+            name: true,
+            email: true
+          }
+        }
+      },
       orderBy: { createdAt: "desc" }, // opcional: ordena por data
     });
     res.json(produtos);
@@ -51,7 +61,19 @@ export const listarProduto = async (req, res) => {
 export const buscarPorId = async (req, res) => {
   try {
     const { id } = req.params;
-    const produto = await prisma.product.findUnique({ where: { id } });
+    const produto = await prisma.product.findUnique({ 
+      where: { id },
+      include: {
+        category: true,  // Incluir dados da categoria
+        seller: {        // Incluir dados do vendedor (opcional)
+          select: {
+            id: true,
+            name: true,
+            email: true
+          }
+        }
+      }
+    });
 
     if (!produto) {
       return res.status(404).json({ error: "Produto não encontrado" });
