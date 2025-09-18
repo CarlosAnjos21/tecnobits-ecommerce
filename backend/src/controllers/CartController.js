@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 /**
  * Buscar carrinho do usuário logado
  */
-export const getCart = async (req, res) => {
+export const buscarCarrinho = async (req, res) => {
   try {
-    const cart = await prisma.cart.findUnique({
+    const carrinho = await prisma.cart.findUnique({
       where: { userId: req.user.id },
       include: {
         items: {
@@ -15,11 +15,11 @@ export const getCart = async (req, res) => {
       }
     });
 
-    if (!cart) {
+    if (!carrinho) {
       return res.json({ items: [] });
     }
 
-    res.json(cart);
+    res.json(carrinho);
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar carrinho", details: error.message });
   }
@@ -28,28 +28,28 @@ export const getCart = async (req, res) => {
 /**
  * Adicionar item ao carrinho
  */
-export const addItem = async (req, res) => {
+export const adicionarItem = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
 
-    let cart = await prisma.cart.findUnique({ where: { userId: req.user.id } });
+    let carrinho = await prisma.cart.findUnique({ where: { userId: req.user.id } });
 
-    if (!cart) {
-      cart = await prisma.cart.create({
+    if (!carrinho) {
+      carrinho = await prisma.cart.create({
         data: { userId: req.user.id }
       });
     }
 
     // Se item já existe no carrinho → soma quantidade
-    const existingItem = await prisma.cartItem.findFirst({
+    const itemExiste = await prisma.cartItem.findFirst({
       where: { cartId: cart.id, productId }
     });
 
     let item;
-    if (existingItem) {
+    if (itemExiste) {
       item = await prisma.cartItem.update({
-        where: { id: existingItem.id },
-        data: { quantity: existingItem.quantity + quantity }
+        where: { id: itemExiste.id },
+        data: { quantity: itemExiste.quantity + quantity }
       });
     } else {
       item = await prisma.cartItem.create({
@@ -70,7 +70,7 @@ export const addItem = async (req, res) => {
 /**
  * Atualizar quantidade de um item
  */
-export const updateItem = async (req, res) => {
+export const atualizarItem = async (req, res) => {
   try {
     const { id } = req.params; // id do CartItem
     const { quantity } = req.body;
@@ -89,7 +89,7 @@ export const updateItem = async (req, res) => {
 /**
  * Remover item do carrinho
  */
-export const removeItem = async (req, res) => {
+export const removerItem = async (req, res) => {
   try {
     const { id } = req.params; // id do CartItem
 
