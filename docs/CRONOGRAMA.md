@@ -248,47 +248,6 @@ Iniciando (5/5) *Compilar relatório final*
 ---
 
 
-
-### **📋 SPRINT PLANNING & ORGANIZAÇÃO**
-**Kaio (Líder Back) + Carlos (Líder Front)**
-- Planejamento semanal das sprints
-- Definição de prioridades técnicas
-- Estimativas de tempo realistas
-- Relatórios de progresso para Daniely
-
-### **🔧 BACKEND - Time Kaio (Líder)**
-
-
-**Kaio Vinícius** - Líder Backend
-- Implementação do cancelamento de vendas (cliente e vendedor)
-- Controle de estoque e restrição de adicionar ao carrinho sem estoque
-- Opção de adicionar produtos ao estoque pelo vendedor
-- APIs de pedidos e histórico
-
-❌ PENDENTE
-Implementar sistema de pedidos com status (incluindo cancelamento)
-Criar sistema de controle de estoque
-Desenvolver endpoints para gerenciamento de estoque pelo vendedor
-Implementar APIs de histórico de pedidos
-- **Reporta para:** Daniely
-
-
-**Antônio Gabriel** - Dev Backend
-- APIs de produtos e categorias (CRUD)
-- Sistema de carrinho de compras
-- Cadastro de produto (com fotos, preço, descrição, título)
-- Gravação de vendas no banco de dados (parcialmente feito, falta Controllers e rotas para pedidos não implementados)
-- Listagem de vendas (parcialmente feito, falta Endpoints para listagem de vendas)(vendedor vê todas, cliente vê só as próprias, admin vê ambos)
-
-❌ PENDENTE DE IMPLEMENTAÇÃO:
-APIs de produtos (CRUD)
-APIs de categorias (CRUD)
-Sistema de carrinho
-APIs de cadastro de produtos
-APIs de vendas e pedidos
-Endpoints de listagem de vendas
-- **Reporta para:** Kaio
-
 ### **🎨 FRONTEND - Time Carlos (Líder)**
 
 **Carlos Otacílio** - Líder Frontend
