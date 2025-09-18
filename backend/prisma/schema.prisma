@@ -19,8 +19,11 @@ model User {
   address   String?
   phone     String?
   cnpj      String?   // Campo opcional para vendedores
+
+  // Relações
   orders    Order[]
   products  Product[]
+  carts     Cart[]   // 🔹 lado inverso da relação com Cart
 
   @@map("users")
 }
@@ -28,6 +31,8 @@ model User {
 model Category {
   id       String    @id @default(cuid())
   name     String    @unique
+
+  // Relações
   products Product[]
 
   @@map("categories")
@@ -44,9 +49,12 @@ model Product {
   updatedAt   DateTime    @updatedAt
   sellerId    String
   categoryId  String
+
+  // Relações
   orderItems  OrderItem[]
-  category    Category    @relation(fields: [categoryId], references: [id])
-  seller      User        @relation(fields: [sellerId], references: [id])
+  cartItems   CartItem[]    // 🔹 lado inverso da relação com CartItem
+  category    Category      @relation(fields: [categoryId], references: [id])
+  seller      User          @relation(fields: [sellerId], references: [id])
 
   @@map("products")
 }
@@ -66,6 +74,8 @@ model Order {
   metodoPagamento      PaymentMethod
   statusPagamento      String        @default("PENDENTE")
   status               OrderStatus   @default(AGUARDANDO_PAGAMENTO)
+
+  // Relações
   items                OrderItem[]
   buyer                User          @relation(fields: [buyerId], references: [id])
 
@@ -78,23 +88,22 @@ model OrderItem {
   price     Float
   orderId   String
   productId String
+
+  // Relações
   order     Order   @relation(fields: [orderId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
 
   @@map("order_items")
 }
 
-enum Role {
-  cliente
-  vendedor
-  admin
-}
-
 model Cart {
   id        String     @id @default(cuid())
   userId    String
+
+  // Relações
   user      User       @relation(fields: [userId], references: [id])
   items     CartItem[]
+
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
@@ -102,10 +111,19 @@ model Cart {
 model CartItem {
   id        String   @id @default(cuid())
   cartId    String
-  cart      Cart     @relation(fields: [cartId], references: [id])
   productId String
+
+  // Relações
+  cart      Cart     @relation(fields: [cartId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
+
   quantity  Int      @default(1)
+}
+
+enum Role {
+  cliente
+  vendedor
+  admin
 }
 
 enum OrderStatus {
