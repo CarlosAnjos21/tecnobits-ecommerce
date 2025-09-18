@@ -4,6 +4,7 @@ import authRoutes from './src/routes/authRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
 import adminRoutes from './src/routes/adminRoutes.js';
+import categoryRoutes from "./src/routes/categoryRoutes.js";
 import { protect, authorize } from './src/middleware/authMiddleware.js';
 
 
@@ -28,5 +29,8 @@ app.use('/api/admin', adminRoutes);
 app.post('/api/products', protect, authorize('vendedor'), (req, res) => {
     res.status(201).json({ message: `Produto criado pelo vendedor ${req.user.name}` });
 });
+
+// Rotas de Gerenciamento de Categorias
+app.use("/api/categories", categoryRoutes);
 
 export default app;
