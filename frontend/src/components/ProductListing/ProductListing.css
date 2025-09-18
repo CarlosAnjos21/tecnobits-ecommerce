@@ -7,9 +7,9 @@
   margin: 0 auto;
   padding: 0;
   width: auto;
+  /* border: 8px solid red; */
   overflow-y: hidden;
   justify-content: space-around;  
-  
   background-color: var(--background-color);
 }
 
