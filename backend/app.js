@@ -5,6 +5,7 @@ import userRoutes from './src/routes/userRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
 import adminRoutes from './src/routes/adminRoutes.js';
 import categoryRoutes from "./src/routes/categoryRoutes.js";
+import cartRoutes from "./src/routes/cartRoutes.js";
 import { protect, authorize } from './src/middleware/authMiddleware.js';
 
 
@@ -32,5 +33,8 @@ app.post('/api/products', protect, authorize('vendedor'), (req, res) => {
 
 // Rotas de Gerenciamento de Categorias
 app.use("/api/categories", categoryRoutes);
+
+// Rotas do Carrinho de Compras
+app.use("/api/cart", cartRoutes);
 
 export default app;
