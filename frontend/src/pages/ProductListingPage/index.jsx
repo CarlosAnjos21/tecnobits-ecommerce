@@ -4,9 +4,12 @@ import ProductListing from '../../components/ProductListing';
 import CustomSelect from '../../components/CustomSelect';
 import './ProductListingPage.css';
 import Section from '../../components/Section';
-import products from '../../data/products.json';
+// import products from '../../data/products.json'; // Removido para usar dados do backend
 
 const ProductListingPage = () => {
+  const [products, setProducts] = useState([]); // Estado para produtos do backend
+  const [loading, setLoading] = useState(true); // Estado de carregamento
+  const [error, setError] = useState(null); // Estado de erro
   const [selectedFilters, setSelectedFilters] = useState({ categoriaMarca: {}, emEstoque: false });
   const [categoriasExpandida, setCategoriasExpandida] = useState({});
   const [sortBy, setSortBy] = useState('mais-relevantes');
@@ -19,6 +22,50 @@ const ProductListingPage = () => {
     { value: 'maior-preco', label: 'maior preço' },
     { value: 'mais-vendidos', label: 'mais vendidos' }
   ];
+
+  // Função para buscar produtos do backend
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      
+      const response = await fetch('http://localhost:3001/api/products');
+      
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      // Adaptar os dados do backend para o formato esperado pelo frontend
+      const adaptedProducts = data.map(product => {
+        return {
+          id: product.id,
+          name: product.title, // title -> name
+          description: product.description,
+          price: product.price,
+          priceDiscount: product.priceDiscount || 0, // Usar o campo priceDiscount do banco
+          category: product.category?.name || 'Sem categoria', // Nome da categoria do relacionamento
+          brand: product.brand || 'Marca', // Usar o campo brand do banco
+          image: product.images?.[0] || '/images/404.png', // Primeira imagem
+          rating: product.rating || 4.0, // Usar o campo rating do banco
+          inStock: product.stock > 0,
+          tagValue: product.tagValue || (product.stock > 0 ? null : 'Fora de estoque') // Usar tagValue do banco
+        };
+      });
+      
+      setProducts(adaptedProducts);
+      setError(null);
+    } catch (err) {
+      console.error('❌ Erro ao buscar produtos:', err);
+      setError('Erro ao carregar produtos. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -121,8 +168,11 @@ const ProductListingPage = () => {
   const applyFiltersAndSort = () => {
   let result = [...products];
 
-  // 🔹 Sempre filtra pelas categorias desejadas
+  // 🔹 Filtra pelas categorias desejadas (REABILITADO)
+  const beforeCategoryFilter = result.length;
   result = result.filter(prod => categoriasDesejadas.includes(prod.category));
+  
+  console.log('⚠️ Filtro de categoria desabilitado temporariamente - mostrando todos os produtos');
 
   // 🔹 Se houver filtro de marca aplicado
   const filtroCategoriaMarca = Object.entries(selectedFilters.categoriaMarca)
@@ -244,7 +294,18 @@ const ProductListingPage = () => {
           </aside>
 
           <main className='products-grid'>
-            <ProductListing $isPageProducts products={filteredProducts} />
+            {loading ? (
+              <div style={{ textAlign: 'center', padding: '2rem' }}>
+                <p>Carregando produtos...</p>
+              </div>
+            ) : error ? (
+              <div style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>
+                <p>{error}</p>
+                <button onClick={fetchProducts}>Tentar novamente</button>
+              </div>
+            ) : (
+              <ProductListing $isPageProducts products={filteredProducts} />
+            )}
           </main>
         </div>
       </Section>
