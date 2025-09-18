@@ -44,7 +44,7 @@
 }
 
 .esquerda .imagem-produto {
-  width: 100%;
+  width: 90%;
   max-width: 500px;
   height: auto;
   object-fit: contain;
