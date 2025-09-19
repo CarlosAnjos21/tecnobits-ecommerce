@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { updateUserProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './PaginaCliente.module.css';
-import { ListaPedidos } from '../PedidosClientePage';
+import PedidosClientePage from '../PedidosClientePage';
 
 const PaginaCliente = () => {
   const { user, isAuthenticated, loading } = useAuth(); // 1. Obter o estado de loading
@@ -120,7 +120,7 @@ const PaginaCliente = () => {
       {/* Seção de Pedidos Recentes */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Meus Pedidos Recentes</h2>
-        <ListaPedidos />
+  <PedidosClientePage />
       </section>
 
       {/* --- MODAL DE EDIÇÃO --- */}

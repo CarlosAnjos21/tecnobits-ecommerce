@@ -15,4 +15,3 @@ export const register = async (userData) => {
   return response.data;
 };
 
-// Adicione outros métodos conforme necessário
