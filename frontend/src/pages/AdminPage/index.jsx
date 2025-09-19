@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getPendingSellers } from '../../services/adminService';
 import styles from './AdminPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -11,20 +12,9 @@ const AdminPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPendingSellers = async () => {
+    const fetchPendingSellersData = async () => {
       try {
-        const token = localStorage.getItem('authToken');
-  const response = await fetch('http://localhost:3001/api/admin/pending-sellers', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Falha ao carregar vendedores pendentes');
-        }
-
-        const data = await response.json();
+        const data = await getPendingSellers();
         setPendingSellers(data);
       } catch (err) {
         setError(err.message);
@@ -32,8 +22,7 @@ const AdminPage = () => {
         setLoading(false);
       }
     };
-
-    fetchPendingSellers();
+    fetchPendingSellersData();
   }, []);
 
   const handleViewDetails = (sellerId) => {

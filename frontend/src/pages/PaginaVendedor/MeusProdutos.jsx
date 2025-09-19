@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getSellerProducts, deleteProduct } from '../../services/sellerService';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './PaginaVendedor.module.css';
@@ -46,21 +47,8 @@ const MeusProdutos = () => {
         if (!window.confirm('Tem certeza que deseja excluir este produto?')) {
             return;
         }
-
         try {
-            const token = localStorage.getItem('authToken');
-            const response = await fetch(`http://localhost:3001/api/products/${productId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Falha ao excluir produto');
-            }
-
-            // Remove o produto da lista local
+            await deleteProduct(productId);
             setProducts(products.filter(product => product.id !== productId));
             alert('Produto excluído com sucesso!');
         } catch (err) {

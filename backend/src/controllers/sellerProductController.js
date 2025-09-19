@@ -1,35 +1,17 @@
-import { PrismaClient, OrderStatus } from "@prisma/client";
-const prisma = new PrismaClient();
+import { criarProdutoVendedorService, listarMeusProdutosService, atualizarProdutoService, listarPedidosDoVendedorService } from '../services/sellerService.js';
 
 // Criar produto reaproveitando o codigo do gaabe
 
 export const criarProdutoVendedor = async (req, res) => {
   try {
-    const { title, description, price, stock, images, categoryId } = req.body;
-
     if (!req.user || !req.user.id) {
       return res.status(401).json({ error: "Usuário não autenticado" });
     }
-
-    const produto = await prisma.product.create({
-      data: {
-        title,
-        description,
-        price: parseFloat(price),
-        stock: parseInt(stock),
-        images,
-        seller: { connect: { id: req.user.id } },
-        category: { connect: { id: categoryId } }
-      }
-    });
-
+    const produto = await criarProdutoVendedorService(req.body, req.user.id);
     res.status(201).json(produto);
   } catch (error) {
     console.error("Erro ao criar produto:", error);
-    res.status(500).json({
-      error: "Erro ao criar produto",
-      details: error.message
-    });
+    res.status(500).json({ error: "Erro ao criar produto", details: error.message });
   }
 };
 
@@ -37,14 +19,7 @@ export const criarProdutoVendedor = async (req, res) => {
  
 export const listarMeusProdutos = async (req, res) => {
   try {
-    const vendedorId = req.user.id;
-
-    const produtos = await prisma.product.findMany({
-      where: { sellerId: vendedorId },
-      include: { category: true },
-      orderBy: { createdAt: "desc" }
-    });
-
+    const produtos = await listarMeusProdutosService(req.user.id);
     res.json(produtos);
   } catch (error) {
     console.error(error);
@@ -56,20 +31,16 @@ export const listarMeusProdutos = async (req, res) => {
  
 export const atualizarProduto = async (req, res) => {
   try {
-    const vendedorId = req.user.id;
     const { id } = req.params;
-
-    const produto = await prisma.product.findUnique({ where: { id } });
-    if (!produto) return res.status(404).json({ error: "Produto não encontrado" });
-    if (produto.sellerId !== vendedorId) return res.status(403).json({ error: "Acesso negado" });
-
-    const atualizado = await prisma.product.update({
-      where: { id },
-      data: req.body
-    });
-
+    const atualizado = await atualizarProdutoService(id, req.user.id, req.body);
     res.json(atualizado);
   } catch (error) {
+    if (error.message === 'Produto não encontrado') {
+      return res.status(404).json({ error: error.message });
+    }
+    if (error.message === 'Acesso negado') {
+      return res.status(403).json({ error: error.message });
+    }
     console.error(error);
     res.status(500).json({ error: "Erro ao atualizar produto", details: error.message });
   }
@@ -80,19 +51,7 @@ export const atualizarProduto = async (req, res) => {
  
 export const listarPedidosDoVendedor = async (req, res) => {
   try {
-    const vendedorId = req.user.id;
-
-    const pedidos = await prisma.order.findMany({
-      where: {
-        items: { some: { product: { sellerId: vendedorId } } }
-      },
-      include: {
-        items: { include: { product: true } },
-        buyer: true
-      },
-      orderBy: { createdAt: "desc" }
-    });
-
+    const pedidos = await listarPedidosDoVendedorService(req.user.id);
     res.json(pedidos);
   } catch (error) {
     console.error(error);

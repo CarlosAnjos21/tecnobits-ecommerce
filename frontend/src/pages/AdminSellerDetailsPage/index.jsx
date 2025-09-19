@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './AdminSellerDetailsPage.module.css';
+import { getSellerDetails, updateSellerStatus } from '../../services/adminService';
 
 const AdminSellerDetailsPage = () => {
   const { sellerId } = useParams();
@@ -9,20 +10,9 @@ const AdminSellerDetailsPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchSellerDetails = async () => {
+    const fetchSellerDetailsData = async () => {
       try {
-    const token = localStorage.getItem('authToken');
-  const response = await fetch(`http://localhost:3001/api/admin/sellers/${sellerId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Falha ao carregar detalhes do vendedor');
-        }
-
-        const data = await response.json();
+        const data = await getSellerDetails(sellerId);
         setSeller(data);
       } catch (err) {
         setError(err.message);
@@ -30,34 +20,15 @@ const AdminSellerDetailsPage = () => {
         setLoading(false);
       }
     };
-
-    fetchSellerDetails();
+    fetchSellerDetailsData();
   }, [sellerId]);
 
   const handleUpdateStatus = async (status) => {
     try {
-      const token = localStorage.getItem('authToken');
-      const response = await fetch(`http://localhost:3001/api/admin/sellers/${sellerId}/status`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ status })
-      });
-
-      if (!response.ok) {
-        throw new Error('Falha ao atualizar status do vendedor');
-      }
-
-      // Atualiza o estado local após aprovação/rejeição
-      const { seller: updatedSeller } = await response.json();
-      setSeller(prevSeller => ({
-        ...prevSeller,
-        status: updatedSeller.status
-      }));
+      await updateSellerStatus(sellerId, status);
+      alert('Status atualizado com sucesso!');
     } catch (err) {
-      setError(err.message);
+      alert('Erro ao atualizar status: ' + err.message);
     }
   };
 

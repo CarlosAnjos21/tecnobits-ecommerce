@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getProducts } from '../../services/productService';
 import { CiFilter } from 'react-icons/ci';
 import ProductListing from '../../components/ProductListing';
 import CustomSelect from '../../components/CustomSelect';
@@ -23,19 +24,11 @@ const ProductListingPage = () => {
     { value: 'mais-vendidos', label: 'mais vendidos' }
   ];
 
-  // Função para buscar produtos do backend
+  // Função para buscar produtos do backend usando service
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      
-      const response = await fetch('http://localhost:3001/api/products');
-      
-      if (!response.ok) {
-        throw new Error(`Erro ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      
+      const data = await getProducts();
       // Adaptar os dados do backend para o formato esperado pelo frontend
       const adaptedProducts = data.map(product => {
         return {

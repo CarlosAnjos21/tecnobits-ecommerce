@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './FormCreatePage.module.css';
+import { register } from '../../services/authService';
 
 // --- FUNÇÕES DE MÁSCARA ---
 const maskCPF = (value) => {
@@ -153,13 +154,8 @@ const RegistrationForm = ({ userType }) => {
           body: JSON.stringify(userData),
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || 'Erro ao cadastrar usuário');
-        }
-
-        // Se o cadastro for bem-sucedido
+        // Fazer a requisição para a API usando service
+        const result = await register(userData);
         if (userType === 'vendedor') {
           navigate('/cadastro/pendente');
         } else {

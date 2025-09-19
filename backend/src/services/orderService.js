@@ -9,6 +9,46 @@ export const __setPrismaClient = (client) => {
 };
 
 class OrderService {
+  /**
+   * Listagem de pedidos por vendedor, com filtros opcionais via query.
+   */
+  async listOrdersBySeller(sellerId, query = {}) {
+    // Filtros básicos: status, período
+    const where = {
+      items: {
+        some: {
+          product: { sellerId: String(sellerId) }
+        }
+      }
+    };
+    if (query.status) where.status = query.status;
+    if (query.from || query.to) {
+      where.createdAt = {};
+      if (query.from) where.createdAt.gte = new Date(query.from);
+      if (query.to) where.createdAt.lte = new Date(query.to);
+    }
+    const orders = await prisma.order.findMany({
+      where,
+      include: {
+        buyer: true,
+        items: { include: { product: true } }
+      },
+      orderBy: { createdAt: "desc" }
+    });
+    // Filtra itens do seller
+    return orders.map((o) => {
+      const sellerItems = o.items.filter((it) => it.product?.sellerId === String(sellerId));
+      const totalSeller = sellerItems.reduce((acc, it) => acc + Number(it.price) * it.quantity, 0);
+      return {
+        id: o.id,
+        createdAt: o.createdAt,
+        status: o.status,
+        buyer: o.buyer,
+        items: sellerItems,
+        totalVendedor: totalSeller,
+      };
+    });
+  }
   async createOrderFromCart(userId, payload) {
     // payload pode conter dados de entrega e pagamento
     const cart = await prisma.cart.findUnique({

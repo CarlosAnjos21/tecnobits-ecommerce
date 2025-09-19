@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getUserProfile, updateUserProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './PaginaVendedor.module.css'; // Reutilizando os estilos principais
 
@@ -12,21 +13,10 @@ const DadosLoja = () => {
     const [editableData, setEditableData] = useState({});
     const [saving, setSaving] = useState(false);
 
-    // Função para buscar dados do perfil
+    // Função para buscar dados do perfil usando service
     const fetchProfile = async () => {
         try {
-            const token = localStorage.getItem('authToken');
-            const response = await fetch('http://localhost:3001/api/auth/profile', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Falha ao carregar dados do perfil');
-            }
-
-            const data = await response.json();
+            const data = await getUserProfile();
             setSellerData(data);
         } catch (err) {
             setError(err.message);

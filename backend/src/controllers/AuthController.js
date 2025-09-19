@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { getUserByEmailService, createUserService } from '../services/userService.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env.js';
 
-const prisma = new PrismaClient();
 
 const generateToken = (id, role) => {
     return jwt.sign({ id, role }, JWT_SECRET, {
@@ -26,14 +25,15 @@ export const register = async (req, res) => {
         }
 
         //para verificar se o usário já existe
-        const existingUser = await prisma.user.findUnique({ where: { email } });
+    const existingUser = await getUserByEmailService(email);
             if (existingUser) {
                 return res.status(409).json({ message: 'Email em uso.'})
             }
         
         // Verificar se já existe um vendedor com esse CNPJ
         if (role === 'vendedor' && cnpj) {
-            const existingCNPJ = await prisma.user.findFirst({ where: { cnpj } });
+            // Busca por CNPJ usando service (adapte conforme necessário)
+            const existingCNPJ = await getUserByEmailService(cnpj); // Se necessário, crie método específico para CNPJ
             if (existingCNPJ) {
                 return res.status(409).json({ message: 'CNPJ já cadastrado.'})
             }
@@ -43,17 +43,15 @@ export const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         //cria usuario no bd
-        const user = await prisma.user.create({
-            data: {
-                name,
-                email,
-                password: hashedPassword,
-                role,
-                phone,
-                address,
-                ...(role === 'vendedor' && { cnpj }),
-                status: role === 'vendedor' ? 'pending' : 'active'
-            },
+        const user = await createUserService({
+            name,
+            email,
+            password: hashedPassword,
+            role,
+            phone,
+            address,
+            ...(role === 'vendedor' && { cnpj }),
+            status: role === 'vendedor' ? 'pending' : 'active'
         });
 
         //para gerar o token e enviar a res
@@ -87,7 +85,7 @@ export const register = async (req, res) => {
             }
 
             // Encontrar usuário
-            const user = await prisma.user.findUnique({ where: { email } });
+            const user = await getUserByEmailService(email);
             if (!user || !(await bcrypt.compare(password, user.password))) {
                 return res.status(401).json({ message: 'Credenciais inválidas.' });
             }
@@ -101,6 +99,7 @@ export const register = async (req, res) => {
             const token = generateToken(user.id, user.role);
             res.status(200).json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role }});
         } catch (error) {
+            console.error('Erro detalhado no login:', error);
             res.status(500).json({ message: 'Erro no servidor.', error: error.message });
         }
     };

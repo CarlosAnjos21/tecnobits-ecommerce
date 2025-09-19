@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { updateUserProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './PaginaCliente.module.css';
 import { ListaPedidos } from '../PedidosClientePage';
@@ -53,35 +54,11 @@ const PaginaCliente = () => {
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
-    setError(null); // Limpa erros anteriores
+    setError(null);
     try {
-      const token = localStorage.getItem('authToken'); // Chave correta do token
-      if (!token) {
-        setError('Sessão expirada. Por favor, faça login novamente.');
-        return;
-      }
-
-      // A URL agora aponta para a rota de perfil, sem ID
-      const response = await fetch(`http://localhost:3001/api/auth/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(editableData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Falha ao salvar alterações.');
-      }
-
-      const updatedData = await response.json();
-      
-      // Atualiza o estado local e o localStorage para refletir a mudança imediatamente
+      const updatedData = await updateUserProfile(editableData);
       setCustomerData(updatedData.user);
       localStorage.setItem('user', JSON.stringify(updatedData.user));
-
       console.log("Dados do cliente salvos no backend:", updatedData);
       setIsModalOpen(false);
     } catch (err) {
