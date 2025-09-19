@@ -38,7 +38,9 @@ const PaginaCliente = () => {
 
   const handleEditData = () => {
     if (customerData) {
-      setEditableData(customerData);
+      // não permite editar email
+      const { name = '', phone = '', address = '' } = customerData || {};
+      setEditableData({ name, phone, address });
       setIsModalOpen(true);
     }
   };
@@ -56,14 +58,15 @@ const PaginaCliente = () => {
     e.preventDefault();
     setError(null);
     try {
-      const updatedData = await updateUserProfile(editableData);
-      setCustomerData(updatedData.user);
-      localStorage.setItem('user', JSON.stringify(updatedData.user));
-      console.log("Dados do cliente salvos no backend:", updatedData);
+      const updated = await updateUserProfile(editableData);
+      setCustomerData(updated);
+      localStorage.setItem('user', JSON.stringify(updated));
+      console.log("Dados do cliente salvos no backend:", updated);
       setIsModalOpen(false);
     } catch (err) {
-      console.error("Erro ao salvar dados do usuário:", err);
-      setError(err.message);
+      const msg = err?.response?.data?.message || err.message || 'Erro ao salvar dados.';
+      console.error("Erro ao salvar dados do usuário:", msg);
+      setError(msg);
     }
   };
 
@@ -135,7 +138,7 @@ const PaginaCliente = () => {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" value={editableData.email || ''} onChange={handleModalChange} />
+                <input type="email" id="email" name="email" value={customerData.email || ''} readOnly disabled />
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="phone">Celular</label>
