@@ -9,9 +9,8 @@ import cartRoutes from "./src/routes/cartRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js";
 import uploadRoutes from "./src/routes/uploadRoutes.js";
 import { protect, authorize } from './src/middleware/authMiddleware.js';
-import { errorHandler } from './src/middleware/errorMiddleware.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
+
+import sellerProductRoutes from "./src/routes/sellerProductRoutes.js";
 
 
 const app = express();
@@ -50,10 +49,9 @@ app.use("/api/cart", cartRoutes);
 // Rotas de Pedidos
 app.use("/api/orders", orderRoutes);
 
-// Uploads
-app.use("/api/upload", uploadRoutes);
 
-// Global error handler (deve ser o último)
-app.use(errorHandler);
+// Rotas do vendedor monitorar os produtos
+app.use("/api/seller", sellerProductRoutes);
+
 
 export default app;

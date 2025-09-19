@@ -23,10 +23,11 @@ router.use(protect);
 router.get("/", listarMeusPedidos);
 
 // Criar pedido
-router.post("/", validate(createOrderSchema), criarPedido);
 
-// Admin vê todos pedidos (com paginação e filtros)
-router.get("/all", authorize("admin"), validate(listOrdersQuery), listarTodosPedidos);
+router.post("/", criarPedido);
+router.patch("/:id/cancel", cancelarPedido); // vini 
+// Admin vê todos pedidos
+router.get("/", authorize("admin"), listarTodosPedidos); // mesma rota GET /, middleware controla acesso
 
 // Admin atualiza pedido parcialmente (status)
 router.patch("/:id", authorize("admin"), atualizarStatusPedido); // PATCH indica atualização parcial
