@@ -14,9 +14,9 @@ const infoLinks = [
 ];
 
 const socialLinks = [
-  { href: '#', icon: faFacebook, label: 'Facebook' },
-  { href: '#', icon: faInstagram, label: 'Instagram' },
-  { href: '#', icon: faTwitter, label: 'Twitter' },
+  { href: 'https://www.facebook.com', icon: faFacebook, label: 'Facebook' },
+  { href: 'https://www.instagram.com', icon: faInstagram, label: 'Instagram' },
+  { href: 'https://www.twitter.com', icon: faTwitter, label: 'Twitter' },
 ];
 
 // coluna de links
