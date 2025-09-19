@@ -119,7 +119,10 @@ export const CartProvider = ({ children }) => {
       return;
     }
     try {
-      await addToCartService({ productId: product.id, quantity: 1 });
+      await apiCall('/cart', {
+        method: 'POST',
+        body: JSON.stringify({ productId: product.id, quantity: 1 }),
+      });
       await loadCartFromServer();
     } catch (error) {
       console.error('❌ Erro ao adicionar item ao carrinho:', error);
@@ -144,7 +147,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
     try {
-      await removeFromCartService(itemToRemove.cartItemId);
+      await apiCall(`/cart/${itemToRemove.cartItemId}`, { method: 'DELETE' });
       await loadCartFromServer();
     } catch (error) {
       console.error('Erro ao remover item do carrinho:', error);

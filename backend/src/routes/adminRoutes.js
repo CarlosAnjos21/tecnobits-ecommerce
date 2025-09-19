@@ -1,5 +1,14 @@
 import express from 'express';
-import { getPendingSellers, getSellerById, updateSellerStatus } from '../controllers/AdminController.js';
+import { 
+    getPendingSellers, 
+    getSellerById, 
+    updateSellerStatus,
+    getCustomersWithStats,
+    getProductsList,
+    getOrdersList,
+    getCustomerDetails,
+        getSellersList,
+} from '../controllers/AdminController.js';
 import { protect, authorize } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -23,6 +32,15 @@ router.get('/pending-sellers', getPendingSellers);
 router.get('/sellers/:id', getSellerById);
 
 // Rota para aprovar/rejeitar um vendedor
+// Aceita PUT e PATCH para compatibilidade
+router.put('/sellers/:id/status', updateSellerStatus);
 router.patch('/sellers/:id/status', updateSellerStatus);
+
+// Novas rotas administrativas
+router.get('/customers', getCustomersWithStats);
+router.get('/customers/:id', getCustomerDetails);
+router.get('/products', getProductsList);
+router.get('/orders', getOrdersList);
+router.get('/sellers', getSellersList);
 
 export default router;

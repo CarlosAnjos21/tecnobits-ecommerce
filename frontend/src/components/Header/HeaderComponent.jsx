@@ -164,9 +164,6 @@ const Header = () => {
                     <ul className="nav-list">
                         <li><NavLink to='/' end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink></li>
                         <li><NavLink to='/produtos' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Produtos</NavLink></li>
-                        {!isDashboardPage() && (
-                            <li><NavLink to='/categorias' className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Categorias</NavLink></li>
-                        )}
                         
                         {/* --- LÓGICA ATUALIZADA PARA O MENU --- */}
                         {user ? (
