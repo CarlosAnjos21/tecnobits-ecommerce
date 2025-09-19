@@ -19,7 +19,7 @@ router.get("/", listarMeusPedidos);
 
 // Criar pedido
 router.post("/", criarPedido);
-
+router.patch("/:id/cancel", cancelarPedido); // vini 
 // Admin vê todos pedidos
 router.get("/", authorize("admin"), listarTodosPedidos); // mesma rota GET /, middleware controla acesso
 

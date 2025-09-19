@@ -8,7 +8,7 @@ import categoryRoutes from "./src/routes/categoryRoutes.js";
 import cartRoutes from "./src/routes/cartRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js";
 import { protect, authorize } from './src/middleware/authMiddleware.js';
-
+import sellerProductRoutes from "./src/routes/sellerProductRoutes.js";
 
 const app = express();
 
@@ -40,5 +40,8 @@ app.use("/api/cart", cartRoutes);
 
 // Rotas de Pedidos
 app.use("/api/orders", orderRoutes);
+
+// Rotas do vendedor monitorar os produtos
+app.use("/api/seller", sellerProductRoutes);
 
 export default app;

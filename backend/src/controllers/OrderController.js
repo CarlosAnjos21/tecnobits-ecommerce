@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-
+import { OrderStatus } from "@prisma/client";
 /**
  * Criar um novo pedido a partir do carrinho do usuário
  */
@@ -57,6 +57,14 @@ export const criarPedido = async (req, res) => {
         buyer: true
       }
     });
+
+     // 🔹 Atualizar estoque dos produtos vini - inicio - é so empurrar essas mod um pouco pra baixo. 
+    for (const item of order.items) {
+      await prisma.product.update({
+        where: { id: item.productId },
+        data: { stock: { decrement: item.quantity } }
+      });
+    } // vini - fim
 
     // Opcional: limpar carrinho depois de criar pedido
     await prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
@@ -131,3 +139,46 @@ export const atualizarStatusPedido = async (req, res) => {
     res.status(500).json({ error: "Erro ao atualizar status do pedido", details: error.message });
   }
 };
+
+  // Cancelar pedido (usuário) - vini - inicio
+export const cancelarPedido = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+
+    // Buscar pedido
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: { items: true }
+    });
+
+    if (!order) return res.status(404).json({ error: "Pedido não encontrado" });
+
+    // Verificar se pertence ao usuário
+    if (order.buyerId !== userId) return res.status(403).json({ error: "Acesso negado" });
+
+    // Verificar se pode ser cancelado
+    if ([OrderStatus.ENVIADO, OrderStatus.ENTREGUE].includes(order.status)) {
+      return res.status(400).json({ error: "Pedido não pode ser cancelado" });
+    }
+
+    // Repor estoque
+    for (const item of order.items) {
+      await prisma.product.update({
+        where: { id: item.productId },
+        data: { stock: { increment: item.quantity } }
+      });
+    }
+
+    // Atualizar status do pedido
+    const pedidoAtualizado = await prisma.order.update({
+      where: { id },
+      data: { status: OrderStatus.CANCELADO }
+    });
+
+    res.json({ message: "Pedido cancelado com sucesso", pedido: pedidoAtualizado });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao cancelar pedido", details: error.message });
+  }
+};// vini - fim
