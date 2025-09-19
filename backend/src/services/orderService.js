@@ -1,0 +1,267 @@
+import { PrismaClient } from "@prisma/client";
+import productService from "./productService.js";
+import { BadRequestError, ConflictError, ForbiddenError, NotFoundError } from "../utils/AppError.js";
+let prisma = new PrismaClient();
+
+// Apenas para testes: permite injetar um prisma mock
+export const __setPrismaClient = (client) => {
+  prisma = client;
+};
+
+class OrderService {
+  async createOrderFromCart(userId, payload) {
+    // payload pode conter dados de entrega e pagamento
+    const cart = await prisma.cart.findUnique({
+      where: { userId },
+      include: { items: { include: { product: true } } }
+    });
+
+    if (!cart || cart.items.length === 0) throw new BadRequestError("Carrinho vazio");
+
+    // Verificar estoque de todos os itens antes (pré-check)
+    for (const item of cart.items) {
+      await productService.ensureStock(item.productId, item.quantity);
+    }
+
+    // transação: recalcula preços atuais, cria pedido + itens, limpa carrinho, decrementa estoque (checagem atômica)
+    const order = await prisma.$transaction(async (tx) => {
+      // Recalcular preços e checar estoque com dados atuais
+      let totalAtual = 0;
+      const orderItemsDataAtual = [];
+      for (const item of cart.items) {
+        const p = await tx.product.findUnique({ where: { id: String(item.productId) }, select: { price: true, stock: true } });
+        if (!p || p.stock < item.quantity) {
+          throw new ConflictError("Estoque insuficiente para um ou mais itens");
+        }
+        const priceNow = Number(p.price);
+        totalAtual += priceNow * item.quantity;
+        orderItemsDataAtual.push({ productId: item.productId, quantity: item.quantity, price: priceNow });
+      }
+
+      // criar pedido com preços recalculados
+      const createdOrder = await tx.order.create({
+        data: {
+          buyerId: userId,
+          total: totalAtual,
+          cep: payload.cep,
+          cidade: payload.cidade,
+          enderecoEntrega: payload.enderecoEntrega,
+          complemento: payload.complemento,
+          dataEntregaPrevista: payload.dataEntregaPrevista,
+          estado: payload.estado,
+          metodoPagamento: payload.metodoPagamento,
+          items: { create: orderItemsDataAtual }
+        },
+        include: { items: true }
+      });
+
+      // limpar carrinho
+      await tx.cartItem.deleteMany({ where: { cartId: cart.id } });
+      await tx.cart.delete({ where: { id: cart.id } });
+
+      // decrementar estoque com checagem (não permitir estoque negativo)
+      for (const item of cart.items) {
+        await tx.product.update({
+          where: { id: String(item.productId) },
+          data: { stock: { decrement: item.quantity } }
+        });
+      }
+
+      return createdOrder;
+    });
+
+    return order;
+  }
+
+  async listMyOrders(userId) {
+    return prisma.order.findMany({ where: { buyerId: userId }, include: { items: { include: { product: true } } } });
+  }
+
+  async listAllOrders() {
+    return prisma.order.findMany({ include: { items: true, buyer: true } });
+  }
+
+  async updateOrderStatus(orderId, status) {
+    return prisma.order.update({ where: { id: String(orderId) }, data: { status } });
+  }
+
+  /**
+   * Cancela um pedido (cliente que é o comprador ou admin).
+   * Regras:
+   * - Só pode cancelar se status ∈ [AGUARDANDO_PAGAMENTO, PAGAMENTO_CONFIRMADO, EM_PREPARACAO]
+   * - Admin também segue a mesma regra
+   * - Ao cancelar, estoque de cada produto é devolvido (incremento) em transação.
+   */
+  async cancelOrder(orderId, requester) {
+    const id = String(orderId);
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: { items: true }
+    });
+
+    if (!order) throw new NotFoundError("Pedido não encontrado");
+
+    const isAdmin = requester?.role === 'admin';
+    const isBuyer = order.buyerId === requester?.id;
+    if (!isAdmin && !isBuyer) {
+      throw new ForbiddenError("Sem permissão para cancelar este pedido");
+    }
+
+    const cancelableStatuses = [
+      'AGUARDANDO_PAGAMENTO',
+      'PAGAMENTO_CONFIRMADO',
+      'EM_PREPARACAO'
+    ];
+    if (!cancelableStatuses.includes(order.status)) {
+      throw new ConflictError("Pedido não pode ser cancelado no status atual");
+    }
+
+    const result = await prisma.$transaction(async (tx) => {
+      // devolve estoque
+      for (const it of order.items) {
+        await tx.product.update({
+          where: { id: String(it.productId) },
+          data: { stock: { increment: it.quantity } }
+        });
+      }
+
+      // atualiza pedido
+      const updated = await tx.order.update({
+        where: { id },
+        data: {
+          status: 'CANCELADO',
+          statusPagamento: 'CANCELADO'
+        },
+        include: { items: true }
+      });
+      return updated;
+    });
+
+    return result;
+  }
+
+  /**
+   * Lista pedidos que contenham itens de produtos do vendedor informado.
+   * Retorna somente os itens pertencentes ao vendedor (não expõe itens de outros vendedores).
+   */
+  async listSellerOrders(sellerId) {
+    // Buscar pedidos que têm pelo menos um item cujo produto pertence ao seller
+    const orders = await prisma.order.findMany({
+      where: {
+        items: {
+          some: {
+            product: { sellerId: String(sellerId) }
+          }
+        }
+      },
+      include: {
+        buyer: true,
+        items: { include: { product: true } }
+      },
+      orderBy: { createdAt: "desc" }
+    });
+
+    // Filtrar itens por sellerId para não vazar itens de outros sellers no mesmo pedido
+    const filtered = orders.map((o) => {
+      const sellerItems = o.items.filter((it) => it.product?.sellerId === String(sellerId));
+      const totalSeller = sellerItems.reduce((acc, it) => acc + Number(it.price) * it.quantity, 0);
+      return {
+        id: o.id,
+        createdAt: o.createdAt,
+        status: o.status,
+        buyer: o.buyer,
+        items: sellerItems,
+        totalVendedor: totalSeller,
+      };
+    });
+
+    return filtered;
+  }
+
+  /**
+   * Listagem paginada e filtrada para admin.
+   */
+  async listAllOrdersPaginated({ page = 1, pageSize = 10, status, from, to, buyerId }) {
+    const where = {};
+    if (status) where.status = status;
+    if (buyerId) where.buyerId = String(buyerId);
+    if (from || to) {
+      where.createdAt = {};
+      if (from) where.createdAt.gte = new Date(from);
+      if (to) where.createdAt.lte = new Date(to);
+    }
+
+    const take = Number(pageSize);
+    const skip = (Number(page) - 1) * take;
+
+    const [total, orders] = await Promise.all([
+      prisma.order.count({ where }),
+      prisma.order.findMany({
+        where,
+        include: { items: true, buyer: true },
+        orderBy: { createdAt: "desc" },
+        skip,
+        take,
+      })
+    ]);
+
+    return {
+      data: orders,
+      pagination: {
+        page: Number(page),
+        pageSize: take,
+        total,
+        totalPages: Math.ceil(total / take) || 1,
+      }
+    };
+  }
+
+  /**
+   * Listagem paginada e filtrada para vendedor (apenas pedidos que contenham seus produtos).
+   * Filtra itens de cada pedido para expor somente os do vendedor e calcula totalVendedor.
+   */
+  async listSellerOrdersPaginated(sellerId, { page = 1, pageSize = 10, status, from, to, buyerId }) {
+    const where = {
+      items: { some: { product: { sellerId: String(sellerId) } } }
+    };
+    if (status) where.status = status;
+    if (buyerId) where.buyerId = String(buyerId);
+    if (from || to) {
+      where.createdAt = {};
+      if (from) where.createdAt.gte = new Date(from);
+      if (to) where.createdAt.lte = new Date(to);
+    }
+
+    const take = Number(pageSize);
+    const skip = (Number(page) - 1) * take;
+
+    const [total, orders] = await Promise.all([
+      prisma.order.count({ where }),
+      prisma.order.findMany({
+        where,
+        include: { buyer: true, items: { include: { product: true } } },
+        orderBy: { createdAt: "desc" },
+        skip,
+        take,
+      })
+    ]);
+
+    const mapped = orders.map((o) => {
+      const sellerItems = o.items.filter((it) => it.product?.sellerId === String(sellerId));
+      const totalVendedor = sellerItems.reduce((acc, it) => acc + Number(it.price) * it.quantity, 0);
+      return { id: o.id, createdAt: o.createdAt, status: o.status, buyer: o.buyer, items: sellerItems, totalVendedor };
+    });
+
+    return {
+      data: mapped,
+      pagination: {
+        page: Number(page),
+        pageSize: take,
+        total,
+        totalPages: Math.ceil(total / take) || 1,
+      }
+    };
+  }
+}
+
+export default new OrderService();

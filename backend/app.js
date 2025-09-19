@@ -7,13 +7,22 @@ import adminRoutes from './src/routes/adminRoutes.js';
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import cartRoutes from "./src/routes/cartRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js";
+import uploadRoutes from "./src/routes/uploadRoutes.js";
 import { protect, authorize } from './src/middleware/authMiddleware.js';
+import { errorHandler } from './src/middleware/errorMiddleware.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Static uploads
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname, 'src', 'uploads')));
 
 // Rotas de Autenticação e Perfil (públicas e privadas)
 app.use('/api/auth', authRoutes);
@@ -40,5 +49,11 @@ app.use("/api/cart", cartRoutes);
 
 // Rotas de Pedidos
 app.use("/api/orders", orderRoutes);
+
+// Uploads
+app.use("/api/upload", uploadRoutes);
+
+// Global error handler (deve ser o último)
+app.use(errorHandler);
 
 export default app;

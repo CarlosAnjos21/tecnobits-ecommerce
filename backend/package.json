@@ -9,7 +9,7 @@
     "dev": "NODE_ENV=development nodemon server.js",
     "start:staging": "NODE_ENV=staging node server.js",
     "start:prod": "NODE_ENV=production node server.js",
-    "test": "jest",
+  "test": "set NODE_OPTIONS=--experimental-vm-modules&& jest --config jest.config.mjs",
     "seed:admin": "node seeds/createAdmin.js",
     "seed:vendor": "node seeds/createVendedor.js",
     "seed:client": "node seeds/createCliente.js",

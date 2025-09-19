@@ -1,18 +1,11 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import categoryService from "../services/categoryService.js";
 
 // Criar categoria
 export const criarCategoria = async (req, res) => {
   try {
     const { name } = req.body;
 
-    if (!name) {
-      return res.status(400).json({ error: "O campo 'name' é obrigatório" });
-    }
-
-    const categoria = await prisma.category.create({
-      data: { name },
-    });
+    const categoria = await categoryService.create({ name });
 
     res.status(201).json(categoria);
   } catch (error) {
@@ -24,9 +17,7 @@ export const criarCategoria = async (req, res) => {
 // Listar todas as categorias
 export const listarCategorias = async (req, res) => {
   try {
-    const categorias = await prisma.category.findMany({
-      include: { products: true }, // opcional: traz produtos da categoria
-    });
+    const categorias = await categoryService.listAll();
     res.json(categorias);
   } catch (error) {
     console.error(error);
@@ -38,14 +29,7 @@ export const listarCategorias = async (req, res) => {
 export const buscarCategoriaPorId = async (req, res) => {
   try {
     const { id } = req.params;
-    const categoria = await prisma.category.findUnique({
-      where: { id },
-      include: { products: true },
-    });
-
-    if (!categoria) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
-    }
+    const categoria = await categoryService.getById(id);
 
     res.json(categoria);
   } catch (error) {
@@ -60,10 +44,7 @@ export const atualizarCategoria = async (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    const categoria = await prisma.category.update({
-      where: { id },
-      data: { name },
-    });
+    const categoria = await categoryService.update(id, { name });
 
     res.json(categoria);
   } catch (error) {
@@ -77,9 +58,7 @@ export const deletarCategoria = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await prisma.category.delete({
-      where: { id },
-    });
+    await categoryService.remove(id);
 
     res.json({ message: "Categoria deletada com sucesso" });
   } catch (error) {
@@ -92,16 +71,7 @@ export const deletarCategoria = async (req, res) => {
 export const listarProdutosDaCategoria = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const categoria = await prisma.category.findUnique({
-      where: { id },
-      include: { products: true },
-    });
-
-    if (!categoria) {
-      return res.status(404).json({ error: "Categoria não encontrada" });
-    }
-
+    const categoria = await categoryService.getById(id);
     res.json(categoria.products);
   } catch (error) {
     console.error(error);
