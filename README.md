@@ -165,6 +165,41 @@ npm run dev
 # Geralmente, ele estará disponível em: http://localhost:5173
 ```
 
+### 🧪 Setup do Postman para Testes da API
+
+Para testar todas as funcionalidades da API de forma automatizada, utilizamos uma coleção completa do Postman:
+
+#### 🚀 **Método Automático (Recomendado)**
+```bash
+# Execute o script de setup automático
+node setup-postman.js
+
+# Ou abra a interface visual
+start postman-setup.html
+```
+
+#### 📋 **Método Manual**
+1. **Importe os arquivos no Postman:**
+   - `tecnobits-postman-collection.json` (coleção)
+   - `tecnobits-postman-environment.json` (ambiente)
+
+2. **Configure o ambiente:**
+   - Selecione "Tecnobits E-commerce - Desenvolvimento"
+   - Verifique as variáveis: `base_url`, `jwt_token`, etc.
+
+3. **Teste a autenticação:**
+   - Execute: `🔐 Autenticação → 🔑 Login Admin`
+   - Teste rotas protegidas: `👥 Administração de Usuários → 📋 Listar Todos os Usuários`
+
+#### 📚 **Sobre a Coleção**
+- **40+ requests** organizadas por categoria
+- Autenticação JWT automática
+- Scripts de teste integrados
+- Variáveis de ambiente dinâmicas
+- Exemplos para todas as operações CRUD
+
+**Pré-requisito:** Backend rodando na porta 3001
+
 -----
 
 ## 📊 Resultados e Conquistas

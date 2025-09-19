@@ -42,45 +42,211 @@ Daniely (Fullstack Leader)
 
 ## 👥 DIVISÃO DETALHADA DE RESPONSABILIDADES
 
-### **📋 SPRINT PLANNING & ORGANIZAÇÃO**
-**Kaio (Líder Back) + Carlos (Líder Front)**
-- Planejamento semanal das sprints
-- Definição de prioridades técnicas
-- Estimativas de tempo realistas
-- Relatórios de progresso para Daniely
+Para listar o que falta de cada membro do grupo, preciso primeiro entender a estrutura do projeto e verificar o que já foi implementado. Vou analisar os arquivos do projeto para identificar as funcionalidades pendentes. 
 
-### **🔧 BACKEND - Time Kaio (Líder)**
+5 tarefas pendentes criadas
 
+Vou começar analisando a documentação do projeto para entender as responsabilidades de cada membro. 
 
-**Kaio Vinícius** - Líder Backend
-- Implementação do cancelamento de vendas (cliente e vendedor)
-- Controle de estoque e restrição de adicionar ao carrinho sem estoque
-- Opção de adicionar produtos ao estoque pelo vendedor
-- APIs de pedidos e histórico
+Leia [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/docs/CRONOGRAMA.md)
 
-❌ PENDENTE
-Implementar sistema de pedidos com status (incluindo cancelamento)
-Criar sistema de controle de estoque
-Desenvolver endpoints para gerenciamento de estoque pelo vendedor
-Implementar APIs de histórico de pedidos
-- **Reporta para:** Daniely
+Agora vou verificar os controllers e rotas existentes para entender o que já foi implementado. 
 
+Iniciando (3/5) *Avaliar funcionalidades implementadas*
 
-**Antônio Gabriel** - Dev Backend
-- APIs de produtos e categorias (CRUD)
-- Sistema de carrinho de compras
-- Cadastro de produto (com fotos, preço, descrição, título)
-- Gravação de vendas no banco de dados (parcialmente feito, falta Controllers e rotas para pedidos não implementados)
-- Listagem de vendas (parcialmente feito, falta Endpoints para listagem de vendas)(vendedor vê todas, cliente vê só as próprias, admin vê ambos)
+Foram pesquisados arquivos correspondentes `**/backend/src/controllers/*.js`, 14 correspondentes
 
-❌ PENDENTE DE IMPLEMENTAÇÃO:
-APIs de produtos (CRUD)
-APIs de categorias (CRUD)
-Sistema de carrinho
-APIs de cadastro de produtos
-APIs de vendas e pedidos
-Endpoints de listagem de vendas
-- **Reporta para:** Kaio
+Leitura [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/backend/src/controllers/ProductController.js#1-1), linhas 1 para 50
+
+Leitura [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/backend/src/controllers/CartController.js#1-1), linhas 1 para 50
+
+Leitura [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/backend/src/controllers/OrderController.js#1-1), linhas 1 para 50
+
+Leitura [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/backend/src/controllers/CategoryController.js#1-1), linhas 1 para 50
+
+Agora vou verificar as rotas para entender o que está funcionando: 
+
+Foram pesquisados arquivos correspondentes `**/backend/src/routes/*.js`, 16 correspondentes
+
+Vou verificar algumas rotas importantes para entender o que está funcionando: 
+
+Leia [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/backend/src/routes/productRoutes.js)
+
+Leia [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/backend/src/routes/orderRoutes.js)
+
+Leia [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/backend/src/routes/cartRoutes.js)
+
+Agora vou verificar o frontend para entender o que já foi implementado: 
+
+Foram pesquisados arquivos correspondentes `**/frontend/src/pages/*.jsx`, nenhuma correspondência
+
+Leia [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/frontend/src/pages)
+
+Leia [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/frontend/src/components)
+
+Agora vou analisar alguns componentes e páginas importantes: 
+
+Iniciando (4/5) *Identificar pendências por área*
+
+Leia [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/frontend/src/pages/ShoppingCartPage)
+
+Leitura [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/frontend/src/pages/ShoppingCartPage/index.jsx#1-1), linhas 1 para 50
+
+Leitura [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/frontend/src/pages/FinalizarCompraPage/index.jsx#1-1), linhas 1 para 30
+
+Vou verificar mais uma página importante - a de produtos: 
+
+Leitura [](file:///c%3A/Users/danie/OneDrive/Documentos/GitHub/capacita-c/projeto-inter-capacita/frontend/src/pages/CadastroProdutosPage/index.jsx#1-1), linhas 1 para 50
+
+Agora vou compilar o relatório final com base em toda a análise: 
+
+Iniciando (5/5) *Compilar relatório final*
+
+## 📊 **RELATÓRIO DE PENDÊNCIAS POR MEMBRO - EQUIPE HARDWARE**
+---
+
+## 🔧 **BACKEND - PENDÊNCIAS**
+
+### **⚠️ Kaio Vinícius (Líder Backend) - CRÍTICO**
+**Status: MÚLTIPLAS FUNCIONALIDADES CRÍTICAS PENDENTES**
+
+#### ❌ **Pendente de Implementação:**
+1. **Sistema de cancelamento de pedidos**
+   - Controller para cancelamento por cliente
+   - Controller para cancelamento por vendedor
+   - Regras de negócio para cancelamento
+   - Atualização de status de pedidos
+
+2. **Controle de estoque**
+   - Validação de estoque antes de adicionar ao carrinho
+   - Redução automática de estoque ao finalizar pedido
+   - Reposição de estoque ao cancelar pedido
+   - Sistema de notificação de estoque baixo
+
+3. **Gerenciamento de estoque pelo vendedor**
+   - Endpoint para atualizar estoque
+   - Interface para controle de estoque
+   - Histórico de movimentações de estoque
+
+4. **APIs de histórico de pedidos**
+   - Filtros por período, status, vendedor
+   - Relatórios de vendas
+   - Métricas para dashboards
+
+---
+
+### **⚠️ Antônio Gabriel (Dev Backend) - CRÍTICO**
+**Status: FUNCIONALIDADES BÁSICAS PENDENTES**
+
+#### ❌ **Pendente de Implementação:**
+1. **Sistema de vendas completo**
+   - ✅ OrderController existe mas precisa de melhorias
+   - ❌ Falta integração completa entre carrinho → pedido → venda
+   - ❌ Falta gravação completa de vendas no banco
+
+2. **APIs de listagem de vendas**
+   - ❌ Endpoint para vendedor ver suas vendas
+   - ❌ Endpoint para cliente ver suas compras
+   - ❌ Endpoint para admin ver todas as vendas
+   - ❌ Filtros e paginação
+
+3. **Melhorias em Controllers existentes**
+   - ⚠️ ProductController precisa validações de estoque
+   - ⚠️ CategoryController funcional mas pode melhorar
+   - ⚠️ CartController precisa integração com estoque
+
+#### ✅ **Já Implementado:**
+- ✅ APIs básicas de produtos (CRUD)
+- ✅ APIs básicas de categorias (CRUD)
+- ✅ Sistema básico de carrinho
+- ✅ Base do sistema de pedidos
+
+---
+
+## 🎨 **FRONTEND - PENDÊNCIAS**
+
+### **⚠️ Carlos Otacílio (Líder Frontend) - MODERADO**
+**Status: RESPONSABILIDADES DE LIDERANÇA PENDENTES**
+
+#### ❌ **Pendente de Implementação:**
+1. **Responsividade total**
+   - ⚠️ Muitas páginas ainda não responsivas
+   - ❌ Testes em múltiplas telas não concluídos
+   - ❌ Otimizações para mobile pendentes
+
+2. **Gerenciamento de estado**
+   - ⚠️ Context API implementado parcialmente
+   - ❌ Estado global para pedidos/vendas pendente
+   - ❌ Sincronização entre componentes precisa melhorar
+
+3. **Garantir produtos para demonstração**
+   - ❌ Seed de produtos para apresentação
+   - ❌ Dados de teste realistas
+
+---
+
+### **⚠️ Maycon Andrade (Dev Frontend) - CRÍTICO**
+**Status: FUNCIONALIDADES PRINCIPAIS PENDENTES**
+
+#### ❌ **Pendente de Implementação:**
+1. **Sistema de carrinho completo**
+   - ✅ ShoppingCartPage existe mas precisa melhorias
+   - ❌ Cálculo correto de preços e fretes
+   - ❌ Persistência do carrinho
+   - ❌ Validações de estoque no frontend
+
+2. **Checkout e finalização de compra**
+   - ⚠️ FinalizarCompraPage existe mas incompleta
+   - ❌ Integração com backend de pedidos
+   - ❌ Validações de formulário
+   - ❌ Confirmação de pedido
+
+3. **Cadastro de produtos**
+   - ⚠️ CadastroProdutosPage existe mas não funcional
+   - ❌ Upload de imagens não implementado
+   - ❌ Integração com API de produtos
+   - ❌ Validações de formulário
+
+4. **Sistema de cancelamento (Frontend)**
+   - ❌ Interface para cancelamento de pedidos
+   - ❌ Integração com APIs de cancelamento
+
+---
+
+### **✅ Anderson Guimarães (Dev Frontend) - BOM**
+**Status: MAIOR PARTE CONCLUÍDA**
+
+#### ✅ **Já Implementado:**
+- ✅ Páginas de produto individual
+- ✅ Sistema de autenticação no frontend
+- ✅ Páginas de cadastro (vendedor, cliente, produto)
+- ✅ Página de redirecionamento pós-cadastro vendedor
+- ✅ Listagem de compras do cliente
+- ✅ Listagem de vendas do vendedor
+- ✅ Responsividade das páginas implementadas
+
+#### ⚠️ **Pendente (Menor):**
+- ⚠️ Refinamentos na responsividade
+- ⚠️ Integração com novas APIs quando disponíveis
+
+---
+
+## 🚨 **RESUMO CRÍTICO - PRIORIDADES**
+
+### **🔴 CRÍTICO (Impedem funcionamento básico):**
+1. **Kaio** - Sistema de estoque e cancelamento
+2. **Antônio** - APIs de vendas e listagem
+3. **Maycon** - Carrinho funcional e checkout
+
+### **🟡 IMPORTANTE (Afetam qualidade):**
+1. **Carlos** - Responsividade e gerenciamento de estado
+2. **Todos** - Integração final e testes
+
+### **🟢 BAIXA PRIORIDADE:**
+1. **Anderson** - Refinamentos finais
+
+---
+
 
 ### **🎨 FRONTEND - Time Carlos (Líder)**
 
