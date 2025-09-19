@@ -58,30 +58,18 @@ const DadosLoja = () => {
         setSaving(true);
         
         try {
-            const token = localStorage.getItem('authToken');
-            const response = await fetch('http://localhost:3001/api/auth/profile', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(editableData)
-            });
+            // Usa o service com axios (já com interceptor de token)
+            const updated = await updateUserProfile(editableData);
 
-            if (!response.ok) {
-                throw new Error('Falha ao atualizar dados do perfil');
-            }
-
-            const result = await response.json();
-            setSellerData(result.user);
+            // O backend retorna o usuário diretamente (não { user: ... })
+            setSellerData(updated);
             setIsModalOpen(false);
             setEditableData({});
-            
-            // Feedback visual de sucesso
             alert('Dados atualizados com sucesso!');
         } catch (err) {
-            setError(err.message);
-            alert('Erro ao salvar dados: ' + err.message);
+            const msg = err?.response?.data?.message || err.message || 'Erro desconhecido';
+            setError(msg);
+            alert('Erro ao salvar dados: ' + msg);
         } finally {
             setSaving(false);
         }
