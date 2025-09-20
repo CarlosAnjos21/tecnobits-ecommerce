@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { updateUserProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './PaginaCliente.module.css';
-import { ListaPedidos } from '../PedidosClientePage';
+import PedidosClientePage from '../PedidosClientePage';
 
 const PaginaCliente = () => {
   const { user, isAuthenticated, loading } = useAuth(); // 1. Obter o estado de loading
@@ -37,7 +38,9 @@ const PaginaCliente = () => {
 
   const handleEditData = () => {
     if (customerData) {
-      setEditableData(customerData);
+      // não permite editar email
+      const { name = '', phone = '', address = '' } = customerData || {};
+      setEditableData({ name, phone, address });
       setIsModalOpen(true);
     }
   };
@@ -53,44 +56,19 @@ const PaginaCliente = () => {
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
-    setError(null); // Limpa erros anteriores
+    setError(null);
     try {
-      const token = localStorage.getItem('authToken'); // Chave correta do token
-      if (!token) {
-        setError('Sessão expirada. Por favor, faça login novamente.');
-        return;
-      }
-
-      // A URL agora aponta para a rota de perfil, sem ID
-      const response = await fetch(`http://localhost:3001/api/auth/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(editableData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Falha ao salvar alterações.');
-      }
-
-      const updatedData = await response.json();
-      
-      // Atualiza o estado local e o localStorage para refletir a mudança imediatamente
-      setCustomerData(updatedData.user);
-      localStorage.setItem('user', JSON.stringify(updatedData.user));
-
-      console.log("Dados do cliente salvos no backend:", updatedData);
+      const updated = await updateUserProfile(editableData);
+      setCustomerData(updated);
+      localStorage.setItem('user', JSON.stringify(updated));
+      console.log("Dados do cliente salvos no backend:", updated);
       setIsModalOpen(false);
     } catch (err) {
-      console.error("Erro ao salvar dados do usuário:", err);
-      setError(err.message);
+      const msg = err?.response?.data?.message || err.message || 'Erro ao salvar dados.';
+      console.error("Erro ao salvar dados do usuário:", msg);
+      setError(msg);
     }
   };
-
-  // ... (o restante do seu componente, incluindo a renderização, permanece o mesmo) ...
 
   if (loading) {
     return <div className={styles.dashboardContainer}><p>Carregando dados do cliente...</p></div>;
@@ -140,7 +118,8 @@ const PaginaCliente = () => {
       {/* Seção de Pedidos Recentes */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Meus Pedidos Recentes</h2>
-        <ListaPedidos />
+        {/* Exibe os últimos 5 pedidos dentro do painel */}
+        <PedidosClientePage embed limit={5} />
       </section>
 
       {/* --- MODAL DE EDIÇÃO --- */}
@@ -158,7 +137,7 @@ const PaginaCliente = () => {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" value={editableData.email || ''} onChange={handleModalChange} />
+                <input type="email" id="email" name="email" value={customerData.email || ''} readOnly disabled />
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="phone">Celular</label>

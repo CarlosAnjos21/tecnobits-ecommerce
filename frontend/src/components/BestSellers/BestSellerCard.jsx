@@ -7,13 +7,14 @@ const BestSellerCard = ({ product, index }) => {
   
   const {
     id,
-    name,
+    title,
     image,
     price,
     priceDiscount,
     rating,
     brand
   } = product;
+  const displayName = title && title.trim() ? title : 'Produto sem nome';
 
   // Formatação de preços
   const originalPrice = priceUtils.formatPrice(price);
@@ -56,8 +57,8 @@ const BestSellerCard = ({ product, index }) => {
       {/* Imagem do produto */}
       <div className="best-seller-image">
         <img 
-          src={image} 
-          alt={name}
+          src={image || (product.images?.[0] ?? '/images/404.png')} 
+          alt={displayName}
           onError={(e) => {
             e.target.src = '/images/placeholder-product.png';
           }}
@@ -69,9 +70,7 @@ const BestSellerCard = ({ product, index }) => {
         <div className="product-brand">
           <span>{brand}</span>
         </div>
-        
-        <h3 className="product-name">{name}</h3>
-        
+        <h3 className="product-name">{displayName}</h3>
         {/* Rating */}
         {rating && (
           <div className="product-rating">

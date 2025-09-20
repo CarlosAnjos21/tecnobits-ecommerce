@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './FormCreatePage.module.css';
+import { register } from '../../services/authService';
 
 // --- FUNÇÕES DE MÁSCARA ---
 const maskCPF = (value) => {
@@ -144,29 +145,18 @@ const RegistrationForm = ({ userType }) => {
           ...(userType === 'vendedor' && { cnpj: formData.cnpj })
         };
 
-        // Fazer a requisição para a API
-        const response = await fetch('http://localhost:3001/api/auth/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || 'Erro ao cadastrar usuário');
-        }
-
-        // Se o cadastro for bem-sucedido
+        // Enviar usando apenas o service para evitar duplicação e 409
+        const result = await register(userData);
         if (userType === 'vendedor') {
           navigate('/cadastro/pendente');
         } else {
           navigate('/login');
         }
       } catch (error) {
-        setErrors({ general: error.message });
+        // Tratar 409 (conflito - e-mail ou CNPJ já existente) com mensagem amigável
+        const apiMessage = error?.response?.data?.message;
+        const isConflict = error?.response?.status === 409;
+        setErrors({ general: isConflict ? (apiMessage || 'Dados já cadastrados.') : (apiMessage || error.message) });
       } finally {
         setIsSubmitting(false);
       }

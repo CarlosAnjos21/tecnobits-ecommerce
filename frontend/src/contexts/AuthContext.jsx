@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { login as loginService } from '../services/authService';
 
 const AuthContext = createContext(null);
 export const useAuth = () => useContext(AuthContext);
@@ -26,27 +27,13 @@ export const AuthProvider = ({ children }) => {
 
     // Função de login que chama o backend
     const login = async (email, password) => {
-        setLoading(true); // Inicia o loading para o processo de login
+        setLoading(true);
         try {
-            const backendUrl = 'http://localhost:3001';
-            const response = await fetch(`${backendUrl}/api/auth/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.message || 'Falha no login. Verifique suas credenciais.');
-            }
-
-            // Atualiza o estado e salva no localStorage
+            const data = await loginService(email, password);
             setUser(data.user);
             localStorage.setItem('user', JSON.stringify(data.user));
             localStorage.setItem('authToken', data.token);
-
-            return data.user; // Retorna os dados do usuário para a página de login
-
+            return data.user;
         } catch (error) {
             // Garante que o estado esteja limpo em caso de erro
             logout();

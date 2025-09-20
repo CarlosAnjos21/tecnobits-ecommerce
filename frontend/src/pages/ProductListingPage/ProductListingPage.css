@@ -89,7 +89,7 @@
   color: var(--dark-gray-2, #474747);
   font-feature-settings: 'liga' off, 'clig' off;
   font-family: Inter;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: 24px;
@@ -101,7 +101,7 @@
 }
 
 .filter-group h4 {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   color: #1f1f1f;
   margin-bottom: 10px;
@@ -125,7 +125,7 @@
   color: var(--dark-gray-2, #474747);
   font-feature-settings: 'liga' off, 'clig' off;
   font-family: Inter;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: 22px;
@@ -141,8 +141,8 @@
 
 /* Checkbox */
 .filter-option input[type='checkbox'] {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   accent-color: #2070ef;
   cursor: pointer;
 }
@@ -152,7 +152,7 @@
 ========================== */
 .add-to-cart-button {
   display: block;
-  width: calc(100% - 40px);
+  width: calc(100% - 50px);
   margin: 15px auto 20px;
   padding: 10px 15px;
   background: linear-gradient(135deg, #00D2FF, #3B82F6);

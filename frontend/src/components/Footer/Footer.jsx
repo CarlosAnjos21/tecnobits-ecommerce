@@ -5,19 +5,18 @@ import './footer.css';
 // DADOS DO RODAPÉ
 
 const infoLinks = [
-  { href: '#', text: 'Sobre TecnoBits' },
-  { href: '#', text: 'Segurança' },
-  { href: '#', text: 'Wishlist' },
-  { href: '#', text: 'Blog' },
-  { href: '#', text: 'Trabalhe conosco' },
-  { href: '#', text: 'Meus pedidos' },
+  { href: '/404', text: 'Sobre TecnoBits' },
+  { href: '/404', text: 'Segurança' },
+  { href: '/404', text: 'Wishlist' },
+  { href: '/404', text: 'Blog' },
+  { href: '/404', text: 'Trabalhe conosco' },
   { href: '/admin/dashboard', text: 'Painel do Administrador' },
 ];
 
 const socialLinks = [
-  { href: '#', icon: faFacebook, label: 'Facebook' },
-  { href: '#', icon: faInstagram, label: 'Instagram' },
-  { href: '#', icon: faTwitter, label: 'Twitter' },
+  { href: 'https://www.facebook.com', icon: faFacebook, label: 'Facebook' },
+  { href: 'https://www.instagram.com', icon: faInstagram, label: 'Instagram' },
+  { href: 'https://www.twitter.com', icon: faTwitter, label: 'Twitter' },
 ];
 
 // coluna de links
