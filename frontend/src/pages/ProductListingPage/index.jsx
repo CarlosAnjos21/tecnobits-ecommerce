@@ -1,18 +1,32 @@
 import { useEffect, useState } from 'react';
+import { getProducts } from '../../services/productService';
 import { CiFilter } from 'react-icons/ci';
 import ProductListing from '../../components/ProductListing';
 import CustomSelect from '../../components/CustomSelect';
 import './ProductListingPage.css';
 import Section from '../../components/Section';
-// import products from '../../data/products.json'; // Removido para usar dados do backend
+import { useLocation } from 'react-router-dom';
 
 const ProductListingPage = () => {
+  const location = useLocation();
   const [products, setProducts] = useState([]); // Estado para produtos do backend
   const [loading, setLoading] = useState(true); // Estado de carregamento
   const [error, setError] = useState(null); // Estado de erro
   const [selectedFilters, setSelectedFilters] = useState({ categoriaMarca: {}, emEstoque: false });
   const [categoriasExpandida, setCategoriasExpandida] = useState({});
   const [sortBy, setSortBy] = useState('mais-relevantes');
+  // Aplica sortBy inicial baseado na query string
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const sortParam = params.get('sort');
+    if (sortParam === 'price_asc') {
+      setSortBy('menor-preco');
+    } else if (sortParam === 'price_desc') {
+      setSortBy('maior-preco');
+    } else if (sortParam === 'best_sellers') {
+      setSortBy('mais-vendidos');
+    }
+  }, [location.search]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 460);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -23,20 +37,12 @@ const ProductListingPage = () => {
     { value: 'mais-vendidos', label: 'mais vendidos' }
   ];
 
-  // Função para buscar produtos do backend
+  // Busca produtos do backend usando service
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      
-      const response = await fetch('http://localhost:3001/api/products');
-      
-      if (!response.ok) {
-        throw new Error(`Erro ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      
-      // Adaptar os dados do backend para o formato esperado pelo frontend
+      const data = await getProducts();
+  // Adapta os dados do backend para o formato esperado pelo frontend
       const adaptedProducts = data.map(product => {
         return {
           id: product.id,
@@ -56,7 +62,6 @@ const ProductListingPage = () => {
       setProducts(adaptedProducts);
       setError(null);
     } catch (err) {
-      console.error('❌ Erro ao buscar produtos:', err);
       setError('Erro ao carregar produtos. Tente novamente.');
     } finally {
       setLoading(false);
@@ -85,96 +90,23 @@ const ProductListingPage = () => {
   };
 
   const categoriasDesejadas = [
-'SMARTPHONE',
-    'NOTEBOOK',
-    'HEADPHONE',
-    'TABLET',
-    'SMART-TV',
-    'ACESSÓRIOS',
-    'CONSOLES',
-    'PROCESSADOR',
-    'PLACA DE VÍDEO',
-    'PLACA-MÃE',
-    'MEMÓRIA RAM',
-    'ARMAZENAMENTO',
-    'FONTE DE ENERGIA',
-    'RESFRIAMENTO',
-    'GABINETE',
-    'PC PORTÁTIL',
-    'MINI-PC',
-    'CONSOLE PORTÁTIL'
+    'SMARTPHONE', 'NOTEBOOK', 'HEADPHONE', 'TABLET', 'SMART-TV', 'ACESSÓRIOS', 'CONSOLES', 'PROCESSADOR', 'PLACA DE VÍDEO', 'PLACA-MÃE', 'MEMÓRIA RAM', 'ARMAZENAMENTO', 'FONTE DE ENERGIA', 'RESFRIAMENTO', 'GABINETE', 'PC PORTÁTIL', 'MINI-PC', 'CONSOLE PORTÁTIL'
   ];
 
   const categoriasDisponiveis = Array.from(new Set(products.map(p => p.category)))
     .filter(cat => categoriasDesejadas.includes(cat));
 
   const marcasDesejadas = [
-    'AMD',
-    'Aigo',
-    'Acer',
-    'ASRock',
-    'ASUS',
-    'Anbernic',
-    'Apple',
-    'Audio-Technica',
-    'AYA',
-    'Beelink',
-    'Bose',
-    'Corsair',
-    'Cooler Master',
-    'EVGA',
-    'Fractal Design',
-    'GIGABYTE',
-    'GPD',
-    'G.Skill',
-    'Google',
-    'Honor',
-    'Hisense',
-    'Huawei',
-    'Intel',
-    'JBL',
-    'Kingston',
-    'LG',
-    'Lenovo',
-    'MINISFORUM',
-    'MSI',
-    'Microsoft',
-    'Motorola',
-    'NZXT',
-    'Nintendo',
-    'Noctua',
-    'Nothing',
-    'NVIDIA',
-    'OnePlus',
-    'OneXPlayer',
-    'OPPO',
-    'Philips',
-    'Realme',
-    'Samsung',
-    'Seagate',
-    'Seasonic',
-    'Sennheiser',
-    'Sony',
-    'SteelSeries',
-    'TCL',
-    'Thermaltake',
-    'Valve',
-    'Vivo',
-    'Western Digital',
-    'Xiaomi',
-    'be quiet!',
+    'AMD','Aigo','Acer','ASRock','ASUS','Anbernic','Apple','Audio-Technica','AYA','Beelink','Bose','Corsair','Cooler Master','EVGA','Fractal Design','GIGABYTE','GPD','G.Skill','Google','Honor','Hisense','Huawei','Intel','JBL','Kingston','LG','Lenovo','MINISFORUM','MSI','Microsoft','Motorola','NZXT','Nintendo','Noctua','Nothing','NVIDIA','OnePlus','OneXPlayer','OPPO','Philips','Realme','Samsung','Seagate','Seasonic','Sennheiser','Sony','SteelSeries','TCL','Thermaltake','Valve','Vivo','Western Digital','Xiaomi','be quiet!'
   ];
 
   const applyFiltersAndSort = () => {
   let result = [...products];
 
-  // 🔹 Filtra pelas categorias desejadas (REABILITADO)
-  const beforeCategoryFilter = result.length;
+  // Filtra pelas categorias desejadas
   result = result.filter(prod => categoriasDesejadas.includes(prod.category));
-  
-  console.log('⚠️ Filtro de categoria desabilitado temporariamente - mostrando todos os produtos');
 
-  // 🔹 Se houver filtro de marca aplicado
+  // Se houver filtro de marca aplicado
   const filtroCategoriaMarca = Object.entries(selectedFilters.categoriaMarca)
     .filter(([, marcas]) => marcas.length > 0);
 
@@ -187,7 +119,7 @@ const ProductListingPage = () => {
     );
   }
 
-  // 🔹 Filtro "Em Estoque"
+  // Filtro "Em Estoque"
   if (selectedFilters.emEstoque) {
     result = result.filter(prod => prod.inStock);
   }

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaCreditCard, FaBoltLightning, FaPix, FaTruck, FaCalendarDays } from 'react-icons/fa6';
 import { InputDefault } from '../../components/Input';
 import React, { useState, useEffect } from 'react';
+import { getProductById } from '../../services/productService';
 import StarRating from '../../components/StarRating';
 
 function ProductViewPage() {
@@ -23,13 +24,7 @@ function ProductViewPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/products/${id}`);
-        
-        if (!response.ok) {
-          throw new Error(`Erro ${response.status}: ${response.statusText}`);
-        }
-        
-        const data = await response.json();
+          const data = await getProductById(id);
         
         // Adaptar os dados do backend para o formato esperado pelo frontend
         const adaptedProduct = {

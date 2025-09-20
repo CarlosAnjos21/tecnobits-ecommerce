@@ -112,30 +112,20 @@ export const CartProvider = ({ children }) => {
 
   // Adicionar item ao carrinho (servidor primeiro, depois local)
   const addToCart = async (product) => {
-    // Verificar se usuário está logado
     const token = localStorage.getItem('authToken');
     if (!token) {
       console.error('❌ Usuário não está logado!');
       alert('Você precisa estar logado para adicionar itens ao carrinho.');
       return;
     }
-
     try {
-      // Primeiro sincronizar com servidor
       await apiCall('/cart', {
         method: 'POST',
-        body: JSON.stringify({
-          productId: product.id,
-          quantity: 1,
-        }),
+        body: JSON.stringify({ productId: product.id, quantity: 1 }),
       });
-
-      // Depois recarregar tudo do servidor para ter dados consistentes
       await loadCartFromServer();
     } catch (error) {
       console.error('❌ Erro ao adicionar item ao carrinho:', error);
-
-      // Mostrar mensagem de erro específica para o usuário
       if (error.message?.includes('401') || error.message?.includes('Unauthorized')) {
         alert('Erro de autenticação. Faça login novamente.');
       } else if (error.message?.includes('404')) {
@@ -145,33 +135,22 @@ export const CartProvider = ({ children }) => {
       } else {
         alert('Erro ao adicionar produto ao carrinho. Tente novamente.');
       }
-
-      // Não adicionar localmente se falhar no servidor
       throw error;
     }
   };
 
   // Remover item do carrinho (servidor primeiro, depois local)
   const removeFromCart = async (productId) => {
-    // Encontrar o item para obter o cartItemId
     const itemToRemove = cartItems.find(item => item.id === productId);
-
     if (!itemToRemove?.cartItemId) {
       console.warn('Item não tem cartItemId, não pode remover do servidor');
       return;
     }
-
     try {
-      // Primeiro remover do servidor
-      await apiCall(`/cart/${itemToRemove.cartItemId}`, {
-        method: 'DELETE',
-      });
-
-      // Depois recarregar tudo do servidor
+      await apiCall(`/cart/${itemToRemove.cartItemId}`, { method: 'DELETE' });
       await loadCartFromServer();
     } catch (error) {
       console.error('Erro ao remover item do carrinho:', error);
-      // Não remover localmente se falhar no servidor
       throw error;
     }
   };

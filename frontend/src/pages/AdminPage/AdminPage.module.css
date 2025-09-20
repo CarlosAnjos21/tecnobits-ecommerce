@@ -106,3 +106,40 @@
   border-radius: 8px;
   border: 2px dashed #dee2e6;
 }
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 1rem 0 1.5rem;
+}
+
+.tab,
+.tabActive {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #eef2ff;
+  color: #1e293b;
+  border: 1px solid #c7d2fe;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabActive {
+  background: linear-gradient(135deg, #00D2FF, #3B82F6);
+  color: white;
+  border-color: transparent;
+}
+
+.filtersRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0 16px;
+}
+
+.filtersRow select {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+}
