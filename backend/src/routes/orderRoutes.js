@@ -3,7 +3,8 @@ import {
   criarPedido,
   atualizarStatusPedido,
   listarMeusPedidos,
-  listarTodosPedidos
+  listarTodosPedidos,
+  cancelarPedido
 } from "../controllers/OrderController.js";
 import { protect, authorize } from "../middleware/authMiddleware.js";
 
@@ -19,7 +20,7 @@ router.get("/", listarMeusPedidos);
 
 // Criar pedido
 router.post("/", criarPedido);
-router.patch("/:id/cancel", cancelarPedido); // vini 
+router.patch("/:id/cancel", cancelarPedido); // <-- cancela pedido </vini>
 // Admin vê todos pedidos
 router.get("/", authorize("admin"), listarTodosPedidos); // mesma rota GET /, middleware controla acesso
 
