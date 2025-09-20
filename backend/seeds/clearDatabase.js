@@ -7,6 +7,12 @@ async function main() {
 
   try {
     // Deleta em ordem para respeitar as relações de foreign key
+    console.log('Deletando itens de carrinho...');
+    await prisma.cartItem.deleteMany({});
+
+    console.log('Deletando carrinhos...');
+    await prisma.cart.deleteMany({});
+
     console.log('Deletando itens de pedido...');
     await prisma.orderItem.deleteMany({});
 

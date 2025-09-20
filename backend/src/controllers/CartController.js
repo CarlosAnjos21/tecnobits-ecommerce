@@ -1,19 +1,11 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import cartService from "../services/cartService.js";
 
 /**
  * Buscar carrinho do usuário logado
  */
 export const buscarCarrinho = async (req, res) => {
   try {
-    const carrinho = await prisma.cart.findUnique({
-      where: { userId: req.user.id },
-      include: {
-        items: {
-          include: { product: true }
-        }
-      }
-    });
+    const carrinho = await cartService.getUserCart(req.user.id);
 
     if (!carrinho) {
       return res.json({ items: [] }); // carrinho vazio
@@ -30,47 +22,10 @@ export const buscarCarrinho = async (req, res) => {
  */
 export const adicionarItem = async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
-
-    let carrinho = await prisma.cart.findUnique({
-      where: { userId: req.user.id }
-    });
-
-    // Se não existe carrinho, cria um novo
-    if (!carrinho) {
-      carrinho = await prisma.cart.create({
-        data: { userId: req.user.id }
-      });
-    }
-
-    // Verifica se item já existe no carrinho
-    const itemExiste = await prisma.cartItem.findFirst({
-      where: { cartId: carrinho.id, productId }
-    });
-
-    let item;
-    if (itemExiste) {
-      item = await prisma.cartItem.update({
-        where: { id: itemExiste.id },
-        data: { quantity: itemExiste.quantity + quantity }
-      });
-    } else {
-      item = await prisma.cartItem.create({
-        data: {
-          cartId: carrinho.id,
-          productId,
-          quantity
-        }
-      });
-    }
-
-    // Retorna carrinho atualizado
-    const carrinhoAtualizado = await prisma.cart.findUnique({
-      where: { id: carrinho.id },
-      include: { items: { include: { product: true } } }
-    });
-
-    res.status(201).json(carrinhoAtualizado);
+    const { productId, quantity = 1 } = req.body;
+    await cartService.addItem(req.user.id, { productId, quantity });
+    const updated = await cartService.getUserCart(req.user.id);
+    res.status(201).json(updated);
   } catch (error) {
     res.status(500).json({ error: "Erro ao adicionar item", details: error.message });
   }
@@ -81,42 +36,27 @@ export const adicionarItem = async (req, res) => {
  */
 export const atualizarItem = async (req, res) => {
   try {
-    const { itemId } = req.params; // deve ser 'itemId'
+    const { itemId } = req.params;
     const { quantity } = req.body;
-
-    if (!itemId) {
-      return res.status(400).json({ error: "ID do item não informado" });
+    if (quantity === 0) {
+      await cartService.removeItem(req.user.id, itemId);
+      return res.json({ message: "Item removido do carrinho com sucesso." });
     }
-
-    if (!item || item.cartId !== carrinho.id) {
-      return res.status(403).json({ error: "Você não pode atualizar este item" });
-    }
-
-    const item = await prisma.cartItem.update({
-      where: { id: itemId },
-      data: { quantity }
-    });
-
-    res.json(item);
+    const updated = await cartService.updateItem(req.user.id, itemId, quantity);
+    res.json(updated);
   } catch (error) {
     res.status(500).json({ error: "Erro ao atualizar item", details: error.message });
   }
 };
 
+
 /**
  * Remover item do carrinho
  */
-
 export const removerItem = async (req, res) => {
   try {
     const { itemId } = req.params;
-
-    if (!item || item.cartId !== carrinho.id) {
-      return res.status(403).json({ error: "Você não pode remover este item" });
-    }
-
-    await prisma.cartItem.delete({ where: { id: itemId } });
-
+    await cartService.removeItem(req.user.id, itemId);
     res.json({ message: "Item removido com sucesso" });
   } catch (error) {
     res.status(500).json({ error: "Erro ao remover item", details: error.message });
