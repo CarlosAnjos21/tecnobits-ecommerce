@@ -18,24 +18,28 @@ const BuySuccessPage = () => {
     return null;
   }
 
-  const {
-    nome,
-    cpf,
-    rua,
-    numero,
-    bairro,
-    cidade,
-    estado,
-    cep,
-    numeroCartao,
-    nomeCartao,
-    validade,
-    cartItems,
-    subtotal,
-    shippingCost,
-    discount,
-    total,
-  } = state;
+  // Quando navegamos a partir do checkout com integração ao backend,
+  // passamos { state: { order: created } }.
+  const order = state.order || {};
+  const orderItems = Array.isArray(order.items) ? order.items : (state.cartItems || []);
+
+  // Dados pessoais/endereço podem não estar no state antigo; usar os do pedido quando existir
+  const nome = state.nome || undefined;
+  const cpf = state.cpf || undefined;
+  const rua = state.rua || (order.enderecoEntrega ? order.enderecoEntrega.split(',')[0] : undefined);
+  const numero = state.numero || undefined;
+  const bairro = state.bairro || undefined;
+  const cidade = state.cidade || order.cidade;
+  const estado = state.estado || order.estado;
+  const cep = state.cep || order.cep;
+  const nomeCartao = state.nomeCartao;
+  const numeroCartao = state.numeroCartao;
+  const validade = state.validade;
+  const subtotal = state.subtotal || (order.total ?? 0);
+  // Como frete/desconto são regras do frontend, mantemos defaults quando não vierem
+  const shippingCost = state.shippingCost ?? 0;
+  const discount = state.discount ?? 0;
+  const total = state.total ?? (typeof order.total === 'number' ? order.total : 0);
 
   const mascararCartao = (num) => {
     if (!num || num.length < 4) return 'Não informado';
@@ -124,19 +128,26 @@ const BuySuccessPage = () => {
 
         <section className="section-resumo">
           <h2>Resumo da Compra</h2>
-          {cartItems.map((item) => (
-            <div key={item.id} className="container-imagem-texto">
-              <div className="lado-esquerdo">
-                <img src={item.image} alt={item.name} />
+          {orderItems.map((item) => {
+            const key = item.id || item.productId;
+            const name = item.product?.title || item.name || 'Produto';
+            const image = item.product?.images?.[0] || item.image || '/images/placeholder.png';
+            const price = Number(item.price || item.product?.price || 0);
+            const quantity = item.quantity || 1;
+            return (
+              <div key={key} className="container-imagem-texto">
+                <div className="lado-esquerdo">
+                  <img src={image} alt={name} />
+                </div>
+                <div className="lado-direito">
+                  <p>{name}</p>
+                  <p>Quantidade: {quantity}</p>
+                  <p>Preço unitário: {formatCurrency(price)}</p>
+                  <p>Subtotal: {formatCurrency(price * quantity)}</p>
+                </div>
               </div>
-              <div className="lado-direito">
-                <p>{item.name}</p>
-                <p>Quantidade: {item.quantity}</p>
-                <p>Preço unitário: {formatCurrency(item.price)}</p>
-                <p>Subtotal: {formatCurrency(item.price * item.quantity)}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
 
           <div className="container-total-valor">
             <div className="total-valor">
@@ -166,7 +177,10 @@ const BuySuccessPage = () => {
           </button>
         </div>
 
-        <div style={{ marginTop: 20, width: '100%', maxWidth: 778, display: 'flex', justifyContent: 'center'}}>
+        <div style={{ marginTop: 20, width: '100%', maxWidth: 778, display: 'flex', justifyContent: 'center', gap: 12 }}>
+          {order?.id && (
+            <ButtonShop onClick={() => navigate(`/orders/${order.id}`)}>Ver detalhes do pedido</ButtonShop>
+          )}
           <ButtonShop onClick={() => navigate('/')}>Voltar para Home</ButtonShop>
         </div>
       </div>

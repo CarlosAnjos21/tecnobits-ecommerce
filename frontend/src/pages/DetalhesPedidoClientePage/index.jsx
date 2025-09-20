@@ -1,51 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styles from './DetalhesPedidoClientePage.module.css'; 
 import { FaBox, FaCreditCard, FaMapPin, FaRegCalendarAlt } from 'react-icons/fa';
-
-// --- DADOS FALSOS  ---
-const mockOrdersDatabase = {
-    'ef789': {
-        id: 'ef789', date: '15/07/2025', total: 89.90, status: 'Entregue',
-        shippingAddress: 'Rua das Flores, 123, São Paulo, SP, 01000-100',
-        paymentMethod: 'Cartão de Crédito final 4321',
-        items: [
-            { id: 'p03', name: 'Mousepad Gamer HyperX', quantity: 1, price: 89.90, image: 'https://placehold.co/100x100/E5E7EB/374151?text=Mousepad' }
-        ]
-    },
-    'ab123': {
-        id: 'ab123', date: '01/09/2025', total: 250.50, status: 'Enviado',
-        shippingAddress: 'Avenida Principal, 456, Rio de Janeiro, RJ, 20000-200',
-        paymentMethod: 'PIX',
-        trackingCode: 'BR123456789CD',
-        items: [
-            { id: 'p04', name: 'Headset Gamer Redragon', quantity: 1, price: 250.50, image: 'https://placehold.co/100x100/E5E7EB/374151?text=Headset' }
-        ]
-    },
-    'cd456': {
-        id: 'cd456', date: '28/08/2025', total: 1999.99, status: 'Processando',
-        shippingAddress: 'Praça da Sé, 789, São Paulo, SP, 01001-000',
-        paymentMethod: 'Boleto Bancário',
-        items: [
-            { id: 'p05', name: 'Monitor Gamer Samsung 27"', quantity: 1, price: 1850.00, image: 'https://placehold.co/100x100/E5E7EB/374151?text=Monitor' },
-            { id: 'p06', name: 'Cabo HDMI 2.1', quantity: 1, price: 149.99, image: 'https://placehold.co/100x100/E5E7EB/374151?text=Cabo' }
-        ]
-    },
-};
-
+import { getOrderById, cancelOrder } from '../../services/orderService';
 
 const DetalhesPedidoClientePage = () => {
-    const { id } = useParams();
-    const order = mockOrdersDatabase[id];
+        const { id } = useParams();
+        const [order, setOrder] = useState(null);
+        const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [cancelLoading, setCancelLoading] = useState(false);
+    const [cancelError, setCancelError] = useState(null);
 
-    if (!order) {
-        return (
-            <div className={styles.container}>
-                <h1 className={styles.title}>Pedido não encontrado</h1>
-                <Link to="/cliente/dashboard" className={styles.backLink}>&larr; Voltar para seus pedidos</Link>
-            </div>
-        );
-    }
+        useEffect(() => {
+            const fetchOrder = async () => {
+                try {
+                    setLoading(true);
+                    const data = await getOrderById(id);
+                    setOrder(data);
+                } catch (err) {
+                    const msg = err?.response?.data?.details || 'Não foi possível carregar o pedido.';
+                    setError(msg);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            fetchOrder();
+        }, [id]);
+
+        if (loading) {
+            return (
+                <div className={styles.container}>
+                    <h1 className={styles.title}>Carregando pedido...</h1>
+                </div>
+            );
+        }
+
+        if (error || !order) {
+            return (
+                <div className={styles.container}>
+                    <h1 className={styles.title}>Pedido não encontrado</h1>
+                    <p className={styles.error}>{error}</p>
+                    <Link to="/cliente/dashboard" className={styles.backLink}>&larr; Voltar para seus pedidos</Link>
+                </div>
+            );
+        }
+
+    const canCancel = order && [
+        'AGUARDANDO_PAGAMENTO',
+        'PAGAMENTO_CONFIRMADO',
+        'EM_PREPARACAO'
+    ].includes(order.status);
+
+    const onCancel = async () => {
+        try {
+            setCancelError(null);
+            setCancelLoading(true);
+            const res = await cancelOrder(order.id);
+            // backend retorna { message, pedido }
+            if (res?.pedido) setOrder(res.pedido);
+        } catch (err) {
+            const msg = err?.response?.data?.details || 'Não foi possível cancelar o pedido.';
+            setCancelError(msg);
+        } finally {
+            setCancelLoading(false);
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -57,17 +77,17 @@ const DetalhesPedidoClientePage = () => {
                 <div className={styles.summaryCard}>
                     <FaRegCalendarAlt className={styles.icon} />
                     <strong>Data do Pedido</strong>
-                    <span>{order.date}</span>
+                    <span>{new Date(order.createdAt).toLocaleDateString('pt-BR')}</span>
                 </div>
                 <div className={styles.summaryCard}>
                     <FaMapPin className={styles.icon} />
                     <strong>Endereço de Entrega</strong>
-                    <span>{order.shippingAddress}</span>
+                    <span>{order.enderecoEntrega} - {order.cidade}/{order.estado} - {order.cep}</span>
                 </div>
                 <div className={styles.summaryCard}>
                     <FaCreditCard className={styles.icon} />
                     <strong>Forma de Pagamento</strong>
-                    <span>{order.paymentMethod}</span>
+                    <span>{order.metodoPagamento}</span>
                 </div>
                 <div className={styles.summaryCard}>
                     <FaBox className={styles.icon} />
@@ -76,24 +96,43 @@ const DetalhesPedidoClientePage = () => {
                 </div>
             </div>
 
+            {cancelError && (
+                <div className={styles.errorBox}>{cancelError}</div>
+            )}
+
+            {canCancel && (
+                <button
+                    className={styles.cancelButton}
+                    onClick={onCancel}
+                    disabled={cancelLoading}
+                    title="Cancelar este pedido"
+                >
+                    {cancelLoading ? 'Cancelando...' : 'Cancelar pedido'}
+                </button>
+            )}
+
             {/* Itens do Pedido */}
             <div className={styles.itemsSection}>
                 <h2 className={styles.sectionTitle}>Itens do Pedido</h2>
                 <div className={styles.itemsList}>
-                    {order.items.map(item => (
-                        <div key={item.id} className={styles.itemCard}>
-                            <img src={item.image} alt={item.name} className={styles.itemImage} />
-                            <div className={styles.itemDetails}>
-                                <span className={styles.itemName}>{item.name}</span>
-                                <span className={styles.itemQuantity}>Quantidade: {item.quantity}</span>
-                            </div>
-                            <span className={styles.itemPrice}>R$ {item.price.toFixed(2)}</span>
-                        </div>
-                    ))}
+                                        {order.items.map(item => {
+                                            const name = item.product?.title || 'Produto';
+                                            const img = item.product?.images?.[0] || '/images/placeholder.png';
+                                            return (
+                                                <div key={item.id} className={styles.itemCard}>
+                                                    <img src={img} alt={name} className={styles.itemImage} />
+                                                    <div className={styles.itemDetails}>
+                                                        <span className={styles.itemName}>{name}</span>
+                                                        <span className={styles.itemQuantity}>Quantidade: {item.quantity}</span>
+                                                    </div>
+                                                    <span className={styles.itemPrice}>R$ {Number(item.price).toFixed(2)}</span>
+                                                </div>
+                                            );
+                                        })}
                 </div>
                 <div className={styles.totalSection}>
                     <span>Total do Pedido:</span>
-                    <span className={styles.totalPrice}>R$ {order.total.toFixed(2)}</span>
+                                        <span className={styles.totalPrice}>R$ {Number(order.total).toFixed(2)}</span>
                 </div>
             </div>
         </div>

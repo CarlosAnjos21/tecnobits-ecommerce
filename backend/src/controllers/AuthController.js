@@ -1,4 +1,4 @@
-import { getUserByEmailService, createUserService } from '../services/userService.js';
+import { getUserByEmailService, getUserByCnpjService, createUserService } from '../services/userService.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env.js';
@@ -12,11 +12,17 @@ const generateToken = (id, role) => {
 
 export const register = async (req, res) => {
     try {
-        const { name, email, password, role, phone, address, cnpj } = req.body;
+    const { name, email, password, role, phone, address, cnpj } = req.body;
 
         //validação
         if (!name || !email || !password || !role) {
             return res.status(400).json({ message: 'Todos os campos são obrigatórios.'})
+        }
+
+        // Validar role permitida
+        const allowedRoles = ['cliente', 'vendedor'];
+        if (!allowedRoles.includes(role)) {
+            return res.status(400).json({ message: 'Role inválida.'});
         }
 
         // Validação adicional para vendedor
@@ -32,8 +38,7 @@ export const register = async (req, res) => {
         
         // Verificar se já existe um vendedor com esse CNPJ
         if (role === 'vendedor' && cnpj) {
-            // Busca por CNPJ usando service (adapte conforme necessário)
-            const existingCNPJ = await getUserByEmailService(cnpj); // Se necessário, crie método específico para CNPJ
+            const existingCNPJ = await getUserByCnpjService(cnpj);
             if (existingCNPJ) {
                 return res.status(409).json({ message: 'CNPJ já cadastrado.'})
             }
@@ -54,14 +59,11 @@ export const register = async (req, res) => {
             status: role === 'vendedor' ? 'pending' : 'active'
         });
 
-        //para gerar o token e enviar a res
-        const token = generateToken(user.id, user.role);
-
+        // Não emitir token no registro para evitar acesso imediato
         res.status(201).json({
             message: role === 'vendedor' 
                 ? 'Cadastro enviado com sucesso! Aguarde a aprovação do administrador.'
                 : 'Usuário registrado com sucesso!',
-            token,
             user: { 
                 id: user.id, 
                 name: user.name, 
