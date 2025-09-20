@@ -20,6 +20,11 @@ export const getUserByEmailService = async (email) => {
     return prisma.user.findUnique({ where: { email } });
 };
 
+export const getUserByCnpjService = async (cnpj) => {
+    if (!cnpj) return null;
+    return prisma.user.findFirst({ where: { cnpj } });
+};
+
 export const createUserService = async (data) => {
     const nanoid = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 6);
     const userId = nanoid();
