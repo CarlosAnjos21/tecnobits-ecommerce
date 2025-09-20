@@ -51,7 +51,7 @@
 
 .product-card .card-product .discount {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 20px;
   background-color: var(--card-tag-color);
   color: var(--text-muted);
