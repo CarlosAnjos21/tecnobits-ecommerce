@@ -26,8 +26,11 @@ export const criarPedido = async (req, res) => {
     const order = await orderService.createOrderFromCart(userId, payload);
     res.status(201).json(order);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao criar pedido", details: error.message });
+    // Responder com o status adequado quando for um erro de domínio (AppError)
+    const status = error?.statusCode || 500;
+    const code = error?.code || "internal_error";
+    console.error("[criarPedido] erro:", { status, code, message: error?.message });
+    res.status(status).json({ error: "Erro ao criar pedido", details: error?.message, code });
   }
 };
 
@@ -41,6 +44,22 @@ export const listarMeusPedidos = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erro ao buscar seus pedidos", details: error.message });
+  }
+};
+
+/**
+ * Buscar detalhes de um pedido específico (cliente comprador ou admin)
+ */
+export const obterPedidoPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await orderService.getOrderByIdForUser(id, req.user);
+    res.json(order);
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    const code = error?.code || "internal_error";
+    console.error("[obterPedidoPorId] erro:", { status, code, message: error?.message });
+    res.status(status).json({ error: "Erro ao buscar pedido", details: error?.message, code });
   }
 };
 
@@ -77,42 +96,13 @@ export const atualizarStatusPedido = async (req, res) => {
   // Cancelar pedido (usuário) - vini - inicio
 export const cancelarPedido = async (req, res) => {
   try {
-    const userId = req.user.id;
     const { id } = req.params;
-
-    // Buscar pedido
-    const order = await prisma.order.findUnique({
-      where: { id },
-      include: { items: true }
-    });
-
-    if (!order) return res.status(404).json({ error: "Pedido não encontrado" });
-
-    // Verificar se pertence ao usuário
-    if (order.buyerId !== userId) return res.status(403).json({ error: "Acesso negado" });
-
-    // Verificar se pode ser cancelado
-    if ([OrderStatus.ENVIADO, OrderStatus.ENTREGUE].includes(order.status)) {
-      return res.status(400).json({ error: "Pedido não pode ser cancelado" });
-    }
-
-    // Repor estoque
-    for (const item of order.items) {
-      await prisma.product.update({
-        where: { id: item.productId },
-        data: { stock: { increment: item.quantity } }
-      });
-    }
-
-    // Atualizar status do pedido
-    const pedidoAtualizado = await prisma.order.update({
-      where: { id },
-      data: { status: OrderStatus.CANCELADO }
-    });
-
-    res.json({ message: "Pedido cancelado com sucesso", pedido: pedidoAtualizado });
+    const pedido = await orderService.cancelOrder(id, req.user);
+    res.json({ message: "Pedido cancelado com sucesso", pedido });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao cancelar pedido", details: error.message });
+    const status = error?.statusCode || 500;
+    const code = error?.code || "internal_error";
+    console.error("[cancelarPedido] erro:", { status, code, message: error?.message });
+    res.status(status).json({ error: "Erro ao cancelar pedido", details: error?.message, code });
   }
 };// vini - fim

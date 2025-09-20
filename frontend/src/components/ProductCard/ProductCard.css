@@ -160,7 +160,7 @@
     line-height: 22px;
     letter-spacing: -0.75px;
   }
-  max-width: 100%;
+  /* max-width: 100%; */ /* Removido pois estava causando problemas de layout inesperados */
 }
 
 @media (max-width: 460px) {

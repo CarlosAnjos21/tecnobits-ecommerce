@@ -1,11 +1,6 @@
-export const getUserByEmailService = async (email) => {
-    return prisma.user.findUnique({ where: { email } });
-};
-
-export const createUserService = async (data) => {
-    return prisma.user.create({ data });
-};
 import { PrismaClient } from '@prisma/client';
+import { customAlphabet } from 'nanoid';
+
 const prisma = new PrismaClient();
 
 const userSelect = {
@@ -19,6 +14,17 @@ const userSelect = {
     status: true,
     createdAt: true,
     updatedAt: true,
+};
+
+export const getUserByEmailService = async (email) => {
+    return prisma.user.findUnique({ where: { email } });
+};
+
+export const createUserService = async (data) => {
+    const nanoid = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 6);
+    const userId = nanoid();
+    const userData = { ...data, id: userId };
+    return prisma.user.create({ data: userData });
 };
 
 export const getAllUsersService = async () => {

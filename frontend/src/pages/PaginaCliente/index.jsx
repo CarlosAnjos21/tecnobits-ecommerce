@@ -70,8 +70,6 @@ const PaginaCliente = () => {
     }
   };
 
-  // ... (o restante do seu componente, incluindo a renderização, permanece o mesmo) ...
-
   if (loading) {
     return <div className={styles.dashboardContainer}><p>Carregando dados do cliente...</p></div>;
   }
@@ -120,7 +118,8 @@ const PaginaCliente = () => {
       {/* Seção de Pedidos Recentes */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Meus Pedidos Recentes</h2>
-  <PedidosClientePage />
+        {/* Exibe os últimos 5 pedidos dentro do painel */}
+        <PedidosClientePage embed limit={5} />
       </section>
 
       {/* --- MODAL DE EDIÇÃO --- */}
