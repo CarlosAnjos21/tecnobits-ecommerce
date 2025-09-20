@@ -9,7 +9,7 @@
     "dev": "NODE_ENV=development nodemon server.js",
     "start:staging": "NODE_ENV=staging node server.js",
     "start:prod": "NODE_ENV=production node server.js",
-  "test": "set NODE_OPTIONS=--experimental-vm-modules&& jest --config jest.config.mjs",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules&& jest --config jest.config.mjs",
     "seed:admin": "node seeds/createAdmin.js",
     "seed:vendor": "node seeds/createVendedor.js",
     "seed:client": "node seeds/createCliente.js",
@@ -22,8 +22,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
+    "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
+    "nanoid": "^5.1.5",
+    "qrcode.react": "^4.2.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {

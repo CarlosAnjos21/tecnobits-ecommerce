@@ -37,7 +37,6 @@ function ProductCard({ product }) {
 
   return (
     <div className="product-card">
-      {/* Link envolve a maior parte do card, exceto o botão de adicionar ao carrinho */}
       <Link to={`/produtos/${id}`} className='product-link'>
         <div className='card-product'>
           {tagValue && <div className='discount'>{tagValue}</div>}
@@ -47,7 +46,6 @@ function ProductCard({ product }) {
             onError={handleImageError}
           />
         </div>
-        {/* Esta categoria parece estática, pode ser dinâmica se necessário */}
         <h4>{name}</h4>
         <div className='card-info'>
           {priceDiscount && priceDiscount > 0 ? (
@@ -60,10 +58,11 @@ function ProductCard({ product }) {
           )}
         </div>
       </Link>
-      {/* Botão Adicionar ao Carrinho fica fora do Link para ter sua própria ação */}
-      <ButtonPrimary className="mobile btn-add-to-cart desktop" onClick={handleAddToCart}>
-        Adicionar ao Carrinho
-      </ButtonPrimary>
+      <div className="card-buy-btn-wrapper" style={{ width: '100%', marginTop: '8px' }}>
+        <ButtonPrimary className="mobile btn-add-to-cart desktop" onClick={handleAddToCart}>
+          Adicionar ao Carrinho
+        </ButtonPrimary>
+      </div>
     </div>
   );
 }

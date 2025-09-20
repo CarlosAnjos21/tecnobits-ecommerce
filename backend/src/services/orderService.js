@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { customAlphabet } from "nanoid";
 import productService from "./productService.js";
 import { BadRequestError, ConflictError, ForbiddenError, NotFoundError } from "../utils/AppError.js";
 let prisma = new PrismaClient();
@@ -9,6 +10,46 @@ export const __setPrismaClient = (client) => {
 };
 
 class OrderService {
+  /**
+   * Listagem de pedidos por vendedor, com filtros opcionais via query.
+   */
+  async listOrdersBySeller(sellerId, query = {}) {
+    // Filtros básicos: status, período
+    const where = {
+      items: {
+        some: {
+          product: { sellerId: String(sellerId) }
+        }
+      }
+    };
+    if (query.status) where.status = query.status;
+    if (query.from || query.to) {
+      where.createdAt = {};
+      if (query.from) where.createdAt.gte = new Date(query.from);
+      if (query.to) where.createdAt.lte = new Date(query.to);
+    }
+    const orders = await prisma.order.findMany({
+      where,
+      include: {
+        buyer: true,
+        items: { include: { product: true } }
+      },
+      orderBy: { createdAt: "desc" }
+    });
+    // Filtra itens do seller
+    return orders.map((o) => {
+      const sellerItems = o.items.filter((it) => it.product?.sellerId === String(sellerId));
+      const totalSeller = sellerItems.reduce((acc, it) => acc + Number(it.price) * it.quantity, 0);
+      return {
+        id: o.id,
+        createdAt: o.createdAt,
+        status: o.status,
+        buyer: o.buyer,
+        items: sellerItems,
+        totalVendedor: totalSeller,
+      };
+    });
+  }
   async createOrderFromCart(userId, payload) {
     // payload pode conter dados de entrega e pagamento
     const cart = await prisma.cart.findUnique({
@@ -22,6 +63,23 @@ class OrderService {
     for (const item of cart.items) {
       await productService.ensureStock(item.productId, item.quantity);
     }
+
+    // Normalização de campos vindos do payload
+    // metodoPagamento pode vir como 'pix' | 'cartao' do frontend ou já no enum
+    let metodoPagamento = payload.metodoPagamento;
+    if (typeof metodoPagamento === 'string') {
+      const m = metodoPagamento.toUpperCase();
+      if (m === 'PIX') metodoPagamento = 'PIX';
+      else if (m === 'CARTAO' || m === 'CARTAO_CREDITO' || m === 'CARTAO-DE-CREDITO') metodoPagamento = 'CARTAO_CREDITO';
+      else if (m === 'CARTAO_DEBITO' || m === 'DEBITO') metodoPagamento = 'CARTAO_DEBITO';
+      else if (m === 'BOLETO') metodoPagamento = 'BOLETO';
+      else if (m === 'TRANSFERENCIA' || m === 'TRANSFERENCIA_BANCARIA') metodoPagamento = 'TRANSFERENCIA_BANCARIA';
+    }
+
+    // dataEntregaPrevista pode vir como string ou Date
+    let dataEntregaPrevista = payload.dataEntregaPrevista
+      ? new Date(payload.dataEntregaPrevista)
+      : new Date(Date.now() + 5 * 24 * 60 * 60 * 1000);
 
     // transação: recalcula preços atuais, cria pedido + itens, limpa carrinho, decrementa estoque (checagem atômica)
     const order = await prisma.$transaction(async (tx) => {
@@ -38,18 +96,22 @@ class OrderService {
         orderItemsDataAtual.push({ productId: item.productId, quantity: item.quantity, price: priceNow });
       }
 
+      const nanoid = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 6);
+      const orderId = nanoid();
+
       // criar pedido com preços recalculados
       const createdOrder = await tx.order.create({
         data: {
+          id: orderId,
           buyerId: userId,
           total: totalAtual,
           cep: payload.cep,
           cidade: payload.cidade,
           enderecoEntrega: payload.enderecoEntrega,
           complemento: payload.complemento,
-          dataEntregaPrevista: payload.dataEntregaPrevista,
+          dataEntregaPrevista,
           estado: payload.estado,
-          metodoPagamento: payload.metodoPagamento,
+          metodoPagamento,
           items: { create: orderItemsDataAtual }
         },
         include: { items: true }
@@ -75,6 +137,22 @@ class OrderService {
 
   async listMyOrders(userId) {
     return prisma.order.findMany({ where: { buyerId: userId }, include: { items: { include: { product: true } } } });
+  }
+
+  async getOrderByIdForUser(orderId, requester) {
+    const id = String(orderId);
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: { items: { include: { product: true } }, buyer: true }
+    });
+    if (!order) throw new NotFoundError("Pedido não encontrado");
+
+    const isAdmin = requester?.role === 'admin';
+    const isBuyer = order.buyerId === requester?.id;
+    if (!isAdmin && !isBuyer) {
+      throw new ForbiddenError("Sem permissão para visualizar este pedido");
+    }
+    return order;
   }
 
   async listAllOrders() {
@@ -117,9 +195,9 @@ class OrderService {
     }
 
     const result = await prisma.$transaction(async (tx) => {
-      // devolve estoque
+      // devolve estoque (tolerante a produto removido)
       for (const it of order.items) {
-        await tx.product.update({
+        await tx.product.updateMany({
           where: { id: String(it.productId) },
           data: { stock: { increment: it.quantity } }
         });

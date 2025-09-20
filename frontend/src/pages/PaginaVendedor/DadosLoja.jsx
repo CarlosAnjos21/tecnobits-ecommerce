@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getUserProfile, updateUserProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './PaginaVendedor.module.css'; // Reutilizando os estilos principais
 
@@ -12,21 +13,10 @@ const DadosLoja = () => {
     const [editableData, setEditableData] = useState({});
     const [saving, setSaving] = useState(false);
 
-    // Função para buscar dados do perfil
+    // Função para buscar dados do perfil usando service
     const fetchProfile = async () => {
         try {
-            const token = localStorage.getItem('authToken');
-            const response = await fetch('http://localhost:3001/api/auth/profile', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Falha ao carregar dados do perfil');
-            }
-
-            const data = await response.json();
+            const data = await getUserProfile();
             setSellerData(data);
         } catch (err) {
             setError(err.message);
@@ -68,30 +58,18 @@ const DadosLoja = () => {
         setSaving(true);
         
         try {
-            const token = localStorage.getItem('authToken');
-            const response = await fetch('http://localhost:3001/api/auth/profile', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(editableData)
-            });
+            // Usa o service com axios (já com interceptor de token)
+            const updated = await updateUserProfile(editableData);
 
-            if (!response.ok) {
-                throw new Error('Falha ao atualizar dados do perfil');
-            }
-
-            const result = await response.json();
-            setSellerData(result.user);
+            // O backend retorna o usuário diretamente (não { user: ... })
+            setSellerData(updated);
             setIsModalOpen(false);
             setEditableData({});
-            
-            // Feedback visual de sucesso
             alert('Dados atualizados com sucesso!');
         } catch (err) {
-            setError(err.message);
-            alert('Erro ao salvar dados: ' + err.message);
+            const msg = err?.response?.data?.message || err.message || 'Erro desconhecido';
+            setError(msg);
+            alert('Erro ao salvar dados: ' + msg);
         } finally {
             setSaving(false);
         }

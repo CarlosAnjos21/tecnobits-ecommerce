@@ -30,7 +30,7 @@ const Gallery = () => {
   }, []);
 
   const handleVerOfertas = () => {
-    window.location.href = '/404';
+    window.location.href = '/produtos?sort=price_asc';
   };
 
   return (

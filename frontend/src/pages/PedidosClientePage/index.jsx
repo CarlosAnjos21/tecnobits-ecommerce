@@ -1,70 +1,81 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './PedidosClientePage.module.css'; 
+import styles from './PedidosClientePage.module.css';
+import { getOrdersByUser } from '../../services/orderService';
 
-// Adicionei mais status para demonstrar as cores
-const mockOrders = [
-  { id: 'ef789', date: '15/07/2025', total: 89.90, status: 'Entregue' },
-  { id: 'ab123', date: '01/09/2025', total: 250.50, status: 'Enviado' },
-  { id: 'gh012', date: '02/09/2025', total: 75.00, status: 'Cancelado' },
-  { id: 'cd456', date: '28/08/2025', total: 1999.99, status: 'Processando' },
-];
-
-// Função para obter a classe de estilo do status
+// Mapeia status do backend (enum) para classes de estilo
 const getStatusClass = (status) => {
-    switch (status.toLowerCase()) {
-        case 'entregue':
-            return styles.statusEntregue;
-        case 'enviado':
-            return styles.statusEnviado;
-        case 'cancelado':
-            return styles.statusCancelado;
-        default:
-            return ''; // Estilo padrão
-    }
+  if (!status) return '';
+  const s = String(status).toLowerCase();
+  if (s.includes('entregue')) return styles.statusEntregue;
+  if (s.includes('enviado')) return styles.statusEnviado;
+  if (s.includes('cancelado')) return styles.statusCancelado;
+  return '';
 };
 
-// Componente que lista os pedidos (agora com layout de grade)
-const ListaPedidos = () => {
-    return (
-        <div className={styles.ordersList}>
-            <div className={styles.orderHeader}>
-                <span>Pedido</span>
-                <span>Data</span>
-                <span>Total</span>
-                <span>Status</span>
-                <span>Ações</span>
-            </div>
-        {mockOrders.length > 0 ? (
-          mockOrders.map(order => (
-            <div key={order.id} className={styles.orderItem}>
-              <span className={styles.orderId}>#{order.id}</span>
-              <span>{order.date}</span>
-              <span>R$ {order.total.toFixed(2)}</span>
-              <span className={`${styles.status} ${getStatusClass(order.status)}`}>
-                {order.status}
-              </span>
-              <Link to={`/orders/${order.id}`} className={styles.detailsLink}>
-                Ver detalhes
-              </Link>
-            </div>
-          ))
-        ) : (
-          <p>Você ainda não fez nenhum pedido.</p>
-        )}
-      </div>
-    );
-}
+// Componente reutilizável: pode ser página completa ou embed (resumo)
+const PedidosClientePage = ({ embed = false, limit = 5 }) => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-// A página completa (se for usada de forma independente)
-const PedidosClientePage = () => {
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        const data = await getOrdersByUser(); // Array de pedidos do usuário
+        // Ordenar por data desc
+        const sorted = [...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setOrders(embed ? sorted.slice(0, limit) : sorted);
+      } catch (err) {
+        const msg = err?.response?.data?.details || err?.message || 'Erro ao carregar pedidos.';
+        setError(msg);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, [embed, limit]);
+
+  const formatCurrency = (v) => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('pt-BR') : '—');
+
   return (
     <div className={styles.ordersContainer}>
-      <h1 className={styles.title}>Meus Pedidos</h1>
-      <ListaPedidos />
+      {!embed && <h1 className={styles.title}>Meus Pedidos</h1>}
+
+      {loading ? (
+        <p>Carregando pedidos...</p>
+      ) : error ? (
+        <p className={styles.error}>{error}</p>
+      ) : orders.length === 0 ? (
+        <p>Nenhum pedido encontrado.</p>
+      ) : (
+        <div className={styles.ordersList}>
+          <div className={styles.orderHeader}>
+            <span>Nº Pedido</span>
+            <span>Data</span>
+            <span>Total</span>
+            <span>Status</span>
+            <span>Ações</span>
+          </div>
+          {orders.map((order) => (
+            <div key={order.id} className={styles.orderItem}>
+              <span className={styles.orderId}>#{order.id}</span>
+              <span className={styles.orderDate}>{fmtDate(order.createdAt)}</span>
+              <span className={styles.orderTotal}>{formatCurrency(order.total)}</span>
+              <span className={`${styles.status} ${getStatusClass(order.status)}`}>{order.status}</span>
+              <Link to={`/orders/${order.id}`} className={styles.detailsLink}>Ver detalhes</Link>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!embed && (
+        <Link to="/cliente/dashboard" className={styles.backLink}>&larr; Voltar para o painel</Link>
+      )}
     </div>
   );
 };
 
-export { ListaPedidos };
 export default PedidosClientePage;

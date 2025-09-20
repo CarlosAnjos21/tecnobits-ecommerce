@@ -1,17 +1,32 @@
-import { ZodError } from "zod";
-import { UnprocessableEntityError } from "../utils/AppError.js";
-
+// Middleware de validação para Joi
+// Aceita tanto um schema único (para body) quanto um objeto { body, params, query }
 export const validate = (schema) => (req, res, next) => {
-  try {
-    if (schema.body) req.body = schema.body.parse(req.body);
-    if (schema.params) req.params = schema.params.parse(req.params);
-    if (schema.query) req.query = schema.query.parse(req.query);
+  const normalize = (sch) => ({ body: sch });
+  const target = schema && (schema.isJoi ? normalize(schema) : schema);
+
+  if (!target || (!target.body && !target.params && !target.query)) {
     return next();
-  } catch (err) {
-    if (err instanceof ZodError) {
-      const msg = err.issues?.map(i => `${i.path.join('.')}: ${i.message}`).join('; ');
-      return next(new UnprocessableEntityError(msg || 'Dados inválidos'));
-    }
-    return next(err);
   }
+
+  const options = { abortEarly: false, stripUnknown: true }; // remove chaves desconhecidas
+
+  // Validar body
+  if (target.body) {
+    const { value, error } = target.body.validate(req.body, options);
+    if (error) return res.status(422).json({ message: error.details.map(d => d.message).join('; ') });
+    req.body = value;
+  }
+  // Validar params
+  if (target.params) {
+    const { value, error } = target.params.validate(req.params, options);
+    if (error) return res.status(422).json({ message: error.details.map(d => d.message).join('; ') });
+    req.params = value;
+  }
+  // Validar query
+  if (target.query) {
+    const { value, error } = target.query.validate(req.query, options);
+    if (error) return res.status(422).json({ message: error.details.map(d => d.message).join('; ') });
+    req.query = value;
+  }
+  next();
 };
