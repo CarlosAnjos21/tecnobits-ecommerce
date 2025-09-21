@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { getProducts } from '../../services/productService';
 import { CiFilter } from 'react-icons/ci';
 import ProductListing from '../../components/ProductListing';
@@ -41,10 +41,12 @@ const ProductListingPage = () => {
   ];
 
   // Busca produtos do backend usando service
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getProducts();
+      const params = new URLSearchParams(location.search);
+      const q = params.get('q') || undefined;
+      const data = await getProducts(q ? { q } : undefined);
   // Adapta os dados do backend para o formato esperado pelo frontend
       const adaptedProducts = data.map(product => {
         return {
@@ -69,11 +71,11 @@ const ProductListingPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [location.search]);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -139,9 +141,10 @@ const ProductListingPage = () => {
   const filteredProducts = applyFiltersAndSort();
 
   // Resetar página quando filtros/ordenação mudarem
+  const selectedFiltersKey = useMemo(() => JSON.stringify(selectedFilters), [selectedFilters]);
   useEffect(() => {
     setCurrentPage(1);
-  }, [JSON.stringify(selectedFilters), sortBy]);
+  }, [selectedFiltersKey, sortBy]);
 
   // Itens da página corrente
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
@@ -167,7 +170,15 @@ const ProductListingPage = () => {
 
       <div className='listing-header'>
         <div className='results-info'>
-          <h2>Resultados para "Hardware" - {filteredProducts.length} produtos</h2>
+          {(() => {
+            const params = new URLSearchParams(location.search);
+            const q = params.get('q');
+            return (
+              <h2>
+                {q ? `Resultados para "${q}"` : 'Todos os produtos'} - {filteredProducts.length} produtos
+              </h2>
+            );
+          })()}
         </div>
         <div className='sort-container'>
           <CustomSelect value={sortBy} onChange={setSortBy} options={sortOptions} />

@@ -114,7 +114,7 @@ class OrderService {
           metodoPagamento,
           items: { create: orderItemsDataAtual }
         },
-        include: { items: true }
+        include: { items: { include: { product: true } } }
       });
 
       // limpar carrinho

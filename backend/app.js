@@ -24,13 +24,19 @@ app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' }, // permitir servir imagens a partir de /uploads
 }));
 
-// Rate limit focado em endpoints sensíveis
-const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 min
-    max: 100, // até 100 req/15min por IP
-    standardHeaders: true,
-    legacyHeaders: false,
-});
+// Rate limit focado em endpoints sensíveis (habilitado apenas em produção)
+const isProd = process.env.NODE_ENV === 'production';
+const authLimiter = isProd
+    ? rateLimit({
+            windowMs: 15 * 60 * 1000, // 15 min
+            max: 100, // até 100 req/15min por IP
+            standardHeaders: true,
+            legacyHeaders: false,
+            message: {
+                message: 'Muitas tentativas. Aguarde alguns minutos e tente novamente.'
+            }
+        })
+    : (req, res, next) => next(); // no-op em dev/test
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -72,6 +78,9 @@ app.use("/api/orders", orderRoutes);
 
 // Rotas do vendedor monitorar os produtos
 app.use("/api/seller", sellerProductRoutes);
+
+// Rotas de Upload de arquivos (imagens de produtos)
+app.use("/api/upload", uploadRoutes);
 
 
 export default app;

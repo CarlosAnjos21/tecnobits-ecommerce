@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, NavLink, Link } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -7,17 +7,17 @@ import { useAuth } from '../../contexts/AuthContext';
 import Logo from '../Logo';
 import { InputDefault } from '../Input';
 import { useCart } from '../../contexts/CartContext';
-import products from '../../data/products.json';
+// import products from '../../data/products.json'; // substituído por busca via backend
 import { FaRegCircleUser, FaCartShopping, FaRegHeart, FaAngleDown } from 'react-icons/fa6';
 
 const Header = () => {
     const { user, logout } = useAuth();
-    const location = useLocation();
+    // const location = useLocation();
     
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+    const [suggestions, setSuggestions] = useState([]); // reservado para auto-complete futuro
     const [searchHistory, setSearchHistory] = useState(() => {
         return JSON.parse(localStorage.getItem('searchHistory')) || [];
     });
@@ -43,54 +43,30 @@ const Header = () => {
     };
 
     // Verifica se estamos nas páginas de painel (cliente, vendedor, admin)
-    const isDashboardPage = () => {
-        return location.pathname.includes('/cliente/dashboard') || 
-               location.pathname.includes('/vendedor/dashboard') || 
-               location.pathname.includes('/admin/dashboard');
-    };
+    // const isDashboardPage = () => {
+    //     return location.pathname.includes('/cliente/dashboard') || 
+    //            location.pathname.includes('/vendedor/dashboard') || 
+    //            location.pathname.includes('/admin/dashboard');
+    // };
 
-    const handleInputChange = (event) => {
+        const handleInputChange = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
-      
-        if (value.trim().length > 1) {
-          const filtered = products.filter((product) => {
-            const term = value.toLowerCase();
-            return (
-              product.name.toLowerCase().includes(term) ||
-              product.brand?.toLowerCase().includes(term) ||
-              product.category?.toLowerCase().includes(term)
-            );
-          });
-      
-          setSuggestions(filtered);
-        } else {
-          setSuggestions([]);
-        }
+                // Sugestões futuras podem ser carregadas do backend
+                setSuggestions([]);
     };
 
-    const handleSearch = () => {
-        const term = searchTerm.trim().toLowerCase();
-        if (!term) return;
-      
-        const matchedProduct = products.find((product) =>
-          product.name.toLowerCase().includes(term) ||
-          product.brand?.toLowerCase().includes(term) ||
-          product.category?.toLowerCase().includes(term)
-        );
-      
-        if (matchedProduct) {
-          const updatedHistory = [term, ...searchHistory.filter((t) => t !== term)].slice(0, 5);
-          setSearchHistory(updatedHistory);
-          localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
-      
-          navigate(`/produtos/${matchedProduct.id}`);
-        } else {
-          alert('Produto não encontrado.');
-        }
-      
-        setSuggestions([]);
-    };
+        const handleSearch = () => {
+                const term = searchTerm.trim();
+                if (!term) return;
+
+                const updatedHistory = [term.toLowerCase(), ...searchHistory.filter((t) => t !== term.toLowerCase())].slice(0, 5);
+                setSearchHistory(updatedHistory);
+                localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
+
+                navigate(`/produtos?q=${encodeURIComponent(term)}`);
+                setSuggestions([]);
+        };
     
     const handleKeyPress = event => {
         if (event.key === 'Enter') handleSearch();

@@ -1,32 +1,46 @@
 import './Buttons.css';
 
-export const ButtonPrimary = ({ children, className = '', ...props }) => {
+// Remove quaisquer props "transientes" (ex: $mobile, $desktop) para não irem ao DOM
+const sanitizeProps = (props) =>
+  Object.fromEntries(
+    Object.entries(props).filter(([key]) => !key.startsWith('$'))
+  );
+
+export const ButtonPrimary = ({ children, className = '', $mobile, $desktop, ...props }) => {
+  const extraClasses = `${$mobile ? 'mobile ' : ''}${$desktop ? 'desktop ' : ''}`.trim();
+  const safeProps = sanitizeProps(props);
   return (
-    <button className={`btn-primary ${className}`} {...props}>
+    <button className={`btn-primary ${extraClasses} ${className}`.trim()} {...safeProps}>
       {children}
     </button>
   );
 };
 
-export const ButtonSecundary = ({ children, className = '', ...props }) => {
+export const ButtonSecundary = ({ children, className = '', $mobile, $desktop, ...props }) => {
+  const extraClasses = `${$mobile ? 'mobile ' : ''}${$desktop ? 'desktop ' : ''}`.trim();
+  const safeProps = sanitizeProps(props);
   return (
-    <button className={`btn-secondary ${className}`} {...props}>
+    <button className={`btn-secondary ${extraClasses} ${className}`.trim()} {...safeProps}>
       {children}
     </button>
   );
 };
 
-export const ButtonIcon = ({ children, className = '', ...props }) => {
+export const ButtonIcon = ({ children, className = '', $mobile, $desktop, ...props }) => {
+  const extraClasses = `${$mobile ? 'mobile ' : ''}${$desktop ? 'desktop ' : ''}`.trim();
+  const safeProps = sanitizeProps(props);
   return (
-    <button className={`btn-icon ${className}`} {...props}>
+    <button className={`btn-icon ${extraClasses} ${className}`.trim()} {...safeProps}>
       {children}
     </button>
   );
 };
 
-export const ButtonShop = ({ children, className = '', ...props }) => {
+export const ButtonShop = ({ children, className = '', $mobile, $desktop, ...props }) => {
+  const extraClasses = `${$mobile ? 'mobile ' : ''}${$desktop ? 'desktop ' : ''}`.trim();
+  const safeProps = sanitizeProps(props);
   return (
-    <button className={`btn-primary ${className}`} {...props}>
+    <button className={`btn-primary ${extraClasses} ${className}`.trim()} {...safeProps}>
       {children}
     </button>
   );
