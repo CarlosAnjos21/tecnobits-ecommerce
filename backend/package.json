@@ -14,7 +14,8 @@
     "seed:vendor": "node seeds/createVendedor.js",
     "seed:client": "node seeds/createCliente.js",
     "seed:products": "node seeds/createProductsAndCategories.js",
-    "seed:all": "npm run seed:admin && npm run seed:vendor && npm run seed:client && npm run seed:products"
+    "seed:test-orders": "node seeds/createTestOrders.js",
+    "seed:all": "npm run seed:admin && npm run seed:vendor && npm run seed:client && npm run seed:products && npm run seed:test-orders"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
@@ -22,6 +23,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
     "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",

@@ -5,14 +5,31 @@ import orderService from "../services/orderService.js";
  */
 export const listarPedidosDoVendedor = async (req, res) => {
   try {
-    const vendedorId = req.user.id;
+    const vendedorId = req.user?.id;
+    if (!vendedorId) {
+      return res.status(401).json({ message: "Não autenticado" });
+    }
     // Usa versão paginada para suportar page/pageSize vindos da query
     const { page, pageSize, status, from, to, buyerId } = req.query || {};
+
+    // Validação simples de status para evitar 500 por valor inválido (enum)
+    const allowedStatus = [
+      'AGUARDANDO_PAGAMENTO',
+      'PAGAMENTO_CONFIRMADO',
+      'EM_PREPARACAO',
+      'ENVIADO',
+      'ENTREGUE',
+      'CANCELADO',
+      'DEVOLVIDO'
+    ];
+    if (status && !allowedStatus.includes(String(status))) {
+      return res.status(422).json({ message: `Status inválido: ${status}` });
+    }
     const result = await orderService.listSellerOrdersPaginated(vendedorId, { page, pageSize, status, from, to, buyerId });
     res.json(result);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao buscar pedidos do vendedor", details: error.message });
+    console.error("[listarPedidosDoVendedor] erro:", error);
+    res.status(500).json({ message: "Erro ao buscar pedidos do vendedor", details: error?.message });
   }
 };
 

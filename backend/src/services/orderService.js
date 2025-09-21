@@ -305,13 +305,21 @@ class OrderService {
     if (status) where.status = status;
     if (buyerId) where.buyerId = String(buyerId);
     if (from || to) {
-      where.createdAt = {};
-      if (from) where.createdAt.gte = new Date(from);
-      if (to) where.createdAt.lte = new Date(to);
+      const createdAt = {};
+      if (from) {
+        const d = new Date(from);
+        if (!isNaN(d.getTime())) createdAt.gte = d;
+      }
+      if (to) {
+        const d = new Date(to);
+        if (!isNaN(d.getTime())) createdAt.lte = d;
+      }
+      if (Object.keys(createdAt).length > 0) where.createdAt = createdAt;
     }
 
-    const take = Number(pageSize);
-    const skip = (Number(page) - 1) * take;
+    const pageNum = Math.max(1, Number(page) || 1);
+    const take = Math.max(1, Number(pageSize) || 10);
+    const skip = (pageNum - 1) * take;
 
     const [total, orders] = await Promise.all([
       prisma.order.count({ where }),
@@ -333,7 +341,7 @@ class OrderService {
     return {
       data: mapped,
       pagination: {
-        page: Number(page),
+        page: pageNum,
         pageSize: take,
         total,
         totalPages: Math.ceil(total / take) || 1,

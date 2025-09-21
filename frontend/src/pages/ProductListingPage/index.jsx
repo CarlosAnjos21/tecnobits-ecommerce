@@ -16,7 +16,7 @@ const ProductListingPage = () => {
   const [categoriasExpandida, setCategoriasExpandida] = useState({});
   const [sortBy, setSortBy] = useState('mais-relevantes');
   // Paginação
-  const PAGE_SIZE = 9;
+  const PAGE_SIZE = 9; //para pag n ficar tao longa com muitas linhas
   const [currentPage, setCurrentPage] = useState(1);
   // Aplica sortBy inicial baseado na query string
   useEffect(() => {
