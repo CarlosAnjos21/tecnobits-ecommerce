@@ -52,9 +52,12 @@ const BuySuccessPage = () => {
     }
   }, [orderDetails?.id, orderDetails?.items]);
 
-  // Dados pessoais/endereço podem não estar no state antigo; usar os do pedido quando existir
-  const nome = state.nome || undefined;
-  const cpf = state.cpf || undefined;
+  // Dados pessoais: preferir dados do pedido (buyer), com fallback ao state
+  const buyer = order?.buyer || {};
+  const nome = buyer.name || state.nome || undefined;
+  const email = buyer.email || state.email || undefined;
+  const phone = buyer.phone || state.phone || undefined;
+  const cpf = order?.cpf || state.cpf || undefined; // Preferir CPF salvo no pedido; fallback ao state
   // Endereço: preferir string completa do pedido
   const enderecoEntrega = order.enderecoEntrega;
   const cidade = order.cidade || state.cidade;
@@ -120,6 +123,18 @@ const BuySuccessPage = () => {
             <p>
               <span>Nome:</span>
               <strong>{nome}</strong>
+            </p>
+          )}
+          {email && (
+            <p>
+              <span>E-mail:</span>
+              <strong>{email}</strong>
+            </p>
+          )}
+          {phone && (
+            <p>
+              <span>Telefone:</span>
+              <strong>{phone}</strong>
             </p>
           )}
           {cpf && (

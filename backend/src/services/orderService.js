@@ -111,10 +111,11 @@ class OrderService {
           complemento: payload.complemento,
           dataEntregaPrevista,
           estado: payload.estado,
+          cpf: payload.cpf,
           metodoPagamento,
           items: { create: orderItemsDataAtual }
         },
-        include: { items: { include: { product: true } } }
+        include: { items: { include: { product: true } }, buyer: true }
       });
 
       // limpar carrinho

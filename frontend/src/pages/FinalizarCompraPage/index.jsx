@@ -201,7 +201,7 @@ const InformacoesPagamento = ({ formData, setFormData, metodo, setMetodo }) => {
 };
 
 const ResumoPedido = () => {
-  const { cartItems, getCartTotal, clearCart } = useCart();
+  const { cartItems, getCartTotal } = useCart();
 
   if (cartItems.length === 0) {
     return (
@@ -274,7 +274,7 @@ const Confirmacompra = () => {
     cvv: ''
   });
 
-  const { cartItems, getCartTotal, clearCart } = useCart();
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -332,11 +332,7 @@ const Confirmacompra = () => {
       return;
     }
 
-    // Preparar dados para enviar para página de sucesso
-    const subtotal = getCartTotal();
-    const shippingCost = 25.0;
-    const discount = subtotal * 0.5;
-    const total = subtotal + shippingCost - discount;
+  // Preparar dados locais (se necessário no futuro)
 
     // Mapear método de pagamento para enum esperado pelo backend (PaymentMethod)
     const metodoPagamentoEnum = metodoPagamento === 'pix' ? 'PIX' : 'CARTAO_CREDITO';
@@ -351,6 +347,7 @@ const Confirmacompra = () => {
       enderecoEntrega: `${formData.rua}, ${formData.numero} - ${formData.bairro}`,
       complemento: '',
       estado: formData.estado,
+      cpf,
       metodoPagamento: metodoPagamentoEnum,
       dataEntregaPrevista,
     };
