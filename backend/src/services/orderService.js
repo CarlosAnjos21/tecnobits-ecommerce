@@ -161,7 +161,125 @@ class OrderService {
   }
 
   async updateOrderStatus(orderId, status) {
-    return prisma.order.update({ where: { id: String(orderId) }, data: { status } });
+    const next = String(status);
+    const allowedStatuses = [
+      'AGUARDANDO_PAGAMENTO',
+      'PAGAMENTO_CONFIRMADO',
+      'EM_PREPARACAO',
+      'ENVIADO',
+      'ENTREGUE',
+      'CANCELADO',
+      'DEVOLVIDO'
+    ];
+    if (!allowedStatuses.includes(next)) {
+      throw new BadRequestError(`Status inválido: ${next}`);
+    }
+
+    const id = String(orderId);
+    const order = await prisma.order.findUnique({ where: { id }, select: { status: true, statusPagamento: true } });
+    if (!order) throw new NotFoundError('Pedido não encontrado');
+
+    // Máquina de estados simples
+    const canGo = {
+      AGUARDANDO_PAGAMENTO: ['PAGAMENTO_CONFIRMADO', 'CANCELADO'],
+      PAGAMENTO_CONFIRMADO: ['EM_PREPARACAO', 'CANCELADO'],
+      EM_PREPARACAO: ['ENVIADO', 'CANCELADO'],
+      ENVIADO: ['ENTREGUE', 'DEVOLVIDO'],
+      ENTREGUE: ['DEVOLVIDO'],
+      CANCELADO: [],
+      DEVOLVIDO: [],
+    };
+
+    const current = order.status;
+    const allowedNext = canGo[current] || [];
+    if (!allowedNext.includes(next)) {
+      throw new ConflictError(`Transição de status não permitida: ${current} -> ${next}`);
+    }
+
+    // Ajuste de statusPagamento coerente
+    let statusPagamento = order.statusPagamento;
+    if (next === 'PAGAMENTO_CONFIRMADO' || next === 'EM_PREPARACAO' || next === 'ENVIADO' || next === 'ENTREGUE') {
+      statusPagamento = 'PAGO';
+    }
+    if (next === 'CANCELADO') {
+      statusPagamento = 'CANCELADO';
+    }
+    if (next === 'DEVOLVIDO') {
+      statusPagamento = 'REEMBOLSADO';
+    }
+
+    return prisma.order.update({ where: { id }, data: { status: next, statusPagamento } });
+  }
+
+  /**
+   * Métricas agregadas para ADMIN.
+   * Filtros: status, from, to, buyerId.
+   * Retorna: totalPedidos, totalItens, faturamentoTotal, statusBreakdown {status: count}.
+   */
+  async getAdminMetrics({ status, from, to, buyerId }) {
+    const where = {};
+    if (status) where.status = String(status);
+    if (buyerId) where.buyerId = String(buyerId);
+    if (from || to) {
+      where.createdAt = {};
+      if (from) where.createdAt.gte = new Date(from);
+      if (to) where.createdAt.lte = new Date(to);
+    }
+
+    const orders = await prisma.order.findMany({
+      where,
+      include: { items: true },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    const totalPedidos = orders.length;
+    const totalItens = orders.reduce((acc, o) => acc + o.items.reduce((a, it) => a + it.quantity, 0), 0);
+    const faturamentoTotal = orders.reduce((acc, o) => acc + Number(o.total || 0), 0);
+    const statusBreakdown = orders.reduce((map, o) => {
+      map[o.status] = (map[o.status] || 0) + 1;
+      return map;
+    }, {});
+
+    return { totalPedidos, totalItens, faturamentoTotal, statusBreakdown };
+  }
+
+  /**
+   * Métricas agregadas para VENDEDOR (ou admin com sellerId).
+   * Filtros: status, from, to.
+   * Retorna: totalPedidosSeller, totalItensSeller, totalFaturadoSeller, statusBreakdown (por pedidos com itens do seller).
+   */
+  async getSellerMetrics(sellerId, { status, from, to, buyerId }) {
+    const where = {
+      items: { some: { product: { sellerId: String(sellerId) } } }
+    };
+    if (status) where.status = String(status);
+    if (buyerId) where.buyerId = String(buyerId);
+    if (from || to) {
+      const createdAt = {};
+      if (from) createdAt.gte = new Date(from);
+      if (to) createdAt.lte = new Date(to);
+      where.createdAt = createdAt;
+    }
+
+    const orders = await prisma.order.findMany({
+      where,
+      include: { items: { include: { product: true } } },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    const totalPedidosSeller = orders.length;
+    let totalItensSeller = 0;
+    let totalFaturadoSeller = 0;
+    const statusBreakdown = {};
+
+    for (const o of orders) {
+      statusBreakdown[o.status] = (statusBreakdown[o.status] || 0) + 1;
+      const sellerItems = o.items.filter((it) => it.product?.sellerId === String(sellerId));
+      totalItensSeller += sellerItems.reduce((a, it) => a + it.quantity, 0);
+      totalFaturadoSeller += sellerItems.reduce((a, it) => a + Number(it.price) * it.quantity, 0);
+    }
+
+    return { totalPedidosSeller, totalItensSeller, totalFaturadoSeller, statusBreakdown };
   }
 
   /**

@@ -123,3 +123,45 @@ export const cancelarPedido = async (req, res) => {
     res.status(status).json({ error: "Erro ao cancelar pedido", details: error?.message, code });
   }
 };// vini - fim
+
+/**
+ * Confirmar pagamento (admin)
+ */
+export const confirmarPagamento = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await orderService.updateOrderStatus(id, 'PAGAMENTO_CONFIRMADO');
+    res.json(order);
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    res.status(status).json({ error: 'Erro ao confirmar pagamento', details: error?.message });
+  }
+};
+
+/**
+ * Métricas admin
+ */
+export const obterMetricasAdmin = async (req, res) => {
+  try {
+    const metrics = await orderService.getAdminMetrics(req.query || {});
+    res.json(metrics);
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    res.status(status).json({ error: 'Erro ao obter métricas', details: error?.message });
+  }
+};
+
+/**
+ * Métricas do vendedor logado
+ */
+export const obterMetricasVendedor = async (req, res) => {
+  try {
+    const vendedorId = req.user?.id;
+    if (!vendedorId) return res.status(401).json({ message: 'Não autenticado' });
+    const metrics = await orderService.getSellerMetrics(vendedorId, req.query || {});
+    res.json(metrics);
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    res.status(status).json({ error: 'Erro ao obter métricas do vendedor', details: error?.message });
+  }
+};

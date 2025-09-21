@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './PaginaVendedor.module.css';
 import StatusTag from '../../components/StatusTag';
-import { getSellerOrders } from '../../services/orderService';
+import { getSellerOrders, getSellerMetrics } from '../../services/orderService';
 import { useAuth } from '../../contexts/AuthContext';
 
 // Este componente cuida apenas da seção "Minhas Vendas Recentes"
@@ -10,6 +10,7 @@ const VendasRecentes = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [metrics, setMetrics] = useState(null);
 
     // Filtros
     const [status, setStatus] = useState('');
@@ -49,6 +50,9 @@ const VendasRecentes = () => {
                     setOrders(Array.isArray(arr) ? arr : []);
                     setServerPagination(resp?.pagination || null);
                 }
+                // buscar métricas do vendedor com mesmos filtros de período/status
+                const met = await getSellerMetrics({ status, from, to, buyerId });
+                setMetrics(met);
             } catch (err) {
                 console.error('Erro ao carregar vendas do vendedor:', err);
                 setError(err?.response?.data?.message || err.message || 'Erro ao carregar vendas');
@@ -57,13 +61,11 @@ const VendasRecentes = () => {
             }
         };
         fetchOrders();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user?.id, currentPage, status, from, to, buyerId]);
 
     // Resetar para página 1 quando filtros mudarem
     useEffect(() => {
         setCurrentPage(1);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, from, to, buyerId]);
 
     const totalPages = useMemo(() => {
@@ -126,6 +128,24 @@ const VendasRecentes = () => {
                     <span>Valor</span>
                     <span>Status</span>
                 </div>
+                {/* Cards de métricas */}
+                {metrics && (
+                    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', margin: '12px 0' }}>
+                        <div className={styles.metricCard}>
+                            <div className={styles.metricTitle}>Pedidos</div>
+                            <div className={styles.metricValue}>{metrics.totalPedidosSeller ?? '—'}</div>
+                        </div>
+                        <div className={styles.metricCard}>
+                            <div className={styles.metricTitle}>Itens vendidos</div>
+                            <div className={styles.metricValue}>{metrics.totalItensSeller ?? '—'}</div>
+                        </div>
+                        <div className={styles.metricCard}>
+                            <div className={styles.metricTitle}>Faturamento</div>
+                            <div className={styles.metricValue}>R$ {(Number(metrics.totalFaturadoSeller || 0)).toFixed(2)}</div>
+                        </div>
+                    </div>
+                )}
+
                 {loading ? (
                     <div className={styles.loading}>Carregando vendas...</div>
                 ) : error ? (
@@ -137,7 +157,13 @@ const VendasRecentes = () => {
                         <div key={order.id} className={styles.saleItem}>
                             <span>{order.items?.[0]?.product?.title || '—'}</span>
                             <span>{new Date(order.createdAt).toLocaleDateString('pt-BR')}</span>
-                            <span>R$ {(order.totalVendedor ?? order.items?.reduce((acc, it) => acc + Number(it.price) * it.quantity, 0)).toFixed(2)}</span>
+                            <span>R$ {(
+                                typeof order.totalVendedor === 'number'
+                                  ? order.totalVendedor
+                                  : Array.isArray(order.items)
+                                    ? order.items.reduce((acc, it) => acc + Number(it?.price || 0) * (it?.quantity || 0), 0)
+                                    : 0
+                              ).toFixed(2)}</span>
                             <StatusTag status={order.status} />
                         </div>
                     ))

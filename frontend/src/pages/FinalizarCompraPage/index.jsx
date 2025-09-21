@@ -213,8 +213,10 @@ const ResumoPedido = () => {
   }
 
   const subtotal = getCartTotal();
-  const shippingCost = 25.0;
-  const discount = subtotal * 0.5;
+  const SHIPPING_COST = 25.0; // ajuste conforme necessário
+  const DISCOUNT_PERCENTAGE = 0.0; // ajuste conforme necessário
+  const shippingCost = SHIPPING_COST;
+  const discount = subtotal * DISCOUNT_PERCENTAGE;
   const total = subtotal + shippingCost - discount;
 
   const formatCurrency = (value) =>

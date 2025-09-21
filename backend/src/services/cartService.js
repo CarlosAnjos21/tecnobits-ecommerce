@@ -15,7 +15,7 @@ class CartService {
     if (!productId) throw new BadRequestError("productId é obrigatório");
     if (!Number.isInteger(quantity) || quantity <= 0) throw new BadRequestError("quantity inválido");
 
-    // Verificar produto
+    // Verificar produto (estoque mínimo para a operação atual)
     await productService.ensureStock(productId, quantity);
 
     // Criar ou obter carrinho
@@ -26,12 +26,15 @@ class CartService {
     });
 
     // Verificar se item já existe
-  const existingItem = await prisma.cartItem.findFirst({ where: { cartId: cart.id, productId: String(productId) } });
+    const existingItem = await prisma.cartItem.findFirst({ where: { cartId: cart.id, productId: String(productId) } });
 
     if (existingItem) {
+      // Validar estoque considerando a soma (quantidade atual + nova)
+      const newTotal = existingItem.quantity + quantity;
+      await productService.ensureStock(productId, newTotal);
       return prisma.cartItem.update({
         where: { id: existingItem.id },
-        data: { quantity: existingItem.quantity + quantity }
+        data: { quantity: newTotal }
       });
     }
 

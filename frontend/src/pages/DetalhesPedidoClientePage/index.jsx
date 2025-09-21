@@ -3,10 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import styles from './DetalhesPedidoClientePage.module.css'; 
 import { FaBox, FaCreditCard, FaMapPin, FaRegCalendarAlt } from 'react-icons/fa';
 import StatusTag from '../../components/StatusTag';
-import { getOrderById, cancelOrder } from '../../services/orderService';
+import { getOrderById, cancelOrder, confirmPayment } from '../../services/orderService';
+import { useAuth } from '../../contexts/AuthContext';
 
 const DetalhesPedidoClientePage = () => {
-        const { id } = useParams();
+    const { id } = useParams();
+    const { isAdmin } = useAuth();
         const [order, setOrder] = useState(null);
         const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -68,6 +70,16 @@ const DetalhesPedidoClientePage = () => {
         }
     };
 
+    const onConfirmPayment = async () => {
+        try {
+            const updated = await confirmPayment(order.id);
+            setOrder(updated);
+        } catch (err) {
+            const msg = err?.response?.data?.details || 'Não foi possível confirmar o pagamento.';
+            alert(msg);
+        }
+    };
+
     // Usa o componente StatusTag compartilhado
 
     return (
@@ -111,6 +123,18 @@ const DetalhesPedidoClientePage = () => {
                     title="Cancelar este pedido"
                 >
                     {cancelLoading ? 'Cancelando...' : 'Cancelar pedido'}
+                </button>
+            )}
+
+            {/* Ação de admin: confirmar pagamento */}
+            {isAdmin && order.status === 'AGUARDANDO_PAGAMENTO' && (
+                <button
+                    className={styles.cancelButton}
+                    onClick={onConfirmPayment}
+                    title="Confirmar pagamento"
+                    style={{ background: '#007b55' }}
+                >
+                    Confirmar Pagamento
                 </button>
             )}
 
