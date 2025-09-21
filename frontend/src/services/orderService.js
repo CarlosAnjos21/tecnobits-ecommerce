@@ -24,4 +24,10 @@ export const cancelOrder = async (id) => {
   return response.data;
 };
 
+// Vendedor: lista pedidos que contenham seus produtos (pode aceitar page, pageSize, status, etc.)
+export const getSellerOrders = async (params = {}) => {
+  const response = await api.get('/orders/seller-orders', { params });
+  return response.data; // pode ser um array (sem paginação) ou { data, pagination }
+};
+
 

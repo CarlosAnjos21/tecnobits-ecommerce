@@ -1,20 +1,20 @@
+import orderService from "../services/orderService.js";
+
 /**
  * Listar pedidos que contenham produtos do vendedor logado
  */
 export const listarPedidosDoVendedor = async (req, res) => {
   try {
     const vendedorId = req.user.id;
-    // Busca pedidos que tenham pelo menos um item de produto do vendedor
-    const pedidos = await orderService.listOrdersBySeller(vendedorId, req.query);
-    res.json(pedidos);
+    // Usa versão paginada para suportar page/pageSize vindos da query
+    const { page, pageSize, status, from, to, buyerId } = req.query || {};
+    const result = await orderService.listSellerOrdersPaginated(vendedorId, { page, pageSize, status, from, to, buyerId });
+    res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erro ao buscar pedidos do vendedor", details: error.message });
   }
 };
-
-
-import orderService from "../services/orderService.js";
 
 /**
  * Criar um novo pedido a partir do carrinho do usuário

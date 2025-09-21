@@ -1,4 +1,6 @@
 import express from 'express';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
@@ -17,6 +19,19 @@ import sellerProductRoutes from "./src/routes/sellerProductRoutes.js";
 
 const app = express();
 
+// Hardening básico
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' }, // permitir servir imagens a partir de /uploads
+}));
+
+// Rate limit focado em endpoints sensíveis
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 min
+    max: 100, // até 100 req/15min por IP
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
@@ -29,7 +44,7 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, 'src', 'uploads')));
 
 // Rotas de Autenticação e Perfil (públicas e privadas)
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authLimiter, authRoutes);
 
 // Rotas de Gerenciamento de Usuários (apenas admin)
 app.use('/api/users', userRoutes);

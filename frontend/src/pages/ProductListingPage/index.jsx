@@ -15,6 +15,9 @@ const ProductListingPage = () => {
   const [selectedFilters, setSelectedFilters] = useState({ categoriaMarca: {}, emEstoque: false });
   const [categoriasExpandida, setCategoriasExpandida] = useState({});
   const [sortBy, setSortBy] = useState('mais-relevantes');
+  // Paginação
+  const PAGE_SIZE = 9;
+  const [currentPage, setCurrentPage] = useState(1);
   // Aplica sortBy inicial baseado na query string
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -135,6 +138,15 @@ const ProductListingPage = () => {
 
   const filteredProducts = applyFiltersAndSort();
 
+  // Resetar página quando filtros/ordenação mudarem
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [JSON.stringify(selectedFilters), sortBy]);
+
+  // Itens da página corrente
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
+  const pageItems = filteredProducts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   const filtrosPorCategoria = categoriasDisponiveis.reduce((acc, categoria) => {
     const produtosDaCategoria = products.filter(
       p => p.category === categoria && marcasDesejadas.includes(p.brand) && (!selectedFilters.emEstoque || p.inStock)
@@ -236,7 +248,31 @@ const ProductListingPage = () => {
                 <button onClick={fetchProducts}>Tentar novamente</button>
               </div>
             ) : (
-              <ProductListing $isPageProducts products={filteredProducts} />
+              <>
+                <ProductListing isPageProducts products={pageItems} />
+                {totalPages > 1 && (
+                  <div style={{ display: 'flex', gap: 8, marginTop: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        disabled={currentPage === page}
+                        style={{
+                          padding: '8px 12px',
+                          borderRadius: 6,
+                          border: '1px solid #ddd',
+                          background: currentPage === page ? '#333' : '#fff',
+                          color: currentPage === page ? '#fff' : '#333',
+                          cursor: currentPage === page ? 'default' : 'pointer'
+                        }}
+                        aria-current={currentPage === page ? 'page' : undefined}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </main>
         </div>

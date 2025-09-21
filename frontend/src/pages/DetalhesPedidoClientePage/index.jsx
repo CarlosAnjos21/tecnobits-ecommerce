@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import styles from './DetalhesPedidoClientePage.module.css'; 
 import { FaBox, FaCreditCard, FaMapPin, FaRegCalendarAlt } from 'react-icons/fa';
+import StatusTag from '../../components/StatusTag';
 import { getOrderById, cancelOrder } from '../../services/orderService';
 
 const DetalhesPedidoClientePage = () => {
@@ -67,6 +68,8 @@ const DetalhesPedidoClientePage = () => {
         }
     };
 
+    // Usa o componente StatusTag compartilhado
+
     return (
         <div className={styles.container}>
             <Link to="/cliente/dashboard" className={styles.backLink}>&larr; Voltar para a lista</Link>
@@ -92,7 +95,7 @@ const DetalhesPedidoClientePage = () => {
                 <div className={styles.summaryCard}>
                     <FaBox className={styles.icon} />
                     <strong>Status do Pedido</strong>
-                    <span className={styles.status}>{order.status}</span>
+                    <StatusTag status={order.status} />
                 </div>
             </div>
 

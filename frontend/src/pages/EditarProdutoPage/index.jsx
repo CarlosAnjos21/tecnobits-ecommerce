@@ -55,7 +55,7 @@ const EditarProdutoPage = () => {
                 stock: product.stock
             });
             alert("Produto atualizado com sucesso!");
-            navigate('/vendedor');
+            navigate('/vendedor/dashboard', { state: { sellerTab: 'produtos', flash: 'Produto atualizado com sucesso!' } });
         } catch (err) {
             console.error('Erro ao salvar produto:', err);
             alert('Erro ao salvar produto: ' + err.message);
@@ -75,7 +75,7 @@ const EditarProdutoPage = () => {
                 <div className={styles.error}>
                     <h2>Erro</h2>
                     <p>{error}</p>
-                    <button onClick={() => navigate('/vendedor')} className={styles.backButton}>
+                    <button onClick={() => navigate('/vendedor/dashboard', { state: { sellerTab: 'produtos' } })} className={styles.backButton}>
                         Voltar ao Painel
                     </button>
                 </div>
@@ -147,7 +147,7 @@ const EditarProdutoPage = () => {
                         <button 
                             type="button" 
                             className={styles.cancelButton} 
-                            onClick={() => navigate('/vendedor')}
+                            onClick={() => navigate('/vendedor/dashboard', { state: { sellerTab: 'produtos' } })}
                             disabled={saving}
                         >
                             Cancelar
