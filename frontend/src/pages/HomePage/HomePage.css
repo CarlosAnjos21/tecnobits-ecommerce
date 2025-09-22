@@ -1,6 +1,7 @@
 /* Seção Marketing Bottom */
 .banner {
   width: 100%;
+  padding-top: 200px;
   height: 512px;
   display: flex;
   align-items: center;
@@ -79,7 +80,6 @@
   margin-top: 10px;
 }
 
-
 /* Responsividade para Marketing Bottom */
 @media (max-width: 1366px) and (min-width: 1025px) {
   .container-bottom {
@@ -157,6 +157,14 @@
 }
 
 @media (max-width: 460px) {
+  .banner {
+    width: 100%;
+    padding-top: 100px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
   .container-bottom {
     width: 100%;
     min-height: 250px;
