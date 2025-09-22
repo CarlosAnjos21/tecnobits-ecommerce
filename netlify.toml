@@ -1,0 +1,10 @@
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "frontend/dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Ajuste em Config > Environment variables do site na Netlify
+  # VITE_API_URL deve apontar para a URL pública do backend em produção
+  VITE_API_URL = "http://localhost:3001"

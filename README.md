@@ -3,7 +3,7 @@
 Bem-vindo ao repositório final do projeto de e-commerce da equipe Hardware (Capacita Brasil). Este monorepo contém o frontend (React + Vite) e o backend (Node.js + Express + Prisma) de uma loja de componentes de hardware com autenticação de usuários, gestão de produtos, carrinho, pedidos e fluxo de vendedores.
 
 - Repositório: daniolivem/projeto-inter-capacita
-- Branch: develop
+- Branch: main
 - Data: 22/09/2025
 
 ## Sumário
@@ -217,3 +217,62 @@ Estruturas:
 
 ## Licença
 MIT – ver arquivo LICENSE se aplicável.
+
+---
+
+## 📦 Deploy na Netlify (Frontend)
+
+Este projeto está preparado para hospedagem do frontend como SPA na Netlify.
+
+Arquivos adicionados/ajustados:
+- `netlify.toml` na raiz (build em `frontend/`, publish `frontend/dist`).
+- `frontend/public/_redirects` com `/* /index.html 200` (SPA fallback).
+
+Build settings (Netlify → Site settings → Build & deploy):
+- Base directory: `frontend`
+- Build command: `npm run build`
+- Publish directory: `frontend/dist`
+
+Environment variables (Netlify → Site settings → Environment):
+- `VITE_API_URL`: URL pública do backend (ex.: `https://api.seu-dominio.com` ou `https://seu-backend.onrender.com`).
+- (Opcional) `NODE_VERSION`: `20`.
+
+No backend, o CORS aceita um domínio configurável via `.env`:
+- `FRONTEND_URL=https://seu-site-na-netlify.netlify.app` (ou seu domínio customizado)
+
+Checklist de Deploy:
+1. Faça o deploy do backend e obtenha a URL pública.
+2. Configure `FRONTEND_URL` no `.env` do backend e reinicie o servidor.
+3. Na Netlify, defina `VITE_API_URL` com a URL pública do backend.
+4. Conecte o repositório GitHub na Netlify e dispare o build.
+5. Teste login, navegação (rotas SPA) e chamadas à API.
+
+---
+
+## 🚀 Deploy do Backend (Render/Railway)
+
+Este repositório inclui um exemplo de configuração para Render (`render.yaml`). Alternativas como Railway ou VPS também funcionam.
+
+### Render.com (Blueprint)
+- Arquivo: `render.yaml`
+- Cria um serviço web Node e um banco Postgres free.
+- Ajustes necessários após criação do site na Netlify:
+  - Defina `FRONTEND_URL` com a URL do seu site (Netlify/domínio próprio).
+
+Comandos de build/start (já no arquivo):
+- build: `npm install && cd backend && npm install && npx prisma generate && npx prisma migrate deploy`
+- start: `cd backend && node server.js`
+
+Variáveis de ambiente no backend:
+- `PORT` (3001)
+- `DATABASE_URL` (Render injeta se usar o Postgres criado pelo blueprint)
+- `JWT_SECRET`, `JWT_EXPIRES_IN`
+- `FRONTEND_URL` (ex.: `https://seu-site.netlify.app`)
+
+### Railway.app (alternativa)
+1. Crie um projeto e adicione um serviço Node apontando para o repo.
+2. Configure a pasta de trabalho (Working directory) para `backend/`.
+3. Configure build command: `npm install && npx prisma generate && npx prisma migrate deploy`.
+4. Start command: `node server.js`.
+5. Adicione as variáveis de ambiente (`DATABASE_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `FRONTEND_URL`).
+6. Crie um Postgres no Railway e copie a connection string para `DATABASE_URL`.
