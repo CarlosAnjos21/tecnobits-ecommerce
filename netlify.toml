@@ -1,7 +1,7 @@
 [build]
   base = "frontend"
-  # Use npm install (em vez de ci) para não depender de package-lock específico no subprojeto
-  command = "npm install && npm run build"
+  # Força Rollup a usar implementação JS para evitar falhas de optional deps (@rollup/rollup-*)
+  command = "ROLLUP_SKIP_NODEJS_NATIVE=true npm ci && ROLLUP_SKIP_NODEJS_NATIVE=true npm run build"
   # publish é relativo ao base
   publish = "dist"
 
