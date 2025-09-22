@@ -4,7 +4,7 @@ import rateLimit from 'express-rate-limit';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
-import { FRONTEND_URL } from './src/config/env.js';
+import { FRONTEND_URL, CORS_ORIGINS } from './src/config/env.js';
 import authRoutes from './src/routes/authRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
@@ -39,8 +39,20 @@ const authLimiter = isProd
         })
     : (req, res, next) => next(); // no-op em dev/test
 
+const allowedOrigins = new Set([FRONTEND_URL, 'http://localhost:5173', ...CORS_ORIGINS]);
 app.use(cors({
-    origin: [FRONTEND_URL, 'http://localhost:5173'],
+    origin: (origin, callback) => {
+        // Permite requests sem origin (ex.: Postman, curl)
+        if (!origin) return callback(null, true);
+        // Aceita correspondência exata da lista
+        if (allowedOrigins.has(origin)) return callback(null, true);
+        // Aceita qualquer subdomínio *.vercel.app (útil para URLs de preview)
+        try {
+            const host = new URL(origin).host;
+            if (host.endsWith('.vercel.app')) return callback(null, true);
+        } catch (_) {}
+        return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true
 }));
 app.use(express.json());
