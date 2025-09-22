@@ -116,17 +116,13 @@
   display: flex;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
-  width: 100%;
+  width: 80%;
   padding: 10px;
   box-sizing: border-box;
+  align-content: center;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-.products-grid #div #button{
-  margin-top: 10px;
-  color: rgb(255, 0, 0)
 }
 
 /* Cards individuais */
@@ -148,19 +144,21 @@
   transform: translateY(-4px);
 }
 
+.card-buy-btn-wrapper {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 /* ===== Responsividade ===== */
 
 
-@media (max-width: 4000px) {
+@media (max-width: 7000px) {
   .products-grid {  
-    display: flex;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    width: 100%;
-    padding: 10px;
     box-sizing: border-box;
     align-content: center;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
