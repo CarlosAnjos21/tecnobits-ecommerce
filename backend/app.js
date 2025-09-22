@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 import { FRONTEND_URL, CORS_ORIGINS } from './src/config/env.js';
+import fs from 'fs';
 import authRoutes from './src/routes/authRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
@@ -94,6 +95,18 @@ app.use("/api/seller", sellerProductRoutes);
 
 // Rotas de Upload de arquivos (imagens de produtos)
 app.use("/api/upload", uploadRoutes);
+
+// Servir o frontend buildado (quando existir) e fallback SPA para rotas do React
+// Evita 404 ao acessar rotas como /admin/login diretamente pelo backend
+const frontendDist = path.resolve(__dirname, "..", "frontend", "dist");
+const indexHtml = path.join(frontendDist, "index.html");
+if (fs.existsSync(indexHtml)) {
+    app.use(express.static(frontendDist));
+    app.get("*", (req, res, next) => {
+        if (req.path.startsWith("/api") || req.path.startsWith("/uploads")) return next();
+        res.sendFile(indexHtml);
+    });
+}
 
 
 export default app;
