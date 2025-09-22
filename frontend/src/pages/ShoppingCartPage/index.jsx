@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // Adicione useState e useEffect
+import React, { useState } from 'react';
 import './ShoppingCartPage.css';
 import { useCart } from '../../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
@@ -54,8 +54,8 @@ const ShoppingCartPage = () => {
 
   // Recalcula o total sempre que o subtotal ou o custo do frete mudar
   // Adicione o desconto aqui se ele for fixo ou baseado apenas no subtotal
-  const discountPercentage = 0.50; // Ex: 50% de desconto sobre o subtotal
-  const discount = subtotal * discountPercentage;
+  const DISCOUNT_PERCENTAGE = 0.0; // Ajuste aqui se quiser aplicar desconto
+  const discount = subtotal * DISCOUNT_PERCENTAGE;
   const total = subtotal + shippingCost - discount;
 
   const handleContinueShopping = () => {

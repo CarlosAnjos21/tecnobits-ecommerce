@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import productService from "./productService.js";
+import { BadRequestError, NotFoundError } from "../utils/AppError.js";
 const prisma = new PrismaClient();
 
 class CartService {
@@ -11,10 +12,10 @@ class CartService {
   }
 
   async addItem(userId, { productId, quantity }) {
-    if (!productId) throw new Error("productId é obrigatório");
-    if (!Number.isInteger(quantity) || quantity <= 0) throw new Error("quantity inválido");
+    if (!productId) throw new BadRequestError("productId é obrigatório");
+    if (!Number.isInteger(quantity) || quantity <= 0) throw new BadRequestError("quantity inválido");
 
-    // Verificar produto
+    // Verificar produto (estoque mínimo para a operação atual)
     await productService.ensureStock(productId, quantity);
 
     // Criar ou obter carrinho
@@ -28,9 +29,12 @@ class CartService {
     const existingItem = await prisma.cartItem.findFirst({ where: { cartId: cart.id, productId: String(productId) } });
 
     if (existingItem) {
+      // Validar estoque considerando a soma (quantidade atual + nova)
+      const newTotal = existingItem.quantity + quantity;
+      await productService.ensureStock(productId, newTotal);
       return prisma.cartItem.update({
         where: { id: existingItem.id },
-        data: { quantity: existingItem.quantity + quantity }
+        data: { quantity: newTotal }
       });
     }
 
@@ -38,10 +42,10 @@ class CartService {
   }
 
   async updateItem(userId, itemId, quantity) {
-    if (!Number.isInteger(quantity) || quantity <= 0) throw new Error("quantity inválido");
+    if (!Number.isInteger(quantity) || quantity <= 0) throw new BadRequestError("quantity inválido");
     // garantir que item pertence ao carrinho do user
     const item = await prisma.cartItem.findUnique({ where: { id: String(itemId) }, include: { cart: true } });
-    if (!item || item.cart.userId !== userId) throw new Error("Item não encontrado no seu carrinho");
+    if (!item || item.cart.userId !== userId) throw new NotFoundError("Item não encontrado no seu carrinho");
 
     // validar estoque atualizado
     await productService.ensureStock(item.productId, quantity);
@@ -51,7 +55,7 @@ class CartService {
 
   async removeItem(userId, itemId) {
     const item = await prisma.cartItem.findUnique({ where: { id: String(itemId) }, include: { cart: true } });
-    if (!item || item.cart.userId !== userId) throw new Error("Item não encontrado no seu carrinho");
+    if (!item || item.cart.userId !== userId) throw new NotFoundError("Item não encontrado no seu carrinho");
 
     await prisma.cartItem.delete({ where: { id: String(itemId) } });
     return { success: true };

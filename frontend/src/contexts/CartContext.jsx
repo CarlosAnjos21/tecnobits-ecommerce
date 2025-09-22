@@ -5,6 +5,9 @@ const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
 
+// Base do backend configurável
+const API_BASE = (import.meta.env.VITE_API_URL?.replace(/\/$/, '') || 'http://localhost:3001');
+
 // Função auxiliar para fazer chamadas API
 const apiCall = async (url, options = {}) => {
   const token = localStorage.getItem('authToken'); // Corrigido: era 'token', deve ser 'authToken'
@@ -16,7 +19,7 @@ const apiCall = async (url, options = {}) => {
     },
   };
 
-  const response = await fetch(`http://localhost:3001/api${url}`, {
+  const response = await fetch(`${API_BASE}/api${url}`, {
     ...defaultOptions,
     ...options,
     headers: {
@@ -26,7 +29,18 @@ const apiCall = async (url, options = {}) => {
   });
 
   if (!response.ok) {
-    throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
+    let details;
+    try {
+      const data = await response.json();
+      details = data?.details || data?.error;
+    } catch {
+      // ignore JSON parse error
+    }
+    const err = new Error(`Erro na API: ${response.status} ${response.statusText}${details ? ` - ${details}` : ''}`);
+    // anexar infos úteis
+    err.status = response.status;
+    err.details = details;
+    throw err;
   }
 
   return response.json();
@@ -40,6 +54,18 @@ export const CartProvider = ({ children }) => {
 
   // Carregar carrinho do servidor
   const loadCartFromServer = async () => {
+    // Evita chamada se não estiver autenticado ou sem token
+    const token = localStorage.getItem('authToken');
+    if (!isAuthenticated || !user || !token) {
+      const localData = localStorage.getItem('cartItems');
+      if (localData) {
+        setCartItems(JSON.parse(localData));
+      } else {
+        setCartItems([]);
+      }
+      setIsInitialized(true);
+      return;
+    }
     try {
       setIsLoading(true);
       const data = await apiCall('/cart');
@@ -56,7 +82,12 @@ export const CartProvider = ({ children }) => {
 
       setCartItems(transformedItems);
     } catch (error) {
-      console.error('❌ Erro ao carregar carrinho:', error);
+      // Evita barulho no console para 401 (ex.: token expirado)
+      if (error?.status === 401) {
+        console.warn('Carrinho não carregado (401). Usuário precisa se autenticar novamente.');
+      } else {
+        console.error('❌ Erro ao carregar carrinho:', error);
+      }
       // Fallback para localStorage se falhar
       const localData = localStorage.getItem('cartItems');
       if (localData) {
@@ -71,6 +102,12 @@ export const CartProvider = ({ children }) => {
   // Sincronizar carrinho local com servidor
   const syncCartWithServer = async () => {
     if (!isInitialized) return;
+
+    const token = localStorage.getItem('authToken');
+    if (!isAuthenticated || !user || !token) {
+      // Sem autenticação, não tenta sincronizar
+      return;
+    }
 
     try {
       // Buscar carrinho atual do servidor
@@ -126,14 +163,16 @@ export const CartProvider = ({ children }) => {
       await loadCartFromServer();
     } catch (error) {
       console.error('❌ Erro ao adicionar item ao carrinho:', error);
-      if (error.message?.includes('401') || error.message?.includes('Unauthorized')) {
+      if (error.status === 401 || error.message?.includes('401') || error.message?.includes('Unauthorized')) {
         alert('Erro de autenticação. Faça login novamente.');
-      } else if (error.message?.includes('404')) {
+      } else if (error.status === 404 || error.message?.includes('404')) {
         alert('Produto não encontrado.');
-      } else if (error.message?.includes('400')) {
+      } else if (error.status === 400 || error.message?.includes('400')) {
         alert('Dados inválidos. Verifique o produto.');
+      } else if (error.status === 409 || error.message?.includes('409') || error.details?.toLowerCase?.().includes('estoque')) {
+        alert(error.details || 'Estoque insuficiente.');
       } else {
-        alert('Erro ao adicionar produto ao carrinho. Tente novamente.');
+        alert(error.details || 'Erro ao adicionar produto ao carrinho. Tente novamente.');
       }
       throw error;
     }

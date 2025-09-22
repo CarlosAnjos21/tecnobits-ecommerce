@@ -14,21 +14,10 @@ const MeusProdutos = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const token = localStorage.getItem('authToken');
-                const response = await fetch(`http://localhost:3001/api/products/seller/${user.id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Falha ao carregar produtos');
-                }
-
-                const data = await response.json();
+                const data = await getSellerProducts(user.id);
                 setProducts(data);
             } catch (err) {
-                setError(err.message);
+                setError(err.message || 'Falha ao carregar produtos');
             } finally {
                 setLoading(false);
             }

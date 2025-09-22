@@ -1,7 +1,11 @@
 /*Página de cadastro dos produtos*/
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './CadastroProdutosPage.module.css';
 import { useNavigate } from 'react-router-dom';
+import { uploadProductImage } from '../../services/uploadService';
+import { createProduct } from '../../services/productService';
+import { getCategories, createCategory } from '../../services/categoryService';
+import { useAuth } from '../../contexts/AuthContext';
 
 const CadastroProdutosPage = () => {
   const navigate = useNavigate();
@@ -14,6 +18,22 @@ const CadastroProdutosPage = () => {
   });
   const [productImage, setProductImage] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [creatingCategory, setCreatingCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const { isAdmin } = useAuth();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const list = await getCategories();
+        setCategories(list || []);
+      } catch (err) {
+        console.error('Erro ao carregar categorias:', err);
+      }
+    })();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,17 +46,40 @@ const CadastroProdutosPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!productData.title || !productData.price || !productImage) {
-      setError('Por favor, preencha todos os campos obrigatórios e adicione uma imagem.');
+      setError('Por favor, preencha título, preço e selecione uma imagem.');
       return;
     }
     setError('');
-    
-    console.log('Dados do produto para enviar:', { ...productData, image: productImage.name });
-    alert('Produto cadastrado com sucesso! (Simulação)');
-    navigate('/vendedor/dashboard'); // Volta para o painel após salvar
+    setLoading(true);
+
+    try {
+      // 1) Upload da imagem
+      const up = await uploadProductImage(productImage);
+      const imagePath = up?.path ? up.path : up?.filename ? `/uploads/products/${up.filename}` : '';
+
+      // 2) Monta payload para API de produto
+      const payload = {
+        title: productData.title,
+        description: productData.description || '',
+        price: parseFloat(productData.price),
+        stock: parseInt(productData.stock || '0', 10),
+        images: imagePath ? [imagePath] : [],
+        categoryId: productData.category ? String(productData.category) : undefined,
+      };
+
+      const created = await createProduct(payload);
+      alert('Produto cadastrado com sucesso!');
+      navigate('/vendedor/dashboard', { state: { sellerTab: 'produtos', flash: 'Produto cadastrado com sucesso!' } });
+    } catch (err) {
+      console.error('Erro ao cadastrar produto:', err?.response?.data || err);
+      const msg = err?.response?.data?.error || err?.message || 'Falha ao cadastrar produto';
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -95,6 +138,58 @@ const CadastroProdutosPage = () => {
         </div>
 
         <div className={styles.formGroup}>
+          <label htmlFor="category">Categoria *</label>
+          {categories.length > 0 ? (
+            <select
+              id="category"
+              name="category"
+              value={productData.category}
+              onChange={handleChange}
+            >
+              <option value="">Selecione uma categoria</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          ) : (
+            <div>
+              <p style={{ marginBottom: 8 }}>Nenhuma categoria encontrada.</p>
+              {isAdmin ? (
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <input
+                    type="text"
+                    placeholder="Nova categoria"
+                    value={newCategoryName}
+                    onChange={(e) => setNewCategoryName(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    disabled={creatingCategory || !newCategoryName.trim()}
+                    onClick={async () => {
+                      try {
+                        setCreatingCategory(true);
+                        const created = await createCategory(newCategoryName.trim());
+                        setCategories((prev) => [...prev, created]);
+                        setProductData((prev) => ({ ...prev, category: created.id }));
+                        setNewCategoryName('');
+                      } catch (err) {
+                        alert('Erro ao criar categoria. Verifique suas permissões.');
+                      } finally {
+                        setCreatingCategory(false);
+                      }
+                    }}
+                  >
+                    {creatingCategory ? 'Criando...' : 'Criar Categoria'}
+                  </button>
+                </div>
+              ) : (
+                <p>Peça a um administrador para cadastrar categorias.</p>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
           <label htmlFor="image">Foto do Produto *</label>
           <input
             type="file"
@@ -116,8 +211,8 @@ const CadastroProdutosPage = () => {
             >
                 Voltar
             </button>
-            <button type="submit" className={styles.submitButton}>
-                Cadastrar Produto
+            <button type="submit" className={styles.submitButton} disabled={loading}>
+                {loading ? 'Cadastrando...' : 'Cadastrar Produto'}
             </button>
         </div>
       </form>

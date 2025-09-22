@@ -16,15 +16,6 @@ export default [
         sourceType: 'module',
       },
     },
-    extends: [
-      'react-app',
-      'react-app/jest',
-      'eslint:recommended',
-      'plugin:react/recommended',
-      'plugin:react-hooks/recommended',
-      'plugin:react-refresh/recommended',
-      'prettier',
-    ],
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
@@ -34,7 +25,6 @@ export default [
       ...reactHooks.configs.recommended.rules,
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'prettier/prettier': 'error',
     },
   },
 ];

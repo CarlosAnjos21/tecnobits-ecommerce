@@ -1,20 +1,37 @@
+import orderService from "../services/orderService.js";
+
 /**
  * Listar pedidos que contenham produtos do vendedor logado
  */
 export const listarPedidosDoVendedor = async (req, res) => {
   try {
-    const vendedorId = req.user.id;
-    // Busca pedidos que tenham pelo menos um item de produto do vendedor
-    const pedidos = await orderService.listOrdersBySeller(vendedorId, req.query);
-    res.json(pedidos);
+    const vendedorId = req.user?.id;
+    if (!vendedorId) {
+      return res.status(401).json({ message: "Não autenticado" });
+    }
+    // Usa versão paginada para suportar page/pageSize vindos da query
+    const { page, pageSize, status, from, to, buyerId } = req.query || {};
+
+    // Validação simples de status para evitar 500 por valor inválido (enum)
+    const allowedStatus = [
+      'AGUARDANDO_PAGAMENTO',
+      'PAGAMENTO_CONFIRMADO',
+      'EM_PREPARACAO',
+      'ENVIADO',
+      'ENTREGUE',
+      'CANCELADO',
+      'DEVOLVIDO'
+    ];
+    if (status && !allowedStatus.includes(String(status))) {
+      return res.status(422).json({ message: `Status inválido: ${status}` });
+    }
+    const result = await orderService.listSellerOrdersPaginated(vendedorId, { page, pageSize, status, from, to, buyerId });
+    res.json(result);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao buscar pedidos do vendedor", details: error.message });
+    console.error("[listarPedidosDoVendedor] erro:", error);
+    res.status(500).json({ message: "Erro ao buscar pedidos do vendedor", details: error?.message });
   }
 };
-
-
-import orderService from "../services/orderService.js";
 
 /**
  * Criar um novo pedido a partir do carrinho do usuário
@@ -106,3 +123,62 @@ export const cancelarPedido = async (req, res) => {
     res.status(status).json({ error: "Erro ao cancelar pedido", details: error?.message, code });
   }
 };// vini - fim
+
+/**
+ * Confirmar pagamento (admin)
+ */
+export const confirmarPagamento = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await orderService.updateOrderStatus(id, 'PAGAMENTO_CONFIRMADO');
+    res.json(order);
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    res.status(status).json({ error: 'Erro ao confirmar pagamento', details: error?.message });
+  }
+};
+
+/**
+ * Métricas admin
+ */
+export const obterMetricasAdmin = async (req, res) => {
+  try {
+    const metrics = await orderService.getAdminMetrics(req.query || {});
+    res.json(metrics);
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    res.status(status).json({ error: 'Erro ao obter métricas', details: error?.message });
+  }
+};
+
+/**
+ * Métricas do vendedor logado
+ */
+export const obterMetricasVendedor = async (req, res) => {
+  try {
+    const vendedorId = req.user?.id;
+    if (!vendedorId) return res.status(401).json({ message: 'Não autenticado' });
+    const metrics = await orderService.getSellerMetrics(vendedorId, req.query || {});
+    res.json(metrics);
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    res.status(status).json({ error: 'Erro ao obter métricas do vendedor', details: error?.message });
+  }
+};
+
+/**
+ * Cancelar pedido (vendedor) — Opção A
+ * Regras: só cancela se todos os itens do pedido forem do vendedor solicitante
+ */
+export const cancelarPedidoVendedor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pedido = await orderService.cancelOrderBySeller(id, req.user);
+    res.json({ message: 'Pedido cancelado pelo vendedor com sucesso', pedido });
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    const code = error?.code || 'internal_error';
+    console.error('[cancelarPedidoVendedor] erro:', { status, code, message: error?.message });
+    res.status(status).json({ error: 'Erro ao cancelar pedido', details: error?.message, code });
+  }
+};

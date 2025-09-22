@@ -3,8 +3,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  
+  // Acrescente a linha abaixo
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -75,6 +78,7 @@ model Order {
   dataEntregaRealizada DateTime?
   enderecoEntrega      String
   estado               String
+  cpf                  String?       // CPF informado no checkout (opcional)
   metodoPagamento      PaymentMethod
   statusPagamento      String        @default("PENDENTE")
   status               OrderStatus   @default(AGUARDANDO_PAGAMENTO)
