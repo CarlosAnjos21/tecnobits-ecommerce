@@ -37,7 +37,13 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             // Garante que o estado esteja limpo em caso de erro
             logout();
-            throw error; // Lança o erro para ser tratado na página de login
+            // Extrai mensagem amigável do backend (ex.: 403 vendedor pendente)
+            const friendlyMessage =
+                error?.response?.data?.message ||
+                (error?.message?.toLowerCase()?.includes('network')
+                    ? 'Falha de rede. Tente novamente.'
+                    : 'Falha no login. Verifique suas credenciais.');
+            throw new Error(friendlyMessage); // Repassa mensagem para a página de login
         } finally {
             setLoading(false); // Finaliza o loading após a tentativa de login
         }
@@ -56,7 +62,10 @@ export const AuthProvider = ({ children }) => {
             const next = typeof partialOrUser === 'function' ? partialOrUser(prev) : { ...prev, ...partialOrUser };
             try {
                 localStorage.setItem('user', JSON.stringify(next));
-            } catch {}
+            } catch (e) {
+                // Ignora falha de persistência no localStorage (ex.: modo privado ou quota excedida)
+                void e;
+            }
             return next;
         });
     };

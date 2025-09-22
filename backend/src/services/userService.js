@@ -26,7 +26,7 @@ export const getUserByCnpjService = async (cnpj) => {
 };
 
 export const createUserService = async (data) => {
-    const nanoid = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 6);
+    const nanoid = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
     const userId = nanoid();
     const userData = { ...data, id: userId };
     return prisma.user.create({ data: userData });
