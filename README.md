@@ -220,34 +220,7 @@ MIT – ver arquivo LICENSE se aplicável.
 
 ---
 
-## 📦 Deploy na Netlify (Frontend)
-
-Este projeto está preparado para hospedagem do frontend como SPA na Netlify.
-
-Arquivos adicionados/ajustados:
-- `netlify.toml` na raiz (build em `frontend/`, publish `frontend/dist`).
-- `frontend/public/_redirects` com `/* /index.html 200` (SPA fallback).
-
-Build settings (Netlify → Site settings → Build & deploy):
-- Base directory: `frontend`
-- Build command: `npm run build`
-- Publish directory: `frontend/dist`
-
-Environment variables (Netlify → Site settings → Environment):
-- `VITE_API_URL`: URL pública do backend (ex.: `https://api.seu-dominio.com` ou `https://seu-backend.onrender.com`).
-- (Opcional) `NODE_VERSION`: `20`.
-
-No backend, o CORS aceita um domínio configurável via `.env`:
-- `FRONTEND_URL=https://seu-site-na-netlify.netlify.app` (ou seu domínio customizado)
-
-Checklist de Deploy:
-1. Faça o deploy do backend e obtenha a URL pública.
-2. Configure `FRONTEND_URL` no `.env` do backend e reinicie o servidor.
-3. Na Netlify, defina `VITE_API_URL` com a URL pública do backend.
-4. Conecte o repositório GitHub na Netlify e dispare o build.
-5. Teste login, navegação (rotas SPA) e chamadas à API.
-
----
+ 
 
 ## 🚀 Deploy do Backend (Render/Railway)
 
@@ -256,8 +229,7 @@ Este repositório inclui um exemplo de configuração para Render (`render.yaml`
 ### Render.com (Blueprint)
 - Arquivo: `render.yaml`
 - Cria um serviço web Node e um banco Postgres free.
-- Ajustes necessários após criação do site na Netlify:
-  - Defina `FRONTEND_URL` com a URL do seu site (Netlify/domínio próprio).
+  - Defina `FRONTEND_URL` com a URL do seu frontend em produção (seu domínio/próxima hospedagem).
 
 Comandos de build/start (já no arquivo):
 - build: `npm install && cd backend && npm install && npx prisma generate && npx prisma migrate deploy`
@@ -267,7 +239,7 @@ Variáveis de ambiente no backend:
 - `PORT` (3001)
 - `DATABASE_URL` (Render injeta se usar o Postgres criado pelo blueprint)
 - `JWT_SECRET`, `JWT_EXPIRES_IN`
-- `FRONTEND_URL` (ex.: `https://seu-site.netlify.app`)
+- `FRONTEND_URL` (ex.: `https://seu-frontend.exemplo.com`)
 
 ### Railway.app (alternativa)
 1. Crie um projeto e adicione um serviço Node apontando para o repo.
