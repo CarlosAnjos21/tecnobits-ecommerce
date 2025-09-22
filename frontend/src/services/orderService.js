@@ -48,4 +48,19 @@ export const confirmPayment = async (orderId) => {
   return response.data;
 };
 
+// VENDEDOR: cancelar pedido (somente se todos os itens forem do vendedor)
+export const sellerCancelOrder = async (orderId) => {
+  try {
+    const response = await api.patch(`/orders/${orderId}/seller-cancel`);
+    return response.data;
+  } catch (err) {
+    if (err?.response?.status === 404) {
+      // Fallback para servidores que só aceitam POST
+      const response = await api.post(`/orders/${orderId}/seller-cancel`);
+      return response.data;
+    }
+    throw err;
+  }
+};
+
 

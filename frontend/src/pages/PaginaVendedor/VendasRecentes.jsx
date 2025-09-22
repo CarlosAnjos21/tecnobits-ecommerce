@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './PaginaVendedor.module.css';
 import StatusTag from '../../components/StatusTag';
-import { getSellerOrders, getSellerMetrics } from '../../services/orderService';
+import { getSellerOrders, getSellerMetrics, sellerCancelOrder } from '../../services/orderService';
 import { useAuth } from '../../contexts/AuthContext';
 
 // Este componente cuida apenas da seção "Minhas Vendas Recentes"
@@ -86,6 +86,41 @@ const VendasRecentes = () => {
         const start = (currentPage - 1) * PAGE_SIZE;
         return orders.slice(start, start + PAGE_SIZE);
     }, [currentPage, orders, serverPagination]);
+
+    const canCancel = (status) => {
+        return ['AGUARDANDO_PAGAMENTO', 'PAGAMENTO_CONFIRMADO', 'EM_PREPARACAO'].includes(status);
+    };
+
+    const onSellerCancel = async (orderId) => {
+        if (!orderId) return;
+        if (!window.confirm('Confirmar cancelamento deste pedido?')) return;
+        try {
+            await sellerCancelOrder(orderId);
+            // Recarrega a lista e métricas
+            const params = { page: currentPage, pageSize: PAGE_SIZE };
+            if (status) params.status = status;
+            if (from) params.from = from;
+            if (to) params.to = to;
+            if (buyerId) params.buyerId = buyerId;
+            const resp = await getSellerOrders(params);
+            if (Array.isArray(resp)) {
+                setOrders(resp);
+                setServerPagination(null);
+            } else if (resp && Array.isArray(resp.data) && resp.pagination) {
+                setOrders(resp.data);
+                setServerPagination(resp.pagination);
+            } else {
+                const arr = resp?.data || resp || [];
+                setOrders(Array.isArray(arr) ? arr : []);
+                setServerPagination(resp?.pagination || null);
+            }
+            const met = await getSellerMetrics({ status, from, to, buyerId });
+            setMetrics(met);
+        } catch (err) {
+            console.error('Erro ao cancelar pedido:', err);
+            alert(err?.response?.data?.error || 'Erro ao cancelar pedido');
+        }
+    };
     
     // StatusTag padroniza as cores/labels
 
@@ -153,7 +188,7 @@ const VendasRecentes = () => {
                 ) : pageItems.length === 0 ? (
                     <div className={styles.noProducts}>Nenhuma venda encontrada</div>
                 ) : (
-                    pageItems.map(order => (
+                                        pageItems.map(order => (
                         <div key={order.id} className={styles.saleItem}>
                             <span>{order.items?.[0]?.product?.title || '—'}</span>
                             <span>{new Date(order.createdAt).toLocaleDateString('pt-BR')}</span>
@@ -165,6 +200,15 @@ const VendasRecentes = () => {
                                     : 0
                               ).toFixed(2)}</span>
                             <StatusTag status={order.status} />
+                                                        {canCancel(order.status) && (
+                                                                <button
+                                                                    className={styles.deleteButton}
+                                                                    onClick={() => onSellerCancel(order.id)}
+                                                                    aria-label={`Cancelar pedido ${order.id}`}
+                                                                >
+                                                                    Cancelar
+                                                                </button>
+                                                        )}
                         </div>
                     ))
                 )}
