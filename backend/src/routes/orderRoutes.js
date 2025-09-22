@@ -9,7 +9,8 @@ import {
   obterPedidoPorId,
   confirmarPagamento,
   obterMetricasAdmin,
-  obterMetricasVendedor
+  obterMetricasVendedor,
+  cancelarPedidoVendedor
 } from "../controllers/orderController.js";
 import { protect, authorize } from "../middleware/authMiddleware.js";
 import { validate } from "../middleware/validateMiddleware.js";
@@ -19,9 +20,6 @@ import { listOrdersQuery, listSellerOrdersQuery } from "../validators/orderQuery
 const router = express.Router();
 
 router.use(protect);  // todas rotas exigem usuário autenticado
-
-// Todas as rotas exigem login
-router.use(protect);
 
 // Usuário vê seus pedidos
 router.get("/", listarMeusPedidos);
@@ -44,6 +42,10 @@ router.post("/", criarPedido);
 // Cancelar pedido (cliente proprietário ou admin)
 router.patch("/:id/cancel", cancelarPedido); // vini
 router.delete("/:id/cancel", cancelarPedido);
+
+// Cancelar pedido (vendedor) — só se todos os itens forem dele
+router.patch("/:id/seller-cancel", authorize("vendedor"), cancelarPedidoVendedor);
+router.post("/:id/seller-cancel", authorize("vendedor"), cancelarPedidoVendedor);
 
 // Admin atualiza pedido parcialmente (status)
 router.patch("/:id", authorize("admin"), atualizarStatusPedido); // PATCH indica atualização parcial

@@ -51,3 +51,7 @@ pids
 # Temporary folders
 tmp/
 temp/
+
+# Postman collections/environments (local only)
+postman/
+.postman/

@@ -165,3 +165,20 @@ export const obterMetricasVendedor = async (req, res) => {
     res.status(status).json({ error: 'Erro ao obter métricas do vendedor', details: error?.message });
   }
 };
+
+/**
+ * Cancelar pedido (vendedor) — Opção A
+ * Regras: só cancela se todos os itens do pedido forem do vendedor solicitante
+ */
+export const cancelarPedidoVendedor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pedido = await orderService.cancelOrderBySeller(id, req.user);
+    res.json({ message: 'Pedido cancelado pelo vendedor com sucesso', pedido });
+  } catch (error) {
+    const status = error?.statusCode || 500;
+    const code = error?.code || 'internal_error';
+    console.error('[cancelarPedidoVendedor] erro:', { status, code, message: error?.message });
+    res.status(status).json({ error: 'Erro ao cancelar pedido', details: error?.message, code });
+  }
+};

@@ -1,10 +1,15 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dest = path.join(process.cwd(), "backend", "src", "uploads", "products");
+    // Resolve para backend/src/uploads/products independentemente do CWD
+    const dest = path.join(__dirname, "..", "uploads", "products");
     fs.mkdirSync(dest, { recursive: true });
     cb(null, dest);
   },
