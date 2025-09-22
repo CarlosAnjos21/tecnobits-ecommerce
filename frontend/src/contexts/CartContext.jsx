@@ -54,6 +54,18 @@ export const CartProvider = ({ children }) => {
 
   // Carregar carrinho do servidor
   const loadCartFromServer = async () => {
+    // Evita chamada se não estiver autenticado ou sem token
+    const token = localStorage.getItem('authToken');
+    if (!isAuthenticated || !user || !token) {
+      const localData = localStorage.getItem('cartItems');
+      if (localData) {
+        setCartItems(JSON.parse(localData));
+      } else {
+        setCartItems([]);
+      }
+      setIsInitialized(true);
+      return;
+    }
     try {
       setIsLoading(true);
       const data = await apiCall('/cart');
@@ -70,7 +82,12 @@ export const CartProvider = ({ children }) => {
 
       setCartItems(transformedItems);
     } catch (error) {
-      console.error('❌ Erro ao carregar carrinho:', error);
+      // Evita barulho no console para 401 (ex.: token expirado)
+      if (error?.status === 401) {
+        console.warn('Carrinho não carregado (401). Usuário precisa se autenticar novamente.');
+      } else {
+        console.error('❌ Erro ao carregar carrinho:', error);
+      }
       // Fallback para localStorage se falhar
       const localData = localStorage.getItem('cartItems');
       if (localData) {
@@ -85,6 +102,12 @@ export const CartProvider = ({ children }) => {
   // Sincronizar carrinho local com servidor
   const syncCartWithServer = async () => {
     if (!isInitialized) return;
+
+    const token = localStorage.getItem('authToken');
+    if (!isAuthenticated || !user || !token) {
+      // Sem autenticação, não tenta sincronizar
+      return;
+    }
 
     try {
       // Buscar carrinho atual do servidor
