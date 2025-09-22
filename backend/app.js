@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+import { FRONTEND_URL } from './src/config/env.js';
 import authRoutes from './src/routes/authRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
@@ -39,7 +40,7 @@ const authLimiter = isProd
     : (req, res, next) => next(); // no-op em dev/test
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: [FRONTEND_URL, 'http://localhost:5173'],
     credentials: true
 }));
 app.use(express.json());

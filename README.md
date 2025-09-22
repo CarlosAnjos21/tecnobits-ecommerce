@@ -3,7 +3,7 @@
 Bem-vindo ao repositório final do projeto de e-commerce da equipe Hardware (Capacita Brasil). Este monorepo contém o frontend (React + Vite) e o backend (Node.js + Express + Prisma) de uma loja de componentes de hardware com autenticação de usuários, gestão de produtos, carrinho, pedidos e fluxo de vendedores.
 
 - Repositório: daniolivem/projeto-inter-capacita
-- Branch: develop
+- Branch: main
 - Data: 22/09/2025
 
 ## Sumário
@@ -217,3 +217,58 @@ Estruturas:
 
 ## Licença
 MIT – ver arquivo LICENSE se aplicável.
+
+---
+
+ 
+
+## 🚀 Deploy do Frontend (Vercel)
+
+Este projeto (frontend em Vite) está pronto para deploy na Vercel usando `@vercel/static-build`.
+
+Arquivos/Configs adicionados:
+- `vercel.json` (build estática do diretório `frontend/`, rewrite SPA para `/index.html`, Node 20, workaround para Rollup).
+- `.npmrc` na raiz desativando `optional` deps (evita bug do Rollup nativo em ambientes Linux).
+- `frontend/package.json` com `postinstall` neutro para não acionar rebuild do Rollup nativo.
+
+Como publicar:
+1. No dashboard da Vercel, importe este repositório.
+2. Configure o projeto para usar o caminho `frontend/` como base de build.
+3. Variáveis de ambiente (caso necessário):
+  - `VITE_API_URL` → URL pública do backend (ex.: `https://api.seu-dominio.com`).
+4. Deploy.
+
+Rotas SPA
+- O `vercel.json` inclui rewrite para que todas as rotas caiam em `/index.html` (React Router).
+
+Node/Build
+- Node 20 (`.nvmrc` já aponta 20) e `ROLLUP_SKIP_NODEJS_NATIVE` forçado na build.
+
+---
+
+## 🚀 Deploy do Backend (Render/Railway)
+
+Este repositório inclui um exemplo de configuração para Render (`render.yaml`). Alternativas como Railway ou VPS também funcionam.
+
+### Render.com (Blueprint)
+- Arquivo: `render.yaml`
+- Cria um serviço web Node e um banco Postgres free.
+  - Defina `FRONTEND_URL` com a URL do seu frontend em produção (seu domínio/próxima hospedagem).
+
+Comandos de build/start (já no arquivo):
+- build: `npm install && cd backend && npm install && npx prisma generate && npx prisma migrate deploy`
+- start: `cd backend && node server.js`
+
+Variáveis de ambiente no backend:
+- `PORT` (3001)
+- `DATABASE_URL` (Render injeta se usar o Postgres criado pelo blueprint)
+- `JWT_SECRET`, `JWT_EXPIRES_IN`
+- `FRONTEND_URL` (ex.: `https://seu-frontend.exemplo.com`)
+
+### Railway.app (alternativa)
+1. Crie um projeto e adicione um serviço Node apontando para o repo.
+2. Configure a pasta de trabalho (Working directory) para `backend/`.
+3. Configure build command: `npm install && npx prisma generate && npx prisma migrate deploy`.
+4. Start command: `node server.js`.
+5. Adicione as variáveis de ambiente (`DATABASE_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `FRONTEND_URL`).
+6. Crie um Postgres no Railway e copie a connection string para `DATABASE_URL`.
