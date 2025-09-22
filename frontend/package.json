@@ -9,6 +9,7 @@
     "build": "vite build",
     "build:staging": "vite build --mode staging",
     "build:prod": "vite build --mode production",
+    "postinstall": "npm rebuild rollup -f || true",
     "lint": "eslint .",
     "preview": "vite preview"
   },
