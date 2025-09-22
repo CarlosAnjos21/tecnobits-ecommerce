@@ -228,7 +228,8 @@ body {
   padding: 0;
   border-radius: 2.669px;
   background-color: #E2E3FF;
-  background-image: url('/src/assets/images/tenisnike.png');
+  /* background-image removido: arquivo /src/assets/images/tenisnike.png não existe */
+  /* background-image: url('/src/assets/images/tenisnike.png'); */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

@@ -6,7 +6,8 @@ import {
   getAdminOrders,
   getAdminSellers,
 } from '../../services/adminService';
-import { getAdminMetrics } from '../../services/orderService';
+import { getAdminMetrics, confirmPayment, cancelOrder } from '../../services/orderService';
+import StatusTag from '../../components/StatusTag';
 import styles from './AdminPage.module.css';
 import { useNavigate } from 'react-router-dom';
 // import { useAuth } from '../../contexts/AuthContext';
@@ -63,6 +64,33 @@ const AdminPage = () => {
     }
   };
 
+  const reloadOrders = async () => {
+    try {
+      const ordersData = await getAdminOrders({ page: 1, pageSize: 10, buyerId: filters.buyerId || undefined });
+      setOrders(ordersData);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleConfirmPayment = async (orderId) => {
+    try {
+      await confirmPayment(orderId);
+      await reloadOrders();
+    } catch (err) {
+      alert(err?.response?.data?.message || 'Falha ao confirmar pagamento');
+    }
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    try {
+      await cancelOrder(orderId);
+      await reloadOrders();
+    } catch (err) {
+      alert(err?.response?.data?.message || 'Falha ao cancelar pedido');
+    }
+  };
+
   const applyProductFilters = async () => {
     setLoading(true);
     try {
@@ -101,7 +129,7 @@ const AdminPage = () => {
 
       {activeTab === 'overview' && (
         <>
-          {metrics && (
+              {metrics && (
             <div className={styles.metricsGrid}>
               <div className={styles.metricCard}>
                 <div className={styles.metricLabel}>Pedidos</div>
@@ -117,11 +145,14 @@ const AdminPage = () => {
               </div>
               <div className={styles.metricCard}>
                 <div className={styles.metricLabel}>Status</div>
-                <div className={styles.metricValueSmall}>
-                  {Object.entries(metrics.statusBreakdown || {}).map(([k, v]) => (
-                    <div key={k}>{k}: {v}</div>
-                  ))}
-                </div>
+                    <div className={styles.metricValueSmall}>
+                      {Object.entries(metrics.statusBreakdown || {}).map(([k, v]) => (
+                        <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                          <StatusTag status={k} />
+                          <span>× {v}</span>
+                        </div>
+                      ))}
+                    </div>
               </div>
             </div>
           )}
@@ -235,8 +266,26 @@ const AdminPage = () => {
                   <div className={styles.sellerInfo}>
                     <span className={styles.sellerName}>Pedido #{o.id.slice(0,8)} — R$ {o.total?.toFixed(2)}</span>
                     <span className={styles.sellerDate}>
-                      {new Date(o.createdAt).toLocaleString()} • Itens: {o.itemsCount} • Cliente: {o.buyer?.name} • Status: {o.status}
+                      {new Date(o.createdAt).toLocaleString()} • Itens: {o.itemsCount} • Cliente: {o.buyer?.name} • Status: <StatusTag status={o.status} />
                     </span>
+                  </div>
+                  <div className={styles.actionsRow}>
+                    <button
+                      className={styles.successButton}
+                      disabled={o.status !== 'AGUARDANDO_PAGAMENTO'}
+                      onClick={() => handleConfirmPayment(o.id)}
+                      title={o.status !== 'AGUARDANDO_PAGAMENTO' ? 'Ação disponível apenas para pedidos aguardando pagamento' : ''}
+                    >
+                      Confirmar pagamento
+                    </button>
+                    <button
+                      className={styles.dangerButton}
+                      disabled={o.status === 'CANCELADO' || o.status === 'ENTREGUE'}
+                      onClick={() => handleCancelOrder(o.id)}
+                      title={(o.status === 'CANCELADO' || o.status === 'ENTREGUE') ? 'Ação indisponível para este status' : ''}
+                    >
+                      Cancelar pedido
+                    </button>
                   </div>
                 </div>
               ))

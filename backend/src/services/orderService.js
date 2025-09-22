@@ -338,6 +338,62 @@ class OrderService {
   }
 
   /**
+   * Cancelamento por VENDEDOR (Opção A):
+   * - Só permite cancelar o pedido inteiro se TODOS os itens pertencem ao vendedor solicitante.
+   * - Status permitido: AGUARDANDO_PAGAMENTO, PAGAMENTO_CONFIRMADO, EM_PREPARACAO
+   * - Devolve estoque de todos os itens e marca como CANCELADO/CANCELADO
+   */
+  async cancelOrderBySeller(orderId, requester) {
+    const sellerId = String(requester?.id);
+    if (!requester || requester.role !== 'vendedor') {
+      throw new ForbiddenError('Apenas vendedores podem cancelar por esta rota');
+    }
+
+    const id = String(orderId);
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: { items: { include: { product: true } } }
+    });
+
+    if (!order) throw new NotFoundError('Pedido não encontrado');
+
+    // Verifica se todos os itens pertencem ao vendedor
+    if (!order.items.length) throw new ConflictError('Pedido sem itens');
+    const allFromSeller = order.items.every((it) => it.product?.sellerId === sellerId);
+    if (!allFromSeller) {
+      throw new ForbiddenError('Pedido contém itens de outros vendedores; cancelamento total não permitido');
+    }
+
+    const cancelableStatuses = [
+      'AGUARDANDO_PAGAMENTO',
+      'PAGAMENTO_CONFIRMADO',
+      'EM_PREPARACAO'
+    ];
+    if (!cancelableStatuses.includes(order.status)) {
+      throw new ConflictError('Pedido não pode ser cancelado no status atual');
+    }
+
+    const result = await prisma.$transaction(async (tx) => {
+      // Devolve estoque de todos os itens do pedido
+      for (const it of order.items) {
+        await tx.product.updateMany({
+          where: { id: String(it.productId) },
+          data: { stock: { increment: it.quantity } }
+        });
+      }
+
+      const updated = await tx.order.update({
+        where: { id },
+        data: { status: 'CANCELADO', statusPagamento: 'CANCELADO' },
+        include: { items: true }
+      });
+      return updated;
+    });
+
+    return result;
+  }
+
+  /**
    * Lista pedidos que contenham itens de produtos do vendedor informado.
    * Retorna somente os itens pertencentes ao vendedor (não expõe itens de outros vendedores).
    */

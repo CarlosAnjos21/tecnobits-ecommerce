@@ -1,246 +1,274 @@
-# 🚀 Tecnobits E-commerce: Seu Setup, Nosso Poder\!
+# Tecnobits E-commerce – Projeto Final
 
-Bem-vindo ao repositório oficial da **Tecnobits E-commerce**, sua loja virtual de hardware completa, desenvolvida em **React** pela talentosa equipe do programa Capacita Brasil. Nosso objetivo é oferecer a melhor experiência para gamers e profissionais de TI que buscam componentes de alta performance.
+Bem-vindo ao repositório final do projeto de e-commerce da equipe Hardware (Capacita Brasil). Este monorepo contém o frontend (React + Vite) e o backend (Node.js + Express + Prisma) de uma loja de componentes de hardware com autenticação de usuários, gestão de produtos, carrinho, pedidos e fluxo de vendedores.
 
------
+- Repositório: daniolivem/projeto-inter-capacita
+- Branch: main
+- Data: 22/09/2025
 
-## 📋 Sumário
-
-- [🎯 Sobre o Projeto](#-sobre-o-projeto)
-- [✨ Principais Funcionalidades](#-principais-funcionalidades)
-- [🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
-- [📊 Modelo de Dados](#-modelo-de-dados)
-- [👥 Contribuições Detalhadas da Equipe](#-contribuições-detalhadas-da-equipe)
-- [🏗️ Estrutura do Projeto](#️-estrutura-do-projeto)
-- [🚀 Como Executar o Projeto Localmente](#-como-executar-o-projeto-localmente)
-- [📋 API Endpoints](#-api-endpoints)
-- [🔄 Estratégia de Branches e Desenvolvimento](#-estratégia-de-branches-e-desenvolvimento)
-- [📊 Resultados e Conquistas](#-resultados-e-conquistas)
-- [🤝 Como Contribuir](#-como-contribuir)
-- [📝 Licença](#-licença)
-- [📞 Contato](#-contato)
+## Sumário
+- Visão Geral
+- Arquitetura e Tech Stack
+- Requisitos de Ambiente
+- Configuração Rápida (monorepo)
+- Backend (API)
+  - Variáveis de Ambiente
+  - Banco de Dados, Prisma e Migrations
+  - Rodando o servidor
+  - Seeds de dados
+  - Estrutura de rotas principais
+  - Uploads
+- Frontend (Web)
+  - Variáveis de Ambiente
+  - Rodando em desenvolvimento
+  - Build de produção
+- Fluxos de Usuário
+  - Cliente
+  - Vendedor (com aprovação)
+  - Administrador
+- Convenções, Scripts e Estrutura de Pastas
+- Troubleshooting
+- Licença
 
 ---
 
-A Tecnobits é um e-commerce moderno e responsivo, focado em otimizar a jornada do usuário, desde a busca por produtos até a finalização da compra.
+## Visão Geral
+Aplicação de e-commerce completa:
+- Catálogo de produtos, categorias, carrinho, checkout e pedidos.
+- Autenticação com JWT e perfis: cliente, vendedor e admin.
+- Vendedor cadastra-se e aguarda aprovação do admin (bloqueio de login até status "active").
+- Upload de imagens de produtos via API servidas estaticamente.
+- Frontend em React com Context API, React Router e Vite.
 
-### ✨ Principais Funcionalidades
+## Arquitetura e Tech Stack
+- Frontend: React 19, Vite 7, React Router, Axios.
+- Backend: Node 18+, Express 4, Prisma 5/6, PostgreSQL, JWT, bcrypt, multer, helmet, rate-limit.
+- Monorepo com workspaces npm: `frontend` e `backend`.
 
-  * **Página Inicial Intuitiva:** Destaque para produtos campeões de venda e novidades, com uma navegação que convida à exploração.
-  * **Catálogo Robusto:** Explore mais de **100 produtos** detalhados, com informações completas para cada item.
-  * **Carrinho Inteligente:** Adicione, remova e gerencie seus itens facilmente, com cálculo automático de valores.
-  * **Checkout Simplificado:** Processo de finalização de compra ágil e seguro para uma experiência sem complicações.
-  * **Sistema de Autenticação:** Login e cadastro de usuários para uma experiência personalizada.
-  * **Design Totalmente Responsivo:** Acesso perfeito em qualquer dispositivo, do desktop ao mobile.
-  * **Carrossel Dinâmico de Ofertas:** Fique por dentro das melhores promoções do dia com um carrossel interativo.
+## Requisitos de Ambiente
+- Node.js LTS (18+) e npm.
+- PostgreSQL (local ou gerenciado). 
+- Windows/macOS/Linux. Em dev, frontend usa http://localhost:5173 e backend http://localhost:3001.
 
-### 🛠️ Tecnologias Utilizadas
+## Configuração Rápida (monorepo)
+Na raiz do repositório:
 
-Este projeto foi construído com as seguintes tecnologias, garantindo performance e modularidade:
+```powershell
+# Instalar dependências de frontend e backend
+npm run install:all
 
-  * **React 19.1.0:** A biblioteca JavaScript líder para construção de interfaces de usuário interativas.
-  * **Vite 7.0.0:** Ferramenta de build rápida para um desenvolvimento ágil.
-  * **CSS Modular:** Estilização organizada e de fácil manutenção (através de `style/global.css` e CSS por componente).
-  * **Context API:** Gerenciamento de estado global eficiente (`contexts/CartContext.jsx`).
-  * **React Router DOM:** Navegação otimizada entre as páginas.
-  * **Mobile-First Design:** Priorização da experiência móvel no desenvolvimento do layout.
-
------
-
-## 👥 Contribuições da Equipe
-
-Este projeto é fruto da colaboração e dedicação de uma equipe multidisciplinar. Cada membro contribuiu significativamente para a construção da Tecnobits:
-
-> 📋 **Nota:** Todas as contribuições detalhadas podem ser acompanhadas através dos commits e pull requests no repositório GitHub.
-
-  * **🎨 Dani** (Design System & Responsividade)
-
-      * Criação da **HomePage**, `BestSellers` (cards), `FeaturedProducts` e `Gallery`.
-      * Estruturação dos dados de `products.json`, `bestSellersConfig.js` e `featuredProducts.js`.
-      * Página de erro **404** personalizada.
-      * Otimização e organização do CSS e do código em geral.
-      * Padronização do componente `Buttons`.
-
-  * **🛒 May** (Carrinho & Estado Global)
-
-      * Implementação completa do **`CartContext`** e da `ShoppingCartPage` (Carrinho).
-      * Funcionalidades de adicionar/remover produtos do carrinho.
-      * Desenvolvimento da `FinalizarCompraPage` (Checkout) e formulários de compra.
-      * Lógica de cálculos automáticos e persistência dos dados do carrinho.
-
-  * **🎯 Gaabe** (Navegação & Roteamento)
-
-      * Criação do `Header` principal e do `Menu Mobile`.
-      * Desenvolvimento da `ProductViewPage` (Detalhes do Produto).
-      * Configuração e ajuste do **React Router** e das rotas de navegação.
-      * Implementação do sistema de busca de produtos (se aplicável, com `ProductListing` componente).
-
-  * **💳 Carlos** (Listagem & Formulários)
-
-      * Construção da `ProductListingPage` com funcionalidades de filtros.
-      * Desenvolvimento da interface de listagem de produtos.
-      * Tratamento de formulários (como `FormCreatePage`).
-
-  * **📦 Vini** (Produtos & Layout)
-
-      * Criação do componente `ProductCard`.
-      * Desenvolvimento do `Footer` responsivo com layout de 4 colunas.
-      * Design dos cards de produtos individuais.
-      * Estrutura do `Layout` geral da aplicação.
-
-  * **🔐 Anderson** (Autenticação & Segurança)
-
-      * Implementação completa da `LoginPage`.
-      * Desenvolvimento da `CreateAccountInitialPage` e `FormCreatePage` (páginas de registro de usuários).
-      * Componente `UserDashboard` para gerenciamento de perfil/pedidos.
-
------
-
-## 🏗️ Estrutura do Projeto
-
-A organização do projeto segue uma estrutura modular e intuitiva, facilitando a manutenção e expansão:
-
-```
-src/
-├── components/
-│   ├── BestSellers/          # Seção de produtos mais vendidos
-│   ├── Buttons/              # Componente de botões reutilizáveis
-│   ├── CustomSelect/         # Componente para seletores customizados
-│   ├── FeaturedProducts/     # Seção de produtos em destaque
-│   ├── Footer/               # Rodapé da aplicação
-│   ├── Gallery/              # Componente de galeria de imagens
-│   ├── Header/               # Cabeçalho e navegação principal
-│   ├── Input/                # Componente para campos de entrada de texto
-│   ├── Logo/                 # Componente do logo da marca
-│   ├── ProductCard/          # Cards individuais de produtos
-│   ├── ProductListing/       # Componente de listagem de produtos (se for um componente separado da página)
-│   ├── ResetScroll/          # Componente para resetar o scroll (como ResetScroll.jsx)
-│   ├── Section/              # Componente genérico de seção
-│   ├── StarRating/           # Componente de avaliação por estrelas
-│   └── UserDashboard/        # Componente do painel do usuário
-├── contexts/
-│   └── CartContext.jsx       # Contexto global para o carrinho de compras
-├── data/
-│   ├── bestSellersConfig.js  # Configurações para produtos mais vendidos
-│   ├── featuredProducts.js   # Configurações para produtos em destaque
-│   └── products.json         # Arquivo JSON com os dados de todos os produtos
-├── pages/
-│   ├── 404/                  # Página de erro (não encontrada)
-│   ├── BuySuccess/           # Página de sucesso de compra
-│   ├── CreateAccountInitialPage/ # Página inicial para criação de conta
-│   ├── FinalizarCompraPage/  # Página de finalização da compra (checkout)
-│   ├── FormCreatePage/       # Página de formulário de criação de conta
-│   ├── HomePage/             # Página inicial da loja
-│   ├── Layout/               # Componente de layout principal da aplicação
-│   ├── LoginPage/            # Página de login de usuários
-│   ├── ProductListingPage/   # Página de listagem de todos os produtos
-│   ├── ProductViewPage/      # Página de detalhes de um produto
-│   └── ShoppingCartPage/     # Página do carrinho de compras
-├── style/
-│   └── global.css            # Estilos CSS globais da aplicação
-└── utils/
-    └── priceUtils.js         # Utilitários para formatação e manipulação de preços
+# Rodar ambos (frontend + backend) em dev
+npm run dev
 ```
 
------
+- Frontend: http://localhost:5173
+- Backend: http://localhost:3001
 
-## 🚀 Como Executar o Projeto Localmente
+Se preferir, rode cada parte separadamente usando os scripts em cada pacote.
 
-Siga estes passos simples para configurar e rodar o projeto em sua máquina:
+---
 
-```bash
-# 1. Clone o repositório para sua máquina
-git clone https://github.com/daniolivem/projeto-inter-capacita.git
+## Backend (API)
+Pasta: `backend/`
 
-# 2. Navegue até o diretório do projeto
-cd projeto-inter-capacita
+### Variáveis de Ambiente
+Crie `backend/.env` com as variáveis abaixo (vide `backend/src/config/env.js`):
 
-# 3. Instale todas as dependências necessárias
-npm install
+```
+PORT=3001
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DBNAME?schema=public
+JWT_SECRET=sua_chave_super_secreta
+JWT_EXPIRES_IN=7d
+```
 
-# 4. Inicie o servidor de desenvolvimento
+### Banco de Dados, Prisma e Migrations
+- Esquema Prisma: `backend/prisma/schema.prisma` (PostgreSQL).
+- Aplique as migrations existentes (a pasta `backend/prisma/migrations` já inclui histórico). Com o Prisma instalado globalmente ou via npx:
+
+```powershell
+# dentro de backend/
+npx prisma migrate deploy
+# ou (para desenvolvimento)
+npx prisma migrate dev
+
+# gerar cliente prisma (se necessário)
+npx prisma generate
+```
+
+### Rodando o servidor
+Na pasta `backend/`:
+
+```powershell
+# Desenvolvimento (com nodemon)
 npm run dev
 
-# 5. Acesse o projeto em seu navegador
-# Geralmente, ele estará disponível em: http://localhost:5173
+# Produção
+npm start
 ```
 
-### 🧪 Setup do Postman para Testes da API
+- O servidor sobe em `http://localhost:${PORT}` (padrão 3001). 
+- CORS já permite `http://localhost:5173`.
 
-Para testar todas as funcionalidades da API de forma automatizada, utilizamos uma coleção completa do Postman:
+### Seeds de dados
+Scripts de seed em `backend/seeds/`.
 
-#### 🚀 **Método Automático (Recomendado)**
-```bash
-# Execute o script de setup automático
-node setup-postman.js
+```powershell
+# Rodar todos (admin, vendedor, cliente, produtos e pedidos de teste)
+npm run seed:all
 
-# Ou abra a interface visual
-start postman-setup.html
+# Ou individualmente
+npm run seed:admin
+npm run seed:vendor
+npm run seed:client
+npm run seed:products
+npm run seed:test-orders
 ```
 
-#### 📋 **Método Manual**
-1. **Importe os arquivos no Postman:**
-   - `tecnobits-postman-collection.json` (coleção)
-   - `tecnobits-postman-environment.json` (ambiente)
+Obs.: Há também `clearDatabase.js` e `create_multiple_users.js` para cenários de reset/população.
 
-2. **Configure o ambiente:**
-   - Selecione "Tecnobits E-commerce - Desenvolvimento"
-   - Verifique as variáveis: `base_url`, `jwt_token`, etc.
+### Estrutura de rotas principais
+Prefixo base: `/api`
+- Autenticação e Perfil: `/api/auth` (register, login, profile)
+- Usuários (admin): `/api/users`
+- Produtos: `/api/products`
+- Categorias: `/api/categories`
+- Carrinho: `/api/cart`
+- Pedidos: `/api/orders`
+- Uploads: `/api/upload`
+- Área do vendedor: `/api/seller`
 
-3. **Teste a autenticação:**
-   - Execute: `🔐 Autenticação → 🔑 Login Admin`
-   - Teste rotas protegidas: `👥 Administração de Usuários → 📋 Listar Todos os Usuários`
+Uploads estáticos servidos em `/uploads` (ex.: `/uploads/products/<arquivo>`).
 
-#### 📚 **Sobre a Coleção**
-- **40+ requests** organizadas por categoria
-- Autenticação JWT automática
-- Scripts de teste integrados
-- Variáveis de ambiente dinâmicas
-- Exemplos para todas as operações CRUD
-
-**Pré-requisito:** Backend rodando na porta 3001
-
------
-
-## 📊 Resultados e Conquistas
-
-  * ✅ **Sistema Responsivo Completo:** Uma experiência de usuário impecável em qualquer tamanho de tela.
-  * ✅ **Catálogo Abrangente:** Mais de 100 produtos catalogados e prontos para serem explorados.
-  * ✅ **Carrinho Totalmente Funcional:** Adicione, remova e finalize suas compras com facilidade.
-  * ✅ **Design Profissional e Intuitivo:** Uma interface limpa e agradável, pensada para o usuário.
-
------
-
-**Este projeto foi orgulhosamente desenvolvido como parte do programa Capacita Brasil - FullStack.** 🚀
+### Regras de autenticação relevantes
+- JWT no header: `Authorization: Bearer <token>` (frontend injeta automaticamente).
+- Login de vendedor bloqueado se `status !== 'active'`. O backend retorna `403` com a mensagem:
+  "Seu cadastro ainda não foi aprovado. Aguarde a aprovação para acessar a plataforma."
 
 ---
 
-## 🧩 Backend: Ambiente, Migrations e Seeds
+## Frontend (Web)
+Pasta: `frontend/`
 
-1) Crie o arquivo `.env` em `backend/` a partir do exemplo:
+### Variáveis de Ambiente
+Crie `frontend/.env` (opcional). A base da API é definida por `VITE_API_URL`:
 
-  - `backend/.env.example` → copie para `.env` e ajuste `DATABASE_URL`, `JWT_SECRET` e `PORT` (opcional).
+```
+VITE_API_URL=http://localhost:3001
+```
 
-2) Execute as migrations do Prisma e popular dados:
+O Axios é configurado em `frontend/src/services/api.js` com `baseURL: ${VITE_API_URL}/api` e adiciona automaticamente o token JWT do localStorage.
 
-  - Scripts de seed estão em `backend/seeds/`.
-  - Ordem recomendada:
-    - `node seeds/clearDatabase.js`
-    - `node seeds/create_multiple_users.js` (ou `createAdmin.js`/`createCliente.js`/`createVendedor.js`)
-    - `node seeds/createProductsAndCategories.js`
-    - Opcional: `node seeds/createTestOrders.js` (gera pedidos de teste; ajuste `BUYER_ID`/`SELLER_ID` no arquivo conforme sua base)
+### Rodando em desenvolvimento
+Na pasta `frontend/`:
 
-> Observação: os uploads de produtos são servidos via rota estática `/uploads/products`. Ao subir imagem pela API, o backend retorna um `path` utilizável direto no frontend.
+```powershell
+npm run dev
+```
 
-## 🧪 Testes do Backend
+Aplicação em `http://localhost:5173`.
 
-Há testes focados em pedidos e cancelamento em `backend/src.__tests__/`.
+### Build de produção
 
-- Para executar: dentro de `backend/`, rode `npm test`.
-- Garanta que o banco de dados de teste esteja configurado, se aplicável.
+```powershell
+npm run build
+npm run preview  # opcional para servir o build localmente
+```
 
-## 📤 Upload e Cadastro de Produto (Fluxo Frontend)
+---
 
-1) Vendedor/Admin realiza upload da foto: `POST /upload/products` (multipart/form-data, campo `image`).
-2) Em seguida cria o produto: `POST /products` com `{ title, description, price, stock, images: ["/uploads/products/<arquivo>"], categoryId }`.
-3) No frontend, isso já está integrado na página `CadastroProdutosPage` via `uploadService` e `productService`.
+## Fluxos de Usuário
+### Cliente
+- Registro e login.
+- Navegar por categorias e produtos, gerenciar carrinho, realizar checkout e ver status de pedidos.
+
+### Vendedor (com aprovação)
+- Registro exige CNPJ.
+- Ao registrar, `status = 'pending'`. Somente após aprovação (admin) o vendedor consegue efetuar login e criar produtos.
+- Se tentar logar pendente, recebe 403 com mensagem de aguarde (frontend exibe a mensagem).
+
+### Administrador
+- Crie um admin com `npm run seed:admin`.
+- Acesso a rotas administrativas (gestão de usuários, aprovação de vendedores, etc.).
+
+---
+
+## Convenções, Scripts e Estrutura de Pastas
+Na raiz (`package.json`):
+- `install:all` – instala dependências de frontend e backend.
+- `dev` – roda frontend e backend juntos (usa `concurrently`).
+- `dev:frontend`, `dev:backend` – rodam partes isoladas.
+- `build:*` – builds individuais.
+
+Estruturas:
+- Backend: `backend/src/` com `controllers`, `routes`, `middleware`, `services`, `validators`, `utils`.
+- Frontend: `frontend/src/` com `pages`, `components`, `contexts`, `services`, `utils`.
+
+---
+
+## Troubleshooting
+- 500 no login:
+  - Verifique `.env` no backend (`JWT_SECRET`, `DATABASE_URL`, `JWT_EXPIRES_IN`).
+  - Conferir logs do servidor. Se vendedor pendente, o correto é 403 com mensagem de aguarde.
+- CORS: Frontend deve apontar para `VITE_API_URL` do backend; backend já libera `http://localhost:5173`.
+- Prisma: se migrations antigas, rode `npx prisma migrate deploy` ou `dev`. Gere o client se necessário.
+- Uploads: verifique permissões da pasta `backend/src/uploads/`.
+
+---
+
+## Licença
+MIT – ver arquivo LICENSE se aplicável.
+
+---
+
+ 
+
+## 🚀 Deploy do Frontend (Vercel)
+
+Este projeto (frontend em Vite) está pronto para deploy na Vercel usando `@vercel/static-build`.
+
+Arquivos/Configs adicionados:
+- `vercel.json` (build estática do diretório `frontend/`, rewrite SPA para `/index.html`, Node 20, workaround para Rollup).
+- `.npmrc` na raiz desativando `optional` deps (evita bug do Rollup nativo em ambientes Linux).
+- `frontend/package.json` com `postinstall` neutro para não acionar rebuild do Rollup nativo.
+
+Como publicar:
+1. No dashboard da Vercel, importe este repositório.
+2. Configure o projeto para usar o caminho `frontend/` como base de build.
+3. Variáveis de ambiente (caso necessário):
+  - `VITE_API_URL` → URL pública do backend (ex.: `https://api.seu-dominio.com`).
+4. Deploy.
+
+Rotas SPA
+- O `vercel.json` inclui rewrite para que todas as rotas caiam em `/index.html` (React Router).
+
+Node/Build
+- Node 20 (`.nvmrc` já aponta 20) e `ROLLUP_SKIP_NODEJS_NATIVE` forçado na build.
+
+---
+
+## 🚀 Deploy do Backend (Render/Railway)
+
+Este repositório inclui um exemplo de configuração para Render (`render.yaml`). Alternativas como Railway ou VPS também funcionam.
+
+### Render.com (Blueprint)
+- Arquivo: `render.yaml`
+- Cria um serviço web Node e um banco Postgres free.
+  - Defina `FRONTEND_URL` com a URL do seu frontend em produção (seu domínio/próxima hospedagem).
+
+Comandos de build/start (já no arquivo):
+- build: `npm install && cd backend && npm install && npx prisma generate && npx prisma migrate deploy`
+- start: `cd backend && node server.js`
+
+Variáveis de ambiente no backend:
+- `PORT` (3001)
+- `DATABASE_URL` (Render injeta se usar o Postgres criado pelo blueprint)
+- `JWT_SECRET`, `JWT_EXPIRES_IN`
+- `FRONTEND_URL` (ex.: `https://seu-frontend.exemplo.com`)
+
+### Railway.app (alternativa)
+1. Crie um projeto e adicione um serviço Node apontando para o repo.
+2. Configure a pasta de trabalho (Working directory) para `backend/`.
+3. Configure build command: `npm install && npx prisma generate && npx prisma migrate deploy`.
+4. Start command: `node server.js`.
+5. Adicione as variáveis de ambiente (`DATABASE_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `FRONTEND_URL`).
+6. Crie um Postgres no Railway e copie a connection string para `DATABASE_URL`.

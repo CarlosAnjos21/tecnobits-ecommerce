@@ -65,7 +65,7 @@
     min-width: 600px;
 }
 .productItem { grid-template-columns: 3fr 1fr 1fr 1fr; }
-.salesHeader, .saleItem { grid-template-columns: 2fr 1fr 1fr 1fr; }
+.salesHeader, .saleItem { grid-template-columns: 2fr 1fr 1fr 1fr 0.8fr; }
 .saleItem:last-child, .productItem:last-child { border-bottom: none; }
 .status { /* legado: mantido para compat, não usado com StatusTag */
     padding: 4px 8px;
@@ -169,6 +169,18 @@
 .deleteButton:focus {
     outline: 2px solid #e74c3c;
     outline-offset: 2px;
+}
+
+/* Botão específico para cancelar pedido (menor) */
+.cancelOrderButton {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+/* Célula de ação centralizada no grid */
+.actionCell {
+    justify-self: center;
 }
 
 .editButton:disabled,
