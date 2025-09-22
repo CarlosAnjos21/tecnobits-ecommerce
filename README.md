@@ -222,6 +222,30 @@ MIT – ver arquivo LICENSE se aplicável.
 
  
 
+## 🚀 Deploy do Frontend (Vercel)
+
+Este projeto (frontend em Vite) está pronto para deploy na Vercel usando `@vercel/static-build`.
+
+Arquivos/Configs adicionados:
+- `vercel.json` (build estática do diretório `frontend/`, rewrite SPA para `/index.html`, Node 20, workaround para Rollup).
+- `.npmrc` na raiz desativando `optional` deps (evita bug do Rollup nativo em ambientes Linux).
+- `frontend/package.json` com `postinstall` neutro para não acionar rebuild do Rollup nativo.
+
+Como publicar:
+1. No dashboard da Vercel, importe este repositório.
+2. Configure o projeto para usar o caminho `frontend/` como base de build.
+3. Variáveis de ambiente (caso necessário):
+  - `VITE_API_URL` → URL pública do backend (ex.: `https://api.seu-dominio.com`).
+4. Deploy.
+
+Rotas SPA
+- O `vercel.json` inclui rewrite para que todas as rotas caiam em `/index.html` (React Router).
+
+Node/Build
+- Node 20 (`.nvmrc` já aponta 20) e `ROLLUP_SKIP_NODEJS_NATIVE` forçado na build.
+
+---
+
 ## 🚀 Deploy do Backend (Render/Railway)
 
 Este repositório inclui um exemplo de configuração para Render (`render.yaml`). Alternativas como Railway ou VPS também funcionam.
