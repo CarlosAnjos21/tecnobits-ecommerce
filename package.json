@@ -27,7 +27,6 @@
   "author": "Equipe Hardware - Daniely, Kaio, Antônio, Carlos, Maycon, Anderson",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "cross-env": "^10.0.0"
+    "concurrently": "^8.2.2"
   }
 }
