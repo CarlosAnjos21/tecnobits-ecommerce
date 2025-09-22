@@ -113,12 +113,20 @@
 
 /* ===== Grid de Produtos ===== */
 .products-grid {
-    display: flex;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    width: 80%;
-    padding: 10px;
-    box-sizing: border-box;
+  display: flex;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.products-grid #div #button{
+  margin-top: 10px;
+  color: rgb(255, 0, 0)
 }
 
 /* Cards individuais */
@@ -141,6 +149,23 @@
 }
 
 /* ===== Responsividade ===== */
+
+
+@media (max-width: 4000px) {
+  .products-grid {  
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+}
 
 /* Telas médias (tablets/notebooks menores) */
 @media (max-width: 1024px) {
