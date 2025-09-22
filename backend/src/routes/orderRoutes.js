@@ -11,7 +11,7 @@ import {
   obterMetricasAdmin,
   obterMetricasVendedor,
   cancelarPedidoVendedor
-} from "../controllers/orderController.js";
+} from "../controllers/OrderController.js";
 import { protect, authorize } from "../middleware/authMiddleware.js";
 import { validate } from "../middleware/validateMiddleware.js";
 import { createOrderSchema } from "../validators/orderSchemas.js";
