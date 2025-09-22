@@ -212,3 +212,35 @@ start postman-setup.html
 -----
 
 **Este projeto foi orgulhosamente desenvolvido como parte do programa Capacita Brasil - FullStack.** 🚀
+
+---
+
+## 🧩 Backend: Ambiente, Migrations e Seeds
+
+1) Crie o arquivo `.env` em `backend/` a partir do exemplo:
+
+  - `backend/.env.example` → copie para `.env` e ajuste `DATABASE_URL`, `JWT_SECRET` e `PORT` (opcional).
+
+2) Execute as migrations do Prisma e popular dados:
+
+  - Scripts de seed estão em `backend/seeds/`.
+  - Ordem recomendada:
+    - `node seeds/clearDatabase.js`
+    - `node seeds/create_multiple_users.js` (ou `createAdmin.js`/`createCliente.js`/`createVendedor.js`)
+    - `node seeds/createProductsAndCategories.js`
+    - Opcional: `node seeds/createTestOrders.js` (gera pedidos de teste; ajuste `BUYER_ID`/`SELLER_ID` no arquivo conforme sua base)
+
+> Observação: os uploads de produtos são servidos via rota estática `/uploads/products`. Ao subir imagem pela API, o backend retorna um `path` utilizável direto no frontend.
+
+## 🧪 Testes do Backend
+
+Há testes focados em pedidos e cancelamento em `backend/src.__tests__/`.
+
+- Para executar: dentro de `backend/`, rode `npm test`.
+- Garanta que o banco de dados de teste esteja configurado, se aplicável.
+
+## 📤 Upload e Cadastro de Produto (Fluxo Frontend)
+
+1) Vendedor/Admin realiza upload da foto: `POST /upload/products` (multipart/form-data, campo `image`).
+2) Em seguida cria o produto: `POST /products` com `{ title, description, price, stock, images: ["/uploads/products/<arquivo>"], categoryId }`.
+3) No frontend, isso já está integrado na página `CadastroProdutosPage` via `uploadService` e `productService`.

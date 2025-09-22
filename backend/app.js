@@ -1,4 +1,8 @@
 import express from 'express';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import cors from 'cors';
 import authRoutes from './src/routes/authRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
@@ -7,16 +11,46 @@ import adminRoutes from './src/routes/adminRoutes.js';
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import cartRoutes from "./src/routes/cartRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js";
+import uploadRoutes from "./src/routes/uploadRoutes.js";
 import { protect, authorize } from './src/middleware/authMiddleware.js';
+
+import sellerProductRoutes from "./src/routes/sellerProductRoutes.js";
 
 
 const app = express();
 
-app.use(cors());
+// Hardening básico
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' }, // permitir servir imagens a partir de /uploads
+}));
+
+// Rate limit focado em endpoints sensíveis (habilitado apenas em produção)
+const isProd = process.env.NODE_ENV === 'production';
+const authLimiter = isProd
+    ? rateLimit({
+            windowMs: 15 * 60 * 1000, // 15 min
+            max: 100, // até 100 req/15min por IP
+            standardHeaders: true,
+            legacyHeaders: false,
+            message: {
+                message: 'Muitas tentativas. Aguarde alguns minutos e tente novamente.'
+            }
+        })
+    : (req, res, next) => next(); // no-op em dev/test
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 app.use(express.json());
 
+// Static uploads
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname, 'src', 'uploads')));
+
 // Rotas de Autenticação e Perfil (públicas e privadas)
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authLimiter, authRoutes);
 
 // Rotas de Gerenciamento de Usuários (apenas admin)
 app.use('/api/users', userRoutes);
@@ -40,5 +74,13 @@ app.use("/api/cart", cartRoutes);
 
 // Rotas de Pedidos
 app.use("/api/orders", orderRoutes);
+
+
+// Rotas do vendedor monitorar os produtos
+app.use("/api/seller", sellerProductRoutes);
+
+// Rotas de Upload de arquivos (imagens de produtos)
+app.use("/api/upload", uploadRoutes);
+
 
 export default app;

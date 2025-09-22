@@ -1,0 +1,25 @@
+{
+  "id": "ecommerce-environment",
+  "name": "Ecommerce Local",
+  "_postman_variable_scope": "environment",
+  "values": [
+    { "key": "baseUrl", "value": "http://localhost:3001", "enabled": true },
+    { "key": "token", "value": "", "enabled": true },
+
+    { "key": "clienteEmail", "value": "cliente@example.com", "enabled": true },
+    { "key": "clientePassword", "value": "123456", "enabled": true },
+
+    { "key": "adminEmail", "value": "admin@example.com", "enabled": true },
+    { "key": "adminPassword", "value": "123456", "enabled": true },
+
+    { "key": "vendedorEmail", "value": "vendedor@example.com", "enabled": true },
+    { "key": "vendedorPassword", "value": "123456", "enabled": true },
+
+    { "key": "lastProductId", "value": "", "enabled": true },
+    { "key": "lastCategoryId", "value": "", "enabled": true },
+    { "key": "lastCartItemId", "value": "", "enabled": true },
+    { "key": "lastOrderId", "value": "", "enabled": true },
+    { "key": "lastUserId", "value": "", "enabled": true },
+    { "key": "sellerId", "value": "", "enabled": true }
+  ]
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Confirmacompra.module.css';
 import { useCart } from '../../contexts/CartContext';
+import { createOrder } from '../../services/orderService';
 import { useNavigate } from 'react-router-dom';
 
 // Validador de CPF
@@ -130,7 +131,7 @@ const InformacoesPessoais = ({ cpf, setCpf, cpfErro, setCpfErro, formData, setFo
   );
 };
 
-const InformacoesPagamento = ({ formData, setFormData }) => {
+const InformacoesPagamento = ({ formData, setFormData, metodo, setMetodo }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -139,45 +140,62 @@ const InformacoesPagamento = ({ formData, setFormData }) => {
     <section className={styles.formSection}>
       <h4>Informações de Pagamento</h4>
 
-      <label>Número do Cartão *</label>
-      <input
-        type="text"
-        name="numeroCartao"
-        placeholder="0000 0000 0000 0000"
-        value={formData.numeroCartao}
-        onChange={handleChange}
-        required
-      />
+      <label>Método de Pagamento *</label>
+      <select name="metodoPagamento" value={metodo} onChange={e => setMetodo(e.target.value)} required>
+        <option value="cartao">Cartão de Crédito</option>
+        <option value="pix">Pix</option>
+      </select>
 
-      <label>Nome no Cartão *</label>
-      <input
-        type="text"
-        name="nomeCartao"
-        placeholder="Nome impresso no cartão"
-        value={formData.nomeCartao}
-        onChange={handleChange}
-        required
-      />
+      {metodo === 'cartao' && (
+        <>
+          <label>Número do Cartão *</label>
+          <input
+            type="text"
+            name="numeroCartao"
+            placeholder="0000 0000 0000 0000"
+            value={formData.numeroCartao}
+            onChange={handleChange}
+            required
+          />
 
-      <label>Validade (MM/AA) *</label>
-      <input
-        type="text"
-        name="validade"
-        placeholder="MM/AA"
-        value={formData.validade}
-        onChange={handleChange}
-        required
-      />
+          <label>Nome no Cartão *</label>
+          <input
+            type="text"
+            name="nomeCartao"
+            placeholder="Nome impresso no cartão"
+            value={formData.nomeCartao}
+            onChange={handleChange}
+            required
+          />
 
-      <label>CVV *</label>
-      <input
-        type="text"
-        name="cvv"
-        placeholder="123"
-        value={formData.cvv}
-        onChange={handleChange}
-        required
-      />
+          <label>Validade (MM/AA) *</label>
+          <input
+            type="text"
+            name="validade"
+            placeholder="MM/AA"
+            value={formData.validade}
+            onChange={handleChange}
+            required
+          />
+
+          <label>CVV *</label>
+          <input
+            type="text"
+            name="cvv"
+            placeholder="123"
+            value={formData.cvv}
+            onChange={handleChange}
+            required
+          />
+        </>
+      )}
+      {metodo === 'pix' && (
+        <div style={{marginTop: '16px'}}>
+          <p>Pagamento instantâneo via Pix.</p>
+          <p>Use a chave Pix abaixo:</p>
+          <input type="text" value="fazopixbb@tecnobits.com" readOnly style={{width: '100%', marginBottom: '8px'}} />
+        </div>
+      )}
     </section>
   );
 };
@@ -195,8 +213,10 @@ const ResumoPedido = () => {
   }
 
   const subtotal = getCartTotal();
-  const shippingCost = 25.0;
-  const discount = subtotal * 0.5;
+  const SHIPPING_COST = 25.0; // ajuste conforme necessário
+  const DISCOUNT_PERCENTAGE = 0.0; // ajuste conforme necessário
+  const shippingCost = SHIPPING_COST;
+  const discount = subtotal * DISCOUNT_PERCENTAGE;
   const total = subtotal + shippingCost - discount;
 
   const formatCurrency = (value) =>
@@ -241,6 +261,7 @@ const ResumoPedido = () => {
 const Confirmacompra = () => {
   const [cpf, setCpf] = useState('');
   const [cpfErro, setCpfErro] = useState('');
+  const [metodoPagamento, setMetodoPagamento] = useState('cartao');
   const [formData, setFormData] = useState({
     nome: '',
     rua: '',
@@ -255,10 +276,12 @@ const Confirmacompra = () => {
     cvv: ''
   });
 
-  const { cartItems, getCartTotal } = useCart();
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // CPF
@@ -267,40 +290,43 @@ const Confirmacompra = () => {
       return;
     }
 
-    // Número do cartão (16 dígitos)
-    const cardNumber = formData.numeroCartao.replace(/\s/g, '');
-    if (!/^\d{16}$/.test(cardNumber)) {
-      alert('Número do cartão inválido. Deve conter 16 dígitos.');
-      return;
-    }
+    // Validações específicas conforme método de pagamento
+    if (metodoPagamento === 'cartao') {
+      // Número do cartão (16 dígitos)
+      const cardNumber = formData.numeroCartao.replace(/\s/g, '');
+      if (!/^\d{16}$/.test(cardNumber)) {
+        alert('Número do cartão inválido. Deve conter 16 dígitos.');
+        return;
+      }
 
-    // Nome no cartão
-    if (!/^[a-zA-ZÀ-ú]+\s+[a-zA-ZÀ-ú]+/.test(formData.nomeCartao.trim())) {
-      alert('Nome no cartão inválido. Deve conter nome e sobrenome.');
-      return;
-    }
+      // Nome no cartão
+      if (!/^[a-zA-ZÀ-ú]+\s+[a-zA-ZÀ-ú]+/.test(formData.nomeCartao.trim())) {
+        alert('Nome no cartão inválido. Deve conter nome e sobrenome.');
+        return;
+      }
 
-    // Validade MM/AA e não expirada
-    const validade = formData.validade.trim();
-    if (!/^\d{2}\/\d{2}$/.test(validade)) {
-      alert('Validade inválida. Use o formato MM/AA.');
-      return;
-    }
+      // Validade MM/AA e não expirada
+      const validade = formData.validade.trim();
+      if (!/^\d{2}\/\d{2}$/.test(validade)) {
+        alert('Validade inválida. Use o formato MM/AA.');
+        return;
+      }
 
-    const [mes, ano] = validade.split('/').map(Number);
-    const dataAtual = new Date();
-    const anoAtual = Number(String(dataAtual.getFullYear()).slice(2));
-    const mesAtual = dataAtual.getMonth() + 1;
+      const [mes, ano] = validade.split('/').map(Number);
+      const dataAtual = new Date();
+      const anoAtual = Number(String(dataAtual.getFullYear()).slice(2));
+      const mesAtual = dataAtual.getMonth() + 1;
 
-    if (mes < 1 || mes > 12 || ano < anoAtual || (ano === anoAtual && mes < mesAtual)) {
-      alert('Cartão vencido. Informe uma validade futura.');
-      return;
-    }
+      if (mes < 1 || mes > 12 || ano < anoAtual || (ano === anoAtual && mes < mesAtual)) {
+        alert('Cartão vencido. Informe uma validade futura.');
+        return;
+      }
 
-    // CVV
-    if (!/^\d{3}$/.test(formData.cvv)) {
-      alert('CVV inválido. Deve conter 3 dígitos.');
-      return;
+      // CVV
+      if (!/^\d{3}$/.test(formData.cvv)) {
+        alert('CVV inválido. Deve conter 3 dígitos.');
+        return;
+      }
     }
 
     if (cartItems.length === 0) {
@@ -308,23 +334,40 @@ const Confirmacompra = () => {
       return;
     }
 
-    // Preparar dados para enviar para página de sucesso
-    const subtotal = getCartTotal();
-    const shippingCost = 25.0;
-    const discount = subtotal * 0.5;
-    const total = subtotal + shippingCost - discount;
+  // Preparar dados locais (se necessário no futuro)
 
-    const dadosPedido = {
-      ...formData,
+    // Mapear método de pagamento para enum esperado pelo backend (PaymentMethod)
+    const metodoPagamentoEnum = metodoPagamento === 'pix' ? 'PIX' : 'CARTAO_CREDITO';
+
+    // Estimativa simples de entrega: +5 dias corridos
+    const dataEntregaPrevista = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000);
+
+    // Montar payload para backend (orderService.createOrderFromCart)
+    const payload = {
+      cep: formData.cep,
+      cidade: formData.cidade,
+      enderecoEntrega: `${formData.rua}, ${formData.numero} - ${formData.bairro}`,
+      complemento: '',
+      estado: formData.estado,
       cpf,
-      cartItems,
-      subtotal,
-      shippingCost,
-      discount,
-      total,
+      metodoPagamento: metodoPagamentoEnum,
+      dataEntregaPrevista,
     };
 
-    navigate('/success', { state: dadosPedido });
+    try {
+      setSubmitError('');
+      setSubmitting(true);
+      const created = await createOrder(payload);
+      // Opcional: limpar carrinho após criar pedido
+      clearCart();
+      navigate('/success', { state: { order: created } });
+    } catch (err) {
+      console.error('Erro ao criar pedido:', err?.response?.data || err);
+      const details = err?.response?.data?.details || err?.message || '';
+      setSubmitError(`Não foi possível registrar o pedido. ${details}`);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -341,10 +384,20 @@ const Confirmacompra = () => {
             formData={formData}
             setFormData={setFormData}
           />
-          <InformacoesPagamento formData={formData} setFormData={setFormData} />
+          <InformacoesPagamento
+            formData={formData}
+            setFormData={setFormData}
+            metodo={metodoPagamento}
+            setMetodo={setMetodoPagamento}
+          />
 
-          <button type="submit" className={styles.summaryButton}>
-            Enviar Dados
+          {submitError && (
+            <div className={styles.erroMensagem} role="alert" style={{ marginTop: 8 }}>
+              {submitError}
+            </div>
+          )}
+          <button type="submit" className={styles.summaryButton} disabled={submitting}>
+            {submitting ? 'Enviando...' : 'Enviar Dados'}
           </button>
         </form>
 

@@ -5,6 +5,9 @@ const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
 
+// Base do backend configurável
+const API_BASE = (import.meta.env.VITE_API_URL?.replace(/\/$/, '') || 'http://localhost:3001');
+
 // Função auxiliar para fazer chamadas API
 const apiCall = async (url, options = {}) => {
   const token = localStorage.getItem('authToken'); // Corrigido: era 'token', deve ser 'authToken'
@@ -16,7 +19,7 @@ const apiCall = async (url, options = {}) => {
     },
   };
 
-  const response = await fetch(`http://localhost:3001/api${url}`, {
+  const response = await fetch(`${API_BASE}/api${url}`, {
     ...defaultOptions,
     ...options,
     headers: {
@@ -26,7 +29,18 @@ const apiCall = async (url, options = {}) => {
   });
 
   if (!response.ok) {
-    throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
+    let details;
+    try {
+      const data = await response.json();
+      details = data?.details || data?.error;
+    } catch {
+      // ignore JSON parse error
+    }
+    const err = new Error(`Erro na API: ${response.status} ${response.statusText}${details ? ` - ${details}` : ''}`);
+    // anexar infos úteis
+    err.status = response.status;
+    err.details = details;
+    throw err;
   }
 
   return response.json();
@@ -112,66 +126,47 @@ export const CartProvider = ({ children }) => {
 
   // Adicionar item ao carrinho (servidor primeiro, depois local)
   const addToCart = async (product) => {
-    // Verificar se usuário está logado
     const token = localStorage.getItem('authToken');
     if (!token) {
       console.error('❌ Usuário não está logado!');
       alert('Você precisa estar logado para adicionar itens ao carrinho.');
       return;
     }
-
     try {
-      // Primeiro sincronizar com servidor
       await apiCall('/cart', {
         method: 'POST',
-        body: JSON.stringify({
-          productId: product.id,
-          quantity: 1,
-        }),
+        body: JSON.stringify({ productId: product.id, quantity: 1 }),
       });
-
-      // Depois recarregar tudo do servidor para ter dados consistentes
       await loadCartFromServer();
     } catch (error) {
       console.error('❌ Erro ao adicionar item ao carrinho:', error);
-
-      // Mostrar mensagem de erro específica para o usuário
-      if (error.message?.includes('401') || error.message?.includes('Unauthorized')) {
+      if (error.status === 401 || error.message?.includes('401') || error.message?.includes('Unauthorized')) {
         alert('Erro de autenticação. Faça login novamente.');
-      } else if (error.message?.includes('404')) {
+      } else if (error.status === 404 || error.message?.includes('404')) {
         alert('Produto não encontrado.');
-      } else if (error.message?.includes('400')) {
+      } else if (error.status === 400 || error.message?.includes('400')) {
         alert('Dados inválidos. Verifique o produto.');
+      } else if (error.status === 409 || error.message?.includes('409') || error.details?.toLowerCase?.().includes('estoque')) {
+        alert(error.details || 'Estoque insuficiente.');
       } else {
-        alert('Erro ao adicionar produto ao carrinho. Tente novamente.');
+        alert(error.details || 'Erro ao adicionar produto ao carrinho. Tente novamente.');
       }
-
-      // Não adicionar localmente se falhar no servidor
       throw error;
     }
   };
 
   // Remover item do carrinho (servidor primeiro, depois local)
   const removeFromCart = async (productId) => {
-    // Encontrar o item para obter o cartItemId
     const itemToRemove = cartItems.find(item => item.id === productId);
-
     if (!itemToRemove?.cartItemId) {
       console.warn('Item não tem cartItemId, não pode remover do servidor');
       return;
     }
-
     try {
-      // Primeiro remover do servidor
-      await apiCall(`/cart/${itemToRemove.cartItemId}`, {
-        method: 'DELETE',
-      });
-
-      // Depois recarregar tudo do servidor
+      await apiCall(`/cart/${itemToRemove.cartItemId}`, { method: 'DELETE' });
       await loadCartFromServer();
     } catch (error) {
       console.error('Erro ao remover item do carrinho:', error);
-      // Não remover localmente se falhar no servidor
       throw error;
     }
   };

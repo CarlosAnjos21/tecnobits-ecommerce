@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { getProductById } from '../../services/productService';
+import { updateProduct } from '../../services/sellerService';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './EditarProdutoPage.module.css';
@@ -17,24 +19,10 @@ const EditarProdutoPage = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const token = localStorage.getItem('authToken');
-                const response = await fetch(`http://localhost:3001/api/products/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Produto não encontrado');
-                }
-
-                const productData = await response.json();
-                
-                // Verifica se o produto pertence ao vendedor logado
+                const productData = await getProductById(id);
                 if (productData.sellerId !== user?.id) {
                     throw new Error('Você não tem permissão para editar este produto');
                 }
-
                 setProduct(productData);
             } catch (err) {
                 setError(err.message);
@@ -43,7 +31,6 @@ const EditarProdutoPage = () => {
                 setLoading(false);
             }
         };
-
         if (id && user?.id) {
             fetchProduct();
         }
@@ -60,29 +47,15 @@ const EditarProdutoPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSaving(true);
-        
         try {
-            const token = localStorage.getItem('authToken');
-            const response = await fetch(`http://localhost:3001/api/products/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    title: product.title,
-                    description: product.description,
-                    price: product.price,
-                    stock: product.stock
-                })
+            await updateProduct(id, {
+                title: product.title,
+                description: product.description,
+                price: product.price,
+                stock: product.stock
             });
-
-            if (!response.ok) {
-                throw new Error('Falha ao atualizar produto');
-            }
-
             alert("Produto atualizado com sucesso!");
-            navigate('/vendedor'); // Volta para o painel do vendedor
+            navigate('/vendedor/dashboard', { state: { sellerTab: 'produtos', flash: 'Produto atualizado com sucesso!' } });
         } catch (err) {
             console.error('Erro ao salvar produto:', err);
             alert('Erro ao salvar produto: ' + err.message);
@@ -102,7 +75,7 @@ const EditarProdutoPage = () => {
                 <div className={styles.error}>
                     <h2>Erro</h2>
                     <p>{error}</p>
-                    <button onClick={() => navigate('/vendedor')} className={styles.backButton}>
+                    <button onClick={() => navigate('/vendedor/dashboard', { state: { sellerTab: 'produtos' } })} className={styles.backButton}>
                         Voltar ao Painel
                     </button>
                 </div>
@@ -174,7 +147,7 @@ const EditarProdutoPage = () => {
                         <button 
                             type="button" 
                             className={styles.cancelButton} 
-                            onClick={() => navigate('/vendedor')}
+                            onClick={() => navigate('/vendedor/dashboard', { state: { sellerTab: 'produtos' } })}
                             disabled={saving}
                         >
                             Cancelar
