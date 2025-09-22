@@ -80,6 +80,49 @@
   filter: brightness(110%);
 }
 
+.actionsRow {
+  display: flex;
+  gap: 8px;
+}
+
+.successButton {
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #10b981, #059669); /* verde */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.successButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(110%);
+}
+.successButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dangerButton {
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #ef4444, #b91c1c); /* vermelho */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.dangerButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(110%);
+}
+.dangerButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .loading {
   text-align: center;
   padding: 2rem;
