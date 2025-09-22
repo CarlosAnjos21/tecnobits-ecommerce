@@ -24,4 +24,28 @@ export const cancelOrder = async (id) => {
   return response.data;
 };
 
+// Vendedor: lista pedidos que contenham seus produtos (pode aceitar page, pageSize, status, etc.)
+export const getSellerOrders = async (params = {}) => {
+  const response = await api.get('/orders/seller-orders', { params });
+  return response.data; // pode ser um array (sem paginação) ou { data, pagination }
+};
+
+// ADMIN: métricas
+export const getAdminMetrics = async (params = {}) => {
+  const response = await api.get('/orders/metrics/admin', { params });
+  return response.data;
+};
+
+// VENDEDOR: métricas do vendedor logado
+export const getSellerMetrics = async (params = {}) => {
+  const response = await api.get('/orders/metrics/seller', { params });
+  return response.data;
+};
+
+// ADMIN: confirmar pagamento de um pedido
+export const confirmPayment = async (orderId) => {
+  const response = await api.post(`/orders/${orderId}/confirm-payment`);
+  return response.data;
+};
+
 

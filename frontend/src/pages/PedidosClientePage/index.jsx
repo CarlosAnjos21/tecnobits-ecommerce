@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './PedidosClientePage.module.css';
+import StatusTag from '../../components/StatusTag';
 import { getOrdersByUser } from '../../services/orderService';
 
-// Mapeia status do backend (enum) para classes de estilo
-const getStatusClass = (status) => {
-  if (!status) return '';
-  const s = String(status).toLowerCase();
-  if (s.includes('entregue')) return styles.statusEntregue;
-  if (s.includes('enviado')) return styles.statusEnviado;
-  if (s.includes('cancelado')) return styles.statusCancelado;
-  return '';
-};
+// Usa o componente StatusTag compartilhado
 
 // Componente reutilizável: pode ser página completa ou embed (resumo)
 const PedidosClientePage = ({ embed = false, limit = 5 }) => {
@@ -64,7 +57,7 @@ const PedidosClientePage = ({ embed = false, limit = 5 }) => {
               <span className={styles.orderId}>#{order.id}</span>
               <span className={styles.orderDate}>{fmtDate(order.createdAt)}</span>
               <span className={styles.orderTotal}>{formatCurrency(order.total)}</span>
-              <span className={`${styles.status} ${getStatusClass(order.status)}`}>{order.status}</span>
+              <StatusTag status={order.status} />
               <Link to={`/orders/${order.id}`} className={styles.detailsLink}>Ver detalhes</Link>
             </div>
           ))}

@@ -97,9 +97,21 @@ export const register = async (req, res) => {
                 return res.status(403).json({ message: 'Seu cadastro ainda não foi aprovado. Aguarde a aprovação para acessar a plataforma.' });
             }
 
-            // Gerar token e enviar resposta
+            // Gerar token e enviar resposta (retornando campos completos não sensíveis)
             const token = generateToken(user.id, user.role);
-            res.status(200).json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role }});
+            res.status(200).json({
+                token,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    address: user.address ?? null,
+                    phone: user.phone ?? null,
+                    cnpj: user.cnpj ?? null,
+                    status: user.status ?? 'active'
+                }
+            });
         } catch (error) {
             console.error('Erro detalhado no login:', error);
             res.status(500).json({ message: 'Erro no servidor.', error: error.message });

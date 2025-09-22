@@ -6,7 +6,10 @@ import {
   listarTodosPedidos,
   listarPedidosDoVendedor,
   cancelarPedido,
-  obterPedidoPorId
+  obterPedidoPorId,
+  confirmarPagamento,
+  obterMetricasAdmin,
+  obterMetricasVendedor
 } from "../controllers/orderController.js";
 import { protect, authorize } from "../middleware/authMiddleware.js";
 import { validate } from "../middleware/validateMiddleware.js";
@@ -29,6 +32,12 @@ router.get("/seller-orders", authorize("vendedor", "admin"), validate(listSeller
 // Admin vê todos pedidos (rota distinta para não conflitar com listarMeusPedidos)
 router.get("/all", authorize("admin"), listarTodosPedidos);
 
+// Métricas
+router.get("/metrics/admin", authorize("admin"), obterMetricasAdmin);
+router.get("/metrics/seller", authorize("vendedor", "admin"), obterMetricasVendedor);
+// Alias para evitar qualquer conflito de matching
+router.get("/seller/metrics", authorize("vendedor", "admin"), obterMetricasVendedor);
+
 // Criar pedido
 router.post("/", criarPedido);
 
@@ -38,6 +47,9 @@ router.delete("/:id/cancel", cancelarPedido);
 
 // Admin atualiza pedido parcialmente (status)
 router.patch("/:id", authorize("admin"), atualizarStatusPedido); // PATCH indica atualização parcial
+
+// Confirmar pagamento (admin)
+router.post("/:id/confirm-payment", authorize("admin"), confirmarPagamento);
 
 // Usuário (ou admin) vê um pedido específico (deve vir por último para não capturar rotas específicas)
 router.get("/:id", obterPedidoPorId);

@@ -17,8 +17,20 @@ class ProductService {
     });
   }
 
-  async listAll() {
+  async listAll(query) {
+    const where = query
+      ? {
+          OR: [
+            { title: { contains: query, mode: 'insensitive' } },
+            { description: { contains: query, mode: 'insensitive' } },
+            { brand: { contains: query, mode: 'insensitive' } },
+            { category: { name: { contains: query, mode: 'insensitive' } } },
+          ],
+        }
+      : undefined;
+
     return prisma.product.findMany({
+      where,
       include: {
         category: true,
         seller: { select: { id: true, name: true, email: true } }

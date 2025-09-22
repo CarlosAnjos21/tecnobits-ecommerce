@@ -50,11 +50,23 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('authToken');
     };
 
+    // Atualiza dados do usuário no contexto e persiste no localStorage
+    const updateUser = (partialOrUser) => {
+        setUser((prev) => {
+            const next = typeof partialOrUser === 'function' ? partialOrUser(prev) : { ...prev, ...partialOrUser };
+            try {
+                localStorage.setItem('user', JSON.stringify(next));
+            } catch {}
+            return next;
+        });
+    };
+
     const value = {
         user,
         loading, // 3. Expor o estado de loading
         login,
         logout,
+        updateUser,
         isAuthenticated: !loading && !!user, // A autenticação só é real quando não está carregando e existe usuário
         isAdmin: !loading && user?.role === 'admin',
     };

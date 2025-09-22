@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { getProducts } from '../../services/productService';
 import { CiFilter } from 'react-icons/ci';
 import ProductListing from '../../components/ProductListing';
@@ -15,6 +15,9 @@ const ProductListingPage = () => {
   const [selectedFilters, setSelectedFilters] = useState({ categoriaMarca: {}, emEstoque: false });
   const [categoriasExpandida, setCategoriasExpandida] = useState({});
   const [sortBy, setSortBy] = useState('mais-relevantes');
+  // Paginação
+  const PAGE_SIZE = 9; //para pag n ficar tao longa com muitas linhas
+  const [currentPage, setCurrentPage] = useState(1);
   // Aplica sortBy inicial baseado na query string
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -38,10 +41,12 @@ const ProductListingPage = () => {
   ];
 
   // Busca produtos do backend usando service
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getProducts();
+      const params = new URLSearchParams(location.search);
+      const q = params.get('q') || undefined;
+      const data = await getProducts(q ? { q } : undefined);
   // Adapta os dados do backend para o formato esperado pelo frontend
       const adaptedProducts = data.map(product => {
         return {
@@ -66,11 +71,11 @@ const ProductListingPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [location.search]);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -135,6 +140,16 @@ const ProductListingPage = () => {
 
   const filteredProducts = applyFiltersAndSort();
 
+  // Resetar página quando filtros/ordenação mudarem
+  const selectedFiltersKey = useMemo(() => JSON.stringify(selectedFilters), [selectedFilters]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedFiltersKey, sortBy]);
+
+  // Itens da página corrente
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
+  const pageItems = filteredProducts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   const filtrosPorCategoria = categoriasDisponiveis.reduce((acc, categoria) => {
     const produtosDaCategoria = products.filter(
       p => p.category === categoria && marcasDesejadas.includes(p.brand) && (!selectedFilters.emEstoque || p.inStock)
@@ -155,7 +170,15 @@ const ProductListingPage = () => {
 
       <div className='listing-header'>
         <div className='results-info'>
-          <h2>Resultados para "Hardware" - {filteredProducts.length} produtos</h2>
+          {(() => {
+            const params = new URLSearchParams(location.search);
+            const q = params.get('q');
+            return (
+              <h2>
+                {q ? `Resultados para "${q}"` : 'Todos os produtos'} - {filteredProducts.length} produtos
+              </h2>
+            );
+          })()}
         </div>
         <div className='sort-container'>
           <CustomSelect value={sortBy} onChange={setSortBy} options={sortOptions} />
@@ -236,7 +259,31 @@ const ProductListingPage = () => {
                 <button onClick={fetchProducts}>Tentar novamente</button>
               </div>
             ) : (
-              <ProductListing $isPageProducts products={filteredProducts} />
+              <>
+                <ProductListing isPageProducts products={pageItems} />
+                {totalPages > 1 && (
+                  <div style={{ display: 'flex', gap: 8, marginTop: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        disabled={currentPage === page}
+                        style={{
+                          padding: '8px 12px',
+                          borderRadius: 6,
+                          border: '1px solid #ddd',
+                          background: currentPage === page ? '#333' : '#fff',
+                          color: currentPage === page ? '#fff' : '#333',
+                          cursor: currentPage === page ? 'default' : 'pointer'
+                        }}
+                        aria-current={currentPage === page ? 'page' : undefined}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </main>
         </div>

@@ -6,13 +6,14 @@ import {
   getAdminOrders,
   getAdminSellers,
 } from '../../services/adminService';
+import { getAdminMetrics } from '../../services/orderService';
 import styles from './AdminPage.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+// import { useAuth } from '../../contexts/AuthContext';
 
 const AdminPage = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [pendingSellers, setPendingSellers] = useState([]);
   const [customers, setCustomers] = useState({ total: 0, items: [] });
   const [products, setProducts] = useState({ total: 0, items: [] });
@@ -22,22 +23,25 @@ const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [sellers, setSellers] = useState([]);
   const [filters, setFilters] = useState({ buyerId: '', sellerId: '', stockStatus: 'all' });
+  const [metrics, setMetrics] = useState(null);
 
   useEffect(() => {
     const fetchPendingSellersData = async () => {
       try {
-        const [pendings, customersData, productsData, ordersData, sellersData] = await Promise.all([
+        const [pendings, customersData, productsData, ordersData, sellersData, metricsData] = await Promise.all([
           getPendingSellers(),
           getAdminCustomers({ page: 1, pageSize: 10 }),
           getAdminProducts({ page: 1, pageSize: 10 }),
           getAdminOrders({ page: 1, pageSize: 10 }),
           getAdminSellers({ status: 'active' }),
+          getAdminMetrics(),
         ]);
         setPendingSellers(pendings);
         setCustomers(customersData);
         setProducts(productsData);
         setOrders(ordersData);
         setSellers(sellersData);
+        setMetrics(metricsData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -97,6 +101,30 @@ const AdminPage = () => {
 
       {activeTab === 'overview' && (
         <>
+          {metrics && (
+            <div className={styles.metricsGrid}>
+              <div className={styles.metricCard}>
+                <div className={styles.metricLabel}>Pedidos</div>
+                <div className={styles.metricValue}>{metrics.totalPedidos ?? 0}</div>
+              </div>
+              <div className={styles.metricCard}>
+                <div className={styles.metricLabel}>Itens vendidos</div>
+                <div className={styles.metricValue}>{metrics.totalItens ?? 0}</div>
+              </div>
+              <div className={styles.metricCard}>
+                <div className={styles.metricLabel}>Faturamento</div>
+                <div className={styles.metricValue}>R$ {(metrics.faturamentoTotal ?? 0).toFixed(2)}</div>
+              </div>
+              <div className={styles.metricCard}>
+                <div className={styles.metricLabel}>Status</div>
+                <div className={styles.metricValueSmall}>
+                  {Object.entries(metrics.statusBreakdown || {}).map(([k, v]) => (
+                    <div key={k}>{k}: {v}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
           <h2 className={styles.subtitle}>Vendedores com Cadastro Pendente</h2>
           <div className={styles.pendingList}>
             {pendingSellers.length === 0 ? (

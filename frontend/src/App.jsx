@@ -6,6 +6,7 @@ import UserDashboard from './components/UserDashboard';
 import BuySuccessPage from './pages/BuySuccess';
 import ResetScroll from './components/ResetScroll';
 import AdminRoute from './components/AdminRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Imports lazy
 const AdminLoginPage = lazy(() => import('./pages/AdminLoginPage'));
@@ -42,18 +43,24 @@ const App = () => {
         <Route path='/cadastro/pendente' element={<Layout><PendingApprovalPage /></Layout>} />
         
         {/* ROTAS PRIVADAS */}
-        <Route path='/checkout' element={<Layout><FinaleBuyPage /></Layout>} />
-        <Route path='/success' element={<Layout><Success/></Layout>} />
-        <Route path='/product-success' element={<Layout><BuySuccessPage /></Layout>} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/checkout' element={<Layout><FinaleBuyPage /></Layout>} />
+          <Route path='/success' element={<Layout><Success/></Layout>} />
+          <Route path='/product-success' element={<Layout><BuySuccessPage /></Layout>} />
+        </Route>
 
         {/* ROTAS DE CLIENTE */}
-        <Route path='/cliente/dashboard' element={<Layout><PaginaCliente /></Layout>} />
-        <Route path='/orders/:id' element={<Layout><DetalhesPedidoClientePage /></Layout>} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/cliente/dashboard' element={<Layout><PaginaCliente /></Layout>} />
+          <Route path='/orders/:id' element={<Layout><DetalhesPedidoClientePage /></Layout>} />
+        </Route>
 
         {/* ROTAS DE VENDEDOR */}
-        <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} />
-        <Route path='/vendedor/dashboard' element={<Layout><PaginaVendedor /></Layout>}  />
-        <Route path='/vendedor/produtos/editar/:id' element={<Layout><EditarProdutoPage /></Layout>} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/vendedor/cadastrar-produto'element={<Layout><CadastroProdutosPage /></Layout>} />
+          <Route path='/vendedor/dashboard' element={<Layout><PaginaVendedor /></Layout>}  />
+          <Route path='/vendedor/produtos/editar/:id' element={<Layout><EditarProdutoPage /></Layout>} />
+        </Route>
 
         {/* --- ROTAS DE ADMIN --- */}
         <Route path='/admin/login' element={<AdminLoginPage />} />

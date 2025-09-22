@@ -201,7 +201,7 @@ const InformacoesPagamento = ({ formData, setFormData, metodo, setMetodo }) => {
 };
 
 const ResumoPedido = () => {
-  const { cartItems, getCartTotal, clearCart } = useCart();
+  const { cartItems, getCartTotal } = useCart();
 
   if (cartItems.length === 0) {
     return (
@@ -213,8 +213,10 @@ const ResumoPedido = () => {
   }
 
   const subtotal = getCartTotal();
-  const shippingCost = 25.0;
-  const discount = subtotal * 0.5;
+  const SHIPPING_COST = 25.0; // ajuste conforme necessário
+  const DISCOUNT_PERCENTAGE = 0.0; // ajuste conforme necessário
+  const shippingCost = SHIPPING_COST;
+  const discount = subtotal * DISCOUNT_PERCENTAGE;
   const total = subtotal + shippingCost - discount;
 
   const formatCurrency = (value) =>
@@ -274,8 +276,10 @@ const Confirmacompra = () => {
     cvv: ''
   });
 
-  const { cartItems, getCartTotal, clearCart } = useCart();
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -330,11 +334,7 @@ const Confirmacompra = () => {
       return;
     }
 
-    // Preparar dados para enviar para página de sucesso
-    const subtotal = getCartTotal();
-    const shippingCost = 25.0;
-    const discount = subtotal * 0.5;
-    const total = subtotal + shippingCost - discount;
+  // Preparar dados locais (se necessário no futuro)
 
     // Mapear método de pagamento para enum esperado pelo backend (PaymentMethod)
     const metodoPagamentoEnum = metodoPagamento === 'pix' ? 'PIX' : 'CARTAO_CREDITO';
@@ -349,11 +349,14 @@ const Confirmacompra = () => {
       enderecoEntrega: `${formData.rua}, ${formData.numero} - ${formData.bairro}`,
       complemento: '',
       estado: formData.estado,
+      cpf,
       metodoPagamento: metodoPagamentoEnum,
       dataEntregaPrevista,
     };
 
     try {
+      setSubmitError('');
+      setSubmitting(true);
       const created = await createOrder(payload);
       // Opcional: limpar carrinho após criar pedido
       clearCart();
@@ -361,7 +364,9 @@ const Confirmacompra = () => {
     } catch (err) {
       console.error('Erro ao criar pedido:', err?.response?.data || err);
       const details = err?.response?.data?.details || err?.message || '';
-      alert(`Não foi possível registrar o pedido. ${details}`);
+      setSubmitError(`Não foi possível registrar o pedido. ${details}`);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -386,8 +391,13 @@ const Confirmacompra = () => {
             setMetodo={setMetodoPagamento}
           />
 
-          <button type="submit" className={styles.summaryButton}>
-            Enviar Dados
+          {submitError && (
+            <div className={styles.erroMensagem} role="alert" style={{ marginTop: 8 }}>
+              {submitError}
+            </div>
+          )}
+          <button type="submit" className={styles.summaryButton} disabled={submitting}>
+            {submitting ? 'Enviando...' : 'Enviar Dados'}
           </button>
         </form>
 
