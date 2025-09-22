@@ -197,6 +197,14 @@
   .summaryTotal {
     font-size: 18px;
   }
+
+  .formsColumn {
+    gap: 16px;
+  }
+
+  .formSection {
+    padding: 20px;
+  }
 }
 
 /* Feedback visual de erro */

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getUserProfile, updateUserProfile } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../components/Toast/ToastProvider.jsx';
 import styles from './PaginaVendedor.module.css'; // Reutilizando os estilos principais
 
 // Este componente cuida apenas da seção "Dados da Minha Loja" e do modal
 const DadosLoja = () => {
     const { user } = useAuth();
+    const { show } = useToast();
     const [sellerData, setSellerData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -63,13 +65,14 @@ const DadosLoja = () => {
 
             // O backend retorna o usuário diretamente (não { user: ... })
             setSellerData(updated);
+            localStorage.setItem('user', JSON.stringify(updated));
             setIsModalOpen(false);
             setEditableData({});
-            alert('Dados atualizados com sucesso!');
+            show('Dados atualizados com sucesso!', 'success');
         } catch (err) {
             const msg = err?.response?.data?.message || err.message || 'Erro desconhecido';
             setError(msg);
-            alert('Erro ao salvar dados: ' + msg);
+            show('Erro ao salvar dados: ' + msg, 'error');
         } finally {
             setSaving(false);
         }

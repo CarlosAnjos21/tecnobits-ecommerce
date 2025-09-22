@@ -75,6 +75,7 @@ model Order {
   dataEntregaRealizada DateTime?
   enderecoEntrega      String
   estado               String
+  cpf                  String?       // CPF informado no checkout (opcional)
   metodoPagamento      PaymentMethod
   statusPagamento      String        @default("PENDENTE")
   status               OrderStatus   @default(AGUARDANDO_PAGAMENTO)

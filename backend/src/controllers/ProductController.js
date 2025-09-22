@@ -24,9 +24,10 @@ export const criarProduto = async (req, res) => {
 };
 
 // Listar todos os produtos
-export const listarProduto = async (_req, res) => {
+export const listarProduto = async (req, res) => {
   try {
-    const produtos = await productService.listAll();
+    const q = (req.query.q || '').trim();
+    const produtos = await productService.listAll(q || undefined);
     res.json(produtos);
   } catch (error) {
     console.error("Erro ao listar produtos:", error);

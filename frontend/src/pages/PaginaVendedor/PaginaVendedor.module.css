@@ -65,9 +65,9 @@
     min-width: 600px;
 }
 .productItem { grid-template-columns: 3fr 1fr 1fr 1fr; }
-.salesHeader, .saleItem { grid-template-columns: 2fr 1fr 1fr 1fr; }
+.salesHeader, .saleItem { grid-template-columns: 2fr 1fr 1fr 1fr 0.8fr; }
 .saleItem:last-child, .productItem:last-child { border-bottom: none; }
-.status {
+.status { /* legado: mantido para compat, não usado com StatusTag */
     padding: 4px 8px;
     border-radius: 12px;
     text-align: center;
@@ -171,6 +171,18 @@
     outline-offset: 2px;
 }
 
+/* Botão específico para cancelar pedido (menor) */
+.cancelOrderButton {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+/* Célula de ação centralizada no grid */
+.actionCell {
+    justify-self: center;
+}
+
 .editButton:disabled,
 .deleteButton:disabled {
     opacity: 0.6;
@@ -210,9 +222,7 @@
     border-radius: 6px;
     margin: 1rem 0;
 }
-.statusEntregue { background-color: #d4edda; color: #155724; }
-.statusEnviado { background-color: #fff3cd; color: #856404; }
-.statusCancelado { background-color: #f8d7da; color: #721c24; }
+/* classes antigas removidas, StatusTag possui seu próprio CSS */
 .modalOverlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;

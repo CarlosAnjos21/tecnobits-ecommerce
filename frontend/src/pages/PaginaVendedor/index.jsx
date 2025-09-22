@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './PaginaVendedor.module.css';
 import DadosLoja from './DadosLoja';
 import VendasRecentes from './VendasRecentes';
 import MeusProdutos from './MeusProdutos';
 import { FaStore, FaTag, FaChartLine } from 'react-icons/fa'; // Ícones para o menu
+import { useLocation } from 'react-router-dom';
+import { useToast } from '../../components/Toast/ToastProvider.jsx';
 
 const PaginaVendedor = () => {
+    const location = useLocation();
+    const { show } = useToast();
     // Este estado controla qual componente será exibido na tela principal
     const [currentView, setCurrentView] = useState('dados'); // A visualização padrão é 'dados'
+
+    // Quando vier de uma navegação com state, abrir a aba adequada e exibir mensagem
+    useEffect(() => {
+        const tabFromState = location?.state?.sellerTab;
+        if (tabFromState) {
+            setCurrentView(tabFromState);
+        }
+        const flash = location?.state?.flash;
+        if (flash) {
+            show(flash, 'success');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={styles.dashboardContainer}>
