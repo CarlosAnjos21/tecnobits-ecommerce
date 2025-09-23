@@ -1,11 +1,15 @@
 import axios from 'axios';
 
 // Base do backend configurável via .env (Vite)
-// Ex.: VITE_API_URL=http://localhost:3001
-const API_BASE = (import.meta.env.VITE_API_URL?.replace(/\/$/, '') || 'http://localhost:3001');
+// Exemplos válidos:
+// - VITE_API_URL=http://localhost:3001
+// - VITE_API_URL=http://localhost:3001/api
+const RAW_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const CLEAN_BASE = RAW_BASE.replace(/\/$/, '');
+const baseURL = CLEAN_BASE.endsWith('/api') ? CLEAN_BASE : `${CLEAN_BASE}/api`;
 
 const api = axios.create({
-  baseURL: `${API_BASE}/api`,
+  baseURL,
   withCredentials: true,
 });
 
