@@ -40,7 +40,7 @@ router.get("/seller/metrics", authorize("vendedor", "admin"), obterMetricasVende
 router.post("/", criarPedido);
 
 // Cancelar pedido (cliente proprietário ou admin)
-router.patch("/:id/cancel", cancelarPedido); // vini
+router.patch("/:id/cancel", cancelarPedido); // vini 
 router.delete("/:id/cancel", cancelarPedido);
 
 // Cancelar pedido (vendedor) — só se todos os itens forem dele
