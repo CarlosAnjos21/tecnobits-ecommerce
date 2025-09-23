@@ -96,68 +96,62 @@ async function main() {
     let updatedCount = 0;
 
     for (let i = 0; i < productsData.length; i++) {
-      const productData = productsData[i];
-      const categoryId = categoryMap.get(productData.category);
-      
-      // Distribui produtos entre vendedores de forma circular
-      const currentSeller = sellers[i % sellers.length];
-      
-      // As imagens serão puxadas do frontend, não armazenamos no banco
-      const images = [];
-      
-      // Calcula o estoque baseado no inStock
-      const stock = productData.inStock ? Math.floor(Math.random() * 50) + 10 : 0;
-      
-      // Usa o preço com desconto se disponível, senão usa o preço normal
-      const finalPrice = productData.priceDiscount || productData.price;
+  const productData = productsData[i];
+  const categoryId = categoryMap.get(productData.category);
 
-      try {
-        // Tenta buscar produto pelo título (removemos a verificação de sellerId para permitir reatribuição)
-        const existingProduct = await prisma.product.findFirst({
-          where: { 
-            title: productData.name
-          }
-        });
+  // Distribui produtos entre vendedores
+  const currentSeller = sellers[i % sellers.length];
 
-        if (existingProduct) {
-          // Atualiza produto existente (incluindo possível mudança de vendedor)
-          await prisma.product.update({
-            where: { id: existingProduct.id },
-            data: {
-              title: productData.name,
-              description: productData.description,
-              price: finalPrice,
-              stock: stock,
-              images: images,
-              categoryId: categoryId,
-              sellerId: currentSeller.id, // Atualiza o vendedor
-            }
-          });
-          updatedCount++;
-        } else {
-          // Cria novo produto
-          await prisma.product.create({
-            data: {
-              title: productData.name,
-              description: productData.description,
-              price: finalPrice,
-              stock: stock,
-              images: images,
-              sellerId: currentSeller.id,
-              categoryId: categoryId,
-            }
-          });
-          createdCount++;
+  // Usa as imagens do JSON
+  const images = productData.image || [];
+
+  // Calcula estoque
+  const stock = productData.inStock ? Math.floor(Math.random() * 50) + 10 : 0;
+
+  try {
+    const existingProduct = await prisma.product.findFirst({
+      where: { title: productData.name }
+    });
+
+    if (existingProduct) {
+      await prisma.product.update({
+        where: { id: existingProduct.id },
+        data: {
+          title: productData.name,
+          description: productData.description,
+          price: productData.price,
+          priceDiscount: productData.priceDiscount,
+          stock,
+          images,
+          categoryId,
+          sellerId: currentSeller.id,
         }
-
-        if ((createdCount + updatedCount) % 50 === 0) {
-          console.log(`Processados ${createdCount + updatedCount} produtos...`);
+      });
+      updatedCount++;
+    } else {
+      await prisma.product.create({
+        data: {
+          title: productData.name,
+          description: productData.description,
+          price: productData.price,
+          priceDiscount: productData.priceDiscount,
+          stock,
+          images,
+          sellerId: currentSeller.id,
+          categoryId,
         }
-
-      } catch (error) {
-        console.error(`Erro ao processar produto '${productData.name}':`, error.message);
-      }
+      });
+      createdCount++;
     }
+
+    if ((createdCount + updatedCount) % 50 === 0) {
+      console.log(`Processados ${createdCount + updatedCount} produtos...`);
+    }
+
+  } catch (error) {
+    console.error(`Erro ao processar produto '${productData.name}':`, error.message);
+  }
+}
 
     console.log('\n=== RESUMO DO SEED ===');
     console.log(`✅ Categorias processadas: ${uniqueCategories.length}`);
