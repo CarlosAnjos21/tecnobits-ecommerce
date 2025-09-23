@@ -208,7 +208,9 @@ body {
 
 .cart-item-unit-price p {
   margin: 0;
+  display: none;
 }
+
 .cart-item-unit-price:empty::before {
   content: "R$ 0,00";
   color: #adb5bd;
