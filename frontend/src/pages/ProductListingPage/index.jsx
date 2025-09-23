@@ -36,35 +36,35 @@ const ProductListingPage = () => {
     { value: 'mais-vendidos', label: 'mais vendidos' }
   ];
 
-  const fetchProducts = useCallback(async () => {
-    try {
-      setLoading(true);
-      const params = new URLSearchParams(location.search);
-      const q = params.get('q') || undefined;
-      const data = await getProducts(q ? { q } : undefined);
-      const adaptedProducts = data.map(product => ({
-        id: product.id,
-        name: product.title,
-        description: product.description,
-        price: product.price,
-        priceDiscount: product.priceDiscount || 0,
-        // MUDANÇA: Padroniza a categoria para maiúsculas logo na adaptação dos dados
-        category: product.category?.name?.toUpperCase() || 'SEM CATEGORIA',
-        brand: product.brand || 'Marca',
-        image: product.images?.[0] || '/images/404.png',
-        rating: product.rating || 4.0,
-        inStock: product.stock > 0,
-        tagValue: product.tagValue || (product.stock > 0 ? null : 'Fora de estoque'),
-        sales: product.sales || 0 // Garante que a propriedade sales exista para a ordenação
-      }));
-      setProducts(adaptedProducts);
-      setError(null);
-    } catch (err) {
-      setError('Erro ao carregar produtos. Tente novamente.');
-    } finally {
-      setLoading(false);
-    }
-  }, [location.search]);
+    const fetchProducts = useCallback(async () => {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams(location.search);
+        const q = params.get('q') || undefined;
+        const data = await getProducts(q ? { q } : undefined);
+        const adaptedProducts = data.map(product => ({
+          id: product.id,
+          name: product.title,
+          description: product.description,
+          price: product.price,
+          priceDiscount: product.priceDiscount || 0,
+          // MUDANÇA: Padroniza a categoria para maiúsculas logo na adaptação dos dados
+          category: product.category?.name?.toUpperCase() || 'SEM CATEGORIA',
+          brand: product.brand || 'Marca',
+          image: product.images?.[0] || '/images/404.png',
+          rating: product.rating || 4.0,
+          inStock: product.stock > 0,
+          tagValue: product.tagValue || (product.stock > 0 ? null : 'Fora de estoque'),
+          sales: product.sales || 0 // Garante que a propriedade sales exista para a ordenação
+        }));
+        setProducts(adaptedProducts);
+        setError(null);
+      } catch (err) {
+        setError('Erro ao carregar produtos. Tente novamente.');
+      } finally {
+        setLoading(false);
+      }
+    }, [location.search]);
 
   useEffect(() => {
     fetchProducts();
