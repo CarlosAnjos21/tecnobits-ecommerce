@@ -106,11 +106,11 @@
 @media (max-width: 768px) {
   .footer {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Alinha tudo à esquerda por padrão */
+    align-items: center;
     text-align: left;
     gap: 2.5rem;
-    padding: 2rem 1.5rem; /* Reduz o padding para telas menores */
+    padding: 2rem 1.5rem;
+    flex-direction: column;
   }
 
   .footer-header {
