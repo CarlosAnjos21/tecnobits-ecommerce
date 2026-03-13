@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from '../../contexts/AuthContext';
 import styles from './LoginPage.module.css';
 
-const validateLoginForm = (formData) => {
+const validateLoginForm = formData => {
   const errors = {};
   if (!formData.email) {
     errors.email = 'O email é obrigatório';
@@ -28,7 +28,7 @@ const LoginPage = () => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const newErrors = validateLoginForm(formData);
     setErrors(newErrors);
@@ -45,17 +45,22 @@ const LoginPage = () => {
 
         // Navega para o painel correto com base na role do usuário
         switch (user.role) {
+          case 'admin':
+            navigate('/admin/dashboard');
+            break;
+
           case 'cliente':
             navigate('/cliente/dashboard');
             break;
+
           case 'vendedor':
             navigate('/vendedor/dashboard');
             break;
+
           default:
             setErrors({ general: 'Tipo de usuário não reconhecido.' });
             break;
         }
-
       } catch (error) {
         // O erro lançado pelo contexto é capturado e exibido aqui
         setErrors({ general: error.message });
@@ -67,38 +72,68 @@ const LoginPage = () => {
 
   return (
     <div className={styles.pageContainer}>
-        <div className={styles.formWrapper}>
-            <div className={styles.titleContainer}>
-                <h1 className={styles.title}>Acesse sua Conta</h1>
-                <p className={styles.subtitle}>
-                    Não tem uma conta? <Link to="/create-account" className={styles.link}>Crie uma aqui</Link>
-                </p>
-            </div>
-            <form onSubmit={handleSubmit} noValidate>
-                <div className={styles.formGroup}>
-                    <label htmlFor="email">Email *</label>
-                    <input id="email" name="email" type="email" value={formData.email} onChange={handleChange} className={errors.email ? styles.inputError : ''} placeholder="seu.email@exemplo.com" />
-                    {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="password">Senha *</label>
-                    <input id="password" name="password" type="password" value={formData.password} onChange={handleChange} className={errors.password ? styles.inputError : ''} placeholder="Sua senha" />
-                    {errors.password && <p className={styles.errorMessage}>{errors.password}</p>}
-                </div>
-                {errors.general && <p className={styles.errorMessage}>{errors.general}</p>}
-                <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-                    {isSubmitting ? 'Entrando...' : 'Entrar'}
-                </button>
-            </form>
-            <div className={styles.separator}><span>Ou entre com</span></div>
-            <div className={styles.socialLogin}>
-                <button className={styles.socialButton}>Google</button>
-                <button className={styles.socialButton}>Facebook</button>
-            </div>
+      <div className={styles.formWrapper}>
+        <div className={styles.titleContainer}>
+          <h1 className={styles.title}>Acesse sua Conta</h1>
+          <p className={styles.subtitle}>
+            Não tem uma conta?{' '}
+            <Link to='/create-account' className={styles.link}>
+              Crie uma aqui
+            </Link>
+          </p>
         </div>
+        <form onSubmit={handleSubmit} noValidate>
+          <div className={styles.formGroup}>
+            <label htmlFor='email'>Email *</label>
+            <input
+              id='email'
+              name='email'
+              type='email'
+              value={formData.email}
+              onChange={handleChange}
+              className={errors.email ? styles.inputError : ''}
+              placeholder='seu.email@exemplo.com'
+            />
+            {errors.email && (
+              <p className={styles.errorMessage}>{errors.email}</p>
+            )}
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor='password'>Senha *</label>
+            <input
+              id='password'
+              name='password'
+              type='password'
+              value={formData.password}
+              onChange={handleChange}
+              className={errors.password ? styles.inputError : ''}
+              placeholder='Sua senha'
+            />
+            {errors.password && (
+              <p className={styles.errorMessage}>{errors.password}</p>
+            )}
+          </div>
+          {errors.general && (
+            <p className={styles.errorMessage}>{errors.general}</p>
+          )}
+          <button
+            type='submit'
+            className={styles.submitButton}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Entrando...' : 'Entrar'}
+          </button>
+        </form>
+        <div className={styles.separator}>
+          <span>Ou entre com</span>
+        </div>
+        <div className={styles.socialLogin}>
+          <button className={styles.socialButton}>Google</button>
+          <button className={styles.socialButton}>Facebook</button>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default LoginPage;
-
