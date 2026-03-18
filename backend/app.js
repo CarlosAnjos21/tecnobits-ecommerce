@@ -4,7 +4,6 @@ import rateLimit from "express-rate-limit";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
-import { FRONTEND_URL, CORS_ORIGINS } from "./src/config/env.js";
 import fs from "fs";
 import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
@@ -42,9 +41,12 @@ const authLimiter = isProd
   : (req, res, next) => next(); // no-op em dev/test
 
 const allowedOrigins = new Set([
-  FRONTEND_URL,
+  process.env.FRONTEND_URL || "http://localhost:5173",
   "http://localhost:5173",
-  ...CORS_ORIGINS,
+  ...(process.env.CORS_ORIGINS || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean),
 ]);
 app.use(
   cors({
@@ -59,8 +61,8 @@ app.use(
         const host = new URL(origin).host;
         if (host.endsWith(".vercel.app")) return callback(null, true);
         if (host.endsWith(".onrender.com")) return callback(null, true);
+        if (host.endsWith(".railway.app")) return callback(null, true);
       } catch (_) {}
-      F;
       return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
