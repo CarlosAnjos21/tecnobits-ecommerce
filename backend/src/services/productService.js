@@ -35,6 +35,8 @@ class ProductService {
 
   async listAll(query) {
     if (isProd) {
+      console.log('SUPABASE_URL:', process.env.SUPABASE_URL)
+      console.log('KEY exists:', !!process.env.SUPABASE_SECRET_KEY)
       let q = supabase
         .from("products")
         .select("*, category:categories(*), seller:users(id, name, email)");
@@ -42,7 +44,10 @@ class ProductService {
         q = q.or(`title.ilike.%${query}%,description.ilike.%${query}%,brand.ilike.%${query}%`);
       }
       const { data, error } = await q;
-      if (error) throw new Error(error.message);
+      if (error) {
+        console.log('Erro Supabase detalhado:', JSON.stringify(error))
+        throw new Error(error.message)
+      }
       return data;
     }
     const where = query ? {
