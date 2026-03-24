@@ -6,7 +6,6 @@
   "main": "server.js",
   "scripts": {
     "postinstall": "prisma generate",
-    "start": "node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
     "start:staging": "cross-env NODE_ENV=staging node server.js",
     "start:prod": "cross-env NODE_ENV=production node server.js",
@@ -16,11 +15,13 @@
     "seed:client": "node seeds/createCliente.js",
     "seed:products": "node seeds/createProductsAndCategories.js",
     "seed:test-orders": "node seeds/createTestOrders.js",
-    "seed:all": "npm run seed:admin && npm run seed:vendor && npm run seed:client && npm run seed:products && npm run seed:test-orders"
+    "seed:all:dev": "cross-env NODE_ENV=development node seeds/createAdmin.js && node seeds/createVendedor.js && node seeds/createCliente.js && node seeds/createProductsAndCategories.js && node seeds/createTestOrders.js",
+    "seed:all:prod": "cross-env NODE_ENV=production node seeds/createAdmin.js && node seeds/createVendedor.js && node seeds/createCliente.js && node seeds/createProductsAndCategories.js && node seeds/createTestOrders.js",
+    "prisma:push:dev": "cross-env NODE_ENV=development npx prisma db push",
+    "prisma:push:prod": "cross-env NODE_ENV=production npx prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "@supabase/supabase-js": "^2.100.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
@@ -31,7 +32,6 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "nanoid": "^5.1.5",
-    "qrcode.react": "^4.2.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
